@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".LoginActivity" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_login_login_desc" />
+
+    <TextView
+        android:id="@+id/signinResult"
+        style="@style/WarningTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/block_margin_bottom"
+        android:layout_marginTop="@dimen/block_margin_top"
+        android:text="@string/str_login_login_desc" />
+
+    <EditText
+        android:id="@+id/signinUserName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/default_margin_vertical"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_login_start_hint_user_name"
+        android:inputType="text"
+        android:maxLength="16" />
+
+    <EditText
+        android:id="@+id/signinPassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/default_margin_vertical"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_login_start_hint_password"
+        android:inputType="textPassword"
+        android:maxLength="16" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/LcomNormalButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/normal_button"
+            android:text="@string/str_login_login_button"
+            android:textColor="@drawable/normal_button_text" />
+    </LinearLayout>
+
+</LinearLayout>

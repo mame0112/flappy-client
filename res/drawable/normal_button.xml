@@ -1,0 +1,12 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/lcom_normal_button_normal" android:state_enabled="true" android:state_window_focused="false"/>
+    <item android:drawable="@drawable/lcom_normal_button_disabled" android:state_enabled="false" android:state_window_focused="false"/>
+    <item android:drawable="@drawable/lcom_normal_button_disabled" android:state_enabled="false" android:state_window_focused="true"/>
+    <item android:drawable="@drawable/lcom_normal_button_pressed" android:state_pressed="true"/>
+    <item android:drawable="@drawable/lcom_normal_button_focused" android:state_enabled="true" android:state_focused="true"/>
+    <item android:drawable="@drawable/lcom_normal_button_normal" android:state_enabled="true"/>
+    <item android:drawable="@drawable/lcom_normal_button_focused" android:state_focused="true"/>
+    <item android:drawable="@drawable/lcom_normal_button_normal"/>
+
+</selector>

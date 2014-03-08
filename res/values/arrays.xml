@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <array name="help_label">
+        <item>@string/str_help_what_is_this</item>
+        <item>@string/str_help_privacy_policy</item>
+        <item>@string/str_help_tos</item>
+        <item>@string/str_help_contact</item>
+    </array>
+
+    <array name="contact_category">
+        <item>@string/str_help_not_selected</item>
+        <item>@string/str_help_for_apply</item>
+        <item>@string/str_help_for_how_to_use</item>
+        <item>@string/str_help_for_bug</item>
+        <item>@string/str_help_for_improve_request</item>
+        <item>@string/str_help_for_ads</item>
+        <item>@string/str_help_for_others</item>
+    </array>
+
+</resources>

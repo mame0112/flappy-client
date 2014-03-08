@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <color name="flappy_white">#ffffff</color>
+    <color name="flappy_note_green">#27ae60</color>
+    <color name="flappy_disabled_gray">#888888</color>
+    <color name="flappy_light_pink">#ffcccc</color>
+    <color name="flappy_pink">#ff4a75</color>
+    <color name="flappy_dark_pink">#ff2953</color>
+    <color name="flappy_basic_black">#333333</color>
+
+</resources>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- -Generic -->
+    <string name="str_generic_ok">OK</string>
+    <string name="str_generic_server_time_out">Time out occurrs. Please try again later.</string>
+    <string name="str_generic_wait_desc">Wait for a moment</string>
+    <string name="str_generic_server_timeout">Server timeout. Please try again later</string>
+    <string name="str_generic_no_network_error">No network connection. Please confirm network connection.</string>
+
+    <!-- Option menu -->
+    <string name="str_menu_help">Help</string>
+    <string name="str_menu_signout">Sign out</string>
+    <string name="str_menu_add_new">Add friend</string>
+    <string name="str_menu_update">Update</string>
+
+    <!-- Status bar and notification tray -->
+    <string name="str_notification_app_name">flappy</string>
+    <string name="str_notification_content_text">You have new message(s)</string>
+    <string name="str_notification_ticker_text">You got a new message</string>
+
+    <!-- Welcome activity -->
+    <string name="str_welcome_title">flappy</string>
+    <string name="str_welcome_desc">Loosely connect with friends\n by to be disappeard message</string>
+    <string name="str_welcome_signin_button">Sign in</string>
+    <string name="str_welcome_create_account_button">Sign up</string>
+    <string name="str_welcome_already_have_account">Already have an account?</string>
+    <string name="str_welcome_not_have_account">Don\'t you have an account?</string>
+
+    <!-- Login activity -->
+    <string name="app_name">flappy</string>
+    <string name="action_settings">Settings</string>
+    <string name="str_login_login_desc">Let\'s login and enjoy!</string>
+    <string name="str_login_login_button">Sign in</string>
+    <string name="str_login_login_fail_username_null">Please input user name</string>
+    <string name="str_login_login_fail_username_invalid_length">User name must be 4- 16 characters</string>
+    <string name="str_login_login_fail_username_not_half_char">User name should not be 2byte character</string>
+    <string name="str_login_login_fail_password_null">Please input password</string>
+    <string name="str_login_login_fail_password_invalid_length">Password must be 4- 16 characters</string>
+    <string name="str_login_login_fail_password_not_half_char">Password should not be 2byte character</string>
+    <string name="str_login_no_user_account">Don\'t you have account?</string>
+    <string name="str_login_create_account_button">Create account</string>
+    <string name="str_login_start_hint_user_name">User name</string>
+    <string name="str_login_start_hint_password">Password</string>
+    <string name="str_login_login_fail_unknown_error">Unknown error occurred</string>
+    <string name="str_login_login_fail_login_failed">Error occurred. Please try again later.</string>
+    <string name="str_login_login_fail_no_user">No match for your user name and password combination.</string>
+    <string name="str_login_progress_title">Signing in</string>
+
+    <!-- Create account -->
+    <string name="str_create_account_title">Create account</string>
+    <string name="str_create_account_photo_title">Photo</string>
+    <string name="str_create_account_username_hint">User name</string>
+    <string name="str_create_account_username_desc">4 - 16 characters</string>
+    <string name="str_create_account_password_hint">Password</string>
+    <string name="str_create_account_password_desc">4 - 16 characters</string>
+    <string name="str_create_account_password_hint_again">Password again</string>
+    <string name="str_create_account_mail_address_hint">Mail address</string>
+    <string name="str_create_account_create_account_done_button">Done</string>
+    <string name="str_create_account_create_fail_invalid_address">Invalid mail address</string>
+    <string name="str_create_account_fail_username_null">Please input user name</string>
+    <string name="str_create_account_fail_username_invalid_length">User name must be 4- 16 characters</string>
+    <string name="str_create_account_fail_username_not_half_char">User name should not be 2byte character</string>
+    <string name="str_create_account_fail_password_null">Please input password</string>
+    <string name="str_create_account_fail_password_invalid_length">Password must be 4- 16 characters</string>
+    <string name="str_create_account_fail_password_not_half_char">Password should not be 2byte character</string>
+    <string name="str_create_account_fail_invalid_password">Invalid password</string>
+    <string name="str_create_account_fail_address_null">Please input mail address</string>
+    <string name="str_create_account_fail_address_invalid_char">Mail address contains invalid character</string>
+    <string name="str_create_account_fail_server_error">Error occurred. Please try again later</string>
+    <string name="str_create_account_fail_user_exist">Your user name is already used. Please use another name</string>
+    <string name="str_create_account_tos_privacy_desc1">If you create account, you agree to</string>
+    <string name="str_create_account_tos_privacy_between">and</string>
+    <string name="str_create_account_tos_privacy_desc2"></string>
+    <string name="str_create_account_tearms_of_service">Tearms of service</string>
+    <string name="str_create_account_privacy_policy">Privacy policy</string>
+    <string name="str_create_account_next_button">Next</string>
+    <string name="str_create_account_check_name_title">Checking user name</string>
+    <string name="str_create_account_check_name_desc">Wait for a moment</string>
+
+    <!-- Friend list -->
+    <string name="str_friendlist_title">Friend List</string>
+    <string name="str_friendlist_first_add_button">Add friend</string>
+    <string name="str_friendlist_first_add_text">Let\'s add friend and enjoy!</string>
+    <string name="str_friendlist_progress_title">Getting friend info</string>
+    <string name="str_friendlist_progress_desc">Wait for a moment</string>
+
+    <!-- New invitation message -->
+    <string name="str_invitation_title">Invite friend</string>
+    <string name="str_invitation_input_mail_address_hint">Mail address</string>
+    <string name="str_invitation_input_message_hint">Message</string>
+    <string name="str_invitation_input_message_title">Input message</string>
+    <string name="str_invitation_input_message_button">Input message</string>
+    <string name="str_invitation_address_null">Please input friend\'s mail address</string>
+    <string name="str_invitation_invalid_mail_address">Invalid mail address.</string>
+    <string name="str_invitation_unknown_error">Unknown error occurred. Please try again later.</string>
+    <string name="str_invitation_successfully_invited">Successfully sent invitation to your friend</string>
+    <string name="str_invitation_mail_cannot_be_sent">Failed to send message. Please try again later</string>
+    <string name="str_invitation_select_from_contacts_button">Select from Contacts</string>
+    <string name="str_invitation_select_from_contacts_desc">Does your friend is in your Contacts?</string>
+    <string name="str_invitation_direct_input_desc">If you want to input friend\'s mail address directly</string>
+    <string name="str_invitation_confirm_desc">You are about to invite below friend:</string>
+    <string name="str_invitation_send_message_button">Send message</string>
+    <string name="str_invitation_send_cancel_button">Cancel</string>
+
+    <!-- Conversation -->
+    <string name="str_conversation_title">Conversation</string>
+    <string name="str_conversation_progress_title">Sending data</string>
+    <string name="str_conversation_progress_desc">Wait for a moment</string>
+
+    <!-- Contacts list -->
+    <string name="str_contactslist_title">Select friend to send message</string>
+    <string name="str_contactslist_error_no_contact">No contact in your Contacts</string>
+
+    <!-- Contacts list confirm dialog -->
+    <string name="str_contactslist_confirm_title">Your are about to send message:</string>
+    <string name="str_contactslist_confirm_successfuly_sent">Your message is successfully sent!</string>
+    <string name="str_contactslist_confirm_unknown_error">Unknown error occurred. Please try again later</string>
+    <string name="str_contactslist_confirm_maiL_cannot_be_sent">Failed to sent your message. Please try again later</string>
+    <string name="str_contactslist_confirm_failed_to_store_data">But failed to store data.</string>
+
+    <!-- Conversation list -->
+    <string name="str_conversation_send_button">Send</string>
+    <string name="str_conversation_send_hint_text">Input message</string>
+    <string name="str_conversation_no_text_input">Please input message</string>
+    <string name="str_conversation_message_successfuly_sent">Your message is successfully sent!</string>
+    <string name="str_conversation_message_fail_sent">Failed to send message</string>
+    <string name="str_conversation_time_unknown">Unknown</string>
+    <string name="str_conversation_no_message">(No message)</string>
+
+    <!-- Help activity -->
+    <string name="str_help_title">Help</string>
+    <string name="str_help_what_is_this">What\'s flappy?</string>
+    <string name="str_help_privacy_policy">Privacy policy</string>
+    <string name="str_help_tos">Terms of service</string>
+    <string name="str_help_contact">Contact</string>
+
+    <!-- Contact to us activity -->
+    <string name="str_contact_us_title">Contact</string>
+    <string name="str_contact_us_desc">If you have any question or comment on this service, please feel free to contact me!</string>
+    <string name="str_contact_us_message_hint">Comment</string>
+    <string name="str_contact_us_message_title_prompt">Comment</string>
+    <string name="str_help_not_selected">Not selected</string>
+    <string name="str_help_for_apply">For apply</string>
+    <string name="str_help_for_how_to_use">For how to use</string>
+    <string name="str_help_for_bug">For bug / problem</string>
+    <string name="str_help_for_improve_request">For improvement request</string>
+    <string name="str_help_for_ads">For ads, promotion and interviews</string>
+    <string name="str_help_for_others">For others</string>
+    <string name="str_help_mail_title">Inquery</string>
+    <string name="str_help_no_subject">(No subject)</string>
+    <string name="str_help_no_comment">(No comment)</string>
+    <string name="str_help_send_mail_button">Send inquery mail</string>
+
+    <!-- Flappy about activity -->
+    <string name="str_flappy_about_main_itle">About this service</string>
+    <string name="str_flappy_about_title">What\'s flappy?</string>
+    <string name="str_flappy_about_desc">flappy is loose communication tool that enable you to communicate with your friend without stree.</string>
+    <string name="str_flappy_about_stress_less_title">Stress-less messaging</string>
+    <string name="str_flappy_about_stress_less_desc">Don\'t you think current messaging apps is stressful? Too many messages and unanswered messages etc. Yes? Then, it would be good to use this "Flappy". It enable you to communicate with your friend without stress by to be disappeared message.</string>
+    <string name="str_flappy_about_disappear_message_title">To be disappeard message</string>
+    <string name="str_flappy_about_disappear_message_desc">One of characteristics feature of flappy is to be disappeard message. If you don\'t read new message more than about 30 minutes, it will disappear automatically and you will not be abou to read it anymore.\n\n Apparently, it seems inconvenient as a messaging service, but for the sake of it, you never</string>
+    <string name="str_flappy_about_merit_title">So what?</string>
+    <string name="str_flappy_about_merit_desc">This messagin service wiill not make message receiver reply message because you and your friend might missed the message before disappearing. It means message sender can send message without considering situation of receiver. As a result, you can send message more freely than now!</string>
+    <string name="str_flappy_about_start_title">Let\'s get started</string>
+    <string name="str_flappy_about_start_desc">Stress-less messaging service, \'flappy\'. Would you want to get started stress-less communication with your friend?</string>
+
+</resources>

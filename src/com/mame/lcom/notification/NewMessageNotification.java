@@ -1,0 +1,56 @@
+package com.mame.lcom.notification;
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+
+import com.mame.lcom.R;
+import com.mame.lcom.ui.FriendListActivity;
+
+public class NewMessageNotification {
+
+	private final static int REQUEST_CODE = 1;
+
+	private final static int LED_INTERVAL = 1000; // 1 sec
+
+	private static NotificationManager mNotificationManager = null;
+
+	public static void showNotiofication(Context context, int id, int number) {
+
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+				context)
+				.setSmallIcon(R.drawable.flippy_statusbar_icon)
+				.setContentTitle(
+						context.getString(R.string.str_notification_app_name))
+				.setContentText(
+						context.getString(R.string.str_notification_content_text))
+				.setTicker(
+						context.getString(R.string.str_notification_ticker_text))
+				.setLights(Color.MAGENTA, LED_INTERVAL, LED_INTERVAL)
+				.setVibrate(new long[] { 1000, 700, 250, 700, 250 })
+				.setNumber(number).setAutoCancel(true);
+
+		Intent intent = new Intent(context, FriendListActivity.class);
+
+		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		stackBuilder.addParentStack(FriendListActivity.class);
+		stackBuilder.addNextIntent(intent);
+
+		PendingIntent pIntent = stackBuilder.getPendingIntent(REQUEST_CODE,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.setContentIntent(pIntent);
+		mNotificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.notify(id, mBuilder.build());
+	}
+
+	public static void removeNotification() {
+		if (mNotificationManager != null) {
+			mNotificationManager.cancelAll();
+		}
+	}
+}

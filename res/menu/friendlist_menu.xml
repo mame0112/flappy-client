@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menu_friendlist_add"
+        android:icon="@drawable/flappy_plug_icon"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/str_menu_add_new"/>
+    <item
+        android:id="@+id/menu_friendlist_update"
+        android:icon="@drawable/flappy_update_icon"
+        android:showAsAction="ifRoom|withText"
+        android:title="@string/str_menu_update"/>
+    <item
+        android:id="@+id/menu_friendlist_help"
+        android:showAsAction="never"
+        android:title="@string/str_menu_help"/>
+    <item
+        android:id="@+id/menu_friendlist_signout"
+        android:showAsAction="never"
+        android:title="@string/str_menu_signout"/>
+
+</menu>

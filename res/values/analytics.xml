@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="ga_trackingId">UA-48246180-1</string>
+    <string name="ga_logLevel">error</string>
+
+    <bool name="ga_autoActivityTracking">true</bool>
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <string name="ga_sampleFrequency">100</string>
+    <!-- 1800 seconds means 30 minutes dispatch period -->
+    <integer name="ga_dispatchPeriod">1800</integer>
+
+    <bool name="ga_anonymizeIp">true</bool>
+
+</resources>

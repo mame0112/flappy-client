@@ -1,0 +1,127 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:id="@+id/createCompleteResultView"
+        style="@style/WarningTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/block_margin_bottom"
+        android:layout_marginTop="@dimen/block_margin_top" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/str_create_account_username_desc" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/default_padding"
+        android:text="@string/str_create_account_password_desc" />
+
+    <EditText
+        android:id="@+id/createCompletePassword"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/default_margin_vertical"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_create_account_password_hint"
+        android:inputType="textPassword"
+        android:maxLength="16" />
+
+    <EditText
+        android:id="@+id/createCompletePasswordAgain"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/default_margin_vertical"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_create_account_password_hint_again"
+        android:inputType="textPassword"
+        android:maxLength="16" />
+
+    <EditText
+        android:id="@+id/createCompleteMailAddress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/block_margin_top"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_create_account_mail_address_hint"
+        android:inputType="text"
+        android:maxLength="64" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/block_margin_top"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_create_account_tos_privacy_desc1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/createTearmsOfService"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:paddingRight="@dimen/default_padding"
+                android:text="@string/str_create_account_tearms_of_service"
+                android:textColor="@color/flappy_note_green"
+                android:textSize="@dimen/default_font_size_middle" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="@string/str_create_account_tos_privacy_between" />
+
+            <Button
+                android:id="@+id/createPrivacyPolicy"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:background="@null"
+                android:paddingLeft="@dimen/default_padding"
+                android:text="@string/str_create_account_privacy_policy"
+                android:textColor="@color/flappy_note_green"
+                android:textSize="@dimen/default_font_size_middle" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_create_account_tos_privacy_desc2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/createAccountDoneButton"
+            style="@style/LcomNormalButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signup_button"
+            android:text="@string/str_create_account_create_account_done_button"
+            android:textColor="@drawable/normal_button_text" />
+    </LinearLayout>
+
+</LinearLayout>

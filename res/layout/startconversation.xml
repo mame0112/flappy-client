@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <TextView
+        android:id="@+id/newInviResultView"
+        style="@style/WarningTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fromContactsDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/add_friend_padding"
+        android:text="@string/str_invitation_select_from_contacts_desc" />
+
+    <Button
+        android:id="@+id/contactsListButton"
+        style="@style/LcomNormalButtonTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/normal_button"
+        android:paddingTop="@dimen/default_padding_vertical"
+        android:text="@string/str_invitation_select_from_contacts_button"
+        android:textColor="@drawable/normal_button_text" />
+
+    <TextView
+        android:id="@+id/directInputDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/add_friend_padding"
+        android:text="@string/str_invitation_direct_input_desc" />
+
+    <EditText
+        android:id="@+id/newMailAddressEditText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/default_margin_vertical"
+        android:layout_marginTop="@dimen/default_margin_vertical"
+        android:background="@drawable/edittext_frame"
+        android:hint="@string/str_invitation_input_mail_address_hint"
+        android:inputType="text"
+        android:paddingTop="@dimen/block_margin_top" />
+
+    <TextView
+        android:id="@+id/confirmForFromContactsDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/add_friend_padding"
+        android:text="@string/str_invitation_confirm_desc" />
+
+    <TextView
+        android:id="@+id/usreNameFromContacts"
+        style="@style/WarningTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/mailFromContacts"
+        style="@style/WarningTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/newConversationStartButton"
+            style="@style/LcomNormalButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/normal_button"
+            android:paddingTop="@dimen/default_padding_vertical"
+            android:text="@string/str_invitation_input_message_button"
+            android:textColor="@drawable/normal_button_text" />
+    </LinearLayout>
+
+</LinearLayout>

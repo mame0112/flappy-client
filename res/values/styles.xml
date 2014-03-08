@@ -1,0 +1,79 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:actionBarStyle">@style/LcomActionBarStyle</item>
+        <item name="android:textColor">#333333</item>
+        <item name="android:itemTextAppearance">@style/OptionMenuTextStyle</item>
+    </style>
+
+    <!-- Action bar background color -->
+    <style name="LcomActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">#ff4a75</item>
+        <item name="android:titleTextStyle">@style/LcomActionBarStyle</item>
+    </style>
+
+    <!-- Action bar font color -->
+    <style name="LcomActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Action bar font color -->
+    <style name="LcomNormalButtonTheme" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- Edit text style -->
+    <style name="EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/edittext_frame</item>
+        <item name="android:textColor">#808080</item>
+    </style>
+
+    <!-- Warning TextView style -->
+    <style name="WarningTextStyle" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/flappy_white</item>
+        <item name="android:background">@color/flappy_note_green</item>
+        <item name="android:paddingBottom">@dimen/default_padding_vertical</item>
+        <item name="android:paddingTop">@dimen/default_padding_vertical</item>
+        <item name="android:paddingLeft">@dimen/default_padding_vertical</item>
+        <item name="android:textSize">@dimen/default_text_size</item>
+    </style>
+
+    <!-- Option menu text style -->
+    <style name="OptionMenuTextStyle" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/flappy_white</item>
+        <item name="android:textSize">@dimen/default_font_size_middle</item>
+    </style>
+
+    <style name="AboutSubTitle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/default_padding</item>
+        <item name="android:paddingBottom">@dimen/default_padding</item>
+        <item name="android:textColor">@color/flappy_pink</item>
+        <item name="android:textSize">@dimen/default_font_size_subtitle</item>
+    </style>
+
+    <style name="AboutDescription">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">@dimen/about_sentence_margin</item>
+        <item name="android:textColor">@color/flappy_basic_black</item>
+        <item name="android:textSize">@dimen/default_font_size_description</item>
+    </style>
+
+</resources>

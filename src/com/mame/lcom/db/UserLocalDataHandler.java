@@ -1,0 +1,356 @@
+package com.mame.lcom.db;
+
+import java.sql.Blob;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.exception.UserLocalDataHandlerException;
+import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.TimeUtil;
+
+public class UserLocalDataHandler {
+
+	private final String TAG = LcomConst.TAG + "/UserLocalDataHandler";
+
+	private static SQLiteDatabase sDatabase;
+
+	private Context mContext = null;
+
+	private UserLocalDataListener mListener = null;
+
+	private ContentResolver mContentResolver = null;
+
+	public UserLocalDataHandler(Context context) {
+		DbgUtil.showDebug(TAG, "UserLocalDataHandler");
+		mContext = context;
+		mContentResolver = context.getContentResolver();
+	}
+
+	private synchronized void setDatabase() {
+		if (sDatabase == null || !sDatabase.isOpen()) {
+			UserDatabaseHelper helper = new UserDatabaseHelper(mContext);
+			sDatabase = helper.getWritableDatabase();
+		}
+	}
+
+	public ArrayList<MessageItemData> getLocalMessageDataset() {
+		DbgUtil.showDebug(TAG, "getLocalMessageDataset");
+		Cursor cursor = null;
+		ArrayList<MessageItemData> datas = new ArrayList<MessageItemData>();
+		try {
+			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
+					null, null, null);
+			while (cursor != null && cursor.moveToNext()) {
+				String fromUserId = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+				String fromUserName = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_NAME));
+				String toUserId = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+				String toUserName = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_NAME));
+				String message = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+				String date = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+				DbgUtil.showDebug(TAG, "date:" + date);
+
+				// Translate string into int
+				int fromUserIdInt = LcomConst.NO_USER;
+				int toUserIdInt = LcomConst.NO_USER;
+				long date2 = 0L;
+				if (fromUserId != null) {
+					fromUserIdInt = Integer.valueOf(fromUserId);
+				}
+				if (toUserId != null) {
+					fromUserIdInt = Integer.valueOf(toUserId);
+				}
+//				try {
+					date2 = Long.valueOf(date);
+//					date2 = new SimpleDateFormat(LcomConst.DATE_PATTERN)
+//							.parse(date);
+//				} catch (ParseException e) {
+//					DbgUtil.showDebug(TAG, "parseException: " + e.getMessage());
+//				}
+
+				MessageItemData data = new MessageItemData(fromUserIdInt,
+						toUserIdInt, fromUserName, toUserName, message, date2);
+				datas.add(data);
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+		}
+		return datas;
+	}
+
+	public ArrayList<FriendListData> getLocalUserDataset()
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getLocalUserDataset");
+		Cursor cursor = null;
+		ArrayList<FriendListData> datas = new ArrayList<FriendListData>();
+		try {
+			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+					null, null, null, null);
+			if (cursor == null) {
+				DbgUtil.showDebug(TAG, "cursor is null");
+				throw new UserLocalDataHandlerException("Cursor is null");
+			}
+			try {
+				// int userId, String userName, String userThumb,
+				// String lastSender, String lastMessage
+				while (cursor != null && cursor.moveToNext()) {
+					String friendId = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String userName = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessage = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderId = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddress = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumbnail = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					FriendListData data = new FriendListData(
+							Integer.valueOf(friendId), userName,
+							Integer.valueOf(lastSenderId), lastMessage, 0,
+							mailAddress, thumbnail);
+					datas.add(data);
+				}
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException:"
+					+ e.getMessage());
+		}
+
+		return datas;
+	}
+
+	public void setUserLocalDataListener(UserLocalDataListener listener) {
+		mListener = listener;
+	}
+
+	public void addNewMessageAndFriendIfNecessary(int userId, int friendId,
+			String userName, String friendName, int senderId, String message,
+			String date, byte[] friendThumb, String mailAddress)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "addNewMessageAndFriendIfNecessary");
+		DbgUtil.showDebug(TAG, "userId: " + userId);
+		DbgUtil.showDebug(TAG, "friendId: " + friendId);
+		DbgUtil.showDebug(TAG, "friendName: " + friendName);
+		DbgUtil.showDebug(TAG, "senderId: " + senderId);
+		DbgUtil.showDebug(TAG, "mailAddress: " + mailAddress);
+		try {
+			setDatabase();
+			sDatabase.beginTransaction();
+
+			// Set data to Message DB
+			ContentValues valuesForMessage = null;
+			// If sender is myself, userId == userId, and friendId is receiver.
+			if (userId != senderId) {
+				valuesForMessage = getInsertContentValuesForMessage(friendId,
+						userId, friendName, userName, message, date);
+			} else {
+				// If sender is friend
+				valuesForMessage = getInsertContentValuesForMessage(userId,
+						friendId, userName, friendName, message, date);
+			}
+
+			long id = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+					null, valuesForMessage);
+			DbgUtil.showDebug(TAG, "id: " + id);
+			if (id < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG, "Failed to insert data into Message DB");
+				throw new UserLocalDataHandlerException(
+						"id is less than 0. Failed to insert data");
+			}
+
+			// Set data to Friendship DB
+			// Need to check if the target friend has already been in DB
+			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+					friendId, friendName, friendThumb, senderId, message,
+					mailAddress);
+			long friendshipId = sDatabase.insert(
+					DatabaseDef.FriendshipTable.TABLE_NAME, null,
+					valuesForFriendship);
+			DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+			if (id < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG,
+						"Failed to insert data into Friendship DB");
+				throw new UserLocalDataHandlerException(
+						"id is less than 0. Failed to insert data");
+			}
+
+			// Commit change
+			sDatabase.setTransactionSuccessful();
+
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException: "
+					+ e.getMessage());
+		} finally {
+			try {
+				if (sDatabase != null) {
+					DbgUtil.showDebug(TAG, "endTransaction");
+					sDatabase.endTransaction();
+				}
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG,
+						"SQLException: Database is null" + e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException: "
+						+ e.getMessage());
+			}
+		}
+	}
+
+	public void addNewMessage(MessageItemData messageData) {
+		DbgUtil.showDebug(TAG, "addNewMessage (with MessageData class");
+		if (messageData != null) {
+			int userId = messageData.getFromUserId();
+			int friendId = messageData.getTargetUserId();
+			String userName = messageData.getFromUserName();
+			String friendName = messageData.getToUserName();
+			int senderId = userId;
+			String message = messageData.getMessage();
+			long date = messageData.getPostedDate();
+			String date2 = null;
+//			try {
+				date2 = String.valueOf(date);
+//				date2 = TimeUtil.parseDateInDateToString(date);
+//			} catch (ParseException e) {
+//				DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
+//			}
+			addNewMessage(userId, friendId, userName, friendName, senderId,
+					message, date2);
+		} else {
+			// If no data is passed, nothing to do.
+		}
+
+	}
+
+	/**
+	 * This method is for storing message to local DB without adding new user.
+	 * 
+	 * @param userId
+	 * @param friendId
+	 * @param userName
+	 * @param friendName
+	 * @param senderId
+	 * @param message
+	 * @param date
+	 */
+	public void addNewMessage(int userId, int friendId, String userName,
+			String friendName, int senderId, String message, String date) {
+		DbgUtil.showDebug(TAG, "addNewMessage");
+		DbgUtil.showDebug(TAG, "userId: " + userId);
+		DbgUtil.showDebug(TAG, "friendId: " + friendId);
+		DbgUtil.showDebug(TAG, "friendName: " + friendName);
+		DbgUtil.showDebug(TAG, "senderIde: " + senderId);
+		try {
+			setDatabase();
+			sDatabase.beginTransaction();
+
+			// Set data to Message DB
+			ContentValues valuesForMessage = null;
+			// If sender is myself, userId == userId, and friendId is receiver.
+			if (userId == senderId) {
+				valuesForMessage = getInsertContentValuesForMessage(userId,
+						friendId, userName, friendName, message, date);
+			} else {
+				// If sender is friend
+				valuesForMessage = getInsertContentValuesForMessage(friendId,
+						userId, friendName, userName, message, date);
+			}
+
+			long id = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+					null, valuesForMessage);
+			DbgUtil.showDebug(TAG, "id: " + id);
+			if (id < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG, "Failed to insert data into Message DB");
+			}
+
+			// Commit change
+			sDatabase.setTransactionSuccessful();
+
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+		} finally {
+			try {
+				if (sDatabase != null) {
+					DbgUtil.showDebug(TAG, "endTransaction");
+					sDatabase.endTransaction();
+				}
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG,
+						"SQLException: Database is null" + e.getMessage());
+			}
+		}
+	}
+
+	private ContentValues getInsertContentValuesForMessage(int fromUserId,
+			int toUserId, String fromUserName, String toUserName,
+			String message, String date) {
+		ContentValues values = new ContentValues();
+
+		values.put(DatabaseDef.MessageColumns.FROM_USER_ID, fromUserId);
+		values.put(DatabaseDef.MessageColumns.TO_USER_ID, toUserId);
+		values.put(DatabaseDef.MessageColumns.FROM_USER_NAME, fromUserName);
+		values.put(DatabaseDef.MessageColumns.TO_USER_NAME, toUserName);
+		values.put(DatabaseDef.MessageColumns.MESSAGE, message);
+		values.put(DatabaseDef.MessageColumns.DATE, date);
+
+		return values;
+	}
+
+	private ContentValues getInsertContentValuesForFriendship(int friendId,
+			String friendName, byte[] friendThumbnail, int lastSenderId,
+			String lastMessage, String mailAddress) {
+		ContentValues values = new ContentValues();
+
+		values.put(DatabaseDef.FriendshipColumns.FRIEND_ID, friendId);
+		values.put(DatabaseDef.FriendshipColumns.FRIEND_NAME, friendName);
+		values.put(DatabaseDef.FriendshipColumns.LAST_SENDER_ID, lastSenderId);
+		values.put(DatabaseDef.FriendshipColumns.LAST_MESSAGE, lastMessage);
+		values.put(DatabaseDef.FriendshipColumns.MAIL_ADDRESS, mailAddress);
+		values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, friendThumbnail);
+
+		return values;
+	}
+
+	// Interface to notify new user data to client of this class
+	public interface UserLocalDataListener {
+		public void notifyLocalUserDataSet(ArrayList<FriendListData> userData);
+	}
+
+}

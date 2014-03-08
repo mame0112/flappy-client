@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- -Generic -->
+    <string name="str_generic_ok">OK</string>
+    <string name="str_generic_server_time_out">タイムアウトが発生しました。後ほど再度お試しください。</string>
+    <string name="str_generic_wait_desc">少々お待ちください</string>
+    <string name="str_generic_server_timeout">サーバがタイムアウトしました。後ほど再度お試しください。</string>
+    <string name="str_generic_no_network_error">ネットワーク接続がありません。ネットワークにつながっているか確認してください。</string>
+
+    <!-- Option menu -->
+    <string name="str_menu_help">ヘルプ</string>
+    <string name="str_menu_signout">ログアウト</string>
+    <string name="str_menu_add_new">友達を追加</string>
+    <string name="str_menu_update">更新</string>
+
+    <!-- Status bar and notification tray -->
+    <string name="str_notification_app_name">flappy</string>
+    <string name="str_notification_content_text">新しいメッセージがあります</string>
+    <string name="str_notification_ticker_text">メッセージを受信しました</string>
+
+    <!-- Welcome activity -->
+    <string name="str_welcome_title">flappy</string>
+    <string name="str_welcome_desc">Loosely connect with friends\n by to be disappeard message</string>
+    <string name="str_welcome_signin_button">サインイン</string>
+    <string name="str_welcome_create_account_button">アカウント作成</string>
+    <string name="str_welcome_already_have_account">アカウントを持っている方</string>
+    <string name="str_welcome_not_have_account">初めてご利用になる方</string>
+
+    <!-- Login activity -->
+    <string name="app_name">flappy</string>
+    <string name="action_settings">設定</string>
+    <string name="str_login_login_desc">サインインしましょう！</string>
+    <string name="str_login_login_button">サインイン</string>
+    <string name="str_login_login_fail_username_null">ユーザ名を入力してください</string>
+    <string name="str_login_login_fail_username_invalid_length">ユーザ名は4～16文字で入力してください</string>
+    <string name="str_login_login_fail_username_not_half_char">ユーザ名に全角文字は使えません</string>
+    <string name="str_login_login_fail_password_null">パスワードを入力してください。</string>
+    <string name="str_login_login_fail_password_invalid_length">パスワードは4～16文字で入力してください</string>
+    <string name="str_login_login_fail_password_not_half_char">パスワードに全角文字は使えません</string>
+    <string name="str_login_no_user_account">アカウントをお持ちでない方</string>
+    <string name="str_login_create_account_button">アカウントを作成する</string>
+    <string name="str_login_start_hint_user_name">ユーザ名</string>
+    <string name="str_login_start_hint_password">パスワード</string>
+    <string name="str_login_login_fail_unknown_error">不明なエラーが発生しました</string>
+    <string name="str_login_login_fail_login_failed">エラーが発生しました。後ほど再度お試しください</string>
+    <string name="str_login_login_fail_no_user">ユーザ名とパスワードの組み合わせが一致しません。</string>
+    <string name="str_login_progress_title">サインイン</string>
+
+    <!-- Create account -->
+    <string name="str_create_account_title">アカウントを作成する</string>
+    <string name="str_create_account_photo_title">写真を設定</string>
+    <string name="str_create_account_username_hint">ユーザ名」</string>
+    <string name="str_create_account_username_desc">4～16文字</string>
+    <string name="str_create_account_password_hint">パスワード</string>
+    <string name="str_create_account_password_desc">4～16文字</string>
+    <string name="str_create_account_password_hint_again">パスワードの確認</string>
+    <string name="str_create_account_mail_address_hint">メールアドレス</string>
+    <string name="str_create_account_create_account_done_button">完了</string>
+    <string name="str_create_account_create_fail_invalid_address">不正なメールアドレスです</string>
+    <string name="str_create_account_fail_username_null">ユーザ名を入力してください</string>
+    <string name="str_create_account_fail_username_invalid_length">ユーザ名は4～16文字で入力してください</string>
+    <string name="str_create_account_fail_username_not_half_char">ユーザ名に全角文字は使えません</string>
+    <string name="str_create_account_fail_password_null">パスワードを入力してください。</string>
+    <string name="str_create_account_fail_password_invalid_length">パスワードは4～16文字で入力してください</string>
+    <string name="str_create_account_fail_password_not_half_char">パスワードに全角文字は使えません</string>
+    <string name="str_create_account_fail_invalid_password">不正なパスワードです</string>
+    <string name="str_create_account_fail_address_null">メールアドレスを入力してください</string>
+    <string name="str_create_account_fail_address_invalid_char">不正なメールアドレスです</string>
+    <string name="str_create_account_fail_server_error">エラーが発生しました。後ほど再度お試しください</string>
+    <string name="str_create_account_fail_user_exist">ユーザ名はすで他の方に使われています。他の名前をお試しください</string>
+    <string name="str_create_account_tos_privacy_desc1">アカウントを作成すると</string>
+    <string name="str_create_account_tos_privacy_between">と</string>
+    <string name="str_create_account_tos_privacy_desc2">に同意したものとみなします</string>
+    <string name="str_create_account_tearms_of_service">利用規約</string>
+    <string name="str_create_account_privacy_policy">プライバシーポリシー</string>
+    <string name="str_create_account_next_button">次</string>
+    <string name="str_create_account_check_name_title">ユーザ名のチェック中です</string>
+    <string name="str_create_account_check_name_desc">少々お待ちください</string>
+
+    <!-- Friend list -->
+    <string name="str_friendlist_title">友達一覧</string>
+    <string name="str_friendlist_first_add_button">友達を追加する</string>
+    <string name="str_friendlist_first_add_text">まずは友達を追加して連絡してみましょう</string>
+    <string name="str_friendlist_progress_title">友達情報の取得中</string>
+    <string name="str_friendlist_progress_desc">少々お待ち下さい</string>
+
+    <!-- New invitation message -->
+    <string name="str_invitation_title">友達を招待する</string>
+    <string name="str_invitation_input_mail_address_hint">メールアドレス</string>
+    <string name="str_invitation_input_message_hint">メッセージ</string>
+    <string name="str_invitation_input_message_title">メッセージを入力する</string>
+    <string name="str_invitation_input_message_button">メッセージを入力する</string>
+    <string name="str_invitation_address_null">友達のメールアドレスを入力してください</string>
+    <string name="str_invitation_invalid_mail_address">不正なメールアドレスです</string>
+    <string name="str_invitation_unknown_error">不明なエラーが発生しました。後ほど再度お試しください</string>
+    <string name="str_invitation_successfully_invited">友達をflappyに招待しました！</string>
+    <string name="str_invitation_mail_cannot_be_sent">メッセージ送信に失敗しました。後ほど再度お試しください</string>
+    <string name="str_invitation_select_from_contacts_button">電話帳から選択する</string>
+    <string name="str_invitation_select_from_contacts_desc">友達が電話帳に登録されている場合</string>
+    <string name="str_invitation_direct_input_desc">メールアドレスを直接入力する</string>
+    <string name="str_invitation_confirm_desc">下記の友達を招待します</string>
+    <string name="str_invitation_send_message_button">メッセージ送信</string>
+    <string name="str_invitation_send_cancel_button">キャンセル</string>
+
+    <!-- Conversation -->
+    <string name="str_conversation_title">トーク</string>
+    <string name="str_conversation_progress_title">データ送信中</string>
+    <string name="str_conversation_progress_desc">少々お待ちください</string>
+
+    <!-- Contacts list -->
+    <string name="str_contactslist_title">メッセージを送信する友達を選んでください</string>
+    <string name="str_contactslist_error_no_contact">電話帳に友達が登録されていません</string>
+
+    <!-- Contacts list confirm dialog -->
+    <string name="str_contactslist_confirm_title">下記のメッセー時を送ろうとしています</string>
+    <string name="str_contactslist_confirm_successfuly_sent">メッセージを送信しました！</string>
+    <string name="str_contactslist_confirm_unknown_error">不明なエラーが起きました。後ほど再度お試しください</string>
+    <string name="str_contactslist_confirm_maiL_cannot_be_sent">メッセージ送信に失敗しました。後ほど再度お試しください</string>
+    <string name="str_contactslist_confirm_failed_to_store_data">エラーが発生しました</string>
+
+    <!-- Conversation list -->
+    <string name="str_conversation_send_button">送信</string>
+    <string name="str_conversation_send_hint_text">メッセージを入力する</string>
+    <string name="str_conversation_no_text_input">メッセージを入力してください</string>
+    <string name="str_conversation_message_successfuly_sent">メッセージを送信しました！</string>
+    <string name="str_conversation_message_fail_sent">メッセージ送信に失敗しました</string>
+    <string name="str_conversation_time_unknown">不明</string>
+    <string name="str_conversation_no_message">(メッセージはありません)</string>
+
+    <!-- Help activity -->
+    <string name="str_help_title">ヘルプ</string>
+    <string name="str_help_what_is_this">flappyとは？</string>
+    <string name="str_help_privacy_policy">プライバシーポリシー</string>
+    <string name="str_help_tos">利用規約</string>
+    <string name="str_help_contact">連絡</string>
+
+    <!-- Contact to us activity -->
+    <string name="str_contact_us_title">連絡</string>
+    <string name="str_contact_us_desc">ご質問やご要望などございましたら、下記からお問い合わせください</string>
+    <string name="str_contact_us_message_hint">コメント</string>
+    <string name="str_contact_us_message_title_prompt">コメント</string>
+    <string name="str_help_not_selected">選択されていません</string>
+    <string name="str_help_for_apply">登録方法について</string>
+    <string name="str_help_for_how_to_use">使い方について</string>
+    <string name="str_help_for_bug">不具合、問題について</string>
+    <string name="str_help_for_improve_request">改善要望について</string>
+    <string name="str_help_for_ads">広告、プロモーション、インタビューについて</string>
+    <string name="str_help_for_others">その他</string>
+    <string name="str_help_mail_title">質問</string>
+    <string name="str_help_no_subject">(タイトルはありません)</string>
+    <string name="str_help_no_comment">(コメントはありません)</string>
+    <string name="str_help_send_mail_button">送信する</string>
+
+    <!-- Flappy about activity -->
+    <string name="str_flappy_about_main_itle">このサービスについて　</string>
+    <string name="str_flappy_about_title">flappyとは</string>
+    <string name="str_flappy_about_desc">flappyを使うとストレスなく友達とコミュニケーションすることができます</string>
+    <string name="str_flappy_about_stress_less_title">ストレスのないコミュニケーション</string>
+    <string name="str_flappy_about_stress_less_desc">今のメッセージアプリはストレスが多いと思いませんか？たくさんのメッセージを読んで、きちんと返信しないといけませんよね？もしその状況に疲れてしまっているのであれば、このFlappyを使ってください。このflappyで送ったメッセージは、読まないと30分で自動的に消えてしまうので、返信しないと！というストレスが減ります。</string>
+    <string name="str_flappy_about_disappear_message_title">消えるメッセージ</string>
+    <string name="str_flappy_about_disappear_message_desc">flappyの最も特徴的な機能の1つは、読まないと消えるメッセージです。新着メッセージを30分以上読まなかったら、そのメッセージは自動的に消えて読めなくなります。\n\n 一見不便ですが、「メッセージに気づかなかったから返信できなかった」という言い訳がしやすくなります。</string>
+    <string name="str_flappy_about_merit_title">・・・ということは？</string>
+    <string name="str_flappy_about_merit_desc">メッセージを受けとった側はは「既読スルー」がしやすくなり、逆にメッセージを送る側も、相手に気を遣うことなく、これまで以上に気楽にメッセージを送ることが可能となります！</string>
+    <string name="str_flappy_about_start_title">はじめてみましょう</string>
+    <string name="str_flappy_about_start_desc">そんなストレスフリーのメッセージサービス、flappy。あなたも初めてストレスフリーな友達づきあいをしてみませんか？</string>
+
+</resources>

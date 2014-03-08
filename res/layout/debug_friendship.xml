@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+    <EditText
+        android:id="@+id/debugFriendshipUserId"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="UserId" />
+
+    <EditText
+        android:id="@+id/debugFriendshipUesrName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="User name" />
+
+    <EditText
+        android:id="@+id/debugFriendshipFriendId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Friend ID" />
+
+    <EditText
+        android:id="@+id/debugFriendshipFriendName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Friend name" />
+
+    <EditText
+        android:id="@+id/debugFriendshipSenderId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="SenderId" />
+
+    <EditText
+        android:id="@+id/debugFriendshipMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="message" />
+
+    <EditText
+        android:id="@+id/debugFriendshipDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="date" />
+
+    <EditText
+        android:id="@+id/debugFriendshipMail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Mail address" />
+
+    <Button
+        android:id="@+id/debugFriendshipAddButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add data" />
+
+</LinearLayout>

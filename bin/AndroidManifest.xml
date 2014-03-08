@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mame.lcom"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <permission
+        android:name="com.mame.lcom.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.mame.lcom.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name=".FlappyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/flappy_app_icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.mame.lcom.ui.WelcomeActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.mame.lcom.LoginActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.FriendListActivity"
+            android:label="@string/str_friendlist_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.CreateAccountActivity"
+            android:label="@string/str_create_account_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.CreateAccountCompleteActivity"
+            android:label="@string/str_create_account_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.ConversationActivity"
+            android:label="@string/str_conversation_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.StartNewConversationActivity"
+            android:label="@string/str_invitation_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.ContactListActivity"
+            android:label="@string/str_contactslist_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.HelpActivity"
+            android:label="@string/str_help_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.ContactToUsActivity"
+            android:label="@string/str_contact_us_title" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.ui.FlappyAboutActivity"
+            android:label="@string/str_flappy_about_main_itle" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.tool.DebugMainActivity"
+            android:label="flippy debug" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.mame.lcom.tool.DebugConversationActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.tool.DebugFriendshipActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.mame.lcom.tool.DebugAllUserDataActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <service android:name="com.mame.lcom.gcm.GCMIntentService" />
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.mame.lcom" />
+            </intent-filter>
+        </receiver>
+
+        <provider
+            android:name="com.mame.lcom.db.DatabaseContentProvider"
+            android:authorities="com.mame.lcom.db"
+            android:exported="false"
+            android:syncable="true" />
+    </application>
+
+</manifest>
