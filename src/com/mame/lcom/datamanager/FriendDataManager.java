@@ -63,6 +63,16 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 	}
 
+	public boolean isListenerAlreadyRegistered(
+			FriendDataManagerListener listener) {
+		DbgUtil.showDebug(TAG, "listener num: " + mListeners.size());
+		if (mListeners.contains(listener)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void onPause() {
 		// TODO Need to initialize?
 		// mServerDataHandler = null;

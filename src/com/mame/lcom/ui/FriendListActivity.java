@@ -43,7 +43,7 @@ public class FriendListActivity extends Activity implements
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
 
-	FriendDataManager mManager = null;
+	private FriendDataManager mManager = null;
 
 	private int mUserId = LcomConst.NO_USER;
 
@@ -220,6 +220,15 @@ public class FriendListActivity extends Activity implements
 	protected void onResume() {
 		super.onResume();
 
+		// If this activity's listener is not registered yet, register. (For
+		// resume activity case. in normal case, it should be already registered
+		// in onCreate)
+		if (!mManager.isListenerAlreadyRegistered(this)) {
+			DbgUtil.showDebug(TAG,
+					"registered: " + mManager.isListenerAlreadyRegistered(this));
+			mManager.setFriendDataManagerListener(this);
+		}
+
 		// Initialize flag
 		isNewDataAvailable = false;
 		isExistingDataAvailable = false;
@@ -232,6 +241,8 @@ public class FriendListActivity extends Activity implements
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		mManager.removeFriendDataManagerListener(this);
 
 		// Initialize flag
 		isNewDataAvailable = false;
@@ -467,16 +478,16 @@ public class FriendListActivity extends Activity implements
 		ArrayList<FriendListData> friendDatas = new ArrayList<FriendListData>();
 
 		if (newUserDataArg != null) {
-			for (FriendListUpdateData data : newUserDataArg) {
-				DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
-			}
+			// for (FriendListUpdateData data : newUserDataArg) {
+			// DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
+			// }
 
 			// Sort by message data in newUserDataArg
 			Collections.sort(newUserDataArg, new FriendListDataComparator());
 
-			for (FriendListUpdateData data : newUserDataArg) {
-				DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
-			}
+			// for (FriendListUpdateData data : newUserDataArg) {
+			// DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
+			// }
 
 			if (mUserData != null) {
 				DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
@@ -484,19 +495,25 @@ public class FriendListActivity extends Activity implements
 
 			for (FriendListData data : mUserData) {
 				int currentSenderId = data.getFriendId();
-				// boolean isRegistered = false;
+				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
 
 				for (FriendListUpdateData updateData : newUserDataArg) {
 					int updateSenderId = updateData.getNesMassageSenderId();
+					DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
+
+					// If the comment is sent by friend (it means )
 					if (currentSenderId == updateSenderId) {
 						String messageFromServer = updateData.getNewMessage();
 						String messageFromLocal = data.getLastMessage();
-						DbgUtil.showDebug(TAG, "messageFromServer: " + messageFromServer);
-						DbgUtil.showDebug(TAG, "messageFromLocal: " + messageFromLocal);
+						DbgUtil.showDebug(TAG, "messageFromServer: "
+								+ messageFromServer);
+						DbgUtil.showDebug(TAG, "messageFromLocal: "
+								+ messageFromLocal);
 						if (messageFromServer != null
 								&& messageFromLocal != null
 								&& messageFromLocal.contains(messageFromLocal)) {
-							DbgUtil.showDebug(TAG, "messageFromLocal: " + messageFromLocal);
+							DbgUtil.showDebug(TAG, "messageFromLocal: "
+									+ messageFromLocal);
 							// Update lastsender name
 							data.setLastSender(updateData
 									.getNewMessageSenderName());
@@ -521,6 +538,7 @@ public class FriendListActivity extends Activity implements
 		FriendListUpdateData latestUpdateData = null;
 
 		for (FriendListUpdateData updateData : newUserDataArg) {
+
 			latestUpdateData = updateData;
 			boolean isNew = true;
 			int updateSenderId = updateData.getNesMassageSenderId();
@@ -585,8 +603,7 @@ public class FriendListActivity extends Activity implements
 					}
 				} else {
 					// If the data has already been set
-					if (latestUpdateData.getNesMassageSenderId() == PreferenceUtil
-							.getUserId(getApplicationContext())) {
+					if (tmpData.get(latestUpdateData.getNesMassageTargetId()) == null) {
 
 						DbgUtil.showDebug(TAG, "B");
 						// if sender is friend (it means friend is sender,

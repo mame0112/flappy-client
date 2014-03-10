@@ -48,6 +48,8 @@ public class LcomConst {
 	public final static String SERVLET_THUMBNAIL = "servlet_thumbnail";
 
 	public final static String SERVLET_ORIGIN = "servlet_origin";
+	
+//	public final static String SERVLET_CONTEXT_IDENTIFIER = "servlet_identifier";
 
 	public final static String SERVLET_NAME_LOGIN = "login";
 

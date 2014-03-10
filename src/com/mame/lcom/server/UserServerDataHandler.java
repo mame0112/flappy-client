@@ -223,7 +223,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 							final ArrayList<MessageItemData> messageDatas = parseResponseForConveersation(response);
 							notifyConversationDataset(messageDatas);
 						} else {
-							notifyNewDataset(null);
+							notifyConversationDataset(null);
 						}
 					} else {
 
