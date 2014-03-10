@@ -24,6 +24,10 @@
     <!-- For Create account view specific -->
     <dimen name="create_account_block_padding">30dp</dimen>
 
+    <!-- For About view specific -->
+    <dimen name="about_flappy_horizontal_margin">12dp</dimen>
+    <dimen name="about_flappy_horizontal_padding">6dp</dimen>
+
     <!-- Generic -->
     <dimen name="default_font_size_larze">18sp</dimen>
     <dimen name="default_font_size_middle">16sp</dimen>
