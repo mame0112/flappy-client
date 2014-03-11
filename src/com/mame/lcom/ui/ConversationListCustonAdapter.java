@@ -73,17 +73,17 @@ public class ConversationListCustonAdapter extends
 
 			String date = null;
 			long originalDate = item.getPostedDate();
-			if (originalDate != 0L) {
-				date = String.valueOf(originalDate);
-				// try {
-				// date = TimeUtil.parseDateInDateToString(originalDate);
-				// } catch (ParseException e) {
-				// DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
-				// }
-			} else {
-				date = mContext
-						.getString(R.string.str_conversation_time_unknown);
-			}
+			// if (originalDate != 0L) {
+			// date = String.valueOf(originalDate);
+			// // try {
+			// // date = TimeUtil.parseDateInDateToString(originalDate);
+			// // } catch (ParseException e) {
+			// // DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
+			// // }
+			// } else {
+			// date = mContext
+			// .getString(R.string.str_conversation_time_unknown);
+			// }
 
 			// If sender is myself
 			if (mUserId == item.getFromUserId()) {
@@ -100,7 +100,10 @@ public class ConversationListCustonAdapter extends
 					myMessageView.setText(R.string.str_conversation_no_message);
 				}
 
-				myDateView.setText(date);
+				String postDate = TimeUtil.getDateForDisplay(originalDate,
+						mContext);
+				// myDateView.setText(date);
+				myDateView.setText(postDate);
 
 			} else {
 
@@ -119,7 +122,10 @@ public class ConversationListCustonAdapter extends
 					messageView.setText(R.string.str_conversation_no_message);
 				}
 
-				dateView.setText(date);
+				String postDate = TimeUtil.getDateForDisplay(originalDate,
+						mContext);
+				// dateView.setText(date);
+				dateView.setText(postDate);
 
 			}
 

@@ -48,8 +48,9 @@ public class LcomConst {
 	public final static String SERVLET_THUMBNAIL = "servlet_thumbnail";
 
 	public final static String SERVLET_ORIGIN = "servlet_origin";
-	
-//	public final static String SERVLET_CONTEXT_IDENTIFIER = "servlet_identifier";
+
+	// public final static String SERVLET_CONTEXT_IDENTIFIER =
+	// "servlet_identifier";
 
 	public final static String SERVLET_NAME_LOGIN = "login";
 
@@ -66,7 +67,7 @@ public class LcomConst {
 	public final static String SERVLET_NAME_NEW_MESSAGE_DATE = "new_message_date";
 
 	public final static String SERVLET_NAME_SEND_ADD_MESSAGE = "send_add_message";
-	
+
 	public final static String SERVLET_CONVERSATION_DATA = "conversation_data";
 
 	public final static int MAX_USER_NAME_LENGTH = 16;
@@ -94,6 +95,17 @@ public class LcomConst {
 	public final static String RESULT_EXTRA_CONTACT_NAME = "result_extra_contact_name";
 
 	public final static String RESULT_EXTRA_CONTACT_ADDRESS = "result_extra_contact_address";
+
+	/**
+	 * Time constants
+	 */
+	public final static long TIME_SECOND = 1000;
+
+	public final static long TIME_MIN = 60 * TIME_SECOND;
+
+	public final static long TIME_HOUR = 60 * TIME_MIN;
+
+	public final static long TIME_DAY = 24 * TIME_HOUR;
 
 	/**
 	 * Login constants
