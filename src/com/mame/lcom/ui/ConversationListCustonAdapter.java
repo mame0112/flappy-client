@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,10 @@ public class ConversationListCustonAdapter extends
 		}
 
 		if (item != null) {
+			FrameLayout friendLayout = (FrameLayout) convertView
+					.findViewById(R.id.conversationFriendLayout);
+			FrameLayout myLayout = (FrameLayout) convertView
+					.findViewById(R.id.conversationMyLayout);
 			ImageView thumbnailView = (ImageView) convertView
 					.findViewById(R.id.conversationThumbnail);
 			TextView userNameView = (TextView) convertView
@@ -87,10 +92,12 @@ public class ConversationListCustonAdapter extends
 
 			// If sender is myself
 			if (mUserId == item.getFromUserId()) {
+				friendLayout.setVisibility(View.VISIBLE);
 				thumbnailView.setVisibility(View.GONE);
 				userNameView.setVisibility(View.GONE);
 				messageView.setVisibility(View.GONE);
 				dateView.setVisibility(View.GONE);
+				myLayout.setVisibility(View.GONE);
 				myMessageView.setVisibility(View.VISIBLE);
 				myDateView.setVisibility(View.VISIBLE);
 
@@ -109,6 +116,8 @@ public class ConversationListCustonAdapter extends
 
 				userNameView.setText(item.getFromUserName());
 
+				myLayout.setVisibility(View.VISIBLE);
+				friendLayout.setVisibility(View.GONE);
 				thumbnailView.setVisibility(View.VISIBLE);
 				userNameView.setVisibility(View.VISIBLE);
 				messageView.setVisibility(View.VISIBLE);
