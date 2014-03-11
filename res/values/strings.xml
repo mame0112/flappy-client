@@ -16,9 +16,9 @@
 
     <!-- Time -->
     <string name="str_generic_time_before">" before"</string>
-    <string name="str_generic_time_sec">sec</string>
-    <string name="str_generic_time_min">min</string>
-    <string name="str_generic_time_hour">hour</string>
+    <string name="str_generic_time_sec">" sec"</string>
+    <string name="str_generic_time_min">" min"</string>
+    <string name="str_generic_time_hour">" hour"</string>
     <string name="str_generic_time_unknown_date">Unknown date</string>
 
     <!-- Status bar and notification tray -->
