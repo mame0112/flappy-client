@@ -121,6 +121,9 @@ public class ConversationActivity extends Activity implements
 		mManager.setFriendDataManagerListener(this);
 
 		mConversationEditText = (EditText) findViewById(R.id.conversationEditText);
+
+		// Set width of EditText.
+		mConversationEditText.setWidth(mConversationEditText.getWidth());
 		mConversationEditText.addTextChangedListener(new TextWatcher() {
 
 			@Override

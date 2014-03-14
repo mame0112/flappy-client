@@ -3,9 +3,11 @@
 
     <stroke
         android:width="2dp"
-        android:color="@color/flappy_light_pink" />
-
-    <solid android:color="@color/flappy_light_pink" >
-    </solid>
+        android:color="@color/flappy_pink" />
+    <padding
+        android:bottom="6dp"
+        android:left="6dp"
+        android:right="6dp"
+        android:top="6dp" />
 
 </shape>
