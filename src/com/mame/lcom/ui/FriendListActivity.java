@@ -289,7 +289,15 @@ public class FriendListActivity extends Activity implements
 			}
 			DbgUtil.showDebug(TAG, "AA");
 			mUserData = userData;
+			ArrayList<FriendListData> userDatas = mergeNewAndPresentData(mNewUserData);
 			checkAndShowFirstAddButton();
+
+			// Initialize
+			mFriendListData.clear();
+
+			mFriendListData.addAll(userDatas);
+
+			// Initialize flag
 			isNewDataAvailable = false;
 
 		} else {
@@ -306,11 +314,10 @@ public class FriendListActivity extends Activity implements
 		// if (mNewUserData == null) {
 		// Just show user data.
 		// If Friend list is not null and not 0
-		if (mUserData != null && mUserData.size() != 0) {
-			DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
+		if (mFriendListData != null && mFriendListData.size() != 0) {
+			DbgUtil.showDebug(TAG,
+					"mFriendListData size: " + mFriendListData.size());
 			if (mFriendListData != null) {
-				// Initialize
-				mFriendListData.clear();
 
 				// Add new data
 				new Thread(new Runnable() {
@@ -319,7 +326,7 @@ public class FriendListActivity extends Activity implements
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
-								mFriendListData.addAll(userData);
+								// mFriendListData.addAll(userData);
 								// mFriendListData.addAll(userData);
 								if (mAdapter != null) {
 									mAdapter.notifyDataSetChanged();
@@ -478,16 +485,16 @@ public class FriendListActivity extends Activity implements
 		ArrayList<FriendListData> friendDatas = new ArrayList<FriendListData>();
 
 		if (newUserDataArg != null) {
-			// for (FriendListUpdateData data : newUserDataArg) {
-			// DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
-			// }
+			for (FriendListUpdateData data : newUserDataArg) {
+				DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
+			}
 
 			// Sort by message data in newUserDataArg
 			Collections.sort(newUserDataArg, new FriendListDataComparator());
 
-			// for (FriendListUpdateData data : newUserDataArg) {
-			// DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
-			// }
+			for (FriendListUpdateData data : newUserDataArg) {
+				DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
+			}
 
 			if (mUserData != null) {
 				DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
@@ -497,12 +504,16 @@ public class FriendListActivity extends Activity implements
 				int currentSenderId = data.getFriendId();
 				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
 
+				boolean isNewUpdated = false;
+
 				for (FriendListUpdateData updateData : newUserDataArg) {
+
 					int updateSenderId = updateData.getNesMassageSenderId();
 					DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
 
 					// If the comment is sent by friend (it means )
 					if (currentSenderId == updateSenderId) {
+						isNewUpdated = true;
 						String messageFromServer = updateData.getNewMessage();
 						String messageFromLocal = data.getLastMessage();
 						DbgUtil.showDebug(TAG, "messageFromServer: "
@@ -526,11 +537,37 @@ public class FriendListActivity extends Activity implements
 							// set last message
 							data.setLastMessage(updateData.getNewMessage());
 
+							// Update user if by using server side
+							String senderName = updateData
+									.getNewMessageSenderName();
+							if (senderName != null
+									&& !senderName.equals("null")) {
+								// TODO Need to update DB name in this case
+								// (because
+								// we can get correct user name)
+								data.setFriendName(senderName);
+							}
+
 							// Set updated info to list data
 							friendDatas.add(data);
+
+							// Escape from for loop
+							break;
 						}
 					}
 				}
+
+				//
+				if (isNewUpdated == false) {
+					DbgUtil.showDebug(TAG, "isNuewUpdated is false");
+					// If there is no same user id data between current and ndw
+					// data, just add (without increasing the number of new
+					// message)
+					friendDatas.add(data);
+				}
+
+				// Initialize flag
+				isNewUpdated = false;
 			}
 		}
 		HashMap<Integer, FriendListData> tmpData = new HashMap<Integer, FriendListData>();
@@ -544,7 +581,8 @@ public class FriendListActivity extends Activity implements
 			int updateSenderId = updateData.getNesMassageSenderId();
 			DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
 
-			for (FriendListData data : mUserData) {
+			// for (FriendListData data : mUserData) {
+			for (FriendListData data : friendDatas) {
 				int currentSenderId = data.getFriendId();
 				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
 				if (updateSenderId == currentSenderId) {
@@ -601,11 +639,13 @@ public class FriendListActivity extends Activity implements
 						tmpData.put(latestUpdateData.getNesMassageTargetId(),
 								newData);
 					}
+					// If the new message is sent by friend.
 				} else {
 					// If the data has already been set
-					if (tmpData.get(latestUpdateData.getNesMassageTargetId()) == null) {
-
+					if (tmpData.get(latestUpdateData.getNesMassageSenderId()) == null) {
 						DbgUtil.showDebug(TAG, "B");
+						DbgUtil.showDebug(TAG,
+								"message: " + latestUpdateData.getNewMessage());
 						// if sender is friend (it means friend is sender,
 						// target is mine)
 						FriendListData newData = new FriendListData(
@@ -617,6 +657,8 @@ public class FriendListActivity extends Activity implements
 								newData);
 					} else {
 						DbgUtil.showDebug(TAG, "D");
+						DbgUtil.showDebug(TAG,
+								"message: " + latestUpdateData.getNewMessage());
 						// if sender is friend (it means friend is sender,
 						// target is mine)
 						FriendListData newDataTmp = tmpData

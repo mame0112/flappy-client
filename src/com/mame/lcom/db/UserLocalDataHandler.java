@@ -53,6 +53,7 @@ public class UserLocalDataHandler {
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					null, null, null);
 			while (cursor != null && cursor.moveToNext()) {
+				DbgUtil.showDebug(TAG, "get");
 				String fromUserId = cursor
 						.getString(cursor
 								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
@@ -80,13 +81,13 @@ public class UserLocalDataHandler {
 				if (toUserId != null) {
 					fromUserIdInt = Integer.valueOf(toUserId);
 				}
-//				try {
-					date2 = Long.valueOf(date);
-//					date2 = new SimpleDateFormat(LcomConst.DATE_PATTERN)
-//							.parse(date);
-//				} catch (ParseException e) {
-//					DbgUtil.showDebug(TAG, "parseException: " + e.getMessage());
-//				}
+				// try {
+				date2 = Long.valueOf(date);
+				// date2 = new SimpleDateFormat(LcomConst.DATE_PATTERN)
+				// .parse(date);
+				// } catch (ParseException e) {
+				// DbgUtil.showDebug(TAG, "parseException: " + e.getMessage());
+				// }
 
 				MessageItemData data = new MessageItemData(fromUserIdInt,
 						toUserIdInt, fromUserName, toUserName, message, date2);
@@ -111,35 +112,48 @@ public class UserLocalDataHandler {
 				throw new UserLocalDataHandlerException("Cursor is null");
 			}
 			try {
+				if (cursor != null) {
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+							String friendId = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+							String userName = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+							String lastMessage = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+							String lastSenderId = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+							String mailAddress = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+							byte[] thumbnail = cursor
+									.getBlob(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+							FriendListData data = new FriendListData(
+									Integer.valueOf(friendId), userName,
+									Integer.valueOf(lastSenderId), lastMessage,
+									0, mailAddress, thumbnail);
+							datas.add(data);
+							DbgUtil.showDebug(TAG, "friendId: " + friendId
+									+ " userName: " + userName
+									+ " lastSenderId: " + lastSenderId
+									+ " lastMessage: " + lastMessage
+									+ " mailAddress: " + mailAddress);
+						} while (cursor.moveToNext());
+					}
+				}
 				// int userId, String userName, String userThumb,
 				// String lastSender, String lastMessage
-				while (cursor != null && cursor.moveToNext()) {
-					String friendId = cursor
-							.getString(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
-					String userName = cursor
-							.getString(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
-					String lastMessage = cursor
-							.getString(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
-					String lastSenderId = cursor
-							.getString(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
-					String mailAddress = cursor
-							.getString(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+				// while (cursor.moveToNext()) {
 
-					byte[] thumbnail = cursor
-							.getBlob(cursor
-									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
-
-					FriendListData data = new FriendListData(
-							Integer.valueOf(friendId), userName,
-							Integer.valueOf(lastSenderId), lastMessage, 0,
-							mailAddress, thumbnail);
-					datas.add(data);
-				}
+				// }
 			} catch (SQLException e) {
 				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 				throw new UserLocalDataHandlerException("SQLException:"
@@ -244,12 +258,12 @@ public class UserLocalDataHandler {
 			String message = messageData.getMessage();
 			long date = messageData.getPostedDate();
 			String date2 = null;
-//			try {
-				date2 = String.valueOf(date);
-//				date2 = TimeUtil.parseDateInDateToString(date);
-//			} catch (ParseException e) {
-//				DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
-//			}
+			// try {
+			date2 = String.valueOf(date);
+			// date2 = TimeUtil.parseDateInDateToString(date);
+			// } catch (ParseException e) {
+			// DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
+			// }
 			addNewMessage(userId, friendId, userName, friendName, senderId,
 					message, date2);
 		} else {
