@@ -1,12 +1,11 @@
 package com.mame.lcom.ui.view;
 
 import java.util.List;
-
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.util.DbgUtil;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +26,7 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		FriendListData item = (FriendListData) getItem(position);
@@ -48,7 +48,23 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 			name = item.getMailAddress();
 		}
 		userNameView.setText(name);
-		numOfNewMessageView.setText(String.valueOf(item.getNumOfNewMessage()));
+		int numOfMessage = item.getNumOfNewMessage();
+		if (numOfMessage == 0) {
+			// Nothing to do
+			numOfNewMessageView.setBackground(null);
+			;
+		} else if (numOfMessage >= 1 && numOfMessage <= 10) {
+			// If the number of message is between 1 and 10
+			numOfNewMessageView.setText(String.valueOf(numOfMessage));
+			numOfNewMessageView
+					.setBackgroundResource(R.drawable.flappy_new_message_number_bg);
+		} else {
+			// If the number of message is more than 10
+			numOfNewMessageView
+					.setBackgroundResource(R.drawable.flappy_new_message_number_10plus);
+
+		}
+
 		lastMessageView.setText(item.getLastMessage());
 
 		DbgUtil.showDebug(TAG, "userName;" + item.getFriendName());
