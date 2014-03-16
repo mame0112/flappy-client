@@ -8,6 +8,7 @@
     <string name="str_generic_wait_desc">Wait for a moment</string>
     <string name="str_generic_server_timeout">Server timeout. Please try again later</string>
     <string name="str_generic_no_network_error">No network connection. Please confirm network connection.</string>
+    <string name="str_generic_unknown_error">Unknown error occurred. Please try again later.</string>
 
     <!-- Option menu -->
     <string name="str_menu_help">Help</string>
@@ -75,7 +76,8 @@
     <string name="str_create_account_fail_password_not_half_char">Password should not be 2byte character</string>
     <string name="str_create_account_fail_invalid_password">Invalid password</string>
     <string name="str_create_account_fail_address_null">Please input mail address</string>
-    <string name="str_create_account_fail_address_invalid_char">Mail address contains invalid character</string>
+    <string name="str_create_account_fail_address_invalid_char_code">Mail address contains invalid character</string>
+    <string name="str_create_account_fail_address_invalid_char">Mail address must contains @ mark and must not contain space</string>
     <string name="str_create_account_fail_server_error">Error occurred. Please try again later</string>
     <string name="str_create_account_fail_user_exist">Your user name is already used. Please use another name</string>
     <string name="str_create_account_tos_privacy_desc1">If you create account, you agree to</string>

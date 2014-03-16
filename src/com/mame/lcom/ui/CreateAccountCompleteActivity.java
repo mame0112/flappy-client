@@ -172,8 +172,13 @@ public class CreateAccountCompleteActivity extends Activity implements
 						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
 						TrackingUtil.EVENT_LABEL_CREATE_ACCOUNT_EXEC_BUTTON, 1);
 				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
-					checkAndCreateAccountOrShowError(activity);
-					mProgressDialog.show(getFragmentManager(), "progress");
+					boolean checkResult = checkAndCreateAccountOrShowError(activity);
+
+					// If password and mail address is correct, show progress
+					// dalog.
+					if (checkResult) {
+						mProgressDialog.show(getFragmentManager(), "progress");
+					}
 				}
 			}
 		});
@@ -321,7 +326,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 
-	private void checkAndCreateAccountOrShowError(Activity activity) {
+	private boolean checkAndCreateAccountOrShowError(Activity activity) {
 		DbgUtil.showDebug(TAG, "checkAndCreateAccountOrShowError");
 
 		SpannableStringBuilder sbPassword = (SpannableStringBuilder) mPasswordEditText
@@ -333,6 +338,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 					.getText();
 			String passwordAgain = sbPasswordAgain.toString();
 			String resultPasswordAgain = checkAndShowErrorForPassword(passwordAgain);
+			DbgUtil.showDebug(TAG, "resultPasswordAgain: "
+					+ resultPasswordAgain);
 			if (resultPasswordAgain == null) {
 				if (CreateAccountActivityUtil.isInputtedPasswordSame(password,
 						passwordAgain)) {
@@ -345,8 +352,12 @@ public class CreateAccountCompleteActivity extends Activity implements
 						try {
 							sendCreateAccountData(mUserName, password,
 									mailAddress, mThumbnailData);
+							return true;
 						} catch (WebAPIException e) {
 							DbgUtil.showDebug(TAG, e.getMessage());
+							mCreateResultView.setVisibility(View.VISIBLE);
+							mCreateResultView
+									.setText(R.string.str_generic_unknown_error);
 						}
 					} else {
 						DbgUtil.showDebug(TAG, "Invalid mail address");
@@ -363,14 +374,16 @@ public class CreateAccountCompleteActivity extends Activity implements
 			} else {
 				// Passward second time is invalid.
 				mCreateResultView.setVisibility(View.VISIBLE);
-				mCreateResultView.setText(resultPassword);
-				DbgUtil.showDebug(TAG, "Password is Invalid.");
+				mCreateResultView.setText(resultPasswordAgain);
+				DbgUtil.showDebug(TAG, "PasswordAgain is Invalid.");
 			}
 		} else {
 			mCreateResultView.setVisibility(View.VISIBLE);
 			mCreateResultView.setText(resultPassword);
-			DbgUtil.showDebug(TAG, "Password is Invalid.");
+			DbgUtil.showDebug(TAG, "Password is Invalid2.");
 		}
+
+		return false;
 
 	}
 
@@ -412,7 +425,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 			} else {
 				DbgUtil.showDebug(TAG,
 						"Mail address contains invalid character for mail address");
-				result = getString(R.string.str_create_account_fail_address_invalid_char);
+				result = getString(R.string.str_create_account_fail_address_invalid_char_code);
 			}
 		} else {
 			// address is null
