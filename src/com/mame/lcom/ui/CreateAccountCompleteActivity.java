@@ -287,6 +287,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 								mThumbnailData, LcomConst.PROFILE_THUMBNAIL);
 						CreateAccountActivityUtil.startActivityForFriendList(
 								this, userId, userName);
+						finish();
 						break;
 					case LcomConst.CREATE_ACCOUNT_UNKNOWN_ERROR:
 						DbgUtil.showDebug(TAG, "CREATE_ACCOUNT_UNKNOWN_ERROR");

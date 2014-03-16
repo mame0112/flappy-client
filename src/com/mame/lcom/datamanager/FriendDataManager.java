@@ -21,7 +21,7 @@ import com.mame.lcom.util.DbgUtil;
 public class FriendDataManager implements UserServerDataListener,
 		UserLocalDataListener {
 
-	private final String TAG = LcomConst.TAG + "/FriendDataManager";
+	private final static String TAG = LcomConst.TAG + "/FriendDataManager";
 
 	private static FriendDataManager sDataManager = new FriendDataManager();
 
@@ -321,6 +321,14 @@ public class FriendDataManager implements UserServerDataListener,
 			for (FriendDataManagerListener listener : mListeners) {
 				listener.notifyPresentDataset(result);
 			}
+		}
+	}
+
+	public static synchronized void removeUserPreferenceData(Context context,
+			int userId) {
+		DbgUtil.showDebug(TAG, "removeUserPreferenceData");
+		if (userId != LcomConst.NO_USER) {
+			mLocalDataHandler.removeLocalUserPreferenceData(context);
 		}
 	}
 

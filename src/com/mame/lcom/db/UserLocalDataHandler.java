@@ -1,5 +1,6 @@
 package com.mame.lcom.db;
 
+import java.io.File;
 import java.sql.Blob;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -360,6 +361,25 @@ public class UserLocalDataHandler {
 		values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, friendThumbnail);
 
 		return values;
+	}
+
+	public void removeLocalUserPreferenceData(Context context) {
+		DbgUtil.showDebug(TAG, "removeLocalUserPreferenceData");
+		setDatabase();
+		sDatabase.delete(DatabaseDef.FriendshipTable.TABLE_NAME, null, null);
+		sDatabase.delete(DatabaseDef.MessageTable.TABLE_NAME, null, null);
+		doVacuum();
+
+		// File path = context.getDatabasePath(LcomConst.DATABASE_NAME);
+		// DbgUtil.showDebug(TAG, "path: " + path);
+		// File file = new File(path + "/databases/friendship.db");
+		// file.delete();
+
+	}
+
+	private void doVacuum() {
+		setDatabase();
+		sDatabase.execSQL("vacuum");
 	}
 
 	// Interface to notify new user data to client of this class

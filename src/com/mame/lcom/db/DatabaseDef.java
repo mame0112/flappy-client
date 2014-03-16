@@ -1,5 +1,7 @@
 package com.mame.lcom.db;
 
+import com.mame.lcom.constant.LcomConst;
+
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -9,7 +11,7 @@ public class DatabaseDef {
 
 	protected static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
-	static final String DATABASE_NAME = "friendship.db";
+	static final String DATABASE_NAME = LcomConst.DATABASE_NAME;
 
 	static final int DATABASE_VERSION = 1;
 

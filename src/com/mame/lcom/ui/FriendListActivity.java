@@ -102,20 +102,8 @@ public class FriendListActivity extends Activity implements
 		mManager = FriendDataManager.getInstance();
 		mManager.setFriendDataManagerListener(FriendListActivity.this);
 
-		ActionBar actionbar = getActionBar();
-
-		// TODO This is test data.
-		// FriendListData data = new FriendListData(1, "Test user",
-		// "test thumb",
-		// "Me", "Hi, test data");
-		// FriendListData data2 = new FriendListData(1, "Test user",
-		// "test thumb",
-		// "Me2", "Hi2, test data");
-
 		mAdapter = new FriendListCustomAdapter(getApplicationContext(), 0,
 				mFriendListData);
-		// mAdapter.add(data);
-		// mAdapter.add(data2);
 
 		mNewUserData = new ArrayList<FriendListUpdateData>();
 
@@ -777,6 +765,8 @@ public class FriendListActivity extends Activity implements
 					TrackingUtil.EVENT_LABEL_FRIEND_LIST_SIGN_OUT, 1);
 
 			NewMessageNotification.removeNotification();
+
+			FriendDataManager.removeUserPreferenceData(getApplicationContext(), mUserId);
 
 			FriendListActivityUtil.startActivityForWelcomeActivity(this);
 			finish();

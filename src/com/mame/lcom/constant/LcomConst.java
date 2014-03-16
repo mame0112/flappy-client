@@ -14,6 +14,8 @@ public class LcomConst {
 
 	public final static String PROFILE_THUMBNAIL = "propfile_thumbnail";
 
+	public final static String DATABASE_NAME = "friendship.db";
+
 	public final static String NULL = "null";
 
 	public final static boolean IS_DEBUG = true;
