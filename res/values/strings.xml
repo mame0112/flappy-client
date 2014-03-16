@@ -2,6 +2,7 @@
 <resources>
 
     <!-- -Generic -->
+    <string name="app_name">flappy</string>
     <string name="str_generic_ok">OK</string>
     <string name="str_generic_server_time_out">Time out occurrs. Please try again later.</string>
     <string name="str_generic_wait_desc">Wait for a moment</string>
@@ -35,7 +36,7 @@
     <string name="str_welcome_not_have_account">Don\'t you have an account?</string>
 
     <!-- Login activity -->
-    <string name="app_name">flappy</string>
+    <string name="str_login_name">Sign in</string>
     <string name="action_settings">Settings</string>
     <string name="str_login_login_desc">Let\'s login and enjoy!</string>
     <string name="str_login_login_button">Sign in</string>
@@ -57,6 +58,7 @@
     <!-- Create account -->
     <string name="str_create_account_title">Create account</string>
     <string name="str_create_account_photo_title">Photo</string>
+    <string name="str_create_account_photo_desc">Yout thumbnail (Optional)</string>
     <string name="str_create_account_username_hint">User name</string>
     <string name="str_create_account_username_desc">4 - 16 characters</string>
     <string name="str_create_account_password_hint">Password</string>

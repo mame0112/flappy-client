@@ -2,6 +2,7 @@ package com.mame.lcom;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.text.Editable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.exception.WebAPIException;
+import com.mame.lcom.ui.FriendListActivityUtil;
 import com.mame.lcom.ui.LoginActivityUtil;
 import com.mame.lcom.ui.ProgressDialogFragment;
 import com.mame.lcom.util.DbgUtil;
@@ -57,6 +60,9 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 		mWebAPI = new LcomWebAPI();
 		mWebAPI.setListener(this);
+
+		ActionBar actionbar = getActionBar();
+		actionbar.setDisplayHomeAsUpEnabled(true);
 
 		mProgressDialog = ProgressDialogFragment.newInstance(
 				getString(R.string.str_login_progress_title),
@@ -173,9 +179,23 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			finish();
+			return true;
+		case R.id.menu_login_help:
+			DbgUtil.showDebug(TAG, "Login help");
+			FriendListActivityUtil
+					.startActivityForHelp(getApplicationContext());
+			break;
+		}
+		return false;
 	}
 
 	@Override
