@@ -1,6 +1,7 @@
 package com.mame.lcom.ui;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -23,7 +24,9 @@ import android.widget.Toast;
 
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.ConversationDataComparator;
 import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.data.FriendListDataComparator;
 import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.datamanager.FriendDataManager;
@@ -326,6 +329,13 @@ public class ConversationActivity extends Activity implements
 				mConversationData.addAll(messageData);
 			}
 
+			if (mConversationData != null && mConversationData.size() != 0) {
+
+				// Sort by message post data in mConversationData
+				Collections.sort(mConversationData,
+						new ConversationDataComparator());
+			}
+
 			// Notify to adapter
 			mAdapter.notifyDataSetChanged();
 			mListView.setAdapter(mAdapter);
@@ -377,6 +387,12 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
 				mConversationData.addAll(messageData);
+			}
+
+			if (mConversationData != null && mConversationData.size() != 0) {
+				// Sort by message post data in mConversationData
+				Collections.sort(mConversationData,
+						new ConversationDataComparator());
 			}
 
 			// Notify to adapter
