@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:src="@drawable/flappy_app_icon" >
+                    android:src="@drawable/flappy_default_thumbnail_large" >
                 </ImageView>
             </LinearLayout>
 

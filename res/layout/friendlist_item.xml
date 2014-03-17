@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingRight="@dimen/default_padding"
-                android:src="@drawable/flappy_app_icon" >
+                android:src="@drawable/flappy_default_thumbnail_large" >
             </ImageView>
 
             <TextView
@@ -31,10 +31,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:gravity="center"
-                android:textStyle="bold"
                 android:background="@drawable/flappy_new_message_number_bg"
-                android:textColor="@color/flappy_white" />
+                android:gravity="center"
+                android:textColor="@color/flappy_white"
+                android:textStyle="bold" />
         </FrameLayout>
 
         <LinearLayout
