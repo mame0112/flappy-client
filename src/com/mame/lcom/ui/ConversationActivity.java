@@ -83,20 +83,15 @@ public class ConversationActivity extends Activity implements
 					LcomConst.NO_USER);
 			mTargetUserName = intent
 					.getStringExtra(LcomConst.EXTRA_TARGET_USER_NAME);
-			// mNewMessages = intent
-			// .getStringArrayExtra(LcomConst.EXTRA_TARGET_NEW_MESSAGES);
-			// mNewMessageDates = intent
-			// .getStringArrayExtra(LcomConst.EXTRA_TARGET_NEW_MESSAGES_DATE);
-			// if (mNewMessages != null) {
-			// DbgUtil.showDebug(TAG, "mNewMessages size: "
-			// + mNewMessages.length);
-			// }
-
-			DbgUtil.showDebug(TAG, "mTargetUserId: " + mTargetUserId);
 
 			if (mTargetUserName != null) {
 				DbgUtil.showDebug(TAG, "mTargetUserName: " + mTargetUserName);
+
+				// Set target user name as activity title
+				setTitle(mTargetUserName);
 			}
+
+			DbgUtil.showDebug(TAG, "mTargetUserId: " + mTargetUserId);
 		}
 
 		mUserId = PreferenceUtil.getUserId(getApplicationContext());
