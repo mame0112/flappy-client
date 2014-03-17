@@ -70,6 +70,10 @@ public class ConversationActivity extends Activity implements
 
 	private ProgressDialogFragment mProgressDialog = null;
 
+	boolean mIsPresentDataReady = false;
+
+	boolean mIsNewDataReady = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -178,7 +182,7 @@ public class ConversationActivity extends Activity implements
 		});
 
 		try {
-			mManager.requestFriendListDatasetWithTargetUser(mUserId,
+			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
@@ -311,13 +315,37 @@ public class ConversationActivity extends Activity implements
 	public void notifyPresentMessageDataLoaded(
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyPresentMessageData");
-		if (messageData != null) {
-			DbgUtil.showDebug(TAG, "messageData size: " + messageData.size());
-			mConversationData = messageData;
-			// convineNewAndPresentData();
-			mAdapter.clear();
-			mAdapter.addAll(mConversationData);
+
+		// If new data is already available
+		if (mIsNewDataReady) {
+			DbgUtil.showDebug(TAG, "New data available");
+			// Keep data
+			if (messageData != null && messageData.size() != 0) {
+				DbgUtil.showDebug(TAG,
+						"present data size: " + messageData.size());
+				mConversationData.addAll(messageData);
+			}
+
+			// Notify to adapter
+			mAdapter.notifyDataSetChanged();
 			mListView.setAdapter(mAdapter);
+
+			// Initialize flag
+			mIsNewDataReady = false;
+
+		} else {
+			// If new data is not available yet.
+			DbgUtil.showDebug(TAG, "New data not available");
+
+			// Set present
+			mIsPresentDataReady = true;
+
+			// Keep present data but not to notify adapter.
+			if (messageData != null && messageData.size() != 0) {
+				DbgUtil.showDebug(TAG,
+						"present data size: " + messageData.size());
+				mConversationData.addAll(messageData);
+			}
 		}
 	}
 
@@ -340,43 +368,35 @@ public class ConversationActivity extends Activity implements
 	public void notifyNewConversationDataLoaded(
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyNewConversationDataLoaded");
-		if (messageData != null && messageData.size() != 0) {
-			mConversationData.addAll(messageData);
+
+		// If present data is already available
+		if (mIsPresentDataReady) {
+			DbgUtil.showDebug(TAG, "Present data available");
+
+			// Keep data
+			if (messageData != null && messageData.size() != 0) {
+				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
+				mConversationData.addAll(messageData);
+			}
+
+			// Notify to adapter
 			mAdapter.notifyDataSetChanged();
+
+			// Initialize flag
+			mIsPresentDataReady = false;
+
+		} else {
+			// If new data is not available yet.
+			DbgUtil.showDebug(TAG, "Present data not available");
+
+			// Set present
+			mIsNewDataReady = true;
+
+			// Keep new data but not to notify adapter.
+			if (messageData != null && messageData.size() != 0) {
+				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
+				mConversationData.addAll(messageData);
+			}
 		}
-
 	}
-
-	// private void convineNewAndPresentData() {
-	// DbgUtil.showDebug(TAG, "convineNewAndPresentData");
-	// if (mNewMessages != null && mNewMessageDates != null) {
-	// DbgUtil.showDebug(TAG, "newMessages size: " + mNewMessages.length);
-	// for (int i = 0; i < mNewMessages.length; i++) {
-	// MessageItemData data = null;
-	// if (mNewMessageDates[i] != null) {
-	// data = new MessageItemData(mTargetUserId, mUserId,
-	// mTargetUserName, mUserName, mNewMessages[i],
-	// Long.valueOf(mNewMessageDates[i]));
-	// } else {
-	// data = new MessageItemData(mTargetUserId, mUserId,
-	// mTargetUserName, mUserName, mNewMessages[i], 0L);
-	// }
-	// // MessageItemData data = null;
-	// // try {
-	// // Date messageDate = TimeUtil
-	// // .parseDateInStringToDate(mNewMessageDates[i]);
-	// // data = new MessageItemData(mTargetUserId, mUserId,
-	// // mTargetUserName, mUserName, mNewMessages[i],
-	// // messageDate);
-	// // } catch (ParseException e) {
-	// // DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
-	// // data = new MessageItemData(mTargetUserId, mUserId,
-	// // mTargetUserName, mUserName, mNewMessages[i], null);
-	// // }
-	// mConversationData.add(data);
-	// }
-	//
-	// }
-	// }
-
 }
