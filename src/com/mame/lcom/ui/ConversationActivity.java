@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mame.lcom.R;
@@ -53,10 +54,6 @@ public class ConversationActivity extends Activity implements
 
 	private String mTargetUserName = null;
 
-	// private String[] mNewMessages = null;
-	//
-	// private String[] mNewMessageDates = null;
-
 	private FriendDataManager mManager = null;
 
 	private EditText mConversationEditText = null;
@@ -73,9 +70,13 @@ public class ConversationActivity extends Activity implements
 
 	private ProgressDialogFragment mProgressDialog = null;
 
-	boolean mIsPresentDataReady = false;
+	private boolean mIsPresentDataReady = false;
 
-	boolean mIsNewDataReady = false;
+	private boolean mIsNewDataReady = false;
+
+	private TextView mNumOfMessage = null;
+
+	private String mPageNum = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +143,7 @@ public class ConversationActivity extends Activity implements
 					int count) {
 				if (s.length() >= 1) {
 					mConversationSendButton.setEnabled(true);
+					changePageNumber(s.length());
 				} else {
 					mConversationSendButton.setEnabled(false);
 				}
@@ -184,6 +186,12 @@ public class ConversationActivity extends Activity implements
 			}
 		});
 
+		mPageNum = getString(R.string.str_conversation_message_page, 1);
+
+		mNumOfMessage = (TextView) findViewById(R.id.conversationMsgNum);
+		mNumOfMessage.setText(mPageNum);
+		mNumOfMessage.setVisibility(View.GONE);
+
 		try {
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
@@ -192,6 +200,20 @@ public class ConversationActivity extends Activity implements
 					"FriendDataManagerException: " + e.getMessage());
 		}
 
+	}
+
+	private void changePageNumber(int length) {
+		int pageNum = (int) (length / LcomConst.MAX_MESSAGE_LENGTH) + 1;
+		if (pageNum > 1) {
+			mPageNum = getString(R.string.str_conversation_message_page,
+					pageNum);
+			mNumOfMessage = (TextView) findViewById(R.id.conversationMsgNum);
+			mNumOfMessage.setText(mPageNum);
+			mNumOfMessage.setVisibility(View.VISIBLE);
+		} else {
+			// If the user is in first page, we shall make it invisible.
+			mNumOfMessage.setVisibility(View.GONE);
+		}
 	}
 
 	@Override

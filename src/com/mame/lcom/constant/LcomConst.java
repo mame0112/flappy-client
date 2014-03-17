@@ -23,10 +23,9 @@ public class LcomConst {
 	public final static int NO_USER = -1;
 
 	public final static int MESSAGE_MAX_LENGTH = -1;
+	
+	public final static int MAX_MESSAGE_LENGTH = 16;
 
-	// public final static String DATE_PATTERN = "yyyy-mm-dd'T'HH:mm:ss";
-	// public final static String DATE_PATTERN = "dd-MMM-yyy";
-	// public final static String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
 	public final static String DATE_PATTERN = "dd-MM-yy:HH:mm:SS";
 
 	public final static String SERVLET_USER_ID = "servlet_userid";

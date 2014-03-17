@@ -138,6 +138,7 @@
     <string name="str_conversation_message_fail_sent">Failed to send message</string>
     <string name="str_conversation_time_unknown">Unknown</string>
     <string name="str_conversation_no_message">(No message)</string>
+    <string name="str_conversation_message_page">Page: %1$d</string>
 
     <!-- Help activity -->
     <string name="str_help_title">Help</string>
