@@ -74,6 +74,8 @@ public class StartNewConversationActivity extends Activity implements
 
 	private ProgressDialogFragment mProgressDialog = null;
 
+	// private StartNewConversationListener mListener = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -172,11 +174,6 @@ public class StartNewConversationActivity extends Activity implements
 						checkInputInfoAndSendData(mMailAddressFromContacts);
 					}
 				}
-
-				// SpannableStringBuilder sbMessage = (SpannableStringBuilder)
-				// mNewInviMessageEditText
-				// .getText();
-				// final String message = sbMessage.toString();
 			}
 
 		});
@@ -521,4 +518,13 @@ public class StartNewConversationActivity extends Activity implements
 		setResult(RESULT_OK, data);
 		finish();
 	}
+
+	// public void setStartNewConversationListener(
+	// StartNewConversationListener listener) {
+	// mListener = listener;
+	// }
+
+//	public interface StartNewConversationListener {
+//		public void onNotifyNewFriendAdded();
+//	}
 }

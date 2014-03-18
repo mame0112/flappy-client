@@ -187,6 +187,7 @@ public class FriendListActivity extends Activity implements
 		switch (requestCode) {
 		case REQUEST_CODE:
 			if (resultCode == RESULT_OK) {
+				DbgUtil.showDebug(TAG, "RESULT_OK");
 				requestUserData();
 			}
 			break;
@@ -252,9 +253,22 @@ public class FriendListActivity extends Activity implements
 	private void requestUserData() {
 		DbgUtil.showDebug(TAG, "requestUserData");
 		try {
+
+			if (!mManager.isListenerAlreadyRegistered(this)) {
+				DbgUtil.showDebug(
+						TAG,
+						"registered: "
+								+ mManager.isListenerAlreadyRegistered(this));
+				mNewUserData.clear();
+				mUserData.clear();
+				mFriendListData.clear();
+				mManager.setFriendDataManagerListener(this);
+			}
+
 			mManager.requestFriendListDataset(mUserId, true, true);
 		} catch (FriendDataManagerException e) {
-			DbgUtil.showDebug(TAG, e.getMessage());
+			DbgUtil.showDebug(TAG,
+					"FriendDataManagerException: " + e.getMessage());
 
 		}
 	}
@@ -663,21 +677,7 @@ public class FriendListActivity extends Activity implements
 						tmpData.put(latestUpdateData.getNesMassageSenderId(),
 								newData);
 					}
-
 				}
-				// FriendListData newDataTmp = tmpData.get(latestUpdateData
-				// .getNesMassageSenderId());
-				// tmpData.remove(latestUpdateData.getNesMassageSenderId());
-				// int numOfMessage = newDataTmp.getNumOfNewMessage();
-				// numOfMessage = numOfMessage + 1;
-				// FriendListData newData = new FriendListData(
-				// latestUpdateData.getNesMassageSenderId(),
-				// latestUpdateData.getNewMessageSender(),
-				// latestUpdateData.getNesMassageSenderId(),
-				// latestUpdateData.getNewMessage(), numOfMessage,
-				// null, null);
-				// tmpData.put(latestUpdateData.getNesMassageSenderId(),
-				// newData);
 				DbgUtil.showDebug(TAG, "tmpData size: " + tmpData.size());
 			}
 			// else {
@@ -766,7 +766,8 @@ public class FriendListActivity extends Activity implements
 
 			NewMessageNotification.removeNotification();
 
-			FriendDataManager.removeUserPreferenceData(getApplicationContext(), mUserId);
+			FriendDataManager.removeUserPreferenceData(getApplicationContext(),
+					mUserId);
 
 			FriendListActivityUtil.startActivityForWelcomeActivity(this);
 			finish();
