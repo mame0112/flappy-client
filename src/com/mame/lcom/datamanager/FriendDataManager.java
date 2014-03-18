@@ -129,8 +129,8 @@ public class FriendDataManager implements UserServerDataListener,
 
 		// Load local data
 		if (isForExisting) {
-			new LoadLocalMessagesAsyncTask().execute();
-//			new LoadLocalFriendListAsyncTask().execute();
+			new LoadLocalMessagesAsyncTask().execute(targetUserId);
+			// new LoadLocalFriendListAsyncTask().execute();
 		}
 	}
 
@@ -334,16 +334,17 @@ public class FriendDataManager implements UserServerDataListener,
 	}
 
 	private class LoadLocalMessagesAsyncTask extends
-			AsyncTask<Void, Void, ArrayList<MessageItemData>> {
+			AsyncTask<Integer, Void, ArrayList<MessageItemData>> {
 
 		public LoadLocalMessagesAsyncTask() {
 			DbgUtil.showDebug(TAG, "LoadLocalMessagesAsyncTask");
 		}
 
 		@Override
-		protected ArrayList<MessageItemData> doInBackground(Void... params) {
+		protected ArrayList<MessageItemData> doInBackground(
+				Integer... targetUserId) {
 			DbgUtil.showDebug(TAG, "doInBackground");
-			return mLocalDataHandler.getLocalMessageDataset();
+			return mLocalDataHandler.getLocalMessageDataset(targetUserId[0]);
 		}
 
 		@Override
@@ -388,7 +389,6 @@ public class FriendDataManager implements UserServerDataListener,
 	public void notifyConversationServerDataSet(
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyConversationServerDataSet");
-		DbgUtil.showDebug(TAG, "messageData.size(): " + messageData.size());
 		for (FriendDataManagerListener listener : mListeners) {
 			listener.notifyNewConversationDataLoaded(messageData);
 		}

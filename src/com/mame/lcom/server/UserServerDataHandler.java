@@ -404,7 +404,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 			case requestConversationData:
 				DbgUtil.showDebug(TAG,
 						"requestContext is requestConversationData");
-				// TODO
+				notifyConversationDataset(null);
 				break;
 			default:
 				DbgUtil.showDebug(TAG, "requestContext is unknown case");
