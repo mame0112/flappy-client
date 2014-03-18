@@ -285,9 +285,13 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				// length.
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundException: " + e.getMessage());
+				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
+						R.string.str_generic_unknown_error);
 			} catch (NumberFormatException e) {
 				DbgUtil.showDebug(TAG,
 						"NumberFormatException: " + e.getMessage());
+				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
+						R.string.str_generic_unknown_error);
 			}
 		}
 
