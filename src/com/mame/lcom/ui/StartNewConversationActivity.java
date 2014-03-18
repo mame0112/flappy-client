@@ -87,7 +87,7 @@ public class StartNewConversationActivity extends Activity implements
 		}
 
 		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_login_progress_title),
+				getString(R.string.str_invitation_mail_address_check_title),
 				getString(R.string.str_generic_wait_desc));
 
 		mActivity = this;
@@ -332,6 +332,7 @@ public class StartNewConversationActivity extends Activity implements
 		if (StringUtil.isValidCharsForAddress(address)) {
 			if (StringUtil.checkMailAddress(address)) {
 				try {
+					mProgressDialog.show(getFragmentManager(), "progress");
 					sendDataForTargetUser(mUserId, mUserName, address);
 				} catch (WebAPIException e) {
 					DbgUtil.showDebug(TAG, "WebAPIException: " + e.getMessage());
@@ -460,6 +461,11 @@ public class StartNewConversationActivity extends Activity implements
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundException: " + e.getMessage());
 			}
+		}
+
+		// Dismiss dialog
+		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			mProgressDialog.dismiss();
 		}
 
 	}

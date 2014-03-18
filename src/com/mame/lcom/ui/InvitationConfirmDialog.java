@@ -7,7 +7,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +24,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
@@ -45,21 +49,24 @@ public class InvitationConfirmDialog extends DialogFragment implements
 
 	private LcomWebAPI mWebAPI = null;
 
-	private Handler mHandler = new Handler();
-
 	private EditText mMessageEditText = null;
 
 	private Button mPositiveButton = null;
 
 	private Button mNegativeButton = null;
 
+	private TextView mSendProgressText = null;
+
 	private FriendDataManager mManager = null;
 
 	private InvitationConfirmationListener mListener = null;
 
+	private Handler mHandler = new Handler();
+
 	public InvitationConfirmDialog() {
 		mWebAPI = new LcomWebAPI();
 		mWebAPI.setListener(this);
+
 	}
 
 	// public void setTargetUserInfo(int targetUserId, String targetUserName) {
@@ -94,6 +101,10 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				.getApplicationContext());
 		final View dialogView = factory.inflate(
 				R.layout.invitation_confirm_dialog, null);
+
+		mSendProgressText = (TextView) dialogView
+				.findViewById(R.id.sendMessageProgressText);
+		mSendProgressText.setVisibility(View.GONE);
 
 		mMessageEditText = (EditText) dialogView
 				.findViewById(R.id.inviMsgDlgMessageEditText);
@@ -150,6 +161,11 @@ public class InvitationConfirmDialog extends DialogFragment implements
 								.toString();
 						DbgUtil.showDebug(TAG, "targetMessage: "
 								+ targetMessage);
+
+						mSendProgressText.setVisibility(View.VISIBLE);
+						mPositiveButton.setEnabled(false);
+						mNegativeButton.setEnabled(false);
+
 						sendConfirmedMessage(userId, userName, targetUserId,
 								targetUserName, targetMailAddress,
 								targetMessage);
@@ -179,6 +195,19 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setView(dialogView);
 		return builder.create();
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+
+		if (mSendProgressText != null) {
+			mSendProgressText.setVisibility(View.GONE);
+		}
+
+		if (mManager != null) {
+			mManager.removeFriendDataManagerListener(this);
+		}
 	}
 
 	@Override
@@ -226,13 +255,13 @@ public class InvitationConfirmDialog extends DialogFragment implements
 												Integer.valueOf(userId),
 												message, date, null,
 												mailAddress);
-								dismiss();
 								mListener.onNotifyNewFriendAdded();
 								if (!isSuccess) {
 									DbgUtil.showDebug(TAG,
 											"Failed t store data to DB.");
 									showFeedbackToast(R.string.str_contactslist_confirm_failed_to_store_data);
 								}
+								dismiss();
 								// getActivity().finish();
 								break;
 							case LcomConst.INVITATION_CONFIRMED_UNKNOWN_ERROR:
@@ -261,7 +290,24 @@ public class InvitationConfirmDialog extends DialogFragment implements
 						"NumberFormatException: " + e.getMessage());
 			}
 		}
-		mManager.removeFriendDataManagerListener(this);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						// Dismiss progress text
+						if (mSendProgressText != null) {
+							mSendProgressText.setVisibility(View.GONE);
+							mPositiveButton.setEnabled(true);
+							mNegativeButton.setEnabled(true);
+						}
+
+					}
+				});
+			}
+		}).start();
 	}
 
 	private void saveNewData() {
@@ -280,6 +326,24 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		DbgUtil.showDebug(TAG, "onAPITimeout");
 		FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 				R.string.str_generic_server_time_out);
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						// Dismiss progress text
+						if (mSendProgressText != null) {
+							mSendProgressText.setVisibility(View.GONE);
+							mPositiveButton.setEnabled(true);
+							mNegativeButton.setEnabled(true);
+						}
+					}
+				});
+			}
+		}).start();
+
 		dismiss();
 	}
 

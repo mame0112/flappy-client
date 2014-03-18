@@ -102,6 +102,8 @@
     <string name="str_invitation_input_message_hint">Message</string>
     <string name="str_invitation_input_message_title">Input message</string>
     <string name="str_invitation_input_message_button">Input message</string>
+    <string name="str_invitation_message_send_progress_text">Sending message...</string>
+    <string name="str_invitation_mail_address_check_title">Check mail address</string>
     <string name="str_invitation_address_null">Please input friend\'s mail address</string>
     <string name="str_invitation_invalid_mail_address">Invalid mail address.</string>
     <string name="str_invitation_unknown_error">Unknown error occurred. Please try again later.</string>
@@ -113,6 +115,7 @@
     <string name="str_invitation_confirm_desc">You are about to invite below friend:</string>
     <string name="str_invitation_send_message_button">Send message</string>
     <string name="str_invitation_send_cancel_button">Cancel</string>
+    <string name="str_invitation_send_message_prog_dialog_title">Sending message</string>
 
     <!-- Conversation -->
     <string name="str_conversation_title">Conversation</string>

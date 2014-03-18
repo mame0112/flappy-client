@@ -15,7 +15,18 @@
         android:paddingBottom="@dimen/default_margin_vertical" >
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/sendMessageProgressText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_margin"
+            android:layout_marginRight="@dimen/default_margin"
+            android:paddingBottom="@dimen/default_margin_vertical"
+            android:paddingTop="@dimen/default_margin_vertical"
+            android:text="@string/str_invitation_message_send_progress_text"
+            android:textColor="@color/flappy_basic_black"
+            android:textSize="@dimen/default_font_size_larze" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/default_margin"
@@ -48,7 +59,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/normal_button"
                 android:paddingTop="@dimen/default_margin_vertical"
-                android:text="@string/str_invitation_send_cancel_button" />
+                android:text="@string/str_invitation_send_cancel_button"
+                android:textColor="@drawable/normal_button_text" />
 
             <Button
                 android:id="@+id/inviMsgDlgMessagePositive"
