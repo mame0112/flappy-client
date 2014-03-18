@@ -9,7 +9,7 @@
     <dimen name="title_margin_bottom">30dp</dimen>
 
     <!-- For Conversation view specific -->
-    <dimen name="conversation_bottom">30dp</dimen>
+    <dimen name="conversation_bottom">56dp</dimen>
 
     <!-- For Contact view specific -->
     <dimen name="contact_margin_dislay_top">20dp</dimen>
