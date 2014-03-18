@@ -195,6 +195,9 @@ public class ConversationActivity extends Activity implements
 		try {
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
+
+			// Show prgoress dialog
+			mProgressDialog.show(getFragmentManager(), "progress");
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
@@ -341,10 +344,6 @@ public class ConversationActivity extends Activity implements
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyPresentMessageDataLoaded");
 
-		if (messageData != null) {
-			DbgUtil.showDebug(TAG, "messageData: " + messageData.size());
-		}
-
 		// If new data is already available
 		if (mIsNewDataReady) {
 			DbgUtil.showDebug(TAG, "New data available");
@@ -369,6 +368,10 @@ public class ConversationActivity extends Activity implements
 			// Initialize flag
 			mIsNewDataReady = false;
 
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.getDialog().dismiss();
+			}
+
 		} else {
 			// If new data is not available yet.
 			DbgUtil.showDebug(TAG, "New data not available");
@@ -380,10 +383,6 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG,
 						"present data size: " + messageData.size());
-				for (MessageItemData data : messageData) {
-					DbgUtil.showDebug(TAG, "data::: " + data.getFromUserId());
-				}
-
 				mConversationData.addAll(messageData);
 			}
 		}
@@ -423,15 +422,14 @@ public class ConversationActivity extends Activity implements
 				// Sort by message post data in mConversationData
 				Collections.sort(mConversationData,
 						new ConversationDataComparator());
-
-				for (MessageItemData data : mConversationData) {
-					DbgUtil.showDebug(TAG, "data: " + data.getFromUserId());
-				}
-
 			}
 
 			// Notify to adapter
 			mAdapter.notifyDataSetChanged();
+
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.getDialog().dismiss();
+			}
 
 			// Initialize flag
 			mIsPresentDataReady = false;
