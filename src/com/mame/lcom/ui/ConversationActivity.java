@@ -339,7 +339,11 @@ public class ConversationActivity extends Activity implements
 	@Override
 	public void notifyPresentMessageDataLoaded(
 			ArrayList<MessageItemData> messageData) {
-		DbgUtil.showDebug(TAG, "notifyPresentMessageData");
+		DbgUtil.showDebug(TAG, "notifyPresentMessageDataLoaded");
+
+		if (messageData != null) {
+			DbgUtil.showDebug(TAG, "messageData: " + messageData.size());
+		}
 
 		// If new data is already available
 		if (mIsNewDataReady) {
@@ -376,6 +380,10 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG,
 						"present data size: " + messageData.size());
+				for (MessageItemData data : messageData) {
+					DbgUtil.showDebug(TAG, "data::: " + data.getFromUserId());
+				}
+
 				mConversationData.addAll(messageData);
 			}
 		}
@@ -415,6 +423,11 @@ public class ConversationActivity extends Activity implements
 				// Sort by message post data in mConversationData
 				Collections.sort(mConversationData,
 						new ConversationDataComparator());
+
+				for (MessageItemData data : mConversationData) {
+					DbgUtil.showDebug(TAG, "data: " + data.getFromUserId());
+				}
+
 			}
 
 			// Notify to adapter

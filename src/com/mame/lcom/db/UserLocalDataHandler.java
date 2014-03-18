@@ -54,7 +54,6 @@ public class UserLocalDataHandler {
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					null, null, null);
 			while (cursor != null && cursor.moveToNext()) {
-				DbgUtil.showDebug(TAG, "get");
 				String fromUserId = cursor
 						.getString(cursor
 								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
@@ -70,7 +69,7 @@ public class UserLocalDataHandler {
 						.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
 				String date = cursor.getString(cursor
 						.getColumnIndex(DatabaseDef.MessageColumns.DATE));
-				DbgUtil.showDebug(TAG, "date:" + date);
+				DbgUtil.showDebug(TAG, "date: " + date);
 
 				// Translate string into int
 				int fromUserIdInt = LcomConst.NO_USER;
@@ -78,9 +77,11 @@ public class UserLocalDataHandler {
 				long date2 = 0L;
 				if (fromUserId != null) {
 					fromUserIdInt = Integer.valueOf(fromUserId);
+					DbgUtil.showDebug(TAG, "fromUserId: " + fromUserId);
 				}
 				if (toUserId != null) {
-					fromUserIdInt = Integer.valueOf(toUserId);
+					toUserIdInt = Integer.valueOf(toUserId);
+					DbgUtil.showDebug(TAG, "toUserId: " + toUserId);
 				}
 				// try {
 				date2 = Long.valueOf(date);
@@ -89,6 +90,9 @@ public class UserLocalDataHandler {
 				// } catch (ParseException e) {
 				// DbgUtil.showDebug(TAG, "parseException: " + e.getMessage());
 				// }
+
+				// int fromUserId, int toUserId, String fromUserName,
+				// String toUserName, String message, long postedDate
 
 				MessageItemData data = new MessageItemData(fromUserIdInt,
 						toUserIdInt, fromUserName, toUserName, message, date2);
