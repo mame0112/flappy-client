@@ -95,7 +95,7 @@ public class CreateAccountActivityUtil {
 	public static void launchPhotoPicker(Activity activity, int requestCode) {
 		Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, null);
 		galleryIntent.setType("image/*");
-		galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
+		galleryIntent.setAction(Intent.ACTION_PICK);
 		activity.startActivityForResult(galleryIntent, requestCode);
 	}
 

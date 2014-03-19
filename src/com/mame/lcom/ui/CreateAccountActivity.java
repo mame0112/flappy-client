@@ -185,10 +185,11 @@ public class CreateAccountActivity extends Activity implements
 			if (resultCode == RESULT_OK) {
 				try {
 					Uri uri = data.getData();
+					DbgUtil.showDebug(TAG, "uri: " + uri);
 					Intent intent = new Intent("com.android.camera.action.CROP");
 					intent.setData(uri);
-					// intent.putExtra("outputX", 128);
-					// intent.putExtra("outputY", 128);
+					intent.putExtra("outputX", 200);
+					intent.putExtra("outputY", 200);
 					intent.putExtra("aspectX", 1);
 					intent.putExtra("aspectY", 1);
 					intent.putExtra("scale", true);
@@ -197,6 +198,8 @@ public class CreateAccountActivity extends Activity implements
 				} catch (Exception e) {
 					DbgUtil.showDebug(TAG, "Exception: " + e.getMessage());
 				}
+			} else {
+				DbgUtil.showDebug(TAG, "PHOTO_REQUEST_CODE failed");
 			}
 			break;
 		case REQUEST_CROP_PICK:
@@ -207,6 +210,8 @@ public class CreateAccountActivity extends Activity implements
 				} else {
 					DbgUtil.showDebug(TAG, "bitmap is null");
 				}
+			} else {
+				DbgUtil.showDebug(TAG, "REQUESTS_CROP_PICK failed");
 			}
 			break;
 		}
