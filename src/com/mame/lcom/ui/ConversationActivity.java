@@ -2,11 +2,13 @@ package com.mame.lcom.ui;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -447,5 +449,12 @@ public class ConversationActivity extends Activity implements
 				mConversationData.addAll(messageData);
 			}
 		}
+	}
+
+	@Override
+	public void notifyFriendThubmailsLoaded(
+			List<HashMap<Integer, Bitmap>> thumbnailsthumbnails) {
+		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
+
 	}
 }

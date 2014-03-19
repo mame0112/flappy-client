@@ -25,6 +25,7 @@ import com.mame.lcom.exception.WebAPIException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.FileUtil;
+import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.NetworkUtil;
 import com.mame.lcom.util.StringUtil;
 import com.mame.lcom.util.TrackingUtil;
@@ -440,8 +441,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 			String mailAddress, Bitmap thumbnailData) throws WebAPIException {
 		DbgUtil.showDebug(TAG, "sendCreateAccountData");
 
-		String thumbnailString = CreateAccountActivityUtil
-				.transcodeBitmap2String(thumbnailData);
+		String thumbnailString = ImageUtil.encodeTobase64(thumbnailData);
 
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,

@@ -1,6 +1,7 @@
 package com.mame.lcom.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,6 +11,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -408,6 +410,13 @@ public class InvitationConfirmDialog extends DialogFragment implements
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG,
 				"notifyNewConversationDataLoaded : not to be used");
+
+	}
+
+	@Override
+	public void notifyFriendThubmailsLoaded(
+			List<HashMap<Integer, Bitmap>> thumbnailsthumbnails) {
+		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
 	}
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Handler;
 import android.util.Base64;
@@ -99,17 +100,4 @@ public class CreateAccountActivityUtil {
 		activity.startActivityForResult(galleryIntent, requestCode);
 	}
 
-	public static String transcodeBitmap2String(Bitmap bitmap) {
-		String imageBinary = null;
-
-		if (bitmap != null) {
-			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			bitmap.compress(CompressFormat.JPEG, 90, bos);
-			byte[] byteArray = bos.toByteArray();
-			String image64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
-			imageBinary = "data:image/jpeg:base64, " + image64;
-		}
-		return imageBinary;
-
-	}
 }

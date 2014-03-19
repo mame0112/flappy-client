@@ -1,10 +1,14 @@
 package com.mame.lcom.server;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import com.mame.lcom.constant.LcomConst;
@@ -14,6 +18,7 @@ import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.ui.ConversationActivityUtil;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.web.LcomWebAPI;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
@@ -37,6 +42,8 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 	private final static String REQUEST_CONVERSATION_DATA = "request_conversation_data";
 
 	private final static String SEND_AND_ADD_DATA = "send_add_data";
+
+	private final static String REQUEST_FRIEND_THUMBNAILS = "request_friend_thumbnails";
 
 	private LcomConst.ServerRequestContext mRequestContext = LcomConst.ServerRequestContext.none;
 
@@ -137,25 +144,48 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	}
 
-	// public void requestConversationData(int userId, int targetUserId)
-	// throws FriendDataManagerException {
-	// DbgUtil.showDebug(TAG, "requestConversationData");
-	// if (mDataListener == null) {
-	// throw new FriendDataManagerException(
-	// "UserServerDataListener is null");
-	// }
-	//
-	// // // Set context for Timeout case
-	// mRequestContext = LcomConst.ServerRequestContext.requestConversationData;
-	//
-	// String origin = TAG + REQUEST_CONVERSATION_DATA;
-	// String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
-	// LcomConst.SERVLET_TARGET_USER_ID };
-	// String value[] = { origin, String.valueOf(userId),
-	// String.valueOf(targetUserId) };
-	// mWebAPI.sendData(LcomConst.SERVLET_CONVERSATION_DATA, key, value);
-	//
-	// }
+	public void requestNewFriendThumbnails(ArrayList<Integer> targetUserIds)
+			throws FriendDataManagerException {
+		if (mDataListener == null) {
+			throw new FriendDataManagerException(
+					"UserServerDataListener is null");
+		}
+
+		// Set context
+		mRequestContext = LcomConst.ServerRequestContext.requestFriendThumbnails;
+
+		// Parse ArrayList to string
+		if (targetUserIds != null) {
+			String parsedId = "a";
+			boolean isFirst = true;
+			for (int id : targetUserIds) {
+				if (isFirst) {
+					parsedId = parsedId + id + LcomConst.SEPARATOR;
+					isFirst = false;
+				} else {
+					parsedId = parsedId + id + LcomConst.SEPARATOR;
+				}
+			}
+
+			if (parsedId != null && parsedId.length() > 2) {
+
+				// Remove first "a"
+				parsedId = parsedId.substring(1, parsedId.length());
+
+				DbgUtil.showDebug(TAG, "parsedId: " + parsedId);
+
+				// Remove first "a" and last separetor
+				String origin = TAG + REQUEST_FRIEND_THUMBNAILS;
+				String key[] = { LcomConst.SERVLET_ORIGIN,
+						LcomConst.SERVLET_TARGET_USER_ID };
+				String value[] = { origin, parsedId };
+				mWebAPI.sendData(LcomConst.SERVLET_FRIEBD_THUMBNAILS, key,
+						value);
+			}
+
+		}
+
+	}
 
 	public void setFriendListUpdateDataListener(UserServerDataListener listener) {
 		mDataListener = listener;
@@ -224,6 +254,17 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 							notifyConversationDataset(messageDatas);
 						} else {
 							notifyConversationDataset(null);
+						}
+					} else if (origin.equals(TAG + REQUEST_FRIEND_THUMBNAILS)) {
+						DbgUtil.showDebug(TAG, "REQUEST_FRIEND_THUMBNAILS");
+						String response = respList.get(1);
+						if (response != null) {
+							DbgUtil.showDebug(TAG, "thumbnail response: "
+									+ response);
+							List<HashMap<Integer, Bitmap>> result = parseNewFriendThumbnailData(response);
+							notifyNewFriendThumbnails(result);
+						} else {
+							notifyNewFriendThumbnails(null);
 						}
 					} else {
 
@@ -301,6 +342,62 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 		return newUserData;
 	}
 
+	private List<HashMap<Integer, Bitmap>> parseNewFriendThumbnailData(
+			String response) {
+		DbgUtil.showDebug(TAG, "parseNewFriendThumbnail");
+
+		List<HashMap<Integer, Bitmap>> result = new ArrayList<HashMap<Integer, Bitmap>>();
+
+		if (response != null) {
+			String[] items = response.split(LcomConst.ITEM_SEPARATOR);
+			if (items != null && items.length != 0) {
+				for (int i = 0; i < items.length; i++) {
+					String[] item = items[i].split(LcomConst.SEPARATOR);
+					String userId = item[0];
+					String thumbStr = item[1];
+					if (userId != null && thumbStr != null) {
+						// DbgUtil.showDebug(TAG, "userId: " + userId
+						// + " thumgStr: " + thumbStr);
+						Bitmap bitmap = ImageUtil
+								.decodeBase64ToBitmap(thumbStr);
+						if (bitmap != null) {
+							DbgUtil.showDebug(TAG,
+									"bitmap size:" + bitmap.getWidth());
+						} else {
+							DbgUtil.showDebug(TAG, "bitmap is null");
+						}
+						HashMap<Integer, Bitmap> map = new HashMap<Integer, Bitmap>();
+						map.put(Integer.valueOf(userId), bitmap);
+						result.add(map);
+					}
+
+				}
+
+			}
+			return result;
+		}
+
+		return null;
+	}
+
+	// private Bitmap convertString2Bitmap(String original) {
+	// Bitmap bitmap = null;
+	// if (original != null) {
+	// try {
+	// byte[] bytes = original.getBytes("UTF-8");
+	// if (bytes != null) {
+	// bitmap = BitmapFactory.decodeByteArray(bytes, 0,
+	// bytes.length);
+	// }
+	// } catch (UnsupportedEncodingException e) {
+	// DbgUtil.showDebug(TAG,
+	// "UnsupportedEncodingException: " + e.getMessage());
+	// }
+	// }
+	//
+	// return bitmap;
+	// }
+
 	private ArrayList<MessageItemData> parseResponseForConveersation(
 			String response) {
 		DbgUtil.showDebug(TAG, "parseResponse: " + response);
@@ -376,6 +473,23 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 		}).start();
 	}
 
+	private void notifyNewFriendThumbnails(
+			final List<HashMap<Integer, Bitmap>> result) {
+		DbgUtil.showDebug(TAG, "notifyConversationDataset");
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						mDataListener.notifyNewUserThumbnail(result);
+					}
+				});
+			}
+
+		}).start();
+	}
+
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
@@ -406,6 +520,11 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 						"requestContext is requestConversationData");
 				notifyConversationDataset(null);
 				break;
+			case requestFriendThumbnails:
+				DbgUtil.showDebug(TAG,
+						"requestContext is requestFriendThumbnails");
+				notifyNewFriendThumbnails(null);
+				break;
 			default:
 				DbgUtil.showDebug(TAG, "requestContext is unknown case");
 				break;
@@ -423,6 +542,9 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 		public void notifyConversationServerDataSet(
 				ArrayList<MessageItemData> messageData);
+
+		public void notifyNewUserThumbnail(
+				List<HashMap<Integer, Bitmap>> thumbnails);
 
 		// /**
 		// * This API will be called when API timeout occurrd when API call for

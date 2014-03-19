@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -34,6 +36,7 @@ import com.mame.lcom.notification.NewMessageNotification;
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
+import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
@@ -259,8 +262,14 @@ public class FriendListActivity extends Activity implements
 						TAG,
 						"registered: "
 								+ mManager.isListenerAlreadyRegistered(this));
-				mNewUserData.clear();
-				mUserData.clear();
+				if (mNewUserData != null) {
+					mNewUserData.clear();
+				}
+
+				if (mUserData != null) {
+					mUserData.clear();
+				}
+
 				mFriendListData.clear();
 				mManager.setFriendDataManagerListener(this);
 			}
@@ -369,7 +378,6 @@ public class FriendListActivity extends Activity implements
 				DbgUtil.showDebug(TAG, "dismiss dialog");
 				mProgressDialog.dismiss();
 			}
-			DbgUtil.showDebug(TAG, "BB");
 			mNewUserData = newUserData;
 		} else {
 			DbgUtil.showDebug(TAG, "isExistingDataAvailable false");
@@ -706,6 +714,8 @@ public class FriendListActivity extends Activity implements
 					0, newUserDataArg.size());
 		}
 
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+
 		for (FriendListData data : friendDatas) {
 			DbgUtil.showDebug(
 					TAG,
@@ -713,6 +723,15 @@ public class FriendListActivity extends Activity implements
 							+ data.getFriendName() + "message: "
 							+ data.getLastMessage() + "lastSender: "
 							+ data.getLastSender());
+			ids.add(data.getFriendId());
+		}
+
+		// Get thumbnail data
+		try {
+			mManager.requestFriendsNewThumbnail(ids);
+		} catch (FriendDataManagerException e1) {
+			DbgUtil.showDebug(TAG,
+					"FriendDataManagerException: " + e1.getMessage());
 		}
 
 		return friendDatas;
@@ -823,4 +842,66 @@ public class FriendListActivity extends Activity implements
 
 	}
 
+	@Override
+	public void notifyFriendThubmailsLoaded(
+			List<HashMap<Integer, Bitmap>> thumbnails) {
+		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded");
+		if (thumbnails != null) {
+			handleAndUpdateThumbnailData(thumbnails);
+		} else {
+			DbgUtil.showDebug(TAG, "thumbnails is null");
+		}
+
+	}
+
+	private void handleAndUpdateThumbnailData(
+			List<HashMap<Integer, Bitmap>> thumbnails) {
+		DbgUtil.showDebug(TAG, "handleAndUpdateThumbnailData");
+
+		if (thumbnails != null) {
+			for (HashMap<Integer, Bitmap> thumbnail : thumbnails) {
+				for (Iterator<?> it = thumbnail.entrySet().iterator(); it
+						.hasNext();) {
+					Map.Entry entry = (Map.Entry) it.next();
+					Integer friendId = (Integer) entry.getKey();
+					Bitmap friendThumb = (Bitmap) entry.getValue();
+					// ArrayList<FriendListData> mFriendListData
+					if (mFriendListData != null) {
+						for (FriendListData data : mFriendListData) {
+							int currentId = data.getFriendId();
+							if (currentId == friendId) {
+								DbgUtil.showDebug(TAG, "currentId: "
+										+ currentId);
+								data.setThumbnail(friendThumb);
+								break;
+							}
+						}
+					}
+
+					// if (friendThumb != null) {
+					// DbgUtil.showDebug(TAG,
+					// "friendThumb size: " + friendThumb.getWidth()
+					// + " / " + friendThumb.getHeight());
+					// } else {
+					// DbgUtil.showDebug(TAG, "friendThumb is null");
+					// }
+				}
+			}
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (mAdapter != null) {
+								mAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+				}
+
+			}).start();
+
+		}
+	}
 }

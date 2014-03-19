@@ -1,16 +1,20 @@
 package com.mame.lcom.ui.view;
 
 import java.util.List;
+
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.util.DbgUtil;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
@@ -36,12 +40,22 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 					null);
 		}
 
+		ImageView userThumbnail = (ImageView) convertView
+				.findViewById(R.id.userThumbnail);
 		TextView userNameView = (TextView) convertView
 				.findViewById(R.id.friendUserName);
 		TextView numOfNewMessageView = (TextView) convertView
 				.findViewById(R.id.numOfNewMessage);
 		TextView lastMessageView = (TextView) convertView
 				.findViewById(R.id.lastMessage);
+
+		Bitmap bitmap = item.getThumbnail();
+		if (bitmap != null) {
+			// userThumbnail.setim
+			userThumbnail.setImageBitmap(bitmap);
+		} else {
+			// Nothing to do.
+		}
 
 		String name = item.getFriendName();
 		if (name == null || name.equals(LcomConst.NULL)) {

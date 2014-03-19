@@ -1,8 +1,11 @@
 package com.mame.lcom.datamanager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Handler;
 
@@ -132,6 +135,20 @@ public class FriendDataManager implements UserServerDataListener,
 			new LoadLocalMessagesAsyncTask().execute(targetUserId);
 			// new LoadLocalFriendListAsyncTask().execute();
 		}
+	}
+
+	public void requestFriendsNewThumbnail(ArrayList<Integer> targetUserIds)
+			throws FriendDataManagerException {
+		DbgUtil.showDebug(TAG, "requestFriendsNewThumbnail");
+		if (mListeners == null || mListeners.size() == 0) {
+			throw new FriendDataManagerException("mListenr is null");
+		}
+
+		if (targetUserIds == null) {
+			throw new FriendDataManagerException("targetUserIds is null");
+		}
+
+		mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
 	}
 
 	/**
@@ -291,6 +308,12 @@ public class FriendDataManager implements UserServerDataListener,
 		public void notifyNewConversationDataLoaded(
 				ArrayList<MessageItemData> messageData);
 
+		/**
+		 * To be called when FriendDataManager get frien thumbnail data
+		 */
+		public void notifyFriendThubmailsLoaded(
+				List<HashMap<Integer, Bitmap>> thumbnailsthumbnails);
+
 	}
 
 	private class LoadLocalFriendListAsyncTask extends
@@ -392,5 +415,14 @@ public class FriendDataManager implements UserServerDataListener,
 		for (FriendDataManagerListener listener : mListeners) {
 			listener.notifyNewConversationDataLoaded(messageData);
 		}
+	}
+
+	@Override
+	public void notifyNewUserThumbnail(List<HashMap<Integer, Bitmap>> thumbnails) {
+		DbgUtil.showDebug(TAG, "notifyNewUserThumbnail");
+		for (FriendDataManagerListener listener : mListeners) {
+			listener.notifyFriendThubmailsLoaded(thumbnails);
+		}
+
 	}
 }

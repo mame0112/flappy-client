@@ -1,5 +1,7 @@
 package com.mame.lcom.data;
 
+import android.graphics.Bitmap;
+
 import com.mame.lcom.constant.LcomConst;
 
 public class FriendListData {
@@ -20,11 +22,11 @@ public class FriendListData {
 
 	private String mMailAddress = null;
 
-	private byte[] mThumbnail = null;
+	private Bitmap mThumbnail = null;
 
 	public FriendListData(int friendId, String friendName, int lastSenderId,
 			String lastMessage, int numOfNewMessage, String mailAddress,
-			byte[] thumbnail) {
+			Bitmap thumbnail) {
 		mFriendId = friendId;
 		// mFriendName = friendName;
 		mFriendName = friendName;
@@ -63,7 +65,7 @@ public class FriendListData {
 		mMailAddress = mailAddress;
 	}
 
-	public void setThumbnail(byte[] thumbnail) {
+	public void setThumbnail(Bitmap thumbnail) {
 		mThumbnail = thumbnail;
 	}
 
@@ -95,7 +97,7 @@ public class FriendListData {
 		return mMailAddress;
 	}
 
-	public byte[] getThumbnail() {
+	public Bitmap getThumbnail() {
 		return mThumbnail;
 	}
 

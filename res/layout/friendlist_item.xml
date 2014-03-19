@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/userThumbnail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/friend_list_image_size"
+                android:layout_height="@dimen/friend_list_image_size"
                 android:paddingRight="@dimen/default_padding"
                 android:src="@drawable/flappy_default_thumbnail_large" >
             </ImageView>

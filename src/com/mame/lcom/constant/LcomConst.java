@@ -23,7 +23,7 @@ public class LcomConst {
 	public final static int NO_USER = -1;
 
 	public final static int MESSAGE_MAX_LENGTH = -1;
-	
+
 	public final static int MAX_MESSAGE_LENGTH = 16;
 
 	public final static String DATE_PATTERN = "dd-MM-yy:HH:mm:SS";
@@ -70,6 +70,8 @@ public class LcomConst {
 	public final static String SERVLET_NAME_SEND_ADD_MESSAGE = "send_add_message";
 
 	public final static String SERVLET_CONVERSATION_DATA = "conversation_data";
+
+	public final static String SERVLET_FRIEBD_THUMBNAILS = "friend_thumbnails";
 
 	public final static int MAX_USER_NAME_LENGTH = 16;
 
@@ -171,7 +173,7 @@ public class LcomConst {
 	 * (case).
 	 */
 	public static enum ServerRequestContext {
-		none, requestNewUserData, sendAndRegiserMessage, requestConversationData,
+		none, requestNewUserData, sendAndRegiserMessage, requestConversationData, requestFriendThumbnails,
 	}
 
 	/**

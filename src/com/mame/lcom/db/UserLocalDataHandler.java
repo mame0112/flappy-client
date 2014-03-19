@@ -13,12 +13,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.TimeUtil;
 
 public class UserLocalDataHandler {
@@ -142,11 +144,16 @@ public class UserLocalDataHandler {
 							byte[] thumbnail = cursor
 									.getBlob(cursor
 											.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+							Bitmap bmp = null;
+							if (thumbnail != null) {
+								bmp = ImageUtil
+										.decodeByteArrayToBitmap(thumbnail);
+							}
 
 							FriendListData data = new FriendListData(
 									Integer.valueOf(friendId), userName,
 									Integer.valueOf(lastSenderId), lastMessage,
-									0, mailAddress, thumbnail);
+									0, mailAddress, bmp);
 							datas.add(data);
 							DbgUtil.showDebug(TAG, "friendId: " + friendId
 									+ " userName: " + userName
