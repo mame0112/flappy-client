@@ -877,14 +877,6 @@ public class FriendListActivity extends Activity implements
 							}
 						}
 					}
-
-					// if (friendThumb != null) {
-					// DbgUtil.showDebug(TAG,
-					// "friendThumb size: " + friendThumb.getWidth()
-					// + " / " + friendThumb.getHeight());
-					// } else {
-					// DbgUtil.showDebug(TAG, "friendThumb is null");
-					// }
 				}
 			}
 			new Thread(new Runnable() {
@@ -901,7 +893,6 @@ public class FriendListActivity extends Activity implements
 				}
 
 			}).start();
-
 		}
 	}
 }

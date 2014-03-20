@@ -6,6 +6,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -148,6 +152,11 @@ public class UserLocalDataHandler {
 							if (thumbnail != null) {
 								bmp = ImageUtil
 										.decodeByteArrayToBitmap(thumbnail);
+								if (bmp != null) {
+									DbgUtil.showDebug(TAG,
+											"bmp size: " + bmp.getWidth()
+													+ " / " + bmp.getHeight());
+								}
 							}
 
 							FriendListData data = new FriendListData(
@@ -376,6 +385,23 @@ public class UserLocalDataHandler {
 		return values;
 	}
 
+	private ContentValues getInsertContentValuesForThubmnail(
+			Bitmap thumbnailData) {
+		DbgUtil.showDebug(TAG, "getInsertContentValuesForThubmnail");
+		ContentValues values = new ContentValues();
+
+		if (thumbnailData != null) {
+			DbgUtil.showDebug(TAG,
+					"thumbnailData is not null: " + thumbnailData.getWidth()
+							+ " / " + thumbnailData.getHeight());
+			byte[] bytes = ImageUtil.encodeBitmapToByteArray(thumbnailData);
+			DbgUtil.showDebug(TAG, "bytes size: " + bytes.length);
+			values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, bytes);
+		}
+
+		return values;
+	}
+
 	public void removeLocalUserPreferenceData(Context context) {
 		DbgUtil.showDebug(TAG, "removeLocalUserPreferenceData");
 		setDatabase();
@@ -393,6 +419,38 @@ public class UserLocalDataHandler {
 	private void doVacuum() {
 		setDatabase();
 		sDatabase.execSQL("vacuum");
+	}
+
+	public void storeFriendThumbnails(List<HashMap<Integer, Bitmap>> thumbnails) {
+		DbgUtil.showDebug(TAG, "storeFriendThumbnails");
+		try {
+			setDatabase();
+
+			for (HashMap<Integer, Bitmap> thumbnail : thumbnails) {
+				for (Iterator<?> it = thumbnail.entrySet().iterator(); it
+						.hasNext();) {
+					Map.Entry entry = (Map.Entry) it.next();
+					Integer friendId = (Integer) entry.getKey();
+					Bitmap friendThumb = (Bitmap) entry.getValue();
+					// ArrayList<FriendListData> mFriendListData
+					ContentValues valuesForThumbnail = getInsertContentValuesForThubmnail(friendThumb);
+					String where = DatabaseDef.FriendshipColumns.FRIEND_ID
+							+ "=" + friendId;
+					DbgUtil.showDebug(TAG, "where: " + where);
+					long id = sDatabase.update(
+							DatabaseDef.FriendshipTable.TABLE_NAME,
+							valuesForThumbnail, where, null);
+					DbgUtil.showDebug(TAG, "id: " + id);
+					if (id < 0) {
+						// Failed.
+						DbgUtil.showDebug(TAG,
+								"Failed to insert data into Message DB");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+		}
 	}
 
 	// Interface to notify new user data to client of this class

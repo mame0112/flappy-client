@@ -23,6 +23,17 @@ public class ImageUtil {
 
 	}
 
+	public static byte[] encodeBitmapToByteArray(Bitmap bitmap) {
+		if (bitmap != null) {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			bitmap.compress(CompressFormat.JPEG, 90, bos);
+			byte[] byteArray = bos.toByteArray();
+			return byteArray;
+		}
+		return null;
+
+	}
+
 	public static Bitmap decodeBase64ToBitmap(String input) {
 		byte[] decodedByte = Base64.decode(input, 0);
 		return BitmapFactory

@@ -424,5 +424,16 @@ public class FriendDataManager implements UserServerDataListener,
 			listener.notifyFriendThubmailsLoaded(thumbnails);
 		}
 
+		if (thumbnails != null) {
+			storeFriendThumbnails(thumbnails);
+		}
 	}
+
+	private void storeFriendThumbnails(List<HashMap<Integer, Bitmap>> thumbnails) {
+		DbgUtil.showDebug(TAG, "storeFriendThumbnails");
+		if (mLocalDataHandler != null) {
+			mLocalDataHandler.storeFriendThumbnails(thumbnails);
+		}
+	}
+
 }
