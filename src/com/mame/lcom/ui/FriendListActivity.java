@@ -494,6 +494,9 @@ public class FriendListActivity extends Activity implements
 			ArrayList<FriendListUpdateData> newUserDataArg) {
 		ArrayList<FriendListData> friendDatas = new ArrayList<FriendListData>();
 
+		// ArrayList for users who doesn't have thumbnail data in local
+		ArrayList<Integer> thumbNotDLUser = new ArrayList<Integer>();
+
 		if (newUserDataArg != null) {
 			for (FriendListUpdateData data : newUserDataArg) {
 				DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
@@ -508,11 +511,18 @@ public class FriendListActivity extends Activity implements
 
 			if (mUserData != null) {
 				DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
+
 			}
 
 			for (FriendListData data : mUserData) {
 				int currentSenderId = data.getFriendId();
 				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
+
+				// If local data doesn't have thumbnail data, we need to ask
+				// server to provide it.
+				if (data.getThumbnail() == null) {
+					thumbNotDLUser.add(currentSenderId);
+				}
 
 				boolean isNewUpdated = false;
 
@@ -714,7 +724,7 @@ public class FriendListActivity extends Activity implements
 					0, newUserDataArg.size());
 		}
 
-		ArrayList<Integer> ids = new ArrayList<Integer>();
+		// ArrayList<Integer> ids = new ArrayList<Integer>();
 
 		for (FriendListData data : friendDatas) {
 			DbgUtil.showDebug(
@@ -723,15 +733,16 @@ public class FriendListActivity extends Activity implements
 							+ data.getFriendName() + "message: "
 							+ data.getLastMessage() + "lastSender: "
 							+ data.getLastSender());
-			ids.add(data.getFriendId());
 		}
 
 		// Get thumbnail data
-		try {
-			mManager.requestFriendsNewThumbnail(ids);
-		} catch (FriendDataManagerException e1) {
-			DbgUtil.showDebug(TAG,
-					"FriendDataManagerException: " + e1.getMessage());
+		if (thumbNotDLUser != null && thumbNotDLUser.size() != 0) {
+			try {
+				mManager.requestFriendsNewThumbnail(thumbNotDLUser);
+			} catch (FriendDataManagerException e1) {
+				DbgUtil.showDebug(TAG,
+						"FriendDataManagerException: " + e1.getMessage());
+			}
 		}
 
 		return friendDatas;
