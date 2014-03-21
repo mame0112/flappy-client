@@ -103,7 +103,7 @@ public class UserLocalDataHandler {
 				// String toUserName, String message, long postedDate
 
 				MessageItemData data = new MessageItemData(fromUserIdInt,
-						toUserIdInt, fromUserName, toUserName, message, date2);
+						toUserIdInt, fromUserName, toUserName, message, date2, null);
 				datas.add(data);
 			}
 		} catch (SQLException e) {

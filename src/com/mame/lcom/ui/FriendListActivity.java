@@ -121,41 +121,37 @@ public class FriendListActivity extends Activity implements
 				FriendListData data = mAdapter.getItem(position);
 				DbgUtil.showDebug(TAG, "id: " + data.getFriendId() + " name: "
 						+ data.getFriendName());
-				if (mNewUserData != null) {
-					ArrayList<String> newMessages = new ArrayList<String>();
-					ArrayList<String> newDates = new ArrayList<String>();
-					for (FriendListUpdateData updateData : mNewUserData) {
-						if (updateData != null) {
-							int friendUserId = updateData
-									.getNesMassageSenderId();
-							if (friendUserId == data.getFriendId()) {
-								newMessages.add(updateData.getNewMessage());
-								newDates.add(updateData.getNewMessageDate());
-							}
-						}
-					}
-					// String[] arrayNewMessages = (String[]) newMessages
-					// .toArray(new String[newMessages.size()]);
-					// String[] arrayNewDates = (String[]) newDates
-					// .toArray(new String[newDates.size()]);
-					// FriendListActivityUtil.startActivityConversationViewByPos(
-					// mActivity, mUserId, mUserName, position,
-					// data.getFriendId(), data.getFriendName(),
-					// arrayNewMessages, arrayNewDates);
-					FriendListActivityUtil.startActivityConversationViewByPos(
-							mActivity, mUserId, mUserName, position,
-							data.getFriendId(), data.getFriendName());
-
-				} else {
-					// FriendListActivityUtil.startActivityConversationViewByPos(
-					// mActivity, mUserId, mUserName, position,
-					// data.getFriendId(), data.getFriendName(), null,
-					// null);
-					FriendListActivityUtil.startActivityConversationViewByPos(
-							mActivity, mUserId, mUserName, position,
-							data.getFriendId(), data.getFriendName());
-
-				}
+				FriendListActivityUtil.startActivityConversationViewByPos(
+						mActivity, mUserId, mUserName, position,
+						data.getFriendId(), data.getFriendName(),
+						data.getThumbnail());
+				// if (mNewUserData != null) {
+				// ArrayList<String> newMessages = new ArrayList<String>();
+				// ArrayList<String> newDates = new ArrayList<String>();
+				// for (FriendListUpdateData updateData : mNewUserData) {
+				// if (updateData != null) {
+				// int friendUserId = updateData
+				// .getNesMassageSenderId();
+				// if (friendUserId == data.getFriendId()) {
+				// newMessages.add(updateData.getNewMessage());
+				// newDates.add(updateData.getNewMessageDate());
+				// }
+				// }
+				// }
+				// FriendListActivityUtil.startActivityConversationViewByPos(
+				// mActivity, mUserId, mUserName, position,
+				// data.getFriendId(), data.getFriendName());
+				//
+				// } else {
+				// // FriendListActivityUtil.startActivityConversationViewByPos(
+				// // mActivity, mUserId, mUserName, position,
+				// // data.getFriendId(), data.getFriendName(), null,
+				// // null);
+				// FriendListActivityUtil.startActivityConversationViewByPos(
+				// mActivity, mUserId, mUserName, position,
+				// data.getFriendId(), data.getFriendName());
+				//
+				// }
 			}
 		});
 

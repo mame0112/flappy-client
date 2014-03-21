@@ -424,6 +424,7 @@ public class FriendDataManager implements UserServerDataListener,
 			listener.notifyFriendThubmailsLoaded(thumbnails);
 		}
 
+		// If thumbnail is available, try to store it (them) to DBs
 		if (thumbnails != null) {
 			storeFriendThumbnails(thumbnails);
 		}

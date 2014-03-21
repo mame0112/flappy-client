@@ -2,6 +2,8 @@ package com.mame.lcom.data;
 
 import java.util.Date;
 
+import android.graphics.Bitmap;
+
 public class MessageItemData {
 
 	private int mFromUserId = 0;
@@ -19,17 +21,20 @@ public class MessageItemData {
 	 */
 	private long mPostedDate = 0L;
 
+	private Bitmap mThumbnail = null;
+
 	/**
 	 * Constructor
 	 */
 	public MessageItemData(int fromUserId, int toUserId, String fromUserName,
-			String toUserName, String message, long postedDate) {
+			String toUserName, String message, long postedDate, Bitmap thumbnail) {
 		mFromUserId = fromUserId;
 		mToUserId = toUserId;
 		mFromUserName = fromUserName;
 		mToUserName = toUserName;
 		mMessage = message;
 		mPostedDate = postedDate;
+		mThumbnail = thumbnail;
 	}
 
 	public int getFromUserId() {
@@ -56,6 +61,10 @@ public class MessageItemData {
 		return mPostedDate;
 	}
 
+	public Bitmap getThumbnail() {
+		return mThumbnail;
+	}
+
 	public void setFromUserId(int fromUserId) {
 		mFromUserId = fromUserId;
 	}
@@ -78,5 +87,9 @@ public class MessageItemData {
 
 	public void setPostedDate(long postedDate) {
 		mPostedDate = postedDate;
+	}
+
+	public void setThumbnail(Bitmap thumbnail) {
+		mThumbnail = thumbnail;
 	}
 }

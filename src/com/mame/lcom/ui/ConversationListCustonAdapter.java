@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,8 @@ public class ConversationListCustonAdapter extends
 
 	private int mUserId = LcomConst.NO_USER;
 
+	private Bitmap mThumbnail = null;
+
 	public ConversationListCustonAdapter(Context context,
 			int textViewResourceId, List<MessageItemData> objects) {
 		super(context, textViewResourceId, objects);
@@ -39,6 +42,10 @@ public class ConversationListCustonAdapter extends
 		mLayoutInflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mUserId = PreferenceUtil.getUserId(mContext);
+	}
+
+	public void setFriendThumbnail(Bitmap thumbnail) {
+		mThumbnail = thumbnail;
 	}
 
 	/*
@@ -113,6 +120,7 @@ public class ConversationListCustonAdapter extends
 				myDateView.setText(postDate);
 
 			} else {
+				// If sender if friend
 
 				userNameView.setText(item.getFromUserName());
 
@@ -135,6 +143,10 @@ public class ConversationListCustonAdapter extends
 						mContext);
 				// dateView.setText(date);
 				dateView.setText(postDate);
+
+				if (mThumbnail != null) {
+					thumbnailView.setImageBitmap(mThumbnail);
+				}
 
 			}
 

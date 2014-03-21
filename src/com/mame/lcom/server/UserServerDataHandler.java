@@ -238,7 +238,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 							MessageItemData mesageData = new MessageItemData(
 									Integer.valueOf(userId),
 									Integer.valueOf(targetUserId), userName,
-									targetUserName, message, date2);
+									targetUserName, message, date2, null);
 							mDataListener.notifyMessageSend(
 									Integer.valueOf(result), mesageData);
 						} else {
@@ -424,7 +424,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 					MessageItemData data = new MessageItemData(
 							Integer.valueOf(userId),
 							Integer.valueOf(targetUserId), userName,
-							targetUserName, message, Long.valueOf(date));
+							targetUserName, message, Long.valueOf(date), null);
 
 					// data.setNewMessage(message);
 					// data.setNewMessageDate(date);

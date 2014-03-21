@@ -3,6 +3,7 @@ package com.mame.lcom.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -12,13 +13,14 @@ public class FriendListActivityUtil {
 
 	public static void startActivityConversationViewByPos(Activity activity,
 			int userId, String userName, int position, int targetUserId,
-			String targetUserName) {
+			String targetUserName, Bitmap thumbnail) {
 		Intent intent = new Intent(activity, ConversationActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
 		intent.putExtra(LcomConst.EXTRA_USER_NAME, userName);
 		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
 		intent.putExtra(LcomConst.EXTRA_TARGET_USER_NAME, targetUserName);
+		intent.putExtra(LcomConst.EXTRA_THUMBNAIL, thumbnail);
 		// intent.putExtra(LcomConst.EXTRA_TARGET_NEW_MESSAGES, newMessages);
 		// intent.putExtra(LcomConst.EXTRA_TARGET_NEW_MESSAGES_DATE, newDates);
 		activity.startActivity(intent);

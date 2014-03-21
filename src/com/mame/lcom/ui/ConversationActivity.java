@@ -80,6 +80,8 @@ public class ConversationActivity extends Activity implements
 
 	private String mPageNum = null;
 
+	private Bitmap mThumbnail = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,6 +95,13 @@ public class ConversationActivity extends Activity implements
 					LcomConst.NO_USER);
 			mTargetUserName = intent
 					.getStringExtra(LcomConst.EXTRA_TARGET_USER_NAME);
+			mThumbnail = intent.getParcelableExtra(LcomConst.EXTRA_THUMBNAIL);
+
+			if (mThumbnail != null) {
+				DbgUtil.showDebug(TAG,
+						"thumbnail size: " + mThumbnail.getWidth() + " / "
+								+ mThumbnail.getHeight());
+			}
 
 			if (mTargetUserName != null) {
 				DbgUtil.showDebug(TAG, "mTargetUserName: " + mTargetUserName);
@@ -116,6 +125,7 @@ public class ConversationActivity extends Activity implements
 
 		mAdapter = new ConversationListCustonAdapter(getApplicationContext(),
 				0, mConversationData);
+		mAdapter.setFriendThumbnail(mThumbnail);
 		// mAdapter.addAll(mConversationData);
 
 		mListView = (ListView) findViewById(R.id.conversationListView);
