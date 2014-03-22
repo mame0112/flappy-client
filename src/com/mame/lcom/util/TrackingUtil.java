@@ -44,6 +44,10 @@ public class TrackingUtil {
 
 	public static final String EVENT_CATEGORY_CONVERSATION = "Conversation view";
 
+	public static final String EVENT_CATEGORY_HELP = "Help view";
+
+	public static final String EVENT_CATEGORY_START_CONVERSATION = "Start conversation";
+
 	public static final String EVENT_ACTION_START_OPERATION_EXECUTION = "Start operation";
 
 	public static final String EVENT_ACTION_LOGIN_OPTION = "option menu";
@@ -62,15 +66,23 @@ public class TrackingUtil {
 
 	public static final String EVENT_ACTION_CONVERSATION = "Option menu";
 
+	public static final String EVENT_ACTION_HELP = "Help view";
+
+	public static final String EVENT_ACTION_START_CONVERSATION = "Start Conversation view";
+
 	public static final String EVENT_LABEL_LOGIN_BUTTON = "Login";
 
 	public static final String EVENT_LABEL_CREATE_ACCOUNT_BUTTON = "Create account";
+
+	public static final String EVENT_LABEL_CREATE_THUMBNAIL_BUTTON = "Create account thumnail button";
+
+	public static final String EVENT_LABEL_CREATE_NEXT_BUTTON = "Next button";
 
 	public static final String EVENT_LABEL_LOGIN_EXEC_BUTTON = "Execute login";
 
 	public static final String EVENT_LABEL_CREATE_ACCOUNT_EXEC_BUTTON = "Execute create account";
 
-	public static final String EVENT_LABEL_TOC_BUTTON = "Terms of service";
+	public static final String EVENT_LABEL_TOS_BUTTON = "Terms of service";
 
 	public static final String EVENT_LABEL_PRIVACY_BUTTON = "Privacy policy";
 
@@ -91,6 +103,18 @@ public class TrackingUtil {
 	public static final String EVENT_LABEL_FRIEND_LIST_SIGN_OUT = "Sign out";
 
 	public static final String EVENT_LABEL_CONVERSATION_SEND_BUTTON = "Send conversation message";
+
+	public static final String EVENT_LABEL_HELP_ABOUT = "About";
+
+	public static final String EVENT_LABEL_HELP_PRIVACY = "Privacy policy";
+
+	public static final String EVENT_LABEL_HELP_TOS = "Teams of service";
+
+	public static final String EVENT_LABEL_CONTACT = "Contact to us";
+	
+	public static final String EVENT_LABEL_CONTACT_LIST = "Contct list";
+	
+	public static final String EVENT_LABEL_INPUT_MESSAGE = "Input message";
 
 	/**
 	 * Start tracking.

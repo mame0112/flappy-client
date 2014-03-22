@@ -3,6 +3,7 @@ package com.mame.lcom;
 import com.google.android.gcm.GCMRegistrar;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.TrackingUtil;
 
 import android.app.Application;
 import android.content.res.Configuration;
@@ -15,6 +16,9 @@ public class FlappyApplication extends Application {
 	@Override
 	public void onCreate() {
 		DbgUtil.showDebug(TAG, "onCreate");
+
+		// Track device information
+		TrackingUtil.trackModel(getApplicationContext());
 
 		// Check for device manifest
 		GCMRegistrar.checkDevice(getApplicationContext());

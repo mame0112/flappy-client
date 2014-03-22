@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.util.TrackingUtil;
 
 public class FlappyAboutActivity extends Activity {
 
@@ -21,6 +22,18 @@ public class FlappyAboutActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		TrackingUtil.trackActivityStart(this);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		TrackingUtil.trackActivityStop(this);
 	}
 
 	@Override

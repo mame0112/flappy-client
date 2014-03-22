@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.TrackingUtil;
 
 public class HelpActivity extends Activity {
 
@@ -55,23 +56,37 @@ public class HelpActivity extends Activity {
 				switch (position) {
 				// What is this
 				case 0:
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_HELP,
+							TrackingUtil.EVENT_ACTION_HELP,
+							TrackingUtil.EVENT_LABEL_HELP_ABOUT, 1);
+
 					openFlappyAbout();
 					break;
 				// Privacy policy
 				case 1:
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_HELP,
+							TrackingUtil.EVENT_ACTION_HELP,
+							TrackingUtil.EVENT_LABEL_HELP_PRIVACY, 1);
+
 					openPrivacyPolicy();
 					break;
 				// Terms of service
 				case 2:
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_HELP,
+							TrackingUtil.EVENT_ACTION_HELP,
+							TrackingUtil.EVENT_LABEL_HELP_TOS, 1);
 					openTermsOfService();
 					break;
 				// Contact
 				case 3:
-					Intent intent = new Intent(getApplicationContext(),
-							ContactToUsActivity.class);
-					intent.setAction(Intent.ACTION_VIEW);
-					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent);
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_HELP,
+							TrackingUtil.EVENT_ACTION_HELP,
+							TrackingUtil.EVENT_LABEL_CONTACT, 1);
+					openContactToUs();
 					break;
 				default:
 					break;
@@ -100,6 +115,14 @@ public class HelpActivity extends Activity {
 		Uri uri = Uri.parse(LcomConst.BASE_URL + LcomConst.TOC_AUTOHRITY);
 		Intent i = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(i);
+	}
+
+	private void openContactToUs() {
+		Intent intent = new Intent(getApplicationContext(),
+				ContactToUsActivity.class);
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		startActivity(intent);
 	}
 
 	@Override

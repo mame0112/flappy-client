@@ -193,7 +193,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 				TrackingUtil.trackEvent(getApplicationContext(),
 						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
 						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
-						TrackingUtil.EVENT_LABEL_TOC_BUTTON, 1);
+						TrackingUtil.EVENT_LABEL_TOS_BUTTON, 1);
 				CreateAccountActivityUtil.openURL(getApplicationContext(),
 						LcomConst.TOC_AUTOHRITY);
 			}

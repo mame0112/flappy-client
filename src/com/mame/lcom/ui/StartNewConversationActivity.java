@@ -156,6 +156,13 @@ public class StartNewConversationActivity extends Activity implements
 			@Override
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "Start conversation button pressed");
+
+				// Track Input message button pressed event
+				TrackingUtil.trackEvent(getApplicationContext(),
+						TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
+						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
+						TrackingUtil.EVENT_LABEL_INPUT_MESSAGE, 1);
+
 				SpannableStringBuilder sbMailAddress = (SpannableStringBuilder) mMailEditText
 						.getText();
 				final String mailAddress = sbMailAddress.toString();
@@ -184,6 +191,13 @@ public class StartNewConversationActivity extends Activity implements
 			@Override
 			public void onClick(View view) {
 				DbgUtil.showDebug(TAG, "contacts list button pressed");
+
+				// Track Contact list button pressed event
+				TrackingUtil.trackEvent(getApplicationContext(),
+						TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
+						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
+						TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
+
 				StartNewConversationActivityUtil.startActivityForContactsList(
 						mActivity, REQUEST_CODE);
 
@@ -524,7 +538,7 @@ public class StartNewConversationActivity extends Activity implements
 	// mListener = listener;
 	// }
 
-//	public interface StartNewConversationListener {
-//		public void onNotifyNewFriendAdded();
-//	}
+	// public interface StartNewConversationListener {
+	// public void onNotifyNewFriendAdded();
+	// }
 }

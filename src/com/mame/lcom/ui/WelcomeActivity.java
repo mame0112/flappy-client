@@ -32,8 +32,6 @@ public class WelcomeActivity extends Activity {
 		final int userId = PreferenceUtil.getUserId(getApplicationContext());
 		DbgUtil.showDebug(TAG, "userName: " + userName + " userId: " + userId);
 
-		TrackingUtil.trackModel(getApplicationContext());
-
 		// If the user has already logged in to this service before
 		if (userName != null && userId != LcomConst.NO_USER) {
 			LoginActivityUtil

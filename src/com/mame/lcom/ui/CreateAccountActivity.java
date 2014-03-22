@@ -84,6 +84,13 @@ public class CreateAccountActivity extends Activity implements
 			@Override
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "Thumbnail button pressed");
+
+				// Track thumbnail imageView tapped event
+				TrackingUtil.trackEvent(getApplicationContext(),
+						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
+						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
+						TrackingUtil.EVENT_LABEL_CREATE_THUMBNAIL_BUTTON, 1);
+
 				CreateAccountActivityUtil.launchPhotoPicker(activity,
 						PHOTO_REQUEST_CODE);
 			}
@@ -115,6 +122,13 @@ public class CreateAccountActivity extends Activity implements
 			@Override
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "next button pressed");
+
+				// Track next button tapped event
+				TrackingUtil.trackEvent(getApplicationContext(),
+						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
+						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
+						TrackingUtil.EVENT_LABEL_CREATE_NEXT_BUTTON, 1);
+
 				SpannableStringBuilder sbUserName = (SpannableStringBuilder) mUserNameEditText
 						.getText();
 				String userName = sbUserName.toString();
