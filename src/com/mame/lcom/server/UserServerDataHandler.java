@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import com.mame.lcom.ui.ConversationActivityUtil;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.TimeUtil;
+import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
 
@@ -47,9 +49,13 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	private LcomConst.ServerRequestContext mRequestContext = LcomConst.ServerRequestContext.none;
 
-	public UserServerDataHandler() {
+	private Context mContext = null;
+
+	public UserServerDataHandler(Context context) {
+		// public UserServerDataHandler() {
 		mWebAPI = new LcomWebAPI();
 		mWebAPI.setListener(this);
+		mContext = context;
 	}
 
 	/**
@@ -96,12 +102,13 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 			String value[] = { origin, String.valueOf(userId), userName,
 					String.valueOf(targetUserId), targetUserName,
 					parsedMessage, date };
-			// TODO Should we use servlet with request new user data case?
 			mWebAPI.sendData(LcomConst.SERVLET_NAME_SEND_ADD_MESSAGE, key,
 					value);
 			return true;
 		} else {
 			DbgUtil.showDebug(TAG, "parsed message is null");
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"parsedMessage is null");
 			return false;
 		}
 	}
@@ -183,6 +190,9 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 						value);
 			}
 
+		} else {
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"targetUserIds is null");
 		}
 
 	}
@@ -267,17 +277,22 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 							notifyNewFriendThumbnails(null);
 						}
 					} else {
-
 						handleErrorCase();
-						// mDataListener.notifyNewServerUserDataSet(null);
+						TrackingUtil.trackExceptionMessage(mContext, TAG,
+								"origin is unexpected case: " + origin);
+						mDataListener.notifyNewServerUserDataSet(null);
 					}
 				} else {
 					handleErrorCase();
-					// mDataListener.notifyNewServerUserDataSet(null);
+					TrackingUtil.trackExceptionMessage(mContext, TAG,
+							"origin is null");
+					mDataListener.notifyNewServerUserDataSet(null);
 				}
 			} catch (IndexOutOfBoundsException e) {
 				mDataListener.notifyNewServerUserDataSet(null);
 				DbgUtil.showDebug(TAG,
+						"IndexOutOfBoundsException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
 						"IndexOutOfBoundsException: " + e.getMessage());
 
 				// Based on request code, we will handle error.
@@ -285,7 +300,9 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 			}
 		} else {
 			handleErrorCase();
-			// mDataListener.notifyNewServerUserDataSet(null);
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"respList is null or size is 0");
+			mDataListener.notifyNewServerUserDataSet(null);
 		}
 
 		// Initialize request context
@@ -333,10 +350,17 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 			} catch (IndexOutOfBoundsException e) {
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"IndexOutOfBoundsException: " + e.getMessage());
 			} catch (NumberFormatException e) {
 				DbgUtil.showDebug(TAG,
 						"NumberFormatException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"NumberFormatException: " + e.getMessage());
 			}
+		} else {
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"respList is null");
 		}
 
 		return newUserData;
@@ -372,31 +396,15 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 					}
 
 				}
-
+				return result;
 			}
-			return result;
+		} else {
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"respList is null");
 		}
 
 		return null;
 	}
-
-	// private Bitmap convertString2Bitmap(String original) {
-	// Bitmap bitmap = null;
-	// if (original != null) {
-	// try {
-	// byte[] bytes = original.getBytes("UTF-8");
-	// if (bytes != null) {
-	// bitmap = BitmapFactory.decodeByteArray(bytes, 0,
-	// bytes.length);
-	// }
-	// } catch (UnsupportedEncodingException e) {
-	// DbgUtil.showDebug(TAG,
-	// "UnsupportedEncodingException: " + e.getMessage());
-	// }
-	// }
-	//
-	// return bitmap;
-	// }
 
 	private ArrayList<MessageItemData> parseResponseForConveersation(
 			String response) {
@@ -493,6 +501,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
+		TrackingUtil.trackExceptionMessage(mContext, TAG, "API call timeout");
 		handleErrorCase();
 	}
 
@@ -527,9 +536,14 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 				break;
 			default:
 				DbgUtil.showDebug(TAG, "requestContext is unknown case");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"request context is unknown");
 				break;
 			// mDataListener.notifyAPICallTimeOut(mRequestContext);
 			}
+		} else {
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"mDataListener is null");
 		}
 	}
 
@@ -545,13 +559,6 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 		public void notifyNewUserThumbnail(
 				List<HashMap<Integer, Bitmap>> thumbnails);
-
-		// /**
-		// * This API will be called when API timeout occurrd when API call for
-		// * the server.
-		// */
-		// public void notifyAPICallTimeOut(
-		// LcomConst.ServerRequestContext requestContext);
 	}
 
 }

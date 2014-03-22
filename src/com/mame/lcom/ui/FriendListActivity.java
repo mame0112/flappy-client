@@ -3,12 +3,10 @@ package com.mame.lcom.ui;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,13 +34,12 @@ import com.mame.lcom.notification.NewMessageNotification;
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
-import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
 
 public class FriendListActivity extends Activity implements
-		FriendDataManagerListener, LcomWebAPIListener {
+		FriendDataManagerListener {
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
 
@@ -97,10 +94,6 @@ public class FriendListActivity extends Activity implements
 				getString(R.string.str_friendlist_progress_title),
 				getString(R.string.str_friendlist_progress_desc));
 
-		// ActionBar actionBar = getActionBar();
-		// actionBar.setDisplayShowHomeEnabled(true);
-		// actionBar.setDisplayHomeAsUpEnabled(true);
-
 		FriendDataManager.initializeFriendDataManager(getApplicationContext());
 		mManager = FriendDataManager.getInstance();
 		mManager.setFriendDataManagerListener(FriendListActivity.this);
@@ -125,33 +118,6 @@ public class FriendListActivity extends Activity implements
 						mActivity, mUserId, mUserName, position,
 						data.getFriendId(), data.getFriendName(),
 						data.getThumbnail());
-				// if (mNewUserData != null) {
-				// ArrayList<String> newMessages = new ArrayList<String>();
-				// ArrayList<String> newDates = new ArrayList<String>();
-				// for (FriendListUpdateData updateData : mNewUserData) {
-				// if (updateData != null) {
-				// int friendUserId = updateData
-				// .getNesMassageSenderId();
-				// if (friendUserId == data.getFriendId()) {
-				// newMessages.add(updateData.getNewMessage());
-				// newDates.add(updateData.getNewMessageDate());
-				// }
-				// }
-				// }
-				// FriendListActivityUtil.startActivityConversationViewByPos(
-				// mActivity, mUserId, mUserName, position,
-				// data.getFriendId(), data.getFriendName());
-				//
-				// } else {
-				// // FriendListActivityUtil.startActivityConversationViewByPos(
-				// // mActivity, mUserId, mUserName, position,
-				// // data.getFriendId(), data.getFriendName(), null,
-				// // null);
-				// FriendListActivityUtil.startActivityConversationViewByPos(
-				// mActivity, mUserId, mUserName, position,
-				// data.getFriendId(), data.getFriendName());
-				//
-				// }
 			}
 		});
 
@@ -274,7 +240,8 @@ public class FriendListActivity extends Activity implements
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
-
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"FriendDataManagerException: " + e.getMessage());
 		}
 	}
 
@@ -294,7 +261,6 @@ public class FriendListActivity extends Activity implements
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
 			}
-			DbgUtil.showDebug(TAG, "AA");
 			mUserData = userData;
 			ArrayList<FriendListData> userDatas = mergeNewAndPresentData(mNewUserData);
 			checkAndShowFirstAddButton();
@@ -399,29 +365,29 @@ public class FriendListActivity extends Activity implements
 				DbgUtil.showDebug(TAG,
 						"newUserData size: " + newUserData.size());
 
-				DbgUtil.showDebug(TAG, "old user data");
-				for (FriendListData data : mUserData) {
-					DbgUtil.showDebug(TAG, "friendId: " + data.getFriendId());
-					DbgUtil.showDebug(TAG,
-							"friendName: " + data.getFriendName());
-					DbgUtil.showDebug(TAG,
-							"lastMessage: " + data.getLastMessage());
-				}
+				// DbgUtil.showDebug(TAG, "old user data");
+				// for (FriendListData data : mUserData) {
+				// DbgUtil.showDebug(TAG, "friendId: " + data.getFriendId());
+				// DbgUtil.showDebug(TAG,
+				// "friendName: " + data.getFriendName());
+				// DbgUtil.showDebug(TAG,
+				// "lastMessage: " + data.getLastMessage());
+				// }
 
-				DbgUtil.showDebug(TAG, "New user data");
-				for (FriendListUpdateData data : newUserData) {
-					DbgUtil.showDebug(TAG,
-							"senderId: " + data.getNesMassageSenderId());
-					DbgUtil.showDebug(TAG,
-							"targetId: " + data.getNesMassageTargetId());
-					DbgUtil.showDebug(TAG,
-							"senderName: " + data.getNewMessageSenderName());
-					DbgUtil.showDebug(TAG,
-							"targetName: " + data.getNewMessageTargetName());
-					DbgUtil.showDebug(TAG,
-							"new message: " + data.getNewMessage());
-					DbgUtil.showDebug(TAG, "date: " + data.getNewMessageDate());
-				}
+				// DbgUtil.showDebug(TAG, "New user data");
+				// for (FriendListUpdateData data : newUserData) {
+				// DbgUtil.showDebug(TAG,
+				// "senderId: " + data.getNesMassageSenderId());
+				// DbgUtil.showDebug(TAG,
+				// "targetId: " + data.getNesMassageTargetId());
+				// DbgUtil.showDebug(TAG,
+				// "senderName: " + data.getNewMessageSenderName());
+				// DbgUtil.showDebug(TAG,
+				// "targetName: " + data.getNewMessageTargetName());
+				// DbgUtil.showDebug(TAG,
+				// "new message: " + data.getNewMessage());
+				// DbgUtil.showDebug(TAG, "date: " + data.getNewMessageDate());
+				// }
 
 				// Set number of new message (Merge local and sever data)
 				ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
@@ -742,21 +708,6 @@ public class FriendListActivity extends Activity implements
 		}
 
 		return friendDatas;
-	}
-
-	@Override
-	public void onResponseReceived(List<String> respList) {
-		DbgUtil.showDebug(TAG, "onResponseReceived");
-	}
-
-	@Override
-	public void onAPITimeout() {
-		DbgUtil.showDebug(TAG, "onAPITimeout");
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			mProgressDialog.dismiss();
-		}
-		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
-
 	}
 
 	@Override

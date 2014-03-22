@@ -237,6 +237,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 			parseAndHandleResponse(respList);
 		} else {
 			DbgUtil.showDebug(TAG, "respList is null");
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"respList is null");
 		}
 	}
 
@@ -302,9 +304,21 @@ public class CreateAccountCompleteActivity extends Activity implements
 						break;
 
 					}
+				} else {
+					DbgUtil.showDebug(TAG, "result is null");
+					FeedbackUtil
+							.showFeedbackToast(
+									getApplicationContext(),
+									mHandler,
+									getString(R.string.str_create_account_fail_server_error));
+
+					TrackingUtil.trackExceptionMessage(getApplicationContext(),
+							TAG, "result is null");
 				}
 			} else {
 				DbgUtil.showDebug(TAG, "invalid origin");
+				TrackingUtil.trackExceptionMessage(getApplicationContext(),
+						TAG, "Illegal origin");
 				FeedbackUtil
 						.showFeedbackToast(
 								getApplicationContext(),
@@ -313,6 +327,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 			}
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
+					"IndexOutOfBoundsException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHandler,
 					getString(R.string.str_create_account_fail_server_error));
@@ -326,6 +342,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 			mProgressDialog.getDialog().dismiss();
 		}
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
+		TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+				"onAPITimeout");
 	}
 
 	private boolean checkAndCreateAccountOrShowError(Activity activity) {

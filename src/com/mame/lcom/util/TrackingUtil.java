@@ -15,19 +15,19 @@ public class TrackingUtil {
 
 	private final static String TAG_TRACKING = LcomConst.TAG + "/TrackingUtil";
 
-	/** Custom variable 1(Model's name). */
+	/** Custom variable 1 (Model's name). */
 	private static final int CUSTOM_VAR_INDEX_1 = 1;
 
-	/** Custom variable 3(The number of registered friend). */
+	/** Custom variable 2 (The number of registered friend). */
 	private static final int CUSTOM_VAR_INDEX_2 = 2;
 
-	/** Custom variable 4(The number of new message in one time). */
+	/** Custom variable 3 (The number of new message in one time). */
 	private static final int CUSTOM_VAR_INDEX_3 = 3;
 
-	/** Custom variable 5(The number of character in one time). */
+	/** Custom variable 4 (The number of character in one time). */
 	private static final int CUSTOM_VAR_INDEX_4 = 4;
 
-	/** Empty */
+	/** Custome variable5 (Exception that is caught but we need to know) */
 	private static final int CUSTOM_VAR_INDEX_5 = 5;
 
 	public static final String EVENT_CATEGORY_WELCOME = "Welcome view";
@@ -111,9 +111,9 @@ public class TrackingUtil {
 	public static final String EVENT_LABEL_HELP_TOS = "Teams of service";
 
 	public static final String EVENT_LABEL_CONTACT = "Contact to us";
-	
+
 	public static final String EVENT_LABEL_CONTACT_LIST = "Contct list";
-	
+
 	public static final String EVENT_LABEL_INPUT_MESSAGE = "Input message";
 
 	/**
@@ -205,6 +205,23 @@ public class TrackingUtil {
 						.createAppView()
 						.set(Fields.customDimension(CUSTOM_VAR_INDEX_4),
 								String.valueOf(numOfChar)).build());
+	}
+
+	/**
+	 * Tracks content of caught errors (It is not a bug, but we need to know to
+	 * improve quolity)
+	 */
+	public static void trackExceptionMessage(Context context,
+			String identifier, String errorMessage) {
+
+		DbgUtil.showDebug(TAG_TRACKING, "trackExceptionMessage");
+
+		String error = identifier + "/" + errorMessage;
+
+		EasyTracker.getInstance(context).send(
+				MapBuilder.createAppView()
+						.set(Fields.customDimension(CUSTOM_VAR_INDEX_5), error)
+						.build());
 	}
 
 	/**

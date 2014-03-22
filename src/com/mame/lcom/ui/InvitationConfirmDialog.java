@@ -36,6 +36,7 @@ import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
+import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.exception.WebAPIException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
@@ -71,11 +72,6 @@ public class InvitationConfirmDialog extends DialogFragment implements
 
 	}
 
-	// public void setTargetUserInfo(int targetUserId, String targetUserName) {
-	// mTargetUserId = targetUserId;
-	// mTargetUserName = targetUserName;
-	// }
-
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		final String userId = getArguments().getString(LcomConst.EXTRA_USER_ID);
@@ -95,8 +91,8 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				+ targetUserName);
 
 		mManager = FriendDataManager.getInstance();
-		mManager.initializeFriendDataManager(getActivity()
-				.getApplicationContext());
+
+		mManager.initializeFriendDataManager(getActivity());
 		mManager.setFriendDataManagerListener(this);
 
 		LayoutInflater factory = LayoutInflater.from(getActivity()
@@ -287,10 +283,14 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				// length.
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(getActivity(), TAG,
+						"IndexOutOfBoundsException: " + e.getMessage());
 				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 						R.string.str_generic_unknown_error);
 			} catch (NumberFormatException e) {
 				DbgUtil.showDebug(TAG,
+						"NumberFormatException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(getActivity(), TAG,
 						"NumberFormatException: " + e.getMessage());
 				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 						R.string.str_generic_unknown_error);
@@ -316,12 +316,6 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		}).start();
 	}
 
-	private void saveNewData() {
-		FriendDataManager manager = FriendDataManager.getInstance();
-		manager.initializeFriendDataManager(getActivity());
-
-	}
-
 	private void showFeedbackToast(int resId) {
 		StartNewConversationActivityUtil.showFeedbackToast(getActivity(),
 				mHandler, getActivity().getString(resId));
@@ -332,6 +326,9 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		DbgUtil.showDebug(TAG, "onAPITimeout");
 		FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 				R.string.str_generic_server_time_out);
+
+		TrackingUtil.trackExceptionMessage(getActivity(), TAG,
+				"API call timeout");
 
 		new Thread(new Runnable() {
 			@Override

@@ -347,24 +347,9 @@ public class StartNewConversationActivity extends Activity implements
 					sendDataForTargetUser(mUserId, mUserName, address);
 				} catch (WebAPIException e) {
 					DbgUtil.showDebug(TAG, "WebAPIException: " + e.getMessage());
+					TrackingUtil.trackExceptionMessage(getApplicationContext(),
+							TAG, "WebAPIException: " + e.getMessage());
 				}
-				// showMessageInputDialog();
-				// if (message != null) {
-				// // Send invitaion message
-				// try {
-				// sendInvitationMessage(mUserId, mUserName,
-				// mailAddress, message);
-				// } catch (WebAPIException e) {
-				// DbgUtil.showDebug(TAG,
-				// "WebAPIException: " + e.getMessage());
-				// }
-				//
-				// } else {
-				// // If message if null
-				// mResultView.setVisibility(View.VISIBLE);
-				// mResultView
-				// .setText(R.string.str_invitation_address_null);
-				// }
 			} else {
 				DbgUtil.showDebug(TAG, "mail address character check failed");
 				// If mail address contains invalid character for mail
@@ -465,13 +450,32 @@ public class StartNewConversationActivity extends Activity implements
 					default:
 						FeedbackUtil.showFeedbackToast(getApplicationContext(),
 								mHanler, R.string.str_invitation_unknown_error);
+						TrackingUtil
+								.trackExceptionMessage(getApplicationContext(),
+										TAG,
+										"Unknown error - switch sentence is unexpected case");
 						break;
 					}
+				} else {
+					FeedbackUtil.showFeedbackToast(getApplicationContext(),
+							mHanler, R.string.str_invitation_unknown_error);
+					TrackingUtil.trackExceptionMessage(getApplicationContext(),
+							TAG, "result is null");
 				}
 			} catch (IndexOutOfBoundsException e) {
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(getApplicationContext(),
+						TAG, "IndexOutOfBoundsException: " + e.getMessage());
+				FeedbackUtil.showFeedbackToast(getApplicationContext(),
+						mHanler, R.string.str_invitation_unknown_error);
 			}
+		} else {
+			DbgUtil.showDebug(TAG, "respList is null");
+			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHanler,
+					R.string.str_invitation_unknown_error);
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"respList is null");
 		}
 
 		// Dismiss dialog
@@ -513,6 +517,8 @@ public class StartNewConversationActivity extends Activity implements
 			DbgUtil.showDebug(TAG, "respList is null");
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHanler,
 					R.string.str_invitation_unknown_error);
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"respList is null");
 		}
 
 	}
@@ -520,6 +526,10 @@ public class StartNewConversationActivity extends Activity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
+		FeedbackUtil.showFeedbackToast(getApplicationContext(), mHanler,
+				R.string.str_invitation_unknown_error);
+		TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+				"API call timeout");
 
 	}
 
@@ -532,13 +542,4 @@ public class StartNewConversationActivity extends Activity implements
 		setResult(RESULT_OK, data);
 		finish();
 	}
-
-	// public void setStartNewConversationListener(
-	// StartNewConversationListener listener) {
-	// mListener = listener;
-	// }
-
-	// public interface StartNewConversationListener {
-	// public void onNotifyNewFriendAdded();
-	// }
 }

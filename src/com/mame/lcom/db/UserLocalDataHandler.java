@@ -26,6 +26,7 @@ import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.TimeUtil;
+import com.mame.lcom.util.TrackingUtil;
 
 public class UserLocalDataHandler {
 
@@ -91,8 +92,15 @@ public class UserLocalDataHandler {
 					toUserIdInt = Integer.valueOf(toUserId);
 					DbgUtil.showDebug(TAG, "toUserId: " + toUserId);
 				}
-				// try {
-				date2 = Long.valueOf(date);
+				try {
+					date2 = Long.valueOf(date);
+				} catch (NumberFormatException e) {
+					DbgUtil.showDebug(TAG,
+							"NumberFormatException: " + e.getMessage());
+					TrackingUtil.trackExceptionMessage(mContext, TAG,
+							"NumberFormatException for getLocalMessageDataset: "
+									+ e.getMessage());
+				}
 				// date2 = new SimpleDateFormat(LcomConst.DATE_PATTERN)
 				// .parse(date);
 				// } catch (ParseException e) {
@@ -103,11 +111,14 @@ public class UserLocalDataHandler {
 				// String toUserName, String message, long postedDate
 
 				MessageItemData data = new MessageItemData(fromUserIdInt,
-						toUserIdInt, fromUserName, toUserName, message, date2, null);
+						toUserIdInt, fromUserName, toUserName, message, date2,
+						null);
 				datas.add(data);
 			}
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG, "SQLExeption: "
+					+ e.getMessage());
 		}
 		return datas;
 	}
@@ -179,11 +190,23 @@ public class UserLocalDataHandler {
 				// }
 			} catch (SQLException e) {
 				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for getLocalUserDataset cursor move: "
+								+ e.getMessage());
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
 			}
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			TrackingUtil.trackExceptionMessage(
+					mContext,
+					TAG,
+					"SQLExeption for getLocalUserDataset query: "
+							+ e.getMessage());
 			throw new UserLocalDataHandlerException("SQLException:"
 					+ e.getMessage());
 		}
@@ -227,6 +250,8 @@ public class UserLocalDataHandler {
 			if (id < 0) {
 				// Failed.
 				DbgUtil.showDebug(TAG, "Failed to insert data into Message DB");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"illegal id for addNewMessageAndFriendIfNecessary - 1");
 				throw new UserLocalDataHandlerException(
 						"id is less than 0. Failed to insert data");
 			}
@@ -244,6 +269,8 @@ public class UserLocalDataHandler {
 				// Failed.
 				DbgUtil.showDebug(TAG,
 						"Failed to insert data into Friendship DB");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"illegal id for addNewMessageAndFriendIfNecessary - 2");
 				throw new UserLocalDataHandlerException(
 						"id is less than 0. Failed to insert data");
 			}
@@ -253,6 +280,9 @@ public class UserLocalDataHandler {
 
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for  for addNewMessageAndFriendIfNecessary insert: "
+							+ e.getMessage());
 			throw new UserLocalDataHandlerException("SQLException: "
 					+ e.getMessage());
 		} finally {
@@ -264,6 +294,9 @@ public class UserLocalDataHandler {
 			} catch (SQLException e) {
 				DbgUtil.showDebug(TAG,
 						"SQLException: Database is null" + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption for  for addNewMessageAndFriendIfNecessary endTransition: "
+								+ e.getMessage());
 				throw new UserLocalDataHandlerException("SQLException: "
 						+ e.getMessage());
 			}
@@ -335,6 +368,8 @@ public class UserLocalDataHandler {
 			if (id < 0) {
 				// Failed.
 				DbgUtil.showDebug(TAG, "Failed to insert data into Message DB");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"illegal id for addNewMessage");
 			}
 
 			// Commit change
@@ -342,6 +377,8 @@ public class UserLocalDataHandler {
 
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for addNewMessage insert: " + e.getMessage());
 		} finally {
 			try {
 				if (sDatabase != null) {
@@ -351,6 +388,11 @@ public class UserLocalDataHandler {
 			} catch (SQLException e) {
 				DbgUtil.showDebug(TAG,
 						"SQLException: Database is null" + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for addNewMessage endTransition: "
+								+ e.getMessage());
 			}
 		}
 	}
@@ -445,11 +487,15 @@ public class UserLocalDataHandler {
 						// Failed.
 						DbgUtil.showDebug(TAG,
 								"Failed to insert data into Message DB");
+						TrackingUtil.trackExceptionMessage(mContext, TAG,
+								"illegal id for storeFriendThumbnails");
 					}
 				}
 			}
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for storeFriendThumbnails: " + e.getMessage());
 		}
 	}
 

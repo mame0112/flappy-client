@@ -144,6 +144,9 @@ public class CreateAccountActivity extends Activity implements
 					} catch (WebAPIException e) {
 						DbgUtil.showDebug(TAG,
 								"WebAPIException: " + e.getMessage());
+						TrackingUtil.trackExceptionMessage(
+								getApplicationContext(), TAG,
+								"WebAPIException: " + e.getMessage());
 					}
 				}
 
@@ -214,6 +217,8 @@ public class CreateAccountActivity extends Activity implements
 				}
 			} else {
 				DbgUtil.showDebug(TAG, "PHOTO_REQUEST_CODE failed");
+				TrackingUtil.trackExceptionMessage(getApplicationContext(),
+						TAG, "PHOTO_REQUEST_CODE failed");
 			}
 			break;
 		case REQUEST_CROP_PICK:
@@ -226,55 +231,12 @@ public class CreateAccountActivity extends Activity implements
 				}
 			} else {
 				DbgUtil.showDebug(TAG, "REQUESTS_CROP_PICK failed");
+				TrackingUtil.trackExceptionMessage(getApplicationContext(),
+						TAG, "REQUESTS_CROP_PICK failed");
 			}
 			break;
 		}
 	}
-
-	// private void checkUserNameOrShowError(Activity activity) {
-	// DbgUtil.showDebug(TAG, "checkAndCreateAccountOrShowError");
-	// SpannableStringBuilder sbUsername = (SpannableStringBuilder)
-	// mUserNameEditText
-	// .getText();
-	// String userName = sbUsername.toString();
-	// String result = checkAndShowErrorForUserName(userName);
-	// if (result == null) {
-	// DbgUtil.showDebug(TAG, "OK for mail address");
-	// try {
-	// sendCreateAccountData(userName, password,
-	// mailAddress);
-	// } catch (WebAPIException e) {
-	// DbgUtil.showDebug(TAG, e.getMessage());
-	// }
-	// } else {
-	// DbgUtil.showDebug(TAG, "Invalid mail address");
-	// mCreateResultView.setVisibility(View.VISIBLE);
-	// mCreateResultView.setText(mailResult);
-	// }
-	// } else {
-	// // Password is not same between first and second
-	// DbgUtil.showDebug(TAG, "Password is not same");
-	// mCreateResultView.setVisibility(View.VISIBLE);
-	// mCreateResultView
-	// .setText(R.string.str_create_account_fail_invalid_password);
-	// }
-	// } else {
-	// // Passward second time is invalid.
-	// mCreateResultView.setVisibility(View.VISIBLE);
-	// mCreateResultView.setText(resultPassword);
-	// DbgUtil.showDebug(TAG, "Password is Invalid.");
-	// }
-	// } else {
-	// mCreateResultView.setVisibility(View.VISIBLE);
-	// mCreateResultView.setText(resultPassword);
-	// DbgUtil.showDebug(TAG, "Password is Invalid.");
-	// }
-	// } else {
-	// mCreateResultView.setVisibility(View.VISIBLE);
-	// mCreateResultView.setText(result);
-	// DbgUtil.showDebug(TAG, "User name is Invalid.");
-	// }
-	// }
 
 	private String checkAndShowErrorForUserName(String userName) {
 		String result = null;
@@ -308,6 +270,8 @@ public class CreateAccountActivity extends Activity implements
 			parseAndHandleResponse(respList);
 		} else {
 			DbgUtil.showDebug(TAG, "respList is null");
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"respList is null");
 		}
 	}
 
@@ -358,6 +322,8 @@ public class CreateAccountActivity extends Activity implements
 			}
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
+					"IndexOutOfBoundsException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
 			showErrorView(getString(R.string.str_create_account_fail_server_error));
 		}

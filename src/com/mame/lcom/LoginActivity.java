@@ -333,6 +333,11 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 										mHandler,
 										getString(R.string.str_login_login_fail_no_user));
 						break;
+					default:
+						TrackingUtil.trackExceptionMessage(
+								getApplicationContext(), TAG,
+								"illegal origin - switch is default");
+						break;
 					}
 				} else {
 					DbgUtil.showDebug(TAG, "invalid result");
@@ -341,9 +346,15 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 									getApplicationContext(),
 									mHandler,
 									getString(R.string.str_login_login_fail_unknown_error));
+					TrackingUtil.trackExceptionMessage(getApplicationContext(),
+							TAG, "illegal result - result is null");
 				}
 			} else {
 				DbgUtil.showDebug(TAG, "invalid origin");
+				TrackingUtil.trackExceptionMessage(getApplicationContext(),
+						TAG,
+						"illegal origin - origin is null or unexpected case");
+
 				FeedbackUtil.showFeedbackToast(getApplicationContext(),
 						mHandler,
 						getString(R.string.str_login_login_fail_unknown_error));
@@ -351,6 +362,10 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
+
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"IndexOutOfBoundsException: " + e.getMessage());
+
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHandler,
 					getString(R.string.str_login_login_fail_unknown_error));
 		}

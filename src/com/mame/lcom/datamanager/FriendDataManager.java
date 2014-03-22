@@ -20,6 +20,7 @@ import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.server.UserServerDataHandler;
 import com.mame.lcom.server.UserServerDataHandler.UserServerDataListener;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.TrackingUtil;
 
 public class FriendDataManager implements UserServerDataListener,
 		UserLocalDataListener {
@@ -36,16 +37,15 @@ public class FriendDataManager implements UserServerDataListener,
 
 	private Handler mHandler = new Handler();
 
+	private static Context mContext = null;
+
 	public static FriendDataManager getInstance() {
 		return sDataManager;
 	}
 
 	public static void initializeFriendDataManager(Context context) {
-		if (sDataManager != null) {
-			new FriendDataManagerException(
-					"InitializeFriendDataManager should not be called 2 times.");
-		}
-		mServerDataHandler = new UserServerDataHandler();
+		mContext = context;
+		mServerDataHandler = new UserServerDataHandler(context);
 		mServerDataHandler.setFriendListUpdateDataListener(sDataManager);
 		mLocalDataHandler = new UserLocalDataHandler(context);
 		mLocalDataHandler.setUserLocalDataListener(sDataManager);
@@ -152,35 +152,6 @@ public class FriendDataManager implements UserServerDataListener,
 	}
 
 	/**
-	 * Load data for current user
-	 * 
-	 * @param targetUserId
-	 * @throws FriendDataManagerException
-	 */
-	// public void requestDataForCurrentUser(int userId, int targetUserId)
-	// throws FriendDataManagerException {
-	//
-	// if (targetUserId == LcomConst.NO_USER) {
-	// throw new FriendDataManagerException(
-	// "Illegal user id. targetUserId:  " + targetUserId);
-	// }
-	//
-	// // Request server data
-	// mServerDataHandler.requestConversationData(userId, targetUserId);
-	//
-	// // Get local data
-	// new LoadLocalMessagesAsyncTask().execute();
-	// }
-
-	// public void setFriendListAllDataset(int userId, int friendId,
-	// String friendName, int senderId, String message, String date,
-	// byte[] friendThumb) {
-	// DbgUtil.showDebug(TAG, "setFriendAllDataset");
-	// setFriendListPresentDataset(userId, friendId, friendName, senderId,
-	// message, date, null);
-	// }
-
-	/**
 	 * Set data to Local DB. if failed to insert data, return false.
 	 * 
 	 * @param userId
@@ -204,6 +175,8 @@ public class FriendDataManager implements UserServerDataListener,
 			return true;
 		} catch (UserLocalDataHandlerException e) {
 			DbgUtil.showDebug(TAG,
+					"UserLocalDataHandlerException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"UserLocalDataHandlerException: " + e.getMessage());
 			return false;
 		}
@@ -331,6 +304,8 @@ public class FriendDataManager implements UserServerDataListener,
 			} catch (UserLocalDataHandlerException e) {
 				DbgUtil.showDebug(TAG,
 						"UserLocalDataHandlerException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
 				return null;
 			}
 
@@ -395,9 +370,17 @@ public class FriendDataManager implements UserServerDataListener,
 			}
 			break;
 		case LcomConst.SEND_MESSAGE_DATE_CANNOT_BE_PARSED:
+			 TrackingUtil.trackExceptionMessage(mContext, TAG,
+			 "SEND_MESSAGE_DATE_CANNOT_BE_PARSED");
 		case LcomConst.SEND_MESSAGE_UNKNOWN_ERROR:
+			 TrackingUtil.trackExceptionMessage(mContext, TAG,
+			 "SEND_MESSAGE_UNKNOWN_ERROR");
 		case LcomConst.SEND_MESSAGE_CANNOT_BE_SENT_MESSAGE:
+			 TrackingUtil.trackExceptionMessage(mContext, TAG,
+			 "SEND_MESSAGE_CANNOT_BE_SENT_MESSAGE");
 		default:
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"notifyMessageSend switch is unknown case");
 			// mLocalDataHandler.addNewMessage(null);
 			// Because we can't send message due to some reasons. Then, we avoid
 			// to store it to local DB and notify it to the user.

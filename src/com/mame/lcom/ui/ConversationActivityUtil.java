@@ -2,15 +2,19 @@ package com.mame.lcom.ui;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.TrackingUtil;
 
 public class ConversationActivityUtil {
 
 	private final static String TAG = LcomConst.TAG
 			+ "/ConversationActivityUtil";
 
-	public static ArrayList<String> parseMessageBasedOnMaxLength(String message) {
+	public static ArrayList<String> parseMessageBasedOnMaxLength(
+			Context context, String message) {
 		ArrayList<String> result = new ArrayList<String>();
 		if (message != null) {
 			DbgUtil.showDebug(TAG, "message: " + message);
@@ -30,6 +34,10 @@ public class ConversationActivityUtil {
 			}
 		} else {
 			result = null;
+			if (context != null) {
+				TrackingUtil.trackExceptionMessage(context, TAG,
+						"parseMessageBasedOnMaxLength: " + "message is null");
+			}
 		}
 		return result;
 	}
@@ -46,11 +54,10 @@ public class ConversationActivityUtil {
 
 			if (result != null) {
 				// Remove last separator
-				result = result.substring(1, result.length() - 2);
+				result = result.substring(1, result.length()
+						- LcomConst.SEPARATOR.length());
 			}
 		}
-
-		DbgUtil.showDebug(TAG, "result: " + result);
 
 		return result;
 	}

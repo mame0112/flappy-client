@@ -3,7 +3,6 @@ package com.mame.lcom.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -172,9 +171,13 @@ public class ContactListActivity extends Activity implements
 
 		} catch (CursorIndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG, "No contacts: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"CursorIndexOutOfBoundsException: " + e.getMessage());
 			doNoContactsOperation();
 		} catch (StringIndexOutOfBoundsException e2) {
 			DbgUtil.showDebug(TAG, "No contacts: " + e2.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"StringIndexOutOfBoundsException: " + e2.getMessage());
 			doNoContactsOperation();
 		}
 	}
@@ -186,15 +189,6 @@ public class ContactListActivity extends Activity implements
 		finish();
 
 	}
-
-	// private void showConfirmDialog(String name, String address) {
-	// ContactPickerConfirmDialog dialog = new ContactPickerConfirmDialog();
-	// Bundle bundle = new Bundle();
-	// bundle.putString(LcomConst.EXTRA_TARGET_USER_NAME, name);
-	// bundle.putString(LcomConst.EXTRA_TARGET_MAIL_ADDRESS, address);
-	// dialog.setArguments(bundle);
-	// dialog.show(getFragmentManager(), TAG);
-	// }
 
 	private class ContactsListAdapter extends ArrayAdapter<ContactsListData> {
 

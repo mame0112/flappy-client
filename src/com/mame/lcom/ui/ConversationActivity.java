@@ -213,6 +213,8 @@ public class ConversationActivity extends Activity implements
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
+					"FriendDataManagerException: " + e.getMessage());
 		}
 
 	}
@@ -263,7 +265,7 @@ public class ConversationActivity extends Activity implements
 
 		// Store data to local
 		ArrayList<String> parsedMessage = ConversationActivityUtil
-				.parseMessageBasedOnMaxLength(message);
+				.parseMessageBasedOnMaxLength(getApplicationContext(), message);
 
 		if (LcomConst.IS_DEBUG) {
 			for (String msg : parsedMessage) {
@@ -276,6 +278,8 @@ public class ConversationActivity extends Activity implements
 					targetUserName, parsedMessage, date);
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
+					"FriendDataManagerException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
 					"FriendDataManagerException: " + e.getMessage());
 		}
 	}
