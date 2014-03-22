@@ -1,17 +1,23 @@
 package com.mame.lcom;
 
+import java.io.IOException;
+
 import com.google.android.gcm.GCMRegistrar;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 
 public class FlappyApplication extends Application {
 
 	private final String TAG = LcomConst.TAG + "/FlappyApplication";
+
+	private GoogleCloudMessaging mGcm = null;
 
 	@Override
 	public void onCreate() {
@@ -21,18 +27,33 @@ public class FlappyApplication extends Application {
 		TrackingUtil.trackModel(getApplicationContext());
 
 		// Check for device manifest
-		GCMRegistrar.checkDevice(getApplicationContext());
-		GCMRegistrar.checkManifest(getApplicationContext());
+		mGcm = GoogleCloudMessaging.getInstance(this);
+		registerInBackground();
+	}
 
-		String regId = GCMRegistrar.getRegistrationId(getApplicationContext());
-		if (TextUtils.isEmpty(regId)) {
-			DbgUtil.showDebug(TAG, "Not registered");
-			// GCMRegistrar.register(getApplicationContext(), "SENDER_ID");
-			GCMRegistrar
-					.register(getApplicationContext(), LcomConst.PROJECT_ID);
-		} else {
-			DbgUtil.showDebug(TAG, "Already registered: " + regId);
-		}
+	private void registerInBackground() {
+		new AsyncTask<Void, Void, String>() {
+			@Override
+			protected String doInBackground(Void... params) {
+				String msg = "";
+				try {
+					if (mGcm == null) {
+						mGcm = GoogleCloudMessaging
+								.getInstance(getApplicationContext());
+					}
+					String regid = mGcm.register(LcomConst.PROJECT_NUMBER);
+					msg = "Device registered, registration ID=" + regid;
+				} catch (IOException ex) {
+					msg = "Error :" + ex.getMessage();
+				}
+				DbgUtil.showDebug(TAG, "msg: " + msg);
+				return msg;
+			}
+
+			@Override
+			protected void onPostExecute(String msg) {
+			}
+		}.execute(null, null, null);
 	}
 
 	@Override

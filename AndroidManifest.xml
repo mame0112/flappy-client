@@ -98,7 +98,7 @@
         </activity>
 
         <service android:name="com.mame.lcom.gcm.GCMIntentService" />
-
+        <!--
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -109,6 +109,18 @@
                 <category android:name="com.mame.lcom" />
             </intent-filter>
         </receiver>
+        -->
+        <receiver
+            android:name="com.mame.lcom.server.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.mame.lcom" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.mame.lcom.server.GCMIntentService" />
 
         <provider
             android:name="com.mame.lcom.db.DatabaseContentProvider"

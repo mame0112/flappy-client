@@ -179,7 +179,7 @@ public class LcomConst {
 	/**
 	 * GCM Constants
 	 */
-	public final static String PROJECT_ID = "loosecommunication";
+	public final static String PROJECT_NUMBER = "558595405440";
 
 	/**
 	 * Option menu constants
