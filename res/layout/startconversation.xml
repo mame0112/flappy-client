@@ -16,6 +16,7 @@
 
     <TextView
         android:id="@+id/fromContactsDesc"
+        style="@style/GeneralInageDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/add_friend_padding"
@@ -53,6 +54,7 @@
         android:id="@+id/confirmForFromContactsDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+		style="@style/GeneralInageDescription"
         android:layout_marginTop="@dimen/add_friend_padding"
         android:text="@string/str_invitation_confirm_desc" />
 

@@ -30,7 +30,7 @@
 
     <!-- Welcome activity -->
     <string name="str_welcome_title">flappy</string>
-    <string name="str_welcome_desc">Loosely connect with friends\n by to be disappeard message</string>
+    <string name="str_welcome_desc">Stress-less communication with your friend by to be disappeard message.</string>
     <string name="str_welcome_signin_button">Sign in</string>
     <string name="str_welcome_create_account_button">Sign up</string>
     <string name="str_welcome_already_have_account">Already have an account?</string>
@@ -39,7 +39,7 @@
     <!-- Login activity -->
     <string name="str_login_name">Sign in</string>
     <string name="action_settings">Settings</string>
-    <string name="str_login_login_desc">Let\'s login and enjoy!</string>
+    <string name="str_login_login_desc">Please sign in to use.</string>
     <string name="str_login_login_button">Sign in</string>
     <string name="str_login_login_fail_username_null">Please input user name</string>
     <string name="str_login_login_fail_username_invalid_length">User name must be 4- 16 characters</string>
@@ -59,7 +59,7 @@
     <!-- Create account -->
     <string name="str_create_account_title">Create account</string>
     <string name="str_create_account_photo_title">Photo</string>
-    <string name="str_create_account_photo_desc">Yout thumbnail (Optional)</string>
+    <string name="str_create_account_photo_desc">Your thumbnail (Optional)</string>
     <string name="str_create_account_username_hint">User name</string>
     <string name="str_create_account_username_desc">4 - 16 characters</string>
     <string name="str_create_account_password_hint">Password</string>
