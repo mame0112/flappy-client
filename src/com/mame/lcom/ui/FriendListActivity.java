@@ -116,7 +116,7 @@ public class FriendListActivity extends Activity implements
 						+ data.getFriendName());
 				FriendListActivityUtil.startActivityConversationViewByPos(
 						mActivity, mUserId, mUserName, position,
-						data.getFriendId(), data.getFriendName(),
+						data.getFriendId(), data.getFriendName(), data.getMailAddress(),
 						data.getThumbnail());
 			}
 		});

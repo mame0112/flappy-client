@@ -52,6 +52,8 @@ public class ConversationActivity extends Activity implements
 
 	private String mUserName = null;
 
+	private String mMailAddress = null;
+
 	private int mTargetUserId = LcomConst.NO_USER;
 
 	private String mTargetUserName = null;
@@ -96,6 +98,8 @@ public class ConversationActivity extends Activity implements
 			mTargetUserName = intent
 					.getStringExtra(LcomConst.EXTRA_TARGET_USER_NAME);
 			mThumbnail = intent.getParcelableExtra(LcomConst.EXTRA_THUMBNAIL);
+			mMailAddress = intent
+					.getStringExtra(LcomConst.EXTRA_TARGET_MAIL_ADDRESS);
 
 			if (mThumbnail != null) {
 				DbgUtil.showDebug(TAG,
@@ -103,11 +107,20 @@ public class ConversationActivity extends Activity implements
 								+ mThumbnail.getHeight());
 			}
 
-			if (mTargetUserName != null) {
+			if (mTargetUserName != null && !mTargetUserName.equals("null")) {
 				DbgUtil.showDebug(TAG, "mTargetUserName: " + mTargetUserName);
 
 				// Set target user name as activity title
 				setTitle(mTargetUserName);
+			} else {
+				// If target user name is null (could be after invite friend)
+				// Try to show mail address instead of target user name
+				if (mMailAddress != null && !mMailAddress.equals("null")) {
+					setTitle(mMailAddress);
+				} else {
+					// If mail addrss is null as well
+					setTitle(R.string.str_conversation_title);
+				}
 			}
 
 			DbgUtil.showDebug(TAG, "mTargetUserId: " + mTargetUserId);
