@@ -146,17 +146,22 @@ public class ContactListActivity extends Activity implements
 								+ " =? ",
 						new String[] { cursor.getString(columnIndex) }, null);
 				while (cMail.moveToNext()) {
-					DbgUtil.showDebug(
-							TAG,
-							"Mail address: "
-									+ cMail.getString(cMail
-											.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
+					// DbgUtil.showDebug(
+					// TAG,
+					// "Mail address: "
+					// + cMail.getString(cMail
+					// .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
 					data.setMailAddress(cMail.getString(cMail
 							.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
+					DbgUtil.showDebug(TAG,
+							"mail address: " + data.getMailAddress());
 				}
 				cMail.close();
 
-				mContactsListData.add(data);
+				// If mail address is null, we avoid to show it on ListView.
+				if (data != null && data.getMailAddress() != null) {
+					mContactsListData.add(data);
+				}
 
 			}
 
