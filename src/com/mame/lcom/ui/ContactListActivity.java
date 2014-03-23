@@ -146,11 +146,6 @@ public class ContactListActivity extends Activity implements
 								+ " =? ",
 						new String[] { cursor.getString(columnIndex) }, null);
 				while (cMail.moveToNext()) {
-					// DbgUtil.showDebug(
-					// TAG,
-					// "Mail address: "
-					// + cMail.getString(cMail
-					// .getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
 					data.setMailAddress(cMail.getString(cMail
 							.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
 					DbgUtil.showDebug(TAG,

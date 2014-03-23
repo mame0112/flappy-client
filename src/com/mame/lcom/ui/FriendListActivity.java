@@ -116,8 +116,8 @@ public class FriendListActivity extends Activity implements
 						+ data.getFriendName());
 				FriendListActivityUtil.startActivityConversationViewByPos(
 						mActivity, mUserId, mUserName, position,
-						data.getFriendId(), data.getFriendName(), data.getMailAddress(),
-						data.getThumbnail());
+						data.getFriendId(), data.getFriendName(),
+						data.getMailAddress(), data.getThumbnail());
 			}
 		});
 
@@ -274,7 +274,7 @@ public class FriendListActivity extends Activity implements
 			isNewDataAvailable = false;
 
 		} else {
-			DbgUtil.showDebug(TAG, "notifyPresentDataset false");
+			DbgUtil.showDebug(TAG, "isNewDataAvailable false");
 			isExistingDataAvailable = true;
 			mUserData = userData;
 		}
@@ -302,8 +302,8 @@ public class FriendListActivity extends Activity implements
 								// mFriendListData.addAll(userData);
 								// mFriendListData.addAll(userData);
 								if (mAdapter != null) {
-									mAdapter.notifyDataSetChanged();
 									mListView.setAdapter(mAdapter);
+									mAdapter.notifyDataSetChanged();
 								}
 							}
 						});
@@ -365,30 +365,6 @@ public class FriendListActivity extends Activity implements
 				DbgUtil.showDebug(TAG,
 						"newUserData size: " + newUserData.size());
 
-				// DbgUtil.showDebug(TAG, "old user data");
-				// for (FriendListData data : mUserData) {
-				// DbgUtil.showDebug(TAG, "friendId: " + data.getFriendId());
-				// DbgUtil.showDebug(TAG,
-				// "friendName: " + data.getFriendName());
-				// DbgUtil.showDebug(TAG,
-				// "lastMessage: " + data.getLastMessage());
-				// }
-
-				// DbgUtil.showDebug(TAG, "New user data");
-				// for (FriendListUpdateData data : newUserData) {
-				// DbgUtil.showDebug(TAG,
-				// "senderId: " + data.getNesMassageSenderId());
-				// DbgUtil.showDebug(TAG,
-				// "targetId: " + data.getNesMassageTargetId());
-				// DbgUtil.showDebug(TAG,
-				// "senderName: " + data.getNewMessageSenderName());
-				// DbgUtil.showDebug(TAG,
-				// "targetName: " + data.getNewMessageTargetName());
-				// DbgUtil.showDebug(TAG,
-				// "new message: " + data.getNewMessage());
-				// DbgUtil.showDebug(TAG, "date: " + data.getNewMessageDate());
-				// }
-
 				// Set number of new message (Merge local and sever data)
 				ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
 
@@ -398,11 +374,24 @@ public class FriendListActivity extends Activity implements
 
 				mFriendListData.addAll(userDatas);
 
-				// TODO need to display the data.
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								// mFriendListData.addAll(userData);
+								// mFriendListData.addAll(userData);
+								if (mAdapter != null) {
+									mListView.setAdapter(mAdapter);
+									mAdapter.notifyDataSetChanged();
+								}
+							}
+						});
+					}
 
-				if (mAdapter != null) {
-					mAdapter.notifyDataSetChanged();
-				}
+				}).start();
+
 			} else {
 				DbgUtil.showDebug(TAG, "No new friendData");
 				// Nothing to do. (Because no new data)
