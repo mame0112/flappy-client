@@ -40,6 +40,7 @@ import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.exception.WebAPIException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
+import com.mame.lcom.util.LocaleUtil;
 import com.mame.lcom.util.NetworkUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI;
@@ -355,14 +356,18 @@ public class InvitationConfirmDialog extends DialogFragment implements
 			String targetMailAddress, String targetMessage)
 			throws WebAPIException {
 		DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
+		
+		LcomConst.LOCALE_SETTING locale = LocaleUtil.getCurrentLocale();
+		
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
 				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS,
 				LcomConst.SERVLET_MESSAGE_BODY,
 				LcomConst.SERVLET_TARGET_USER_ID,
-				LcomConst.SERVLET_TARGET_USER_NAME };
+				LcomConst.SERVLET_TARGET_USER_NAME,
+				LcomConst.SERVLET_LANGUAGE};
 		String value[] = { origin, userId, userName, targetMailAddress,
-				targetMessage, targetUserId, targetUserName };
+				targetMessage, targetUserId, targetUserName, locale.toString()};
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION_CONFIRMED, key,
 				value);
 	}

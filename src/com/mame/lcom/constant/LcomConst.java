@@ -39,6 +39,8 @@ public class LcomConst {
 	public final static String SERVLET_PASSWORD = "servlet_password";
 
 	public final static String SERVLET_MAILADDRESS = "servet_mailAddress";
+	
+	public final static String SERVLET_LANGUAGE = "servet_language";
 
 	public final static String SERVLET_MESSAGE_BODY = "servlet_message_body";
 
@@ -185,6 +187,13 @@ public class LcomConst {
 	 * Option menu constants
 	 */
 	// public final static int MENU_SIGNOUT = 0;
+
+	/**
+	 * Constants for locale
+	 */
+	public static enum LOCALE_SETTING {
+		ENGLISH, JAPANESE
+	};
 
 	/**
 	 * Debug constants
