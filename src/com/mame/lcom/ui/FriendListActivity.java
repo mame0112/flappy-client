@@ -263,15 +263,43 @@ public class FriendListActivity extends Activity implements
 			}
 			mUserData = userData;
 			ArrayList<FriendListData> userDatas = mergeNewAndPresentData(mNewUserData);
-			checkAndShowFirstAddButton();
 
 			// Initialize
 			mFriendListData.clear();
 
 			mFriendListData.addAll(userDatas);
 
+			checkAndShowFirstAddButton();
+
 			// Initialize flag
 			isNewDataAvailable = false;
+
+			// If Friend list is not null and not 0
+			if (mFriendListData != null && mFriendListData.size() != 0) {
+				DbgUtil.showDebug(TAG, "mFriendListData size: "
+						+ mFriendListData.size());
+				if (mFriendListData != null) {
+
+					// Add new data
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									// mFriendListData.addAll(userData);
+									// mFriendListData.addAll(userData);
+									if (mAdapter != null) {
+										mListView.setAdapter(mAdapter);
+										mAdapter.notifyDataSetChanged();
+									}
+								}
+							});
+						}
+
+					}).start();
+				}
+			}
 
 		} else {
 			DbgUtil.showDebug(TAG, "isNewDataAvailable false");
@@ -286,32 +314,7 @@ public class FriendListActivity extends Activity implements
 		// If new user data have not arrived
 		// if (mNewUserData == null) {
 		// Just show user data.
-		// If Friend list is not null and not 0
-		if (mFriendListData != null && mFriendListData.size() != 0) {
-			DbgUtil.showDebug(TAG,
-					"mFriendListData size: " + mFriendListData.size());
-			if (mFriendListData != null) {
 
-				// Add new data
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								// mFriendListData.addAll(userData);
-								// mFriendListData.addAll(userData);
-								if (mAdapter != null) {
-									mListView.setAdapter(mAdapter);
-									mAdapter.notifyDataSetChanged();
-								}
-							}
-						});
-					}
-
-				}).start();
-			}
-		}
 		// }
 		// else {
 		// DbgUtil.showDebug(TAG, "mNewUserData is not null");
@@ -341,6 +344,60 @@ public class FriendListActivity extends Activity implements
 				mProgressDialog.dismiss();
 			}
 			mNewUserData = newUserData;
+
+			// If server data arrived much faster than Local data
+			if (mUserData == null) {
+				DbgUtil.showDebug(TAG, "mUserData is null");
+				// This is for "1. waiting for local data" or
+				// "2. no friend in local data".
+				// In both cases, nothing to do.
+			} else {
+				// Otherwise (Local data is already available), show New user
+				// data
+				// TODO
+				if (newUserData != null && newUserData.size() != 0) {
+					// If we have more than 1 new item
+					// And newUserData has two patterns. One is sender is myself
+					// and
+					// another one is sender is friend (=targetUser is me)
+					DbgUtil.showDebug(TAG,
+							"newUserData size: " + newUserData.size());
+
+					// Set number of new message (Merge local and sever data)
+					ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
+
+					mFriendListData.addAll(userDatas);
+
+					// if (mFriendListData != null && mFriendListData.size() !=
+					// 0) {
+					checkAndShowFirstAddButton();
+					// }
+
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							mHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									// mFriendListData.addAll(userData);
+									// mFriendListData.addAll(userData);
+									if (mAdapter != null) {
+										mListView.setAdapter(mAdapter);
+										mAdapter.notifyDataSetChanged();
+									}
+								}
+							});
+						}
+
+					}).start();
+
+				} else {
+					DbgUtil.showDebug(TAG, "No new friendData");
+					// Nothing to do. (Because no new data)
+				}
+			}
+			checkAndShowFirstAddButton();
+
 		} else {
 			DbgUtil.showDebug(TAG, "isExistingDataAvailable false");
 			// If local (existing) data is NOT available, set new data as true
@@ -348,56 +405,6 @@ public class FriendListActivity extends Activity implements
 			isNewDataAvailable = true;
 			mNewUserData = newUserData;
 		}
-
-		// If server data arrived much faster than Local data
-		if (mUserData == null) {
-			DbgUtil.showDebug(TAG, "mUserData is null");
-			// This is for "1. waiting for local data" or
-			// "2. no friend in local data".
-			// In both cases, nothing to do.
-		} else {
-			// Otherwise (Local data is already available), show New user data
-			// TODO
-			if (newUserData != null && newUserData.size() != 0) {
-				// If we have more than 1 new item
-				// And newUserData has two patterns. One is sender is myself and
-				// another one is sender is friend (=targetUser is me)
-				DbgUtil.showDebug(TAG,
-						"newUserData size: " + newUserData.size());
-
-				// Set number of new message (Merge local and sever data)
-				ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
-
-				if (userDatas != null && userDatas.size() != 0) {
-					checkAndShowFirstAddButton();
-				}
-
-				mFriendListData.addAll(userDatas);
-
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								// mFriendListData.addAll(userData);
-								// mFriendListData.addAll(userData);
-								if (mAdapter != null) {
-									mListView.setAdapter(mAdapter);
-									mAdapter.notifyDataSetChanged();
-								}
-							}
-						});
-					}
-
-				}).start();
-
-			} else {
-				DbgUtil.showDebug(TAG, "No new friendData");
-				// Nothing to do. (Because no new data)
-			}
-		}
-		checkAndShowFirstAddButton();
 	}
 
 	private void checkAndShowFirstAddButton() {
@@ -405,23 +412,41 @@ public class FriendListActivity extends Activity implements
 		boolean ismUserDataFirst = false;
 		boolean ismNewUserDataFirst = false;
 
-		if (mUserData != null) {
-			if (mUserData.size() == 0) {
-				ismUserDataFirst = true;
-			}
-		} else {
-			ismUserDataFirst = true;
-		}
+		// if (mUserData != null) {
+		// if (mUserData.size() == 0) {
+		// ismUserDataFirst = true;
+		// }
+		// } else {
+		// ismUserDataFirst = true;
+		// }
+		//
+		// if (mNewUserData != null) {
+		// if (mNewUserData.size() == 0) {
+		// ismNewUserDataFirst = true;
+		// }
+		// } else {
+		// ismNewUserDataFirst = true;
+		// }
 
-		if (mNewUserData != null) {
-			if (mNewUserData.size() == 0) {
-				ismNewUserDataFirst = true;
-			}
-		} else {
-			ismNewUserDataFirst = true;
-		}
+		// if (ismUserDataFirst == true && ismNewUserDataFirst == true) {
+		// // If both local and server data is null, show first add text
+		// // and button
+		// DbgUtil.showDebug(TAG, "show first add button");
+		// new Thread(new Runnable() {
+		// @Override
+		// public void run() {
+		// mHandler.post(new Runnable() {
+		// @Override
+		// public void run() {
+		// mFirstAddText.setVisibility(View.VISIBLE);
+		// mFirstAddButton.setVisibility(View.VISIBLE);
+		// }
+		// });
+		// }
+		// }).start();
+		// }
 
-		if (ismUserDataFirst == true && ismNewUserDataFirst == true) {
+		if (mFriendListData == null || mFriendListData.size() == 0) {
 			// If both local and server data is null, show first add text
 			// and button
 			DbgUtil.showDebug(TAG, "show first add button");
