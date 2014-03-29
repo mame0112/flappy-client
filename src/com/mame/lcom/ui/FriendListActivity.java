@@ -345,57 +345,50 @@ public class FriendListActivity extends Activity implements
 			}
 			mNewUserData = newUserData;
 
-			// If server data arrived much faster than Local data
-			if (mUserData == null) {
-				DbgUtil.showDebug(TAG, "mUserData is null");
-				// This is for "1. waiting for local data" or
-				// "2. no friend in local data".
-				// In both cases, nothing to do.
+			// Otherwise (Local data is already available), show New user
+			// data
+			if (newUserData != null && newUserData.size() != 0) {
+				// If we have more than 1 new item
+				// And newUserData has two patterns. One is sender is myself
+				// and
+				// another one is sender is friend (=targetUser is me)
+				DbgUtil.showDebug(TAG,
+						"newUserData size: " + newUserData.size());
+
+				// Set number of new message (Merge local and sever data)
+				ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
+
+				mFriendListData.clear();
+				mFriendListData.addAll(userDatas);
+
+				// if (mFriendListData != null && mFriendListData.size() !=
+				// 0) {
+				checkAndShowFirstAddButton();
+				// }
 			} else {
-				// Otherwise (Local data is already available), show New user
-				// data
-				// TODO
-				if (newUserData != null && newUserData.size() != 0) {
-					// If we have more than 1 new item
-					// And newUserData has two patterns. One is sender is myself
-					// and
-					// another one is sender is friend (=targetUser is me)
-					DbgUtil.showDebug(TAG,
-							"newUserData size: " + newUserData.size());
+				DbgUtil.showDebug(TAG, "No new friendData");
+				mFriendListData.clear();
+				mFriendListData.addAll(mUserData);
+			}
 
-					// Set number of new message (Merge local and sever data)
-					ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
-
-					mFriendListData.addAll(userDatas);
-
-					// if (mFriendListData != null && mFriendListData.size() !=
-					// 0) {
-					checkAndShowFirstAddButton();
-					// }
-
-					new Thread(new Runnable() {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									// mFriendListData.addAll(userData);
-									// mFriendListData.addAll(userData);
-									if (mAdapter != null) {
-										mListView.setAdapter(mAdapter);
-										mAdapter.notifyDataSetChanged();
-									}
-								}
-							});
+							// mFriendListData.addAll(userData);
+							// mFriendListData.addAll(userData);
+							if (mAdapter != null) {
+								mListView.setAdapter(mAdapter);
+								mAdapter.notifyDataSetChanged();
+							}
 						}
-
-					}).start();
-
-				} else {
-					DbgUtil.showDebug(TAG, "No new friendData");
-					// Nothing to do. (Because no new data)
+					});
 				}
-			}
+
+			}).start();
+
 			checkAndShowFirstAddButton();
 
 		} else {
