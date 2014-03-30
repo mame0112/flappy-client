@@ -37,6 +37,7 @@ import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
+import com.mame.lcom.util.HttpClientUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
@@ -484,4 +485,6 @@ public class ConversationActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
 	}
+
+
 }
