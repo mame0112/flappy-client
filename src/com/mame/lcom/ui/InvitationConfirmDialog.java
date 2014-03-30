@@ -369,7 +369,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	}
 
 	@Override
-	public void notifyNewDataset(ArrayList<FriendListUpdateData> newUserData) {
+	public void notifyNewDataset(ArrayList<FriendListData> newUserData) {
 		// TODO Auto-generated method stub
 
 	}

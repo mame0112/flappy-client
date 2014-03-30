@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
@@ -20,6 +21,7 @@ import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.ui.ConversationActivityUtil;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
+import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI;
@@ -213,7 +215,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 						String response = respList.get(1);
 						if (response != null) {
 							DbgUtil.showDebug(TAG, "response: " + response);
-							final ArrayList<FriendListUpdateData> newUserDatas = parseResponse(response);
+							final ArrayList<FriendListData> newUserDatas = parseResponse(response);
 							notifyNewDataset(newUserDatas);
 						} else {
 							notifyNewDataset(null);
@@ -299,6 +301,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 				handleErrorCase();
 			}
 		} else {
+			DbgUtil.showDebug(TAG, "respList is null or size is 0");
 			handleErrorCase();
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"respList is null or size is 0");
@@ -310,34 +313,44 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	}
 
-	private ArrayList<FriendListUpdateData> parseResponse(String response) {
+	private ArrayList<FriendListData> parseResponse(String response) {
 		DbgUtil.showDebug(TAG, "parseResponse: " + response);
-		ArrayList<FriendListUpdateData> newUserData = new ArrayList<FriendListUpdateData>();
+		ArrayList<FriendListData> newUserData = new ArrayList<FriendListData>();
 		if (response != null) {
 			try {
 				String[] newMessage = response.split(LcomConst.ITEM_SEPARATOR);
 				for (int i = 0; i < newMessage.length; i++) {
 					if (newMessage[i] != null) {
+
+						// + LcomConst.SEPARATOR + numOfMessage;
+
 						String[] parsed = newMessage[i]
 								.split(LcomConst.SEPARATOR);
 						// DbgUtil.showDebug(TAG, "parsed[0]: " + parsed[0]
 						// + "parsed[2]: " + parsed[2]);
 						// String senderId = parsed[0];
-						String senderId = parsed[0];
-						String senderName = parsed[1];
-						String targetId = parsed[2];
-						String targetName = parsed[3];
+						String userId = parsed[0];
+						String userName = parsed[1];
+						String friendId = parsed[2];
+						String friendName = parsed[3];
 						String message = parsed[4];
 						String date = parsed[5];
+						String numOfMessage = parsed[6];
 
-						DbgUtil.showDebug(TAG, "parsed:" + senderId + " "
-								+ senderName + " " + targetId + " "
-								+ targetName + " " + message + " " + date);
+						DbgUtil.showDebug(TAG, "parsed:" + userId + " "
+								+ userName + " " + friendId + " " + friendName
+								+ " " + message + " " + date + " "
+								+ numOfMessage);
 
-						FriendListUpdateData data = new FriendListUpdateData(
-								Integer.valueOf(senderId),
-								Integer.valueOf(targetId), senderName,
-								targetName, message, date);
+						// int friendId, String friendName, int lastSenderId,
+						// String lastMessage, int numOfNewMessage, String
+						// mailAddress,
+						// Bitmap thumbnail
+
+						FriendListData data = new FriendListData(
+								Integer.valueOf(friendId), friendName,
+								Integer.valueOf(userId), message,
+								Integer.valueOf(numOfMessage), null, null);
 						newUserData.add(data);
 
 						// data.setNewMessage(message);
@@ -446,8 +459,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 		return messageData;
 	}
 
-	private void notifyNewDataset(
-			final ArrayList<FriendListUpdateData> newUserDatas) {
+	private void notifyNewDataset(final ArrayList<FriendListData> newUserDatas) {
 		DbgUtil.showDebug(TAG, "notifyNewDataset");
 		new Thread(new Runnable() {
 			@Override
@@ -550,7 +562,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 	// Interface to notify new user data to client of this class
 	public interface UserServerDataListener {
 		public void notifyNewServerUserDataSet(
-				ArrayList<FriendListUpdateData> newUserData);
+				ArrayList<FriendListData> newUserData);
 
 		public void notifyMessageSend(int result, MessageItemData mesageData);
 

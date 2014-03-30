@@ -49,11 +49,16 @@ public class FriendListActivity extends Activity implements
 
 	private String mUserName = null;
 
-	private ArrayList<FriendListUpdateData> mNewUserData = null;
+	private ArrayList<FriendListData> mNewUserData = null;
 
 	private ArrayList<FriendListData> mUserData = null;
 
 	private FriendListCustomAdapter mAdapter = null;
+
+	/**
+	 * This is for merging local and server data into one
+	 */
+	private HashMap<Integer, FriendListData> mFriendTmpData = new HashMap<Integer, FriendListData>();
 
 	private ArrayList<FriendListData> mFriendListData = new ArrayList<FriendListData>();
 
@@ -101,7 +106,7 @@ public class FriendListActivity extends Activity implements
 		mAdapter = new FriendListCustomAdapter(getApplicationContext(), 0,
 				mFriendListData);
 
-		mNewUserData = new ArrayList<FriendListUpdateData>();
+		mNewUserData = new ArrayList<FriendListData>();
 
 		mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
@@ -249,128 +254,53 @@ public class FriendListActivity extends Activity implements
 	public void notifyPresentDataset(final ArrayList<FriendListData> userData) {
 		DbgUtil.showDebug(TAG, "notifyPresentDataset");
 
-		if (userData != null && userData.size() != 0) {
-			TrackingUtil.trackNumberOfFriend(getApplicationContext(),
-					userData.size());
-		}
-
+		// If new data is already ready
 		if (isNewDataAvailable) {
-			DbgUtil.showDebug(TAG, "notifyPresentDataset true");
-			// If new (server) data is already available, initialize data and
+			if (mNewUserData != null && mNewUserData.size() != 0) {
+				for (FriendListData data : mNewUserData) {
+
+					int friendUserId = data.getFriendId();
+
+					// If data for the target user is not in HashMap
+					if (mFriendTmpData.get(friendUserId) == null) {
+						mFriendTmpData.put(friendUserId, data);
+					}
+				}
+			}
+
+			if (userData != null && userData.size() != 0) {
+				for (FriendListData data : userData) {
+
+					int friendUserId = data.getFriendId();
+
+					// If data for the target user is not in HashMap
+					if (mFriendTmpData.get(friendUserId) == null) {
+						mFriendTmpData.put(friendUserId, data);
+					}
+				}
+			}
+
+			// Put data to list view data
+			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
+					.hasNext();) {
+				Map.Entry entry = (Map.Entry) it.next();
+				Integer friendId = (Integer) entry.getKey();
+				FriendListData data = (FriendListData) entry.getValue();
+
+				mFriendListData.add(data);
+				DbgUtil.showDebug(TAG, "id: " + friendId);
+				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
+			}
+
 			// dismiss progress
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
 			}
-			mUserData = userData;
-			ArrayList<FriendListData> userDatas = mergeNewAndPresentData(mNewUserData);
-
-			// Initialize
-			mFriendListData.clear();
-
-			mFriendListData.addAll(userDatas);
-
-			checkAndShowFirstAddButton();
 
 			// Initialize flag
 			isNewDataAvailable = false;
 
-			// If Friend list is not null and not 0
-			if (mFriendListData != null && mFriendListData.size() != 0) {
-				DbgUtil.showDebug(TAG, "mFriendListData size: "
-						+ mFriendListData.size());
-				if (mFriendListData != null) {
-
-					// Add new data
-					new Thread(new Runnable() {
-						@Override
-						public void run() {
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									// mFriendListData.addAll(userData);
-									// mFriendListData.addAll(userData);
-									if (mAdapter != null) {
-										mListView.setAdapter(mAdapter);
-										mAdapter.notifyDataSetChanged();
-									}
-								}
-							});
-						}
-
-					}).start();
-				}
-			}
-
-		} else {
-			DbgUtil.showDebug(TAG, "isNewDataAvailable false");
-			isExistingDataAvailable = true;
-			mUserData = userData;
-		}
-
-		if (userData != null) {
-			DbgUtil.showDebug(TAG, "useData: " + userData.size());
-		}
-
-		// If new user data have not arrived
-		// if (mNewUserData == null) {
-		// Just show user data.
-
-		// }
-		// else {
-		// DbgUtil.showDebug(TAG, "mNewUserData is not null");
-		// // If new user data has already reached
-		// // Show both user data and new user data
-		// // TODO
-		// }
-
-	}
-
-	@Override
-	public void notifyNewDataset(ArrayList<FriendListUpdateData> newUserData) {
-		DbgUtil.showDebug(TAG, "notifyNewDataset");
-
-		// Track the number of new messages
-		if (newUserData != null && newUserData.size() != 0) {
-			TrackingUtil.trackNumberOfNewMessage(getApplicationContext(),
-					newUserData.size());
-		}
-
-		if (isExistingDataAvailable) {
-			DbgUtil.showDebug(TAG, "isExistingDataAvailable true");
-			// if local (existing) data is already available, Initialize data
-			isExistingDataAvailable = false;
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				DbgUtil.showDebug(TAG, "dismiss dialog");
-				mProgressDialog.dismiss();
-			}
-			mNewUserData = newUserData;
-
-			// Otherwise (Local data is already available), show New user
-			// data
-			if (newUserData != null && newUserData.size() != 0) {
-				// If we have more than 1 new item
-				// And newUserData has two patterns. One is sender is myself
-				// and
-				// another one is sender is friend (=targetUser is me)
-				DbgUtil.showDebug(TAG,
-						"newUserData size: " + newUserData.size());
-
-				// Set number of new message (Merge local and sever data)
-				ArrayList<FriendListData> userDatas = mergeNewAndPresentData(newUserData);
-
-				mFriendListData.clear();
-				mFriendListData.addAll(userDatas);
-
-				// if (mFriendListData != null && mFriendListData.size() !=
-				// 0) {
-				checkAndShowFirstAddButton();
-				// }
-			} else {
-				DbgUtil.showDebug(TAG, "No new friendData");
-				mFriendListData.clear();
-				mFriendListData.addAll(mUserData);
-			}
-
+			// Notify to list view and adapter
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -386,58 +316,262 @@ public class FriendListActivity extends Activity implements
 						}
 					});
 				}
-
 			}).start();
 
+			// Show button if necessary
 			checkAndShowFirstAddButton();
 
 		} else {
-			DbgUtil.showDebug(TAG, "isExistingDataAvailable false");
-			// If local (existing) data is NOT available, set new data as true
-			// and wait for local data
-			isNewDataAvailable = true;
-			mNewUserData = newUserData;
+			// If new data is not ready yet, just keep old data
+			mUserData = userData;
+
+			// Set flag true
+			isExistingDataAvailable = true;
 		}
 	}
 
+	@Override
+	public void notifyNewDataset(ArrayList<FriendListData> newUserData) {
+		DbgUtil.showDebug(TAG, "notifyNewDataset");
+
+		// If existing data is already ready
+		if (isExistingDataAvailable) {
+			if (newUserData != null && newUserData.size() != 0) {
+				for (FriendListData data : newUserData) {
+
+					int friendUserId = data.getFriendId();
+
+					// If data for the target user is not in HashMap
+					if (mFriendTmpData.get(friendUserId) == null) {
+						mFriendTmpData.put(friendUserId, data);
+					}
+				}
+			}
+
+			// Then, try to add old data
+			if (mUserData != null && mUserData.size() != 0) {
+				for (FriendListData data : mUserData) {
+
+					int friendUserId = data.getFriendId();
+
+					if (mFriendTmpData.get(friendUserId) == null) {
+						mFriendTmpData.put(friendUserId, data);
+					}
+				}
+			}
+
+			// Put data to list view data
+			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
+					.hasNext();) {
+				Map.Entry entry = (Map.Entry) it.next();
+				Integer friendId = (Integer) entry.getKey();
+				FriendListData data = (FriendListData) entry.getValue();
+
+				mFriendListData.add(data);
+				DbgUtil.showDebug(TAG, "id: " + friendId);
+				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
+			}
+
+			// dismiss progress
+			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
+
+			// Initialize flag
+			isExistingDataAvailable = false;
+
+			// Notify to list view and adapter
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							// mFriendListData.addAll(userData);
+							// mFriendListData.addAll(userData);
+							if (mAdapter != null) {
+								mListView.setAdapter(mAdapter);
+								mAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+				}
+			}).start();
+
+			// Show button if necessary
+			checkAndShowFirstAddButton();
+
+		} else {
+			// If existing data is not ready yet, just keep new data
+			mNewUserData = newUserData;
+
+			// Set flag true
+			isNewDataAvailable = true;
+		}
+
+	}
+
+	// @Override
+	// public void notifyPresentDataset(final ArrayList<FriendListData>
+	// userData) {
+	// DbgUtil.showDebug(TAG, "notifyPresentDataset");
+	//
+	// if (userData != null && userData.size() != 0) {
+	// TrackingUtil.trackNumberOfFriend(getApplicationContext(),
+	// userData.size());
+	// }
+	//
+	// if (isNewDataAvailable) {
+	// DbgUtil.showDebug(TAG, "notifyPresentDataset true");
+	// // If new (server) data is already available, initialize data and
+	// // dismiss progress
+	// if (mProgressDialog != null && mProgressDialog.isShowing()) {
+	// mProgressDialog.dismiss();
+	// }
+	// mUserData = userData;
+	// ArrayList<FriendListData> userDatas =
+	// mergeNewAndPresentData(mNewUserData);
+	//
+	// // Initialize
+	// mFriendListData.clear();
+	//
+	// mFriendListData.addAll(userDatas);
+	//
+	// checkAndShowFirstAddButton();
+	//
+	// // Initialize flag
+	// isNewDataAvailable = false;
+	//
+	// // If Friend list is not null and not 0
+	// if (mFriendListData != null && mFriendListData.size() != 0) {
+	// DbgUtil.showDebug(TAG, "mFriendListData size: "
+	// + mFriendListData.size());
+	// if (mFriendListData != null) {
+	//
+	// // Add new data
+	// new Thread(new Runnable() {
+	// @Override
+	// public void run() {
+	// mHandler.post(new Runnable() {
+	// @Override
+	// public void run() {
+	// // mFriendListData.addAll(userData);
+	// // mFriendListData.addAll(userData);
+	// if (mAdapter != null) {
+	// mListView.setAdapter(mAdapter);
+	// mAdapter.notifyDataSetChanged();
+	// }
+	// }
+	// });
+	// }
+	//
+	// }).start();
+	// }
+	// }
+	//
+	// } else {
+	// DbgUtil.showDebug(TAG, "isNewDataAvailable false");
+	// isExistingDataAvailable = true;
+	// mUserData = userData;
+	// }
+	//
+	// if (userData != null) {
+	// DbgUtil.showDebug(TAG, "useData: " + userData.size());
+	// }
+	//
+	// // If new user data have not arrived
+	// // if (mNewUserData == null) {
+	// // Just show user data.
+	//
+	// // }
+	// // else {
+	// // DbgUtil.showDebug(TAG, "mNewUserData is not null");
+	// // // If new user data has already reached
+	// // // Show both user data and new user data
+	// // // TODO
+	// // }
+	//
+	// }
+
+	// @Override
+	// public void notifyNewDataset(ArrayList<FriendListUpdateData> newUserData)
+	// {
+	// DbgUtil.showDebug(TAG, "notifyNewDataset");
+	//
+	// // Track the number of new messages
+	// if (newUserData != null && newUserData.size() != 0) {
+	// TrackingUtil.trackNumberOfNewMessage(getApplicationContext(),
+	// newUserData.size());
+	// }
+	//
+	// if (isExistingDataAvailable) {
+	// DbgUtil.showDebug(TAG, "isExistingDataAvailable true");
+	// // if local (existing) data is already available, Initialize data
+	// isExistingDataAvailable = false;
+	// if (mProgressDialog != null && mProgressDialog.isShowing()) {
+	// DbgUtil.showDebug(TAG, "dismiss dialog");
+	// mProgressDialog.dismiss();
+	// }
+	// mNewUserData = newUserData;
+	//
+	// // Otherwise (Local data is already available), show New user
+	// // data
+	// if (newUserData != null && newUserData.size() != 0) {
+	// // If we have more than 1 new item
+	// // And newUserData has two patterns. One is sender is myself
+	// // and
+	// // another one is sender is friend (=targetUser is me)
+	// DbgUtil.showDebug(TAG,
+	// "newUserData size: " + newUserData.size());
+	//
+	// // Set number of new message (Merge local and sever data)
+	// ArrayList<FriendListData> userDatas =
+	// mergeNewAndPresentData(newUserData);
+	//
+	// mFriendListData.clear();
+	// mFriendListData.addAll(userDatas);
+	//
+	// // if (mFriendListData != null && mFriendListData.size() !=
+	// // 0) {
+	// checkAndShowFirstAddButton();
+	// // }
+	// } else {
+	// DbgUtil.showDebug(TAG, "No new friendData");
+	// mFriendListData.clear();
+	// mFriendListData.addAll(mUserData);
+	// }
+	//
+	// new Thread(new Runnable() {
+	// @Override
+	// public void run() {
+	// mHandler.post(new Runnable() {
+	// @Override
+	// public void run() {
+	// // mFriendListData.addAll(userData);
+	// // mFriendListData.addAll(userData);
+	// if (mAdapter != null) {
+	// mListView.setAdapter(mAdapter);
+	// mAdapter.notifyDataSetChanged();
+	// }
+	// }
+	// });
+	// }
+	//
+	// }).start();
+	//
+	// checkAndShowFirstAddButton();
+	//
+	// } else {
+	// DbgUtil.showDebug(TAG, "isExistingDataAvailable false");
+	// // If local (existing) data is NOT available, set new data as true
+	// // and wait for local data
+	// isNewDataAvailable = true;
+	// mNewUserData = newUserData;
+	// }
+	// }
+
 	private void checkAndShowFirstAddButton() {
 		DbgUtil.showDebug(TAG, "checkAndShowFirstAddButton");
-		boolean ismUserDataFirst = false;
-		boolean ismNewUserDataFirst = false;
-
-		// if (mUserData != null) {
-		// if (mUserData.size() == 0) {
-		// ismUserDataFirst = true;
-		// }
-		// } else {
-		// ismUserDataFirst = true;
-		// }
-		//
-		// if (mNewUserData != null) {
-		// if (mNewUserData.size() == 0) {
-		// ismNewUserDataFirst = true;
-		// }
-		// } else {
-		// ismNewUserDataFirst = true;
-		// }
-
-		// if (ismUserDataFirst == true && ismNewUserDataFirst == true) {
-		// // If both local and server data is null, show first add text
-		// // and button
-		// DbgUtil.showDebug(TAG, "show first add button");
-		// new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// mHandler.post(new Runnable() {
-		// @Override
-		// public void run() {
-		// mFirstAddText.setVisibility(View.VISIBLE);
-		// mFirstAddButton.setVisibility(View.VISIBLE);
-		// }
-		// });
-		// }
-		// }).start();
-		// }
 
 		if (mFriendListData == null || mFriendListData.size() == 0) {
 			// If both local and server data is null, show first add text
@@ -459,282 +593,282 @@ public class FriendListActivity extends Activity implements
 	}
 
 	@SuppressWarnings("unchecked")
-	private ArrayList<FriendListData> mergeNewAndPresentData(
-			ArrayList<FriendListUpdateData> newUserDataArg) {
-		ArrayList<FriendListData> friendDatas = new ArrayList<FriendListData>();
-
-		// ArrayList for users who doesn't have thumbnail data in local
-		ArrayList<Integer> thumbNotDLUser = new ArrayList<Integer>();
-
-		if (newUserDataArg != null) {
-			for (FriendListUpdateData data : newUserDataArg) {
-				DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
-			}
-
-			// Sort by message data in newUserDataArg
-			Collections.sort(newUserDataArg, new FriendListDataComparator());
-
-			for (FriendListUpdateData data : newUserDataArg) {
-				DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
-			}
-
-			if (mUserData != null) {
-				DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
-
-			}
-
-			for (FriendListData data : mUserData) {
-				int currentSenderId = data.getFriendId();
-				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
-
-				// If local data doesn't have thumbnail data, we need to ask
-				// server to provide it.
-				if (data.getThumbnail() == null) {
-					thumbNotDLUser.add(currentSenderId);
-				}
-
-				boolean isNewUpdated = false;
-
-				if (newUserDataArg != null && newUserDataArg.size() != 0) {
-					for (FriendListUpdateData updateData : newUserDataArg) {
-
-						int updateSenderId = updateData.getNesMassageSenderId();
-						DbgUtil.showDebug(TAG, "updateSenderId: "
-								+ updateSenderId);
-
-						// If the comment is sent by friend (it means )
-						if (currentSenderId == updateSenderId) {
-							isNewUpdated = true;
-							String messageFromServer = updateData
-									.getNewMessage();
-							String messageFromLocal = data.getLastMessage();
-							DbgUtil.showDebug(TAG, "messageFromServer: "
-									+ messageFromServer);
-							DbgUtil.showDebug(TAG, "messageFromLocal: "
-									+ messageFromLocal);
-							if (messageFromServer != null
-									&& messageFromLocal != null
-									&& messageFromLocal
-											.contains(messageFromLocal)) {
-								DbgUtil.showDebug(TAG, "messageFromLocal: "
-										+ messageFromLocal);
-								// Update lastsender name
-								data.setLastSender(updateData
-										.getNewMessageSenderName());
-
-								// Update num of new message
-								int numOfMessage = data.getNumOfNewMessage();
-								numOfMessage = numOfMessage + 1;
-								data.setNumOfNewMessage(numOfMessage);
-
-								// set last message
-								data.setLastMessage(updateData.getNewMessage());
-
-								// Update user if by using server side
-								String senderName = updateData
-										.getNewMessageSenderName();
-								if (senderName != null
-										&& !senderName.equals("null")) {
-									// TODO Need to update DB name in this case
-									// (because
-									// we can get correct user name)
-									data.setFriendName(senderName);
-								}
-
-								// Set updated info to list data
-								friendDatas.add(data);
-
-								// Escape from for loop
-								break;
-							}
-						}
-					}
-				}
-
-				//
-				if (isNewUpdated == false) {
-					DbgUtil.showDebug(TAG, "isNuewUpdated is false");
-					// If there is no same user id data between current and ndw
-					// data, just add (without increasing the number of new
-					// message)
-					friendDatas.add(data);
-				}
-
-				// Initialize flag
-				isNewUpdated = false;
-			}
-		}
-		HashMap<Integer, FriendListData> tmpData = new HashMap<Integer, FriendListData>();
-		// ArrayList<FriendListData> tmpData = new ArrayList<FriendListData>();
-		FriendListUpdateData latestUpdateData = null;
-
-		if (newUserDataArg != null && newUserDataArg.size() != 0) {
-			for (FriendListUpdateData updateData : newUserDataArg) {
-
-				latestUpdateData = updateData;
-				boolean isNew = true;
-				int updateSenderId = updateData.getNesMassageSenderId();
-				DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
-
-				// for (FriendListData data : mUserData) {
-				for (FriendListData data : friendDatas) {
-					int currentSenderId = data.getFriendId();
-					DbgUtil.showDebug(TAG, "currentSenderId: "
-							+ currentSenderId);
-					if (updateSenderId == currentSenderId) {
-						isNew = false;
-					}
-				}
-
-				// If new target user data is already in the list data
-				if (isNew == true) {
-					DbgUtil.showDebug(TAG, "isNew is true");
-
-					// int friendId, String friendName, int lastSenderId,
-					// String lastMessage, int numOfNewMessage, String
-					// mailAddress,
-					// byte[] thumbnail
-
-					// And sender is myself (it means friend is target, sender
-					// is mine)
-					if (latestUpdateData.getNesMassageSenderId() == PreferenceUtil
-							.getUserId(getApplicationContext())) {
-
-						// If the data has not been set
-						if (tmpData.get(latestUpdateData
-								.getNesMassageTargetId()) == null) {
-							DbgUtil.showDebug(TAG, "A");
-							DbgUtil.showDebug(TAG, "targetId:: "
-									+ latestUpdateData.getNesMassageTargetId());
-							FriendListData newData = new FriendListData(
-									latestUpdateData.getNesMassageTargetId(),
-									latestUpdateData.getNewMessageTargetName(),
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessage(), 1, null,
-									null);
-							tmpData.put(
-									latestUpdateData.getNesMassageTargetId(),
-									newData);
-
-						} else {
-							// If the data has already been in list
-							DbgUtil.showDebug(TAG, "C");
-							FriendListData newDataTmp = tmpData
-									.get(latestUpdateData
-											.getNesMassageTargetId());
-							DbgUtil.showDebug(TAG, "newDataTmp friendId: "
-									+ newDataTmp.getFriendId());
-							tmpData.remove(latestUpdateData
-									.getNesMassageSenderId());
-							int numOfMessage = newDataTmp.getNumOfNewMessage();
-							numOfMessage = numOfMessage + 1;
-							FriendListData newData = new FriendListData(
-									latestUpdateData.getNesMassageTargetId(),
-									latestUpdateData.getNewMessageTargetName(),
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessage(),
-									numOfMessage, null, null);
-							tmpData.put(
-									latestUpdateData.getNesMassageTargetId(),
-									newData);
-						}
-						// If the new message is sent by friend.
-					} else {
-						// If the data has already been set
-						if (tmpData.get(latestUpdateData
-								.getNesMassageSenderId()) == null) {
-							DbgUtil.showDebug(TAG, "B");
-							DbgUtil.showDebug(TAG, "message: "
-									+ latestUpdateData.getNewMessage());
-							// if sender is friend (it means friend is sender,
-							// target is mine)
-							FriendListData newData = new FriendListData(
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessageSenderName(),
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessage(), 1, null,
-									null);
-							tmpData.put(
-									latestUpdateData.getNesMassageSenderId(),
-									newData);
-						} else {
-							DbgUtil.showDebug(TAG, "D");
-							DbgUtil.showDebug(TAG, "message: "
-									+ latestUpdateData.getNewMessage());
-							// if sender is friend (it means friend is sender,
-							// target is mine)
-							FriendListData newDataTmp = tmpData
-									.get(latestUpdateData
-											.getNesMassageSenderId());
-							tmpData.remove(latestUpdateData
-									.getNesMassageSenderId());
-							int numOfMessage = newDataTmp.getNumOfNewMessage();
-							numOfMessage = numOfMessage + 1;
-							FriendListData newData = new FriendListData(
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessageSenderName(),
-									latestUpdateData.getNesMassageSenderId(),
-									latestUpdateData.getNewMessage(),
-									numOfMessage, null, null);
-							tmpData.put(
-									latestUpdateData.getNesMassageSenderId(),
-									newData);
-						}
-					}
-					DbgUtil.showDebug(TAG, "tmpData size: " + tmpData.size());
-				}
-				// else {
-				// // If new target user data is NOT in the list data
-				// FriendListData registeredData = tmpData.get(updateSenderId);
-				// // And update the number of message in registered data
-				// if (registeredData != null) {
-				// int numOfMessage = registeredData.getNumOfNewMessage();
-				// numOfMessage = numOfMessage + 1;
-				//
-				// tmpData.put(latestUpdateData.getNesMassageSenderId(),
-				// newData);
-				// } else {
-				// DbgUtil.showDebug(TAG, "erro case");
-				// }
-				// }
-			}
-
-		}
-
-		// for (FriendListData data : tmpData) {
-		for (Map.Entry<Integer, FriendListData> e : tmpData.entrySet()) {
-			friendDatas.add(e.getValue());
-		}
-
-		if (newUserDataArg != null) {
-			NewMessageNotification.showNotiofication(getApplicationContext(),
-					0, newUserDataArg.size());
-		}
-
-		// ArrayList<Integer> ids = new ArrayList<Integer>();
-
-		for (FriendListData data : friendDatas) {
-			DbgUtil.showDebug(
-					TAG,
-					"friendId: " + data.getFriendId() + "friendName: "
-							+ data.getFriendName() + "message: "
-							+ data.getLastMessage() + "lastSender: "
-							+ data.getLastSender());
-		}
-
-		// Get thumbnail data
-		if (thumbNotDLUser != null && thumbNotDLUser.size() != 0) {
-			try {
-				mManager.requestFriendsNewThumbnail(thumbNotDLUser);
-			} catch (FriendDataManagerException e1) {
-				DbgUtil.showDebug(TAG,
-						"FriendDataManagerException: " + e1.getMessage());
-			}
-		}
-
-		return friendDatas;
-	}
-
+	// private ArrayList<FriendListData> mergeNewAndPresentData(
+	// ArrayList<FriendListUpdateData> newUserDataArg) {
+	// ArrayList<FriendListData> friendDatas = new ArrayList<FriendListData>();
+	//
+	// // ArrayList for users who doesn't have thumbnail data in local
+	// ArrayList<Integer> thumbNotDLUser = new ArrayList<Integer>();
+	//
+	// if (newUserDataArg != null) {
+	// for (FriendListUpdateData data : newUserDataArg) {
+	// DbgUtil.showDebug(TAG, "before: " + data.getNewMessageDate());
+	// }
+	//
+	// // Sort by message data in newUserDataArg
+	// Collections.sort(newUserDataArg, new FriendListDataComparator());
+	//
+	// for (FriendListUpdateData data : newUserDataArg) {
+	// DbgUtil.showDebug(TAG, "after: " + data.getNewMessageDate());
+	// }
+	//
+	// if (mUserData != null) {
+	// DbgUtil.showDebug(TAG, "mUserData size: " + mUserData.size());
+	//
+	// }
+	//
+	// for (FriendListData data : mUserData) {
+	// int currentSenderId = data.getFriendId();
+	// DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
+	//
+	// // If local data doesn't have thumbnail data, we need to ask
+	// // server to provide it.
+	// if (data.getThumbnail() == null) {
+	// thumbNotDLUser.add(currentSenderId);
+	// }
+	//
+	// boolean isNewUpdated = false;
+	//
+	// if (newUserDataArg != null && newUserDataArg.size() != 0) {
+	// for (FriendListUpdateData updateData : newUserDataArg) {
+	//
+	// int updateSenderId = updateData.getNesMassageSenderId();
+	// DbgUtil.showDebug(TAG, "updateSenderId: "
+	// + updateSenderId);
+	//
+	// // If the comment is sent by friend (it means )
+	// if (currentSenderId == updateSenderId) {
+	// isNewUpdated = true;
+	// String messageFromServer = updateData
+	// .getNewMessage();
+	// String messageFromLocal = data.getLastMessage();
+	// DbgUtil.showDebug(TAG, "messageFromServer: "
+	// + messageFromServer);
+	// DbgUtil.showDebug(TAG, "messageFromLocal: "
+	// + messageFromLocal);
+	// if (messageFromServer != null
+	// && messageFromLocal != null
+	// && messageFromLocal
+	// .contains(messageFromLocal)) {
+	// DbgUtil.showDebug(TAG, "messageFromLocal: "
+	// + messageFromLocal);
+	// // Update lastsender name
+	// data.setLastSender(updateData
+	// .getNewMessageSenderName());
+	//
+	// // Update num of new message
+	// int numOfMessage = data.getNumOfNewMessage();
+	// numOfMessage = numOfMessage + 1;
+	// data.setNumOfNewMessage(numOfMessage);
+	//
+	// // set last message
+	// data.setLastMessage(updateData.getNewMessage());
+	//
+	// // Update user if by using server side
+	// String senderName = updateData
+	// .getNewMessageSenderName();
+	// if (senderName != null
+	// && !senderName.equals("null")) {
+	// // TODO Need to update DB name in this case
+	// // (because
+	// // we can get correct user name)
+	// data.setFriendName(senderName);
+	// }
+	//
+	// // Set updated info to list data
+	// friendDatas.add(data);
+	//
+	// // Escape from for loop
+	// break;
+	// }
+	// }
+	// }
+	// }
+	//
+	// //
+	// if (isNewUpdated == false) {
+	// DbgUtil.showDebug(TAG, "isNuewUpdated is false");
+	// // If there is no same user id data between current and ndw
+	// // data, just add (without increasing the number of new
+	// // message)
+	// friendDatas.add(data);
+	// }
+	//
+	// // Initialize flag
+	// isNewUpdated = false;
+	// }
+	// }
+	// HashMap<Integer, FriendListData> tmpData = new HashMap<Integer,
+	// FriendListData>();
+	// // ArrayList<FriendListData> tmpData = new ArrayList<FriendListData>();
+	// FriendListUpdateData latestUpdateData = null;
+	//
+	// if (newUserDataArg != null && newUserDataArg.size() != 0) {
+	// for (FriendListUpdateData updateData : newUserDataArg) {
+	//
+	// latestUpdateData = updateData;
+	// boolean isNew = true;
+	// int updateSenderId = updateData.getNesMassageSenderId();
+	// DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
+	//
+	// // for (FriendListData data : mUserData) {
+	// for (FriendListData data : friendDatas) {
+	// int currentSenderId = data.getFriendId();
+	// DbgUtil.showDebug(TAG, "currentSenderId: "
+	// + currentSenderId);
+	// if (updateSenderId == currentSenderId) {
+	// isNew = false;
+	// }
+	// }
+	//
+	// // If new target user data is already in the list data
+	// if (isNew == true) {
+	// DbgUtil.showDebug(TAG, "isNew is true");
+	//
+	// // int friendId, String friendName, int lastSenderId,
+	// // String lastMessage, int numOfNewMessage, String
+	// // mailAddress,
+	// // byte[] thumbnail
+	//
+	// // And sender is myself (it means friend is target, sender
+	// // is mine)
+	// if (latestUpdateData.getNesMassageSenderId() == PreferenceUtil
+	// .getUserId(getApplicationContext())) {
+	//
+	// // If the data has not been set
+	// if (tmpData.get(latestUpdateData
+	// .getNesMassageTargetId()) == null) {
+	// DbgUtil.showDebug(TAG, "A");
+	// DbgUtil.showDebug(TAG, "targetId:: "
+	// + latestUpdateData.getNesMassageTargetId());
+	// FriendListData newData = new FriendListData(
+	// latestUpdateData.getNesMassageTargetId(),
+	// latestUpdateData.getNewMessageTargetName(),
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessage(), 1, null,
+	// null);
+	// tmpData.put(
+	// latestUpdateData.getNesMassageTargetId(),
+	// newData);
+	//
+	// } else {
+	// // If the data has already been in list
+	// DbgUtil.showDebug(TAG, "C");
+	// FriendListData newDataTmp = tmpData
+	// .get(latestUpdateData
+	// .getNesMassageTargetId());
+	// DbgUtil.showDebug(TAG, "newDataTmp friendId: "
+	// + newDataTmp.getFriendId());
+	// tmpData.remove(latestUpdateData
+	// .getNesMassageSenderId());
+	// int numOfMessage = newDataTmp.getNumOfNewMessage();
+	// numOfMessage = numOfMessage + 1;
+	// FriendListData newData = new FriendListData(
+	// latestUpdateData.getNesMassageTargetId(),
+	// latestUpdateData.getNewMessageTargetName(),
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessage(),
+	// numOfMessage, null, null);
+	// tmpData.put(
+	// latestUpdateData.getNesMassageTargetId(),
+	// newData);
+	// }
+	// // If the new message is sent by friend.
+	// } else {
+	// // If the data has already been set
+	// if (tmpData.get(latestUpdateData
+	// .getNesMassageSenderId()) == null) {
+	// DbgUtil.showDebug(TAG, "B");
+	// DbgUtil.showDebug(TAG, "message: "
+	// + latestUpdateData.getNewMessage());
+	// // if sender is friend (it means friend is sender,
+	// // target is mine)
+	// FriendListData newData = new FriendListData(
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessageSenderName(),
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessage(), 1, null,
+	// null);
+	// tmpData.put(
+	// latestUpdateData.getNesMassageSenderId(),
+	// newData);
+	// } else {
+	// DbgUtil.showDebug(TAG, "D");
+	// DbgUtil.showDebug(TAG, "message: "
+	// + latestUpdateData.getNewMessage());
+	// // if sender is friend (it means friend is sender,
+	// // target is mine)
+	// FriendListData newDataTmp = tmpData
+	// .get(latestUpdateData
+	// .getNesMassageSenderId());
+	// tmpData.remove(latestUpdateData
+	// .getNesMassageSenderId());
+	// int numOfMessage = newDataTmp.getNumOfNewMessage();
+	// numOfMessage = numOfMessage + 1;
+	// FriendListData newData = new FriendListData(
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessageSenderName(),
+	// latestUpdateData.getNesMassageSenderId(),
+	// latestUpdateData.getNewMessage(),
+	// numOfMessage, null, null);
+	// tmpData.put(
+	// latestUpdateData.getNesMassageSenderId(),
+	// newData);
+	// }
+	// }
+	// DbgUtil.showDebug(TAG, "tmpData size: " + tmpData.size());
+	// }
+	// // else {
+	// // // If new target user data is NOT in the list data
+	// // FriendListData registeredData = tmpData.get(updateSenderId);
+	// // // And update the number of message in registered data
+	// // if (registeredData != null) {
+	// // int numOfMessage = registeredData.getNumOfNewMessage();
+	// // numOfMessage = numOfMessage + 1;
+	// //
+	// // tmpData.put(latestUpdateData.getNesMassageSenderId(),
+	// // newData);
+	// // } else {
+	// // DbgUtil.showDebug(TAG, "erro case");
+	// // }
+	// // }
+	// }
+	//
+	// }
+	//
+	// // for (FriendListData data : tmpData) {
+	// for (Map.Entry<Integer, FriendListData> e : tmpData.entrySet()) {
+	// friendDatas.add(e.getValue());
+	// }
+	//
+	// if (newUserDataArg != null) {
+	// NewMessageNotification.showNotiofication(getApplicationContext(),
+	// 0, newUserDataArg.size());
+	// }
+	//
+	// // ArrayList<Integer> ids = new ArrayList<Integer>();
+	//
+	// for (FriendListData data : friendDatas) {
+	// DbgUtil.showDebug(
+	// TAG,
+	// "friendId: " + data.getFriendId() + "friendName: "
+	// + data.getFriendName() + "message: "
+	// + data.getLastMessage() + "lastSender: "
+	// + data.getLastSender());
+	// }
+	//
+	// // Get thumbnail data
+	// if (thumbNotDLUser != null && thumbNotDLUser.size() != 0) {
+	// try {
+	// mManager.requestFriendsNewThumbnail(thumbNotDLUser);
+	// } catch (FriendDataManagerException e1) {
+	// DbgUtil.showDebug(TAG,
+	// "FriendDataManagerException: " + e1.getMessage());
+	// }
+	// }
+	//
+	// return friendDatas;
+	// }
 	@Override
 	public void notifyAddPresentDataFinished(boolean result,
 			MessageItemData messageData) {

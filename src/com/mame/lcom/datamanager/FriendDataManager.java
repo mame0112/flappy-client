@@ -223,8 +223,7 @@ public class FriendDataManager implements UserServerDataListener,
 	}
 
 	@Override
-	public void notifyNewServerUserDataSet(
-			ArrayList<FriendListUpdateData> newUserData) {
+	public void notifyNewServerUserDataSet(ArrayList<FriendListData> newUserData) {
 		DbgUtil.showDebug(TAG, "notifyNewServerUserDataSet");
 		for (FriendDataManagerListener listener : mListeners) {
 			listener.notifyNewDataset(newUserData);
@@ -258,7 +257,7 @@ public class FriendDataManager implements UserServerDataListener,
 		 * 
 		 * @param newUserData
 		 */
-		public void notifyNewDataset(ArrayList<FriendListUpdateData> newUserData);
+		public void notifyNewDataset(ArrayList<FriendListData> newUserData);
 
 		/**
 		 * To be called when FriendDataManager finished to add present (local)
@@ -370,14 +369,14 @@ public class FriendDataManager implements UserServerDataListener,
 			}
 			break;
 		case LcomConst.SEND_MESSAGE_DATE_CANNOT_BE_PARSED:
-			 TrackingUtil.trackExceptionMessage(mContext, TAG,
-			 "SEND_MESSAGE_DATE_CANNOT_BE_PARSED");
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SEND_MESSAGE_DATE_CANNOT_BE_PARSED");
 		case LcomConst.SEND_MESSAGE_UNKNOWN_ERROR:
-			 TrackingUtil.trackExceptionMessage(mContext, TAG,
-			 "SEND_MESSAGE_UNKNOWN_ERROR");
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SEND_MESSAGE_UNKNOWN_ERROR");
 		case LcomConst.SEND_MESSAGE_CANNOT_BE_SENT_MESSAGE:
-			 TrackingUtil.trackExceptionMessage(mContext, TAG,
-			 "SEND_MESSAGE_CANNOT_BE_SENT_MESSAGE");
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SEND_MESSAGE_CANNOT_BE_SENT_MESSAGE");
 		default:
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"notifyMessageSend switch is unknown case");

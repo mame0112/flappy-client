@@ -316,7 +316,7 @@ public class ConversationActivity extends Activity implements
 	}
 
 	@Override
-	public void notifyNewDataset(ArrayList<FriendListUpdateData> newUserData) {
+	public void notifyNewDataset(ArrayList<FriendListData> newUserData) {
 		DbgUtil.showDebug(TAG, "notifyNewDataset");
 		if (newUserData != null && newUserData.size() != 0) {
 			DbgUtil.showDebug(TAG, "newUserData: " + newUserData.size());
