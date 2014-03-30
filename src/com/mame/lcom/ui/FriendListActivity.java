@@ -495,53 +495,58 @@ public class FriendListActivity extends Activity implements
 
 				boolean isNewUpdated = false;
 
-				for (FriendListUpdateData updateData : newUserDataArg) {
+				if (newUserDataArg != null && newUserDataArg.size() != 0) {
+					for (FriendListUpdateData updateData : newUserDataArg) {
 
-					int updateSenderId = updateData.getNesMassageSenderId();
-					DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
+						int updateSenderId = updateData.getNesMassageSenderId();
+						DbgUtil.showDebug(TAG, "updateSenderId: "
+								+ updateSenderId);
 
-					// If the comment is sent by friend (it means )
-					if (currentSenderId == updateSenderId) {
-						isNewUpdated = true;
-						String messageFromServer = updateData.getNewMessage();
-						String messageFromLocal = data.getLastMessage();
-						DbgUtil.showDebug(TAG, "messageFromServer: "
-								+ messageFromServer);
-						DbgUtil.showDebug(TAG, "messageFromLocal: "
-								+ messageFromLocal);
-						if (messageFromServer != null
-								&& messageFromLocal != null
-								&& messageFromLocal.contains(messageFromLocal)) {
+						// If the comment is sent by friend (it means )
+						if (currentSenderId == updateSenderId) {
+							isNewUpdated = true;
+							String messageFromServer = updateData
+									.getNewMessage();
+							String messageFromLocal = data.getLastMessage();
+							DbgUtil.showDebug(TAG, "messageFromServer: "
+									+ messageFromServer);
 							DbgUtil.showDebug(TAG, "messageFromLocal: "
 									+ messageFromLocal);
-							// Update lastsender name
-							data.setLastSender(updateData
-									.getNewMessageSenderName());
+							if (messageFromServer != null
+									&& messageFromLocal != null
+									&& messageFromLocal
+											.contains(messageFromLocal)) {
+								DbgUtil.showDebug(TAG, "messageFromLocal: "
+										+ messageFromLocal);
+								// Update lastsender name
+								data.setLastSender(updateData
+										.getNewMessageSenderName());
 
-							// Update num of new message
-							int numOfMessage = data.getNumOfNewMessage();
-							numOfMessage = numOfMessage + 1;
-							data.setNumOfNewMessage(numOfMessage);
+								// Update num of new message
+								int numOfMessage = data.getNumOfNewMessage();
+								numOfMessage = numOfMessage + 1;
+								data.setNumOfNewMessage(numOfMessage);
 
-							// set last message
-							data.setLastMessage(updateData.getNewMessage());
+								// set last message
+								data.setLastMessage(updateData.getNewMessage());
 
-							// Update user if by using server side
-							String senderName = updateData
-									.getNewMessageSenderName();
-							if (senderName != null
-									&& !senderName.equals("null")) {
-								// TODO Need to update DB name in this case
-								// (because
-								// we can get correct user name)
-								data.setFriendName(senderName);
+								// Update user if by using server side
+								String senderName = updateData
+										.getNewMessageSenderName();
+								if (senderName != null
+										&& !senderName.equals("null")) {
+									// TODO Need to update DB name in this case
+									// (because
+									// we can get correct user name)
+									data.setFriendName(senderName);
+								}
+
+								// Set updated info to list data
+								friendDatas.add(data);
+
+								// Escape from for loop
+								break;
 							}
-
-							// Set updated info to list data
-							friendDatas.add(data);
-
-							// Escape from for loop
-							break;
 						}
 					}
 				}
@@ -563,124 +568,137 @@ public class FriendListActivity extends Activity implements
 		// ArrayList<FriendListData> tmpData = new ArrayList<FriendListData>();
 		FriendListUpdateData latestUpdateData = null;
 
-		for (FriendListUpdateData updateData : newUserDataArg) {
+		if (newUserDataArg != null && newUserDataArg.size() != 0) {
+			for (FriendListUpdateData updateData : newUserDataArg) {
 
-			latestUpdateData = updateData;
-			boolean isNew = true;
-			int updateSenderId = updateData.getNesMassageSenderId();
-			DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
+				latestUpdateData = updateData;
+				boolean isNew = true;
+				int updateSenderId = updateData.getNesMassageSenderId();
+				DbgUtil.showDebug(TAG, "updateSenderId: " + updateSenderId);
 
-			// for (FriendListData data : mUserData) {
-			for (FriendListData data : friendDatas) {
-				int currentSenderId = data.getFriendId();
-				DbgUtil.showDebug(TAG, "currentSenderId: " + currentSenderId);
-				if (updateSenderId == currentSenderId) {
-					isNew = false;
-				}
-			}
-
-			// If new target user data is already in the list data
-			if (isNew == true) {
-				DbgUtil.showDebug(TAG, "isNew is true");
-
-				// int friendId, String friendName, int lastSenderId,
-				// String lastMessage, int numOfNewMessage, String
-				// mailAddress,
-				// byte[] thumbnail
-
-				// And sender is myself (it means friend is target, sender
-				// is mine)
-				if (latestUpdateData.getNesMassageSenderId() == PreferenceUtil
-						.getUserId(getApplicationContext())) {
-
-					// If the data has not been set
-					if (tmpData.get(latestUpdateData.getNesMassageTargetId()) == null) {
-						DbgUtil.showDebug(TAG, "A");
-						DbgUtil.showDebug(
-								TAG,
-								"targetId:: "
-										+ latestUpdateData
-												.getNesMassageTargetId());
-						FriendListData newData = new FriendListData(
-								latestUpdateData.getNesMassageTargetId(),
-								latestUpdateData.getNewMessageTargetName(),
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessage(), 1, null, null);
-						tmpData.put(latestUpdateData.getNesMassageTargetId(),
-								newData);
-
-					} else {
-						// If the data has already been in list
-						DbgUtil.showDebug(TAG, "C");
-						FriendListData newDataTmp = tmpData
-								.get(latestUpdateData.getNesMassageTargetId());
-						DbgUtil.showDebug(TAG, "newDataTmp friendId: "
-								+ newDataTmp.getFriendId());
-						tmpData.remove(latestUpdateData.getNesMassageSenderId());
-						int numOfMessage = newDataTmp.getNumOfNewMessage();
-						numOfMessage = numOfMessage + 1;
-						FriendListData newData = new FriendListData(
-								latestUpdateData.getNesMassageTargetId(),
-								latestUpdateData.getNewMessageTargetName(),
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessage(), numOfMessage,
-								null, null);
-						tmpData.put(latestUpdateData.getNesMassageTargetId(),
-								newData);
-					}
-					// If the new message is sent by friend.
-				} else {
-					// If the data has already been set
-					if (tmpData.get(latestUpdateData.getNesMassageSenderId()) == null) {
-						DbgUtil.showDebug(TAG, "B");
-						DbgUtil.showDebug(TAG,
-								"message: " + latestUpdateData.getNewMessage());
-						// if sender is friend (it means friend is sender,
-						// target is mine)
-						FriendListData newData = new FriendListData(
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessageSenderName(),
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessage(), 1, null, null);
-						tmpData.put(latestUpdateData.getNesMassageSenderId(),
-								newData);
-					} else {
-						DbgUtil.showDebug(TAG, "D");
-						DbgUtil.showDebug(TAG,
-								"message: " + latestUpdateData.getNewMessage());
-						// if sender is friend (it means friend is sender,
-						// target is mine)
-						FriendListData newDataTmp = tmpData
-								.get(latestUpdateData.getNesMassageSenderId());
-						tmpData.remove(latestUpdateData.getNesMassageSenderId());
-						int numOfMessage = newDataTmp.getNumOfNewMessage();
-						numOfMessage = numOfMessage + 1;
-						FriendListData newData = new FriendListData(
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessageSenderName(),
-								latestUpdateData.getNesMassageSenderId(),
-								latestUpdateData.getNewMessage(), numOfMessage,
-								null, null);
-						tmpData.put(latestUpdateData.getNesMassageSenderId(),
-								newData);
+				// for (FriendListData data : mUserData) {
+				for (FriendListData data : friendDatas) {
+					int currentSenderId = data.getFriendId();
+					DbgUtil.showDebug(TAG, "currentSenderId: "
+							+ currentSenderId);
+					if (updateSenderId == currentSenderId) {
+						isNew = false;
 					}
 				}
-				DbgUtil.showDebug(TAG, "tmpData size: " + tmpData.size());
+
+				// If new target user data is already in the list data
+				if (isNew == true) {
+					DbgUtil.showDebug(TAG, "isNew is true");
+
+					// int friendId, String friendName, int lastSenderId,
+					// String lastMessage, int numOfNewMessage, String
+					// mailAddress,
+					// byte[] thumbnail
+
+					// And sender is myself (it means friend is target, sender
+					// is mine)
+					if (latestUpdateData.getNesMassageSenderId() == PreferenceUtil
+							.getUserId(getApplicationContext())) {
+
+						// If the data has not been set
+						if (tmpData.get(latestUpdateData
+								.getNesMassageTargetId()) == null) {
+							DbgUtil.showDebug(TAG, "A");
+							DbgUtil.showDebug(TAG, "targetId:: "
+									+ latestUpdateData.getNesMassageTargetId());
+							FriendListData newData = new FriendListData(
+									latestUpdateData.getNesMassageTargetId(),
+									latestUpdateData.getNewMessageTargetName(),
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessage(), 1, null,
+									null);
+							tmpData.put(
+									latestUpdateData.getNesMassageTargetId(),
+									newData);
+
+						} else {
+							// If the data has already been in list
+							DbgUtil.showDebug(TAG, "C");
+							FriendListData newDataTmp = tmpData
+									.get(latestUpdateData
+											.getNesMassageTargetId());
+							DbgUtil.showDebug(TAG, "newDataTmp friendId: "
+									+ newDataTmp.getFriendId());
+							tmpData.remove(latestUpdateData
+									.getNesMassageSenderId());
+							int numOfMessage = newDataTmp.getNumOfNewMessage();
+							numOfMessage = numOfMessage + 1;
+							FriendListData newData = new FriendListData(
+									latestUpdateData.getNesMassageTargetId(),
+									latestUpdateData.getNewMessageTargetName(),
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessage(),
+									numOfMessage, null, null);
+							tmpData.put(
+									latestUpdateData.getNesMassageTargetId(),
+									newData);
+						}
+						// If the new message is sent by friend.
+					} else {
+						// If the data has already been set
+						if (tmpData.get(latestUpdateData
+								.getNesMassageSenderId()) == null) {
+							DbgUtil.showDebug(TAG, "B");
+							DbgUtil.showDebug(TAG, "message: "
+									+ latestUpdateData.getNewMessage());
+							// if sender is friend (it means friend is sender,
+							// target is mine)
+							FriendListData newData = new FriendListData(
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessageSenderName(),
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessage(), 1, null,
+									null);
+							tmpData.put(
+									latestUpdateData.getNesMassageSenderId(),
+									newData);
+						} else {
+							DbgUtil.showDebug(TAG, "D");
+							DbgUtil.showDebug(TAG, "message: "
+									+ latestUpdateData.getNewMessage());
+							// if sender is friend (it means friend is sender,
+							// target is mine)
+							FriendListData newDataTmp = tmpData
+									.get(latestUpdateData
+											.getNesMassageSenderId());
+							tmpData.remove(latestUpdateData
+									.getNesMassageSenderId());
+							int numOfMessage = newDataTmp.getNumOfNewMessage();
+							numOfMessage = numOfMessage + 1;
+							FriendListData newData = new FriendListData(
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessageSenderName(),
+									latestUpdateData.getNesMassageSenderId(),
+									latestUpdateData.getNewMessage(),
+									numOfMessage, null, null);
+							tmpData.put(
+									latestUpdateData.getNesMassageSenderId(),
+									newData);
+						}
+					}
+					DbgUtil.showDebug(TAG, "tmpData size: " + tmpData.size());
+				}
+				// else {
+				// // If new target user data is NOT in the list data
+				// FriendListData registeredData = tmpData.get(updateSenderId);
+				// // And update the number of message in registered data
+				// if (registeredData != null) {
+				// int numOfMessage = registeredData.getNumOfNewMessage();
+				// numOfMessage = numOfMessage + 1;
+				//
+				// tmpData.put(latestUpdateData.getNesMassageSenderId(),
+				// newData);
+				// } else {
+				// DbgUtil.showDebug(TAG, "erro case");
+				// }
+				// }
 			}
-			// else {
-			// // If new target user data is NOT in the list data
-			// FriendListData registeredData = tmpData.get(updateSenderId);
-			// // And update the number of message in registered data
-			// if (registeredData != null) {
-			// int numOfMessage = registeredData.getNumOfNewMessage();
-			// numOfMessage = numOfMessage + 1;
-			//
-			// tmpData.put(latestUpdateData.getNesMassageSenderId(),
-			// newData);
-			// } else {
-			// DbgUtil.showDebug(TAG, "erro case");
-			// }
-			// }
+
 		}
 
 		// for (FriendListData data : tmpData) {
