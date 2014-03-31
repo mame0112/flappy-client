@@ -278,6 +278,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 						"IndexOutOfBoundsException: " + e.getMessage());
 				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 						R.string.str_generic_unknown_error);
+				dismiss();
 			} catch (NumberFormatException e) {
 				DbgUtil.showDebug(TAG,
 						"NumberFormatException: " + e.getMessage());
@@ -285,7 +286,15 @@ public class InvitationConfirmDialog extends DialogFragment implements
 						"NumberFormatException: " + e.getMessage());
 				FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
 						R.string.str_generic_unknown_error);
+				dismiss();
 			}
+		} else {
+			DbgUtil.showDebug(TAG, "response is null or size 0");
+			TrackingUtil.trackExceptionMessage(getActivity(), TAG,
+					"respList is null or zero");
+			FeedbackUtil.showFeedbackToast(getActivity(), mHandler,
+					R.string.str_generic_unknown_error);
+			dismiss();
 		}
 
 		new Thread(new Runnable() {
@@ -346,18 +355,17 @@ public class InvitationConfirmDialog extends DialogFragment implements
 			String targetMailAddress, String targetMessage)
 			throws WebAPIException {
 		DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
-		
+
 		LcomConst.LOCALE_SETTING locale = LocaleUtil.getCurrentLocale();
-		
+
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
 				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS,
 				LcomConst.SERVLET_MESSAGE_BODY,
 				LcomConst.SERVLET_TARGET_USER_ID,
-				LcomConst.SERVLET_TARGET_USER_NAME,
-				LcomConst.SERVLET_LANGUAGE};
+				LcomConst.SERVLET_TARGET_USER_NAME, LcomConst.SERVLET_LANGUAGE };
 		String value[] = { origin, userId, userName, targetMailAddress,
-				targetMessage, targetUserId, targetUserName, locale.toString()};
+				targetMessage, targetUserId, targetUserName, locale.toString() };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION_CONFIRMED, key,
 				value);
 	}
