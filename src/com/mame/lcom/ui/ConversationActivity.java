@@ -329,12 +329,16 @@ public class ConversationActivity extends Activity implements
 			final MessageItemData messageData) {
 		DbgUtil.showDebug(TAG, "notifyAddPresentDataFinished");
 
-		DbgUtil.showDebug(TAG, "fromUserName: " + messageData.getFromUserName());
-		DbgUtil.showDebug(TAG, "fromUserId: " + messageData.getFromUserId());
-		DbgUtil.showDebug(TAG, "message: " + messageData.getMessage());
-		DbgUtil.showDebug(TAG, "targetUserId: " + messageData.getTargetUserId());
-		DbgUtil.showDebug(TAG, "toUserName: " + messageData.getToUserName());
-		DbgUtil.showDebug(TAG, "postDate: " + messageData.getPostedDate());
+		if (messageData != null) {
+			DbgUtil.showDebug(TAG,
+					"fromUserName: " + messageData.getFromUserName());
+			DbgUtil.showDebug(TAG, "fromUserId: " + messageData.getFromUserId());
+			DbgUtil.showDebug(TAG, "message: " + messageData.getMessage());
+			DbgUtil.showDebug(TAG,
+					"targetUserId: " + messageData.getTargetUserId());
+			DbgUtil.showDebug(TAG, "toUserName: " + messageData.getToUserName());
+			DbgUtil.showDebug(TAG, "postDate: " + messageData.getPostedDate());
+		}
 
 		if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
@@ -352,7 +356,10 @@ public class ConversationActivity extends Activity implements
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
-							mConversationData.add(messageData);
+							if (messageData != null) {
+								mConversationData.add(messageData);
+							}
+
 							mAdapter.notifyDataSetChanged();
 							mConversationEditText.getEditableText().clear();
 							DbgUtil.showDebug(TAG, "mConversationData: "
@@ -485,6 +492,5 @@ public class ConversationActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
 	}
-
 
 }
