@@ -894,6 +894,7 @@ public class FriendListActivity extends Activity implements
 		case R.id.menu_friendlist_signout:
 			PreferenceUtil.removeUserId(getApplicationContext());
 			PreferenceUtil.removeUserName(getApplicationContext());
+			PreferenceUtil.removePushDeviceId(getApplicationContext());
 
 			TrackingUtil.trackEvent(getApplicationContext(),
 					TrackingUtil.EVENT_CATEGORY_FRIEND_LIST,
@@ -1012,4 +1013,5 @@ public class FriendListActivity extends Activity implements
 			}).start();
 		}
 	}
+
 }

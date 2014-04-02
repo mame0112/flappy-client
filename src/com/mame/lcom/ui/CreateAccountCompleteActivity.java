@@ -1,5 +1,7 @@
 package com.mame.lcom.ui;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -21,7 +23,14 @@ import android.widget.TextView;
 
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.datamanager.FriendDataManager;
+import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
+import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.exception.WebAPIException;
+import com.mame.lcom.server.LcomDeviceIdRegisterHelper;
+import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.FileUtil;
@@ -33,7 +42,7 @@ import com.mame.lcom.web.LcomWebAPI;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
 
 public class CreateAccountCompleteActivity extends Activity implements
-		LcomWebAPIListener {
+		LcomWebAPIListener, LcomPushRegistrationHelperListener {
 	private final String TAG = LcomConst.TAG + "/CreateAccountCompleteActivity";
 
 	private EditText mPasswordEditText = null;
@@ -68,6 +77,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 
 	private Bitmap mThumbnailData = null;
 
+	private Activity mActivity = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		DbgUtil.showDebug(TAG, "onCreate");
@@ -96,7 +107,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
 
-		final Activity activity = this;
+		mActivity = this;
 
 		mProgressDialog = ProgressDialogFragment.newInstance(
 				getString(R.string.str_login_progress_title),
@@ -172,8 +183,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
 						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
 						TrackingUtil.EVENT_LABEL_CREATE_ACCOUNT_EXEC_BUTTON, 1);
-				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
-					boolean checkResult = checkAndCreateAccountOrShowError(activity);
+				if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
+					boolean checkResult = checkAndCreateAccountOrShowError(mActivity);
 
 					// If password and mail address is correct, show progress
 					// dalog.
@@ -225,6 +236,10 @@ public class CreateAccountCompleteActivity extends Activity implements
 		super.onPause();
 	}
 
+	protected void onDestroy() {
+		super.onDestroy();
+	}
+
 	@Override
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
@@ -262,6 +277,11 @@ public class CreateAccountCompleteActivity extends Activity implements
 						CreateAccountActivityUtil.startActivityForFriendList(
 								this, userId, userName);
 						// TODO Need to check Bitmap is stored.
+
+						// Try to get device Id for push message
+						LcomDeviceIdRegisterHelper helper = new LcomDeviceIdRegisterHelper();
+						helper.getAndRegisterDeviceId(mActivity, userId);
+
 						finish();
 						break;
 					case LcomConst.CREATE_ACCOUNT_USER_ALREADY_EXIST:
@@ -494,6 +514,12 @@ public class CreateAccountCompleteActivity extends Activity implements
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onDeviceIdRegistrationFinished(boolean result) {
+		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
+
 	}
 
 }

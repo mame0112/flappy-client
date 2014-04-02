@@ -12,10 +12,12 @@ public class PreferenceUtil {
 	private static final String KEY_FIRST_TIME = "key_first_time";
 	private static final String KEY_TEXT_USER_ID = "key_user_id";
 	private static final String KEY_TEXT_USER_NAME = "key_user_name";
+	private static final String KEY_PUSH_DEVICE_ID = "key_push_device_id";
 
 	final static boolean DEFAULT_FIRST_LAUNCH = true;
 	final static int DEFAULT_TEXT_USER_ID = LcomConst.NO_USER;
 	final static String DEFAULT_TEXT_USER_NAME = "Someone";
+	final static String DEFAULT_PUSH_DEVICE_ID = null;
 
 	public static void setFirstTime(Context c, boolean isFirstTime) {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
@@ -63,6 +65,24 @@ public class PreferenceUtil {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
 				Context.MODE_PRIVATE);
 		pref.edit().remove(KEY_TEXT_USER_NAME).commit();
+	}
+
+	public static void setPushDeviceId(Context c, String deviceId) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putString(KEY_PUSH_DEVICE_ID, deviceId).commit();
+	}
+
+	public static String getPushDeviceId(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getString(KEY_PUSH_DEVICE_ID, DEFAULT_PUSH_DEVICE_ID);
+	}
+
+	public static void removePushDeviceId(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_PUSH_DEVICE_ID).commit();
 	}
 
 }

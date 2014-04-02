@@ -285,7 +285,6 @@ public class FriendDataManager implements UserServerDataListener,
 		 */
 		public void notifyFriendThubmailsLoaded(
 				List<HashMap<Integer, Bitmap>> thumbnailsthumbnails);
-
 	}
 
 	private class LoadLocalFriendListAsyncTask extends
@@ -418,5 +417,4 @@ public class FriendDataManager implements UserServerDataListener,
 			mLocalDataHandler.storeFriendThumbnails(thumbnails);
 		}
 	}
-
 }

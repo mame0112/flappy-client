@@ -39,7 +39,7 @@ public class LcomConst {
 	public final static String SERVLET_PASSWORD = "servlet_password";
 
 	public final static String SERVLET_MAILADDRESS = "servet_mailAddress";
-	
+
 	public final static String SERVLET_LANGUAGE = "servet_language";
 
 	public final static String SERVLET_MESSAGE_BODY = "servlet_message_body";
@@ -51,6 +51,8 @@ public class LcomConst {
 	public final static String SERVLET_THUMBNAIL = "servlet_thumbnail";
 
 	public final static String SERVLET_ORIGIN = "servlet_origin";
+
+	public final static String SERVLET_DEVICE_ID = "servlet_device_id";
 
 	// public final static String SERVLET_CONTEXT_IDENTIFIER =
 	// "servlet_identifier";
@@ -74,6 +76,8 @@ public class LcomConst {
 	public final static String SERVLET_CONVERSATION_DATA = "conversation_data";
 
 	public final static String SERVLET_FRIEBD_THUMBNAILS = "friend_thumbnails";
+
+	public final static String SERVLET_REGISTER_DEVICE_ID = "deviceid_register";
 
 	public final static int MAX_USER_NAME_LENGTH = 16;
 
@@ -175,7 +179,7 @@ public class LcomConst {
 	 * (case).
 	 */
 	public static enum ServerRequestContext {
-		none, requestNewUserData, sendAndRegiserMessage, requestConversationData, requestFriendThumbnails,
+		none, requestNewUserData, sendAndRegiserMessage, requestConversationData, requestFriendThumbnails
 	}
 
 	/**
