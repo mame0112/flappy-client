@@ -1,7 +1,5 @@
 package com.mame.lcom.ui;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.app.ActionBar;
@@ -23,11 +21,6 @@ import android.widget.TextView;
 
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
-import com.mame.lcom.data.FriendListData;
-import com.mame.lcom.data.MessageItemData;
-import com.mame.lcom.datamanager.FriendDataManager;
-import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
-import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.exception.WebAPIException;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
@@ -36,13 +29,14 @@ import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.FileUtil;
 import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.NetworkUtil;
+import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.StringUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
 
 public class CreateAccountCompleteActivity extends Activity implements
-		LcomWebAPIListener, LcomPushRegistrationHelperListener {
+		LcomWebAPIListener {
 	private final String TAG = LcomConst.TAG + "/CreateAccountCompleteActivity";
 
 	private EditText mPasswordEditText = null;
@@ -274,13 +268,10 @@ public class CreateAccountCompleteActivity extends Activity implements
 								getApplicationContext(), userId, userName);
 						FileUtil.storeBitmap(getApplicationContext(),
 								mThumbnailData, LcomConst.PROFILE_THUMBNAIL);
+
+						// TODO Need to check Bitmap is stored.
 						CreateAccountActivityUtil.startActivityForFriendList(
 								this, userId, userName);
-						// TODO Need to check Bitmap is stored.
-
-						// Try to get device Id for push message
-						LcomDeviceIdRegisterHelper helper = new LcomDeviceIdRegisterHelper();
-						helper.getAndRegisterDeviceId(mActivity, userId);
 
 						finish();
 						break;
@@ -515,11 +506,4 @@ public class CreateAccountCompleteActivity extends Activity implements
 		}
 		return false;
 	}
-
-	@Override
-	public void onDeviceIdRegistrationFinished(boolean result) {
-		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
-
-	}
-
 }

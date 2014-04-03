@@ -1,7 +1,6 @@
 package com.mame.lcom.ui;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,22 +23,20 @@ import android.widget.TextView;
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
-import com.mame.lcom.data.FriendListDataComparator;
-import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.notification.NewMessageNotification;
+import com.mame.lcom.server.LcomDeviceIdRegisterHelper;
+import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
-import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TrackingUtil;
-import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
 
 public class FriendListActivity extends Activity implements
-		FriendDataManagerListener {
+		FriendDataManagerListener, LcomPushRegistrationHelperListener {
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
 
@@ -80,6 +77,8 @@ public class FriendListActivity extends Activity implements
 
 	private ProgressDialogFragment mProgressDialog = null;
 
+	private LcomDeviceIdRegisterHelper mHelper = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -98,6 +97,9 @@ public class FriendListActivity extends Activity implements
 		mProgressDialog = ProgressDialogFragment.newInstance(
 				getString(R.string.str_friendlist_progress_title),
 				getString(R.string.str_friendlist_progress_desc));
+
+		mHelper = new LcomDeviceIdRegisterHelper(this);
+		mHelper.setPushRegistrationListener(this);
 
 		FriendDataManager.initializeFriendDataManager(getApplicationContext());
 		mManager = FriendDataManager.getInstance();
@@ -146,8 +148,16 @@ public class FriendListActivity extends Activity implements
 			}
 		});
 
-		requestUserData();
-		mProgressDialog.show(getFragmentManager(), "progress");
+		// Try to get device Id for push message
+		if (!mHelper.isDeviceIdAvailable(getApplicationContext())) {
+			mHelper.checkGPSAndAndRegisterDeviceId(mActivity, mUserId);
+		} else {
+			// If Google play service and Device id is ready, we try to get
+			// actual data.
+			requestUserData();
+			mProgressDialog.show(getFragmentManager(), "progress");
+		}
+
 	}
 
 	@Override
@@ -1014,4 +1024,10 @@ public class FriendListActivity extends Activity implements
 		}
 	}
 
+	@Override
+	public void onDeviceIdRegistrationFinished(boolean result) {
+		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
+		mProgressDialog.show(getFragmentManager(), "progress");
+		requestUserData();
+	}
 }

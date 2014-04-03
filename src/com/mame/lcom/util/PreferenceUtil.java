@@ -13,11 +13,14 @@ public class PreferenceUtil {
 	private static final String KEY_TEXT_USER_ID = "key_user_id";
 	private static final String KEY_TEXT_USER_NAME = "key_user_name";
 	private static final String KEY_PUSH_DEVICE_ID = "key_push_device_id";
+	private static final String KEY_PUSH_APP_VERSION = "key_app_version";
 
 	final static boolean DEFAULT_FIRST_LAUNCH = true;
 	final static int DEFAULT_TEXT_USER_ID = LcomConst.NO_USER;
 	final static String DEFAULT_TEXT_USER_NAME = "Someone";
 	final static String DEFAULT_PUSH_DEVICE_ID = null;
+
+	final static int DEFAULT_APP_VERSION = 1;
 
 	public static void setFirstTime(Context c, boolean isFirstTime) {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
@@ -83,6 +86,25 @@ public class PreferenceUtil {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
 				Context.MODE_PRIVATE);
 		pref.edit().remove(KEY_PUSH_DEVICE_ID).commit();
+	}
+
+	/**
+	 * This is for GCM Device ID. This should be called if app version is
+	 * updated and after we refresh device is .
+	 * 
+	 * @param c
+	 * @param version
+	 */
+	public static void setCurrentAppVersionForGCM(Context c, int version) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putInt(KEY_PUSH_APP_VERSION, version).commit();
+	}
+
+	public static int getCurrentAppVersionForGCM(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getInt(KEY_PUSH_APP_VERSION, DEFAULT_APP_VERSION);
 	}
 
 }
