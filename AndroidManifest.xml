@@ -145,6 +145,13 @@
             android:authorities="com.mame.lcom.db"
             android:exported="false"
             android:syncable="true" />
+
+        <receiver
+            android:name="com.mame.lcom.notification.NewMessageNotificationReceiver"
+            android:process=":remote" />
+
+        <service android:name="com.mame.lcom.notification.NewMessageNotificationService" >
+        </service>
     </application>
 
 </manifest>

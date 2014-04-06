@@ -18,6 +18,8 @@ public class FriendListData {
 
 	private String mLastMessage = null;
 
+	private long mMessageDate = 0L;
+
 	private int mNumOfNewMessage = 0;
 
 	private String mMailAddress = null;
@@ -25,13 +27,14 @@ public class FriendListData {
 	private Bitmap mThumbnail = null;
 
 	public FriendListData(int friendId, String friendName, int lastSenderId,
-			String lastMessage, int numOfNewMessage, String mailAddress,
-			Bitmap thumbnail) {
+			String lastMessage, long lastMsgDate, int numOfNewMessage,
+			String mailAddress, Bitmap thumbnail) {
 		mFriendId = friendId;
 		// mFriendName = friendName;
 		mFriendName = friendName;
 		mLastSenderId = lastSenderId;
 		mLastMessage = lastMessage;
+		mMessageDate = lastMsgDate;
 		mNumOfNewMessage = numOfNewMessage;
 		mMailAddress = mailAddress;
 		mThumbnail = thumbnail;
@@ -55,6 +58,10 @@ public class FriendListData {
 
 	public void setLastMessage(String lastMessage) {
 		mLastMessage = lastMessage;
+	}
+
+	public void setMessagDate(long messageDate) {
+		mMessageDate = messageDate;
 	}
 
 	public void setNumOfNewMessage(int numOfNewMessage) {
@@ -87,6 +94,10 @@ public class FriendListData {
 
 	public String getLastMessage() {
 		return mLastMessage;
+	}
+
+	public long getMessagDate() {
+		return mMessageDate;
 	}
 
 	public int getNumOfNewMessage() {

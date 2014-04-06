@@ -19,7 +19,7 @@ public class NewMessageNotification {
 
 	private static NotificationManager mNotificationManager = null;
 
-	public static void showNotiofication(Context context, int id, int number) {
+	public void showNotiofication(Context context, int id) {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context)
@@ -32,7 +32,7 @@ public class NewMessageNotification {
 						context.getString(R.string.str_notification_ticker_text))
 				.setLights(Color.MAGENTA, LED_INTERVAL, LED_INTERVAL)
 				.setVibrate(new long[] { 1000, 700, 250, 700, 250 })
-				.setNumber(number).setAutoCancel(true);
+				.setAutoCancel(true);
 
 		Intent intent = new Intent(context, FriendListActivity.class);
 
@@ -48,7 +48,7 @@ public class NewMessageNotification {
 		mNotificationManager.notify(id, mBuilder.build());
 	}
 
-	public static void removeNotification() {
+	public void removeNotification() {
 		if (mNotificationManager != null) {
 			mNotificationManager.cancelAll();
 		}

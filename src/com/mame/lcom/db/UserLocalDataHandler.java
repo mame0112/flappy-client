@@ -173,7 +173,7 @@ public class UserLocalDataHandler {
 							FriendListData data = new FriendListData(
 									Integer.valueOf(friendId), userName,
 									Integer.valueOf(lastSenderId), lastMessage,
-									0, mailAddress, bmp);
+									0L, 0, mailAddress, bmp);
 							datas.add(data);
 							DbgUtil.showDebug(TAG, "friendId: " + friendId
 									+ " userName: " + userName

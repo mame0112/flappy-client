@@ -1,5 +1,7 @@
 package com.mame.lcom.ui;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +10,12 @@ import android.os.Handler;
 import android.widget.Toast;
 
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.util.DbgUtil;
 
 public class FriendListActivityUtil {
+
+	private final static String TAG = LcomConst.TAG + "/FriendListActivityUtil";
 
 	public static void startActivityConversationViewByPos(Activity activity,
 			int userId, String userName, int position, int targetUserId,
@@ -49,4 +55,27 @@ public class FriendListActivityUtil {
 		activity.startActivity(intent);
 	}
 
+	public static long getLatestMessageDate(
+			ArrayList<FriendListData> friendListData) {
+
+		if (friendListData != null && friendListData.size() != 0) {
+
+			long latestDate = 0L;
+
+			for (FriendListData data : friendListData) {
+				if (data != null) {
+					long date = data.getMessagDate();
+
+					if (latestDate <= date) {
+						latestDate = date;
+					}
+				}
+			}
+			return latestDate;
+
+		}
+
+		return 0L;
+
+	}
 }

@@ -14,11 +14,13 @@ public class PreferenceUtil {
 	private static final String KEY_TEXT_USER_NAME = "key_user_name";
 	private static final String KEY_PUSH_DEVICE_ID = "key_push_device_id";
 	private static final String KEY_PUSH_APP_VERSION = "key_app_version";
+	private static final String KEY_LATEST_MESSAGE_POSTED_TIME = "key_latest_message_post_time";
 
 	final static boolean DEFAULT_FIRST_LAUNCH = true;
 	final static int DEFAULT_TEXT_USER_ID = LcomConst.NO_USER;
 	final static String DEFAULT_TEXT_USER_NAME = "Someone";
 	final static String DEFAULT_PUSH_DEVICE_ID = null;
+	final static long DEFAULT_LATEST_MESSAGE_POSTED_TIME = 0L;
 
 	final static int DEFAULT_APP_VERSION = 1;
 
@@ -105,6 +107,27 @@ public class PreferenceUtil {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
 				Context.MODE_PRIVATE);
 		return pref.getInt(KEY_PUSH_APP_VERSION, DEFAULT_APP_VERSION);
+	}
+
+	/**
+	 * This is for Notification. Currently, we just need to store data for
+	 * latest message. But once we have to have more than 2 message, we should
+	 * use SQLiteDatabase
+	 * 
+	 * @param c
+	 * @param time
+	 */
+	public static void updateLatestMessagePostedTime(Context c, long time) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putLong(KEY_LATEST_MESSAGE_POSTED_TIME, time).commit();
+	}
+
+	public static long getLatestMessagePostedTime(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getLong(KEY_LATEST_MESSAGE_POSTED_TIME,
+				DEFAULT_LATEST_MESSAGE_POSTED_TIME);
 	}
 
 }

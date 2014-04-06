@@ -342,14 +342,10 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 								+ " " + message + " " + date + " "
 								+ numOfMessage);
 
-						// int friendId, String friendName, int lastSenderId,
-						// String lastMessage, int numOfNewMessage, String
-						// mailAddress,
-						// Bitmap thumbnail
-
 						FriendListData data = new FriendListData(
 								Integer.valueOf(friendId), friendName,
 								Integer.valueOf(userId), message,
+								Long.valueOf(date),
 								Integer.valueOf(numOfMessage), null, null);
 						newUserData.add(data);
 
