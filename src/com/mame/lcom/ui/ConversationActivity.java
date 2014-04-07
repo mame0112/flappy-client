@@ -85,6 +85,8 @@ public class ConversationActivity extends Activity implements
 
 	private Bitmap mThumbnail = null;
 
+	private Activity mActivity = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -132,6 +134,8 @@ public class ConversationActivity extends Activity implements
 
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
+
+		mActivity = this;
 
 		mProgressDialog = ProgressDialogFragment.newInstance(
 				getString(R.string.str_conversation_progress_title),
@@ -340,7 +344,8 @@ public class ConversationActivity extends Activity implements
 			DbgUtil.showDebug(TAG, "postDate: " + messageData.getPostedDate());
 		}
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 

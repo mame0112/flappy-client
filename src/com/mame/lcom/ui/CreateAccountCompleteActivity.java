@@ -238,7 +238,8 @@ public class CreateAccountCompleteActivity extends Activity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 

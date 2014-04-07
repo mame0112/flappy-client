@@ -57,13 +57,15 @@ public class CreateAccountActivity extends Activity implements
 
 	private Bitmap mThumbBitmap = null;
 
+	private Activity mActivity = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		DbgUtil.showDebug(TAG, "onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.createaccount);
 
-		final Activity activity = this;
+		mActivity = this;
 
 		mWebAPI = new LcomWebAPI();
 		mWebAPI.setListener(this);
@@ -91,7 +93,7 @@ public class CreateAccountActivity extends Activity implements
 						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
 						TrackingUtil.EVENT_LABEL_CREATE_THUMBNAIL_BUTTON, 1);
 
-				CreateAccountActivityUtil.launchPhotoPicker(activity,
+				CreateAccountActivityUtil.launchPhotoPicker(mActivity,
 						PHOTO_REQUEST_CODE);
 			}
 		});
@@ -262,7 +264,8 @@ public class CreateAccountActivity extends Activity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 

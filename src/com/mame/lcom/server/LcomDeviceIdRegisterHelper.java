@@ -84,7 +84,8 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
 					registerInBackground(activity, userId);
 				} else {
-					if (mProgressDialog != null && mProgressDialog.isShowing()) {
+					if (!mActivity.isFinishing() && mProgressDialog != null
+							&& mProgressDialog.isShowing()) {
 						mProgressDialog.dismiss();
 					}
 				}
@@ -186,7 +187,8 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 
@@ -242,7 +244,8 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 

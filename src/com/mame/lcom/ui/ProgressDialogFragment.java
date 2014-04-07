@@ -5,7 +5,13 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
+import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.util.DbgUtil;
+
 public class ProgressDialogFragment extends DialogFragment {
+
+	private final String TAG = LcomConst.TAG + "/ProgressDialogFragment";
+
 	private static ProgressDialog progressDialog = null;
 
 	public static ProgressDialogFragment newInstance(String title,
@@ -58,4 +64,17 @@ public class ProgressDialogFragment extends DialogFragment {
 		return false;
 	}
 
+	@Override
+	public void dismiss() {
+		super.dismiss();
+		if (progressDialog != null) {
+			try {
+				progressDialog.dismiss();
+				progressDialog = null;
+			} catch (IllegalStateException e) {
+				DbgUtil.showDebug(TAG,
+						"IllegalStateException: " + e.getMessage());
+			}
+		}
+	}
 }

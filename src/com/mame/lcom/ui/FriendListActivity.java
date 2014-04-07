@@ -305,7 +305,8 @@ public class FriendListActivity extends Activity implements
 			}
 
 			// dismiss progress
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
 			}
 
@@ -388,7 +389,8 @@ public class FriendListActivity extends Activity implements
 			}
 
 			// dismiss progress
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
 			}
 

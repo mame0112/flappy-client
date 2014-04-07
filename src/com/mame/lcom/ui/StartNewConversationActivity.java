@@ -479,7 +479,8 @@ public class StartNewConversationActivity extends Activity implements
 		}
 
 		// Dismiss dialog
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
 		}
 
