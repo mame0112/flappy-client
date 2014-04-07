@@ -450,23 +450,29 @@ public class FriendListActivity extends Activity implements
 	private void checkAndShowFirstAddButton() {
 		DbgUtil.showDebug(TAG, "checkAndShowFirstAddButton");
 
-		if (mFriendListData == null || mFriendListData.size() == 0) {
-			// If both local and server data is null, show first add text
-			// and button
-			DbgUtil.showDebug(TAG, "show first add button");
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (mFriendListData == null
+								|| mFriendListData.size() == 0) {
+							// If both local and server data is null, show first
+							// add text and button
+							DbgUtil.showDebug(TAG, "show first add button");
 							mFirstAddText.setVisibility(View.VISIBLE);
 							mFirstAddButton.setVisibility(View.VISIBLE);
+						} else {
+							mFirstAddText.setVisibility(View.GONE);
+							mFirstAddButton.setVisibility(View.GONE);
 						}
-					});
-				}
-			}).start();
-		}
+
+					}
+				});
+			}
+		}).start();
+
 	}
 
 	@Override
