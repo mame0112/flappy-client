@@ -30,7 +30,7 @@
 
     <!-- Welcome activity -->
     <string name="str_welcome_title">flappy</string>
-    <string name="str_welcome_desc">読まないと自動的に消えるメッセージで友達とゆるくコミュニケーション</string>
+    <string name="str_welcome_desc">メッセージを読まないと自動で消える。既読スルーのできる、ゆるいコミュニケーションツール</string>
     <string name="str_welcome_signin_button">サインイン</string>
     <string name="str_welcome_create_account_button">アカウント作成</string>
     <string name="str_welcome_already_have_account">アカウントを持っている方</string>
