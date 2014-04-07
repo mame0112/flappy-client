@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.exception.WebAPIException;
+import com.mame.lcom.ui.FriendListActivity;
 import com.mame.lcom.ui.FriendListActivityUtil;
 import com.mame.lcom.ui.LoginActivityUtil;
 import com.mame.lcom.ui.ProgressDialogFragment;
@@ -51,6 +53,8 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 	private ProgressDialogFragment mProgressDialog = null;
 
+	private Activity mActivity = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,6 +67,8 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
+
+		mActivity = this;
 
 		mProgressDialog = ProgressDialogFragment.newInstance(
 				getString(R.string.str_login_progress_title),
@@ -262,7 +268,8 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
 			mProgressDialog.getDialog().dismiss();
 		}
 		if (respList != null) {
@@ -303,21 +310,21 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 		try {
 			String origin = respList.get(0);
 			String result = respList.get(1);
-			String userId = respList.get(2);
-			String userName = respList.get(3);
+			final String userId = respList.get(2);
+			final String userName = respList.get(3);
 
 			DbgUtil.showDebug(TAG, "origin: " + origin);
 			if (origin != null && origin.equals(TAG)) {
 				if (result != null) {
 					switch (Integer.valueOf(result)) {
 					case LcomConst.LOGIN_RESULT_OK:
+						DbgUtil.showDebug(TAG, "LOGIN_RESULT_OK");
 						LoginActivityUtil.storeUserDataToPref(
 								getApplicationContext(),
 								Integer.valueOf(userId), userName);
 						LoginActivityUtil.startActivityForFriendList(
 								getApplicationContext(),
 								Integer.valueOf(userId), userName);
-						finish();
 						break;
 					case LcomConst.LOGIN_RESULT_PARAMETER_NULL:
 						FeedbackUtil
