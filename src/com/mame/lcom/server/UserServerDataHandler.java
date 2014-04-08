@@ -176,7 +176,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 				}
 			}
 
-			if (parsedId != null && parsedId.length() > 2) {
+			if (parsedId != null) {
 
 				// Remove first "a"
 				parsedId = parsedId.substring(1, parsedId.length());

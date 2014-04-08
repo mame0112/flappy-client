@@ -397,6 +397,94 @@ public class UserLocalDataHandler {
 		}
 	}
 
+	public ArrayList<Integer> getFriendUseridThumbnailNotRegistered(
+			ArrayList<Integer> targetIds) throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getTargetUseridThumbnailNotRegistered");
+
+		ArrayList<Integer> result = new ArrayList<Integer>();
+
+		if (targetIds != null && targetIds.size() != 0) {
+			for (int id : targetIds) {
+				DbgUtil.showDebug(TAG, "id: " + id);
+
+				boolean isRegistered = false;
+
+				Cursor cursor = null;
+				try {
+					String projection[] = {
+							DatabaseDef.FriendshipColumns.FRIEND_ID,
+							DatabaseDef.FriendshipColumns.THUMBNAIL };
+					String selection = DatabaseDef.FriendshipColumns.FRIEND_ID
+							+ "=?";
+					String selectionArgs[] = { String.valueOf(id) };
+
+					cursor = mContentResolver.query(
+							DatabaseDef.FriendshipTable.URI, projection,
+							selection, selectionArgs, null);
+					if (cursor == null) {
+						DbgUtil.showDebug(TAG, "cursor is null");
+						throw new UserLocalDataHandlerException(
+								"Cursor is null");
+					}
+					try {
+						if (cursor != null) {
+							if (cursor.moveToFirst()) {
+								do {
+									DbgUtil.showDebug(TAG,
+											"A: " + cursor.getCount());
+
+									byte[] thumbnail = cursor
+											.getBlob(cursor
+													.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+									Bitmap bmp = null;
+									if (thumbnail != null) {
+										bmp = ImageUtil
+												.decodeByteArrayToBitmap(thumbnail);
+
+										if (bmp != null && bmp.getWidth() != 0
+												&& bmp.getHeight() != 0) {
+											result.add(id);
+											DbgUtil.showDebug(TAG, "Add");
+											isRegistered = true;
+										}
+									}
+								} while (cursor.moveToNext());
+							}
+						}
+						// }
+					} catch (SQLException e) {
+						DbgUtil.showDebug(TAG,
+								"SQLException: " + e.getMessage());
+						TrackingUtil.trackExceptionMessage(mContext, TAG,
+								"SQLExeption: " + e.getMessage());
+						TrackingUtil.trackExceptionMessage(mContext, TAG,
+								"SQLExeption for getLocalUserDataset cursor move: "
+										+ e.getMessage());
+						throw new UserLocalDataHandlerException("SQLException:"
+								+ e.getMessage());
+					}
+				} catch (SQLException e) {
+					DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+					TrackingUtil.trackExceptionMessage(
+							mContext,
+							TAG,
+							"SQLExeption for getLocalUserDataset query: "
+									+ e.getMessage());
+					throw new UserLocalDataHandlerException("SQLException:"
+							+ e.getMessage());
+				}
+
+				if (!isRegistered) {
+					result.add(id);
+					isRegistered = false;
+				}
+
+			}
+			return result;
+		}
+		return null;
+	}
+
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
 			int toUserId, String fromUserName, String toUserName,
 			String message, String date) {

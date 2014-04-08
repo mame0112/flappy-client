@@ -148,7 +148,19 @@ public class FriendDataManager implements UserServerDataListener,
 			throw new FriendDataManagerException("targetUserIds is null");
 		}
 
-		mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
+		// Once we check thumbnails those are already stored in local DB so that
+		// we can avoid unnecessary access to server
+		try {
+			ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
+					.getFriendUseridThumbnailNotRegistered(targetUserIds);
+
+			mServerDataHandler.requestNewFriendThumbnails(notRegisteredUserIds);
+		} catch (UserLocalDataHandlerException e) {
+			DbgUtil.showDebug(TAG,
+					"UserLocalDataHandlerException: " + e.getMessage());
+			mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
+		}
+
 	}
 
 	/**

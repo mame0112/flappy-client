@@ -292,6 +292,14 @@ public class FriendListActivity extends Activity implements
 				}
 			}
 
+			// Debug
+			if (mFriendTmpData != null) {
+				DbgUtil.showDebug(TAG,
+						"mFriendTmpData: " + mFriendTmpData.size());
+			} else {
+				DbgUtil.showDebug(TAG, "mFriendTmpData is null");
+			}
+
 			// Id list for getting thumbnail
 			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
 
@@ -306,6 +314,7 @@ public class FriendListActivity extends Activity implements
 
 				// TODO We need to check if thumbnail is available in local
 				// before accessing server
+				DbgUtil.showDebug(TAG, "friendId: " + friendId);
 				targetUserIds.add(friendId);
 
 				DbgUtil.showDebug(TAG, "id: " + friendId);
@@ -338,6 +347,13 @@ public class FriendListActivity extends Activity implements
 					});
 				}
 			}).start();
+
+			// Debug
+			if (targetUserIds != null) {
+				for (int id : targetUserIds) {
+					DbgUtil.showDebug(TAG, "id::: " + id);
+				}
+			}
 
 			try {
 				mManager.requestFriendsNewThumbnail(targetUserIds);
@@ -403,6 +419,7 @@ public class FriendListActivity extends Activity implements
 
 				// TODO We need to check if thumbnail is available in local
 				// before accessing server
+				DbgUtil.showDebug(TAG, "friendId: " + friendId);
 				targetUserIds.add(friendId);
 
 				mFriendListData.add(data);
