@@ -292,6 +292,9 @@ public class FriendListActivity extends Activity implements
 				}
 			}
 
+			// Id list for getting thumbnail
+			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
 					.hasNext();) {
@@ -300,6 +303,11 @@ public class FriendListActivity extends Activity implements
 				FriendListData data = (FriendListData) entry.getValue();
 
 				mFriendListData.add(data);
+
+				// TODO We need to check if thumbnail is available in local
+				// before accessing server
+				targetUserIds.add(friendId);
+
 				DbgUtil.showDebug(TAG, "id: " + friendId);
 				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
 			}
@@ -330,6 +338,13 @@ public class FriendListActivity extends Activity implements
 					});
 				}
 			}).start();
+
+			try {
+				mManager.requestFriendsNewThumbnail(targetUserIds);
+			} catch (FriendDataManagerException e) {
+				DbgUtil.showDebug(TAG,
+						"FriendDataManagerException: " + e.getMessage());
+			}
 
 			// Show button if necessary
 			checkAndShowFirstAddButton();
@@ -376,12 +391,19 @@ public class FriendListActivity extends Activity implements
 				}
 			}
 
+			// Id list for getting thumbnail
+			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
 					.hasNext();) {
 				Map.Entry entry = (Map.Entry) it.next();
 				Integer friendId = (Integer) entry.getKey();
 				FriendListData data = (FriendListData) entry.getValue();
+
+				// TODO We need to check if thumbnail is available in local
+				// before accessing server
+				targetUserIds.add(friendId);
 
 				mFriendListData.add(data);
 				DbgUtil.showDebug(TAG, "id: " + friendId);
@@ -414,6 +436,13 @@ public class FriendListActivity extends Activity implements
 					});
 				}
 			}).start();
+
+			try {
+				mManager.requestFriendsNewThumbnail(targetUserIds);
+			} catch (FriendDataManagerException e) {
+				DbgUtil.showDebug(TAG,
+						"FriendDataManagerException: " + e.getMessage());
+			}
 
 			// Show button if necessary
 			checkAndShowFirstAddButton();
