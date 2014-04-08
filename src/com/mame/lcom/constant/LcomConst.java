@@ -116,6 +116,9 @@ public class LcomConst {
 
 	public final static long TIME_DAY = 24 * TIME_HOUR;
 
+	// Check thumanil every 5 days
+	public final static long THUMBNAIL_CHECK_INTERVAL = TIME_DAY * 5;
+
 	/**
 	 * Login constants
 	 */

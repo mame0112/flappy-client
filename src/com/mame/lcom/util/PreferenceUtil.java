@@ -15,12 +15,14 @@ public class PreferenceUtil {
 	private static final String KEY_PUSH_DEVICE_ID = "key_push_device_id";
 	private static final String KEY_PUSH_APP_VERSION = "key_app_version";
 	private static final String KEY_LATEST_MESSAGE_POSTED_TIME = "key_latest_message_post_time";
+	private static final String KEY_THUMBNAIL_CHECK = "key_thumbnail_check";
 
 	final static boolean DEFAULT_FIRST_LAUNCH = true;
 	final static int DEFAULT_TEXT_USER_ID = LcomConst.NO_USER;
 	final static String DEFAULT_TEXT_USER_NAME = "Someone";
 	final static String DEFAULT_PUSH_DEVICE_ID = null;
 	final static long DEFAULT_LATEST_MESSAGE_POSTED_TIME = 0L;
+	final static long DEFAULT_THUMBNAIL_CHECK_TIME = 0L;
 
 	final static int DEFAULT_APP_VERSION = 1;
 
@@ -88,6 +90,25 @@ public class PreferenceUtil {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
 				Context.MODE_PRIVATE);
 		pref.edit().remove(KEY_PUSH_DEVICE_ID).commit();
+	}
+
+	/**
+	 * This preference shall be used for checking thumbnail in certain interval
+	 * (Meaning to avoid check thumbnail every time FriendListActivity shown)
+	 * 
+	 * @param c
+	 * @param time
+	 */
+	public static void setLastThumbnailCheckTime(Context c, long time) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putLong(KEY_THUMBNAIL_CHECK, time).commit();
+	}
+
+	public static long getLastThumbnailCheckTime(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getLong(KEY_THUMBNAIL_CHECK, DEFAULT_THUMBNAIL_CHECK_TIME);
 	}
 
 	/**

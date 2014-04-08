@@ -20,6 +20,8 @@ import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.server.UserServerDataHandler;
 import com.mame.lcom.server.UserServerDataHandler.UserServerDataListener;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.PreferenceUtil;
+import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 public class FriendDataManager implements UserServerDataListener,
@@ -150,15 +152,32 @@ public class FriendDataManager implements UserServerDataListener,
 
 		// Once we check thumbnails those are already stored in local DB so that
 		// we can avoid unnecessary access to server
-		try {
-			ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
-					.getFriendUseridThumbnailNotRegistered(targetUserIds);
+		long currentTime = TimeUtil.getCurrentDate();
+		long lastTime = PreferenceUtil.getLastThumbnailCheckTime(mContext);
+		DbgUtil.showDebug(TAG, "currentTime: " + currentTime);
+		DbgUtil.showDebug(TAG, "lastTIme: " + lastTime);
 
-			mServerDataHandler.requestNewFriendThumbnails(notRegisteredUserIds);
-		} catch (UserLocalDataHandlerException e) {
-			DbgUtil.showDebug(TAG,
-					"UserLocalDataHandlerException: " + e.getMessage());
-			mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
+		if (currentTime > lastTime + LcomConst.THUMBNAIL_CHECK_INTERVAL) {
+			try {
+				ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
+						.getFriendUseridThumbnailNotRegistered(targetUserIds);
+
+				// Update preference
+				PreferenceUtil.setLastThumbnailCheckTime(mContext, currentTime);
+
+				// Check thumbnail
+				mServerDataHandler
+						.requestNewFriendThumbnails(notRegisteredUserIds);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
+			}
+		} else {
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifyFriendThubmailsLoaded(null);
+			}
+
 		}
 
 	}
