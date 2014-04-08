@@ -546,9 +546,8 @@ public class FriendListActivity extends Activity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_friendlist_signout:
-			PreferenceUtil.removeUserId(getApplicationContext());
-			PreferenceUtil.removeUserName(getApplicationContext());
-			PreferenceUtil.removePushDeviceId(getApplicationContext());
+			// Clear all preference data
+			PreferenceUtil.removeAllPreferenceData(getApplicationContext());
 
 			TrackingUtil.trackEvent(getApplicationContext(),
 					TrackingUtil.EVENT_CATEGORY_FRIEND_LIST,

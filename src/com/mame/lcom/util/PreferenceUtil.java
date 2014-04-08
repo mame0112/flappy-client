@@ -111,6 +111,12 @@ public class PreferenceUtil {
 		return pref.getLong(KEY_THUMBNAIL_CHECK, DEFAULT_THUMBNAIL_CHECK_TIME);
 	}
 
+	public static void removeLastThumbnailCheckTime(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_THUMBNAIL_CHECK).commit();
+	}
+
 	/**
 	 * This is for GCM Device ID. This should be called if app version is
 	 * updated and after we refresh device is .
@@ -128,6 +134,12 @@ public class PreferenceUtil {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
 				Context.MODE_PRIVATE);
 		return pref.getInt(KEY_PUSH_APP_VERSION, DEFAULT_APP_VERSION);
+	}
+
+	public static void removeCurrentAppVersionForGCM(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_PUSH_APP_VERSION).commit();
 	}
 
 	/**
@@ -149,6 +161,28 @@ public class PreferenceUtil {
 				Context.MODE_PRIVATE);
 		return pref.getLong(KEY_LATEST_MESSAGE_POSTED_TIME,
 				DEFAULT_LATEST_MESSAGE_POSTED_TIME);
+	}
+
+	public static void removeLatestMessagePostedTime(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_LATEST_MESSAGE_POSTED_TIME).commit();
+	}
+
+	/**
+	 * Remove all preference data. This shall be used for sigining out from this
+	 * application
+	 * 
+	 * @param c
+	 */
+	public static void removeAllPreferenceData(Context c) {
+		setFirstTime(c, true);
+		removeUserId(c);
+		removeUserName(c);
+		removePushDeviceId(c);
+		removeLastThumbnailCheckTime(c);
+		removeCurrentAppVersionForGCM(c);
+		removeLatestMessagePostedTime(c);
 	}
 
 }
