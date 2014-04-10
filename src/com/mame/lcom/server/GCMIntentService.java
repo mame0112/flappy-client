@@ -10,20 +10,27 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.exception.NewMessageNotificationManagerException;
+import com.mame.lcom.notification.NewMessageNotificationManager;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.HttpClientUtil;
+import com.mame.lcom.util.TimeUtil;
 
 public class GCMIntentService extends IntentService {
 
@@ -53,122 +60,167 @@ public class GCMIntentService extends IntentService {
 					.equals(messageType)) {
 				DbgUtil.showDebug(TAG, "messageType: " + messageType + ",body:"
 						+ extras.toString());
+
+				try {
+					String[] parsed = parseJSON(extras.toString());
+					String userId = parsed[0];
+					String targetUserId = parsed[1];
+					String message = parsed[2];
+					DbgUtil.showDebug(TAG, "userId: " + userId);
+					DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
+					DbgUtil.showDebug(TAG, "message: " + message);
+
+					long currentTime = TimeUtil.getCurrentDate();
+					NewMessageNotificationManager
+							.handleLastetMessageAndShowNotification(
+									getApplicationContext(),
+									Integer.valueOf(userId),
+									Integer.valueOf(targetUserId), currentTime);
+				} catch (IndexOutOfBoundsException e) {
+					DbgUtil.showDebug(TAG,
+							"IndexOutOfBoundsException: " + e.getMessage());
+				} catch (NumberFormatException e) {
+					DbgUtil.showDebug(TAG,
+							"NumberFormatException: " + e.getMessage());
+				} catch (NewMessageNotificationManagerException e) {
+					DbgUtil.showDebug(
+							TAG,
+							"NewMessageNotificationManagerException: "
+									+ e.getMessage());
+				}
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 
+	private String[] parseJSON(String json) {
+		String tmp = json.substring(7, json.length() - 1);
+		try {
+			JSONObject rootObject = new JSONObject(tmp);
+			if (rootObject != null) {
+				String msg = rootObject.getString("msg");
+				if (msg != null) {
+					String[] parsed = msg.split(LcomConst.SEPARATOR);
+					return parsed;
+				}
+			}
+
+		} catch (JSONException e) {
+			Log.e(TAG, "JSONException: " + e.getMessage());
+		}
+		return null;
+	}
 }
 
-//public class GCMIntentService extends GCMBaseIntentService {
+// public class GCMIntentService extends GCMBaseIntentService {
 //
-//	private static final String TAG = LcomConst.TAG + "/GCMIntentService";
+// private static final String TAG = LcomConst.TAG + "/GCMIntentService";
 //
-//	private Handler toaster;
+// private Handler toaster;
 //
-//	private static final String USER_ID = "TEST_USER";
+// private static final String USER_ID = "TEST_USER";
 //
-//	public GCMIntentService() {
-//		super(LcomConst.PROJECT_NUMBER);
-//	}
+// public GCMIntentService() {
+// super(LcomConst.PROJECT_NUMBER);
+// }
 //
-//	@Override
-//	public void onCreate() {
-//		DbgUtil.showDebug(TAG, "onCreate");
-//		super.onCreate();
-//		toaster = new Handler();
-//	}
+// @Override
+// public void onCreate() {
+// DbgUtil.showDebug(TAG, "onCreate");
+// super.onCreate();
+// toaster = new Handler();
+// }
 //
-//	@Override
-//	protected void onRegistered(Context context, String registrationId) {
-//		DbgUtil.showDebug(TAG, "onRegistered: regId = " + registrationId);
-//		// GCMから発行された端末IDをアプリサーバに登録する。
-//		String uri = LcomConst.BASE_URL + "?action=register" + "&userId="
-//				+ USER_ID + "&regId=" + registrationId;
-//		// Util.doGet(uri);
-//		HttpClientUtil easyHttpClient = new HttpClientUtil(uri);
-//		String responseString;
-//		try {
-//			// // post の場合
-//			// responseString = easyHttpClient.doPost();
-//			// get の場合
-//			responseString = easyHttpClient.doGet();
-//			DbgUtil.showDebug(TAG, "responseString: " + responseString);
-//		} catch (UnsupportedEncodingException e) {
-//			DbgUtil.showDebug(TAG,
-//					"UnsupportedEncodingException: " + e.getMessage());
-//		} catch (ClientProtocolException e) {
-//			DbgUtil.showDebug(TAG, "ClientProtocolException: " + e.getMessage());
-//		} catch (IOException e) {
-//			DbgUtil.showDebug(TAG, "IOException: " + e.getMessage());
-//		}
-//	}
+// @Override
+// protected void onRegistered(Context context, String registrationId) {
+// DbgUtil.showDebug(TAG, "onRegistered: regId = " + registrationId);
+// // GCMから発行された端末IDをアプリサーバに登録する。
+// String uri = LcomConst.BASE_URL + "?action=register" + "&userId="
+// + USER_ID + "&regId=" + registrationId;
+// // Util.doGet(uri);
+// HttpClientUtil easyHttpClient = new HttpClientUtil(uri);
+// String responseString;
+// try {
+// // // post の場合
+// // responseString = easyHttpClient.doPost();
+// // get の場合
+// responseString = easyHttpClient.doGet();
+// DbgUtil.showDebug(TAG, "responseString: " + responseString);
+// } catch (UnsupportedEncodingException e) {
+// DbgUtil.showDebug(TAG,
+// "UnsupportedEncodingException: " + e.getMessage());
+// } catch (ClientProtocolException e) {
+// DbgUtil.showDebug(TAG, "ClientProtocolException: " + e.getMessage());
+// } catch (IOException e) {
+// DbgUtil.showDebug(TAG, "IOException: " + e.getMessage());
+// }
+// }
 //
-//	@Override
-//	protected void onMessage(Context context, Intent intent) {
-//		// アプリサーバから送信されたPushメッセージの受信。
-//		// Message.data が Intent.extra になるらしい。
-//		CharSequence msg = intent.getCharSequenceExtra("msg");
-//		DbgUtil.showDebug(TAG, "onMessage: msg = " + msg);
-//		toast("Push message: " + msg);
-//	}
+// @Override
+// protected void onMessage(Context context, Intent intent) {
+// // アプリサーバから送信されたPushメッセージの受信。
+// // Message.data が Intent.extra になるらしい。
+// CharSequence msg = intent.getCharSequenceExtra("msg");
+// DbgUtil.showDebug(TAG, "onMessage: msg = " + msg);
+// toast("Push message: " + msg);
+// }
 //
-//	@Override
-//	protected void onUnregistered(Context context, String registrationId) {
-//		DbgUtil.showDebug(TAG, "onUnregistered: regId = " + registrationId);
-//		if (GCMRegistrar.isRegisteredOnServer(context)) {
-//			String uri = LcomConst.BASE_URL + "?action=unregister" + "&userId="
-//					+ USER_ID;
+// @Override
+// protected void onUnregistered(Context context, String registrationId) {
+// DbgUtil.showDebug(TAG, "onUnregistered: regId = " + registrationId);
+// if (GCMRegistrar.isRegisteredOnServer(context)) {
+// String uri = LcomConst.BASE_URL + "?action=unregister" + "&userId="
+// + USER_ID;
 //
-//			HttpClientUtil easyHttpClient = new HttpClientUtil(uri);
-//			String responseString;
-//			try {
-//				// post の場合
-//				responseString = easyHttpClient.doPost();
-//				// get の場合
-//				responseString = easyHttpClient.doGet();
-//			} catch (UnsupportedEncodingException e) {
-//				DbgUtil.showDebug(TAG,
-//						"UnsupportedEncodingException: " + e.getMessage());
-//			} catch (ClientProtocolException e) {
-//				DbgUtil.showDebug(TAG,
-//						"ClientProtocolException: " + e.getMessage());
-//			} catch (IOException e) {
-//				DbgUtil.showDebug(TAG, "IOException: " + e.getMessage());
-//			}
+// HttpClientUtil easyHttpClient = new HttpClientUtil(uri);
+// String responseString;
+// try {
+// // post の場合
+// responseString = easyHttpClient.doPost();
+// // get の場合
+// responseString = easyHttpClient.doGet();
+// } catch (UnsupportedEncodingException e) {
+// DbgUtil.showDebug(TAG,
+// "UnsupportedEncodingException: " + e.getMessage());
+// } catch (ClientProtocolException e) {
+// DbgUtil.showDebug(TAG,
+// "ClientProtocolException: " + e.getMessage());
+// } catch (IOException e) {
+// DbgUtil.showDebug(TAG, "IOException: " + e.getMessage());
+// }
 //
-//			// Util.doGet(uri);
-//		} else {
-//			DbgUtil.showDebug(TAG, "onUnregistered: ignore");
-//		}
-//	}
+// // Util.doGet(uri);
+// } else {
+// DbgUtil.showDebug(TAG, "onUnregistered: ignore");
+// }
+// }
 //
-//	@Override
-//	protected void onDeletedMessages(Context context, int total) {
-//		DbgUtil.showDebug(TAG, "onDeletedMessages total=" + total);
-//		toast("onDeletedMessages: " + total);
-//	}
+// @Override
+// protected void onDeletedMessages(Context context, int total) {
+// DbgUtil.showDebug(TAG, "onDeletedMessages total=" + total);
+// toast("onDeletedMessages: " + total);
+// }
 //
-//	@Override
-//	public void onError(Context context, String errorId) {
-//		DbgUtil.showDebug(TAG, "onError: " + errorId);
-//		toast("onError: " + errorId);
-//	}
+// @Override
+// public void onError(Context context, String errorId) {
+// DbgUtil.showDebug(TAG, "onError: " + errorId);
+// toast("onError: " + errorId);
+// }
 //
-//	@Override
-//	protected boolean onRecoverableError(Context context, String errorId) {
-//		DbgUtil.showDebug(TAG, "onRecoverableError: " + errorId);
-//		toast("onRecoverableError: " + errorId);
-//		return super.onRecoverableError(context, errorId);
-//	}
+// @Override
+// protected boolean onRecoverableError(Context context, String errorId) {
+// DbgUtil.showDebug(TAG, "onRecoverableError: " + errorId);
+// toast("onRecoverableError: " + errorId);
+// return super.onRecoverableError(context, errorId);
+// }
 //
-//	private void toast(final String msg) {
-//		toaster.post(new Runnable() {
-//			@Override
-//			public void run() {
-//				Toast.makeText(GCMIntentService.this, msg, Toast.LENGTH_LONG)
-//						.show();
-//			}
-//		});
-//	}
+// private void toast(final String msg) {
+// toaster.post(new Runnable() {
+// @Override
+// public void run() {
+// Toast.makeText(GCMIntentService.this, msg, Toast.LENGTH_LONG)
+// .show();
+// }
+// });
+// }
 // }
