@@ -63,11 +63,12 @@ public class GCMIntentService extends IntentService {
 
 				try {
 					String[] parsed = parseJSON(extras.toString());
-					String userId = parsed[0];
-					String targetUserId = parsed[1];
+					// Because parsed[0] is "my id" from friend perspective.
+					String friendUserId = parsed[0];
+					String userId = parsed[1];
 					String message = parsed[2];
 					DbgUtil.showDebug(TAG, "userId: " + userId);
-					DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
+					DbgUtil.showDebug(TAG, "friendUserId: " + friendUserId);
 					DbgUtil.showDebug(TAG, "message: " + message);
 
 					long currentTime = TimeUtil.getCurrentDate();
@@ -75,7 +76,7 @@ public class GCMIntentService extends IntentService {
 							.handleLastetMessageAndShowNotification(
 									getApplicationContext(),
 									Integer.valueOf(userId),
-									Integer.valueOf(targetUserId), currentTime);
+									Integer.valueOf(friendUserId), currentTime);
 				} catch (IndexOutOfBoundsException e) {
 					DbgUtil.showDebug(TAG,
 							"IndexOutOfBoundsException: " + e.getMessage());

@@ -48,7 +48,7 @@ public class NewMessageNotificationManager {
 	 * @param latestPostedDate
 	 */
 	public static void handleLastetMessageAndShowNotification(Context context,
-			int userId, int targetUserId, long latestPostedDate)
+			int userId, int friendUserId, long latestPostedDate)
 			throws NewMessageNotificationManagerException {
 		DbgUtil.showDebug(TAG, "handleLastetMessageAndShowNotification");
 
@@ -86,7 +86,7 @@ public class NewMessageNotificationManager {
 
 			// Finally show notification
 			// TODO we need to show message in case of ConversationActivity
-			showNotification(context);
+			showNotification(context, userId, friendUserId);
 		}
 	}
 
@@ -108,10 +108,12 @@ public class NewMessageNotificationManager {
 
 	}
 
-	private static void showNotification(Context context) {
+	private static void showNotification(Context context, int userId,
+			int targetUserId) {
 		DbgUtil.showDebug(TAG, "showNotification");
 		if (mNotification != null) {
-			mNotification.showNotiofication(context, NOTIFICATION_ID);
+			mNotification.showNotiofication(context, userId, targetUserId,
+					NOTIFICATION_ID);
 		}
 	}
 

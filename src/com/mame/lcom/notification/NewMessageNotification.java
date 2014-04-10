@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
 import com.mame.lcom.R;
+import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.ui.FriendListActivity;
 
 public class NewMessageNotification {
@@ -19,7 +20,8 @@ public class NewMessageNotification {
 
 	private static NotificationManager mNotificationManager = null;
 
-	public void showNotiofication(Context context, int id) {
+	public void showNotiofication(Context context, int userId,
+			int targetUserId, int notificationId) {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context)
@@ -35,6 +37,8 @@ public class NewMessageNotification {
 				.setAutoCancel(true);
 
 		Intent intent = new Intent(context, FriendListActivity.class);
+		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
 		TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
 		stackBuilder.addParentStack(FriendListActivity.class);
@@ -45,7 +49,7 @@ public class NewMessageNotification {
 		mBuilder.setContentIntent(pIntent);
 		mNotificationManager = (NotificationManager) context
 				.getSystemService(Context.NOTIFICATION_SERVICE);
-		mNotificationManager.notify(id, mBuilder.build());
+		mNotificationManager.notify(notificationId, mBuilder.build());
 	}
 
 	public void removeNotification() {
