@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.IntentService;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -77,6 +78,10 @@ public class GCMIntentService extends IntentService {
 									getApplicationContext(),
 									Integer.valueOf(userId),
 									Integer.valueOf(friendUserId), currentTime);
+
+					sendBroadcast(Integer.valueOf(userId),
+							Integer.valueOf(friendUserId), message);
+
 				} catch (IndexOutOfBoundsException e) {
 					DbgUtil.showDebug(TAG,
 							"IndexOutOfBoundsException: " + e.getMessage());
@@ -92,6 +97,13 @@ public class GCMIntentService extends IntentService {
 			}
 		}
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
+	}
+
+	private void sendBroadcast(int userId, int targetUserId, String message) {
+		DbgUtil.showDebug(TAG, "sendBroadcast");
+		Intent intent = new Intent(LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+		sendBroadcast(intent);
+
 	}
 
 	private String[] parseJSON(String json) {

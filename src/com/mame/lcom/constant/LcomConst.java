@@ -203,6 +203,12 @@ public class LcomConst {
 	};
 
 	/**
+	 * Broadcast receiver name for Push notification
+	 */
+
+	public final static String PUSH_NOTIFICATION_IDENTIFIER = "com.mame.lcom.server.push_notification";
+
+	/**
 	 * Debug constants
 	 */
 	public final static String DEBUG_SERVLET = "debug_servlet";

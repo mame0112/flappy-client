@@ -7,7 +7,10 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -86,6 +89,8 @@ public class ConversationActivity extends Activity implements
 	private Bitmap mThumbnail = null;
 
 	private Activity mActivity = null;
+
+	private ConversationBroadcastReceiver mPushReceiver = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -222,6 +227,11 @@ public class ConversationActivity extends Activity implements
 		mNumOfMessage.setText(mPageNum);
 		mNumOfMessage.setVisibility(View.GONE);
 
+		requestThreadData();
+
+	}
+
+	private void requestThreadData() {
 		try {
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
@@ -254,9 +264,18 @@ public class ConversationActivity extends Activity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		// if(mConversationSendButton != null){
-		// mConversationSendButton.setEnabled(enabled)
-		// }
+
+		IntentFilter filter = new IntentFilter(
+				LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+		mPushReceiver = new ConversationBroadcastReceiver();
+		registerReceiver(mPushReceiver, filter);
+
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(mPushReceiver);
 	}
 
 	@Override
@@ -393,7 +412,10 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG,
 						"present data size: " + messageData.size());
-				mConversationData.addAll(messageData);
+				if (mConversationData != null) {
+					mConversationData.clear();
+					mConversationData.addAll(messageData);
+				}
 			}
 
 			if (mConversationData != null && mConversationData.size() != 0) {
@@ -457,7 +479,10 @@ public class ConversationActivity extends Activity implements
 			// Keep data
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
-				mConversationData.addAll(messageData);
+				if (mConversationData != null) {
+					mConversationData.clear();
+					mConversationData.addAll(messageData);
+				}
 			}
 
 			if (mConversationData != null && mConversationData.size() != 0) {
@@ -496,6 +521,15 @@ public class ConversationActivity extends Activity implements
 			List<HashMap<Integer, Bitmap>> thumbnailsthumbnails) {
 		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
+	}
+
+	public class ConversationBroadcastReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			DbgUtil.showDebug(TAG, "onReceive");
+			requestThreadData();
+		}
 	}
 
 }
