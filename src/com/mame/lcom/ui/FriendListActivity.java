@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +35,7 @@ import com.mame.lcom.notification.NewMessageNotification;
 import com.mame.lcom.notification.NewMessageNotificationManager;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
+import com.mame.lcom.ui.ConversationActivity.ConversationBroadcastReceiver;
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.PreferenceUtil;
@@ -53,6 +57,8 @@ public class FriendListActivity extends Activity implements
 	private ArrayList<FriendListData> mUserData = null;
 
 	private FriendListCustomAdapter mAdapter = null;
+
+	private FriendListBroadcastReceiver mPushReceiver = null;
 
 	/**
 	 * This is for merging local and server data into one
@@ -150,6 +156,11 @@ public class FriendListActivity extends Activity implements
 			}
 		});
 
+		checkGPSAndRequestUserData();
+
+	}
+
+	private void checkGPSAndRequestUserData() {
 		// Try to get device Id for push message
 		if (!mHelper.isDeviceIdAvailable(getApplicationContext())) {
 			mHelper.checkGPSAndAndRegisterDeviceId(mActivity, mUserId);
@@ -204,9 +215,10 @@ public class FriendListActivity extends Activity implements
 		isNewDataAvailable = false;
 		isExistingDataAvailable = false;
 
-		// Make invisible for first itmes
-		// mFirstAddText.setVisibility(View.GONE);
-		// mFirstAddButton.setVisibility(View.GONE);
+		IntentFilter filter = new IntentFilter(
+				LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+		mPushReceiver = new FriendListBroadcastReceiver();
+		registerReceiver(mPushReceiver, filter);
 	}
 
 	@Override
@@ -219,9 +231,7 @@ public class FriendListActivity extends Activity implements
 		isNewDataAvailable = false;
 		isExistingDataAvailable = false;
 
-		// if (mFriendListData != null) {
-		// mFriendListData.clear();
-		// }
+		unregisterReceiver(mPushReceiver);
 	}
 
 	@Override
@@ -268,6 +278,12 @@ public class FriendListActivity extends Activity implements
 
 		// If new data is already ready
 		if (isNewDataAvailable) {
+
+			// Initialize
+			if (mFriendTmpData != null) {
+				mFriendTmpData.clear();
+			}
+
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				for (FriendListData data : mNewUserData) {
 
@@ -302,6 +318,10 @@ public class FriendListActivity extends Activity implements
 
 			// Id list for getting thumbnail
 			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+
+			if (mFriendListData != null) {
+				mFriendListData.clear();
+			}
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
@@ -370,6 +390,10 @@ public class FriendListActivity extends Activity implements
 
 		} else {
 			// If new data is not ready yet, just keep old data
+			if (mUserData != null) {
+				mUserData.clear();
+			}
+
 			mUserData = userData;
 
 			// Set flag true
@@ -383,6 +407,12 @@ public class FriendListActivity extends Activity implements
 
 		// If existing data is already ready
 		if (isExistingDataAvailable) {
+
+			// Initialize
+			if (mFriendTmpData != null) {
+				mFriendTmpData.clear();
+			}
+
 			if (newUserData != null && newUserData.size() != 0) {
 				for (FriendListData data : newUserData) {
 
@@ -409,6 +439,10 @@ public class FriendListActivity extends Activity implements
 
 			// Id list for getting thumbnail
 			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+
+			if (mFriendListData != null) {
+				mFriendListData.clear();
+			}
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
@@ -469,6 +503,10 @@ public class FriendListActivity extends Activity implements
 
 		} else {
 			// If existing data is not ready yet, just keep new data
+			if (mNewUserData != null) {
+				mNewUserData.clear();
+			}
+
 			mNewUserData = newUserData;
 
 			// Set flag true
@@ -672,5 +710,14 @@ public class FriendListActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
 		mProgressDialog.show(getFragmentManager(), "progress");
 		requestUserData();
+	}
+
+	public class FriendListBroadcastReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			DbgUtil.showDebug(TAG, "onReceive");
+			checkGPSAndRequestUserData();
+		}
 	}
 }
