@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -95,6 +96,10 @@ public class ConversationActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		getWindow().setSoftInputMode(
+				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
 		setContentView(R.layout.conversation);
 		Intent intent = getIntent();
 		if (intent != null) {
@@ -270,6 +275,10 @@ public class ConversationActivity extends Activity implements
 		mPushReceiver = new ConversationBroadcastReceiver();
 		registerReceiver(mPushReceiver, filter);
 
+		// Show most bottom item in ListView
+		DbgUtil.showDebug(TAG, "count: " + mListView.getCount());
+		mListView.setSelection(mListView.getCount() - 1);
+
 	}
 
 	@Override
@@ -427,6 +436,7 @@ public class ConversationActivity extends Activity implements
 			// Notify to adapter
 			mAdapter.notifyDataSetChanged();
 			mListView.setAdapter(mAdapter);
+			mListView.setSelection(mListView.getCount() - 1);
 
 			// Initialize flag
 			mIsNewDataReady = false;
@@ -492,6 +502,8 @@ public class ConversationActivity extends Activity implements
 
 			// Notify to adapter
 			mAdapter.notifyDataSetChanged();
+			mListView.setAdapter(mAdapter);
+			mListView.setSelection(mListView.getCount() - 1);
 
 			if (mProgressDialog != null && mProgressDialog.isShowing()) {
 				mProgressDialog.getDialog().dismiss();
