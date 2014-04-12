@@ -413,7 +413,6 @@ public class ConversationActivity extends Activity implements
 				DbgUtil.showDebug(TAG,
 						"present data size: " + messageData.size());
 				if (mConversationData != null) {
-					mConversationData.clear();
 					mConversationData.addAll(messageData);
 				}
 			}
@@ -447,6 +446,7 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG,
 						"present data size: " + messageData.size());
+				mConversationData.clear();
 				mConversationData.addAll(messageData);
 			}
 		}
@@ -480,7 +480,6 @@ public class ConversationActivity extends Activity implements
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
 				if (mConversationData != null) {
-					mConversationData.clear();
 					mConversationData.addAll(messageData);
 				}
 			}
@@ -511,6 +510,7 @@ public class ConversationActivity extends Activity implements
 			// Keep new data but not to notify adapter.
 			if (messageData != null && messageData.size() != 0) {
 				DbgUtil.showDebug(TAG, "new data size: " + messageData.size());
+				mConversationData.clear();
 				mConversationData.addAll(messageData);
 			}
 		}

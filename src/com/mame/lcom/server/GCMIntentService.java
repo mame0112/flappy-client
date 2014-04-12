@@ -67,9 +67,13 @@ public class GCMIntentService extends IntentService {
 					// Because parsed[0] is "my id" from friend perspective.
 					String friendUserId = parsed[0];
 					String userId = parsed[1];
-					String message = parsed[2];
+					String userName = parsed[2];
+					String targetUserName = parsed[3];
+					String message = parsed[4];
 					DbgUtil.showDebug(TAG, "userId: " + userId);
 					DbgUtil.showDebug(TAG, "friendUserId: " + friendUserId);
+					DbgUtil.showDebug(TAG, "userName: " + userName);
+					DbgUtil.showDebug(TAG, "targetUserName: " + targetUserName);
 					DbgUtil.showDebug(TAG, "message: " + message);
 
 					long currentTime = TimeUtil.getCurrentDate();
@@ -80,7 +84,8 @@ public class GCMIntentService extends IntentService {
 									Integer.valueOf(friendUserId), currentTime);
 
 					sendBroadcast(Integer.valueOf(userId),
-							Integer.valueOf(friendUserId), message);
+							Integer.valueOf(friendUserId), userName,
+							targetUserName, message);
 
 				} catch (IndexOutOfBoundsException e) {
 					DbgUtil.showDebug(TAG,
@@ -99,9 +104,14 @@ public class GCMIntentService extends IntentService {
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
 	}
 
-	private void sendBroadcast(int userId, int targetUserId, String message) {
+	private void sendBroadcast(int userId, int targetUserId, String userName,
+			String targetUserName, String message) {
 		DbgUtil.showDebug(TAG, "sendBroadcast");
 		Intent intent = new Intent(LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
+		intent.putExtra(LcomConst.EXTRA_USER_NAME, userName);
+		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
+		intent.putExtra(LcomConst.EXTRA_TARGET_USER_NAME, targetUserName);
 		sendBroadcast(intent);
 
 	}
