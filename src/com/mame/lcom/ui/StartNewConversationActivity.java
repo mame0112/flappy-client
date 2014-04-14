@@ -540,6 +540,7 @@ public class StartNewConversationActivity extends Activity implements
 		Intent data = new Intent();
 		Bundle bundle = new Bundle();
 		data.putExtras(bundle);
+
 		setResult(RESULT_OK, data);
 		finish();
 	}

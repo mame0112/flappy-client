@@ -145,8 +145,19 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 						if (resultPassword == null) {
 							try {
 								DbgUtil.showDebug(TAG, "sendLoginData");
-								mProgressDialog.show(getFragmentManager(),
-										"progress");
+
+								// Dismiss dialog if it is being shown
+								if (!mActivity.isFinishing()
+										&& mProgressDialog != null
+										&& mProgressDialog.isShowing()) {
+									mProgressDialog.dismiss();
+								}
+
+								if (mProgressDialog != null) {
+									mProgressDialog.show(getFragmentManager(),
+											"progress");
+								}
+
 								sendLoginData(mWebAPI, activity, userName,
 										password);
 							} catch (WebAPIException e) {

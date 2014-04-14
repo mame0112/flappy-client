@@ -166,7 +166,11 @@ public class FriendListActivity extends Activity implements
 			// If Google play service and Device id is ready, we try to get
 			// actual data.
 			requestUserData();
-			mProgressDialog.show(getFragmentManager(), "progress");
+
+			if (mProgressDialog != null) {
+				mProgressDialog.show(getFragmentManager(), "progress");
+			}
+
 		}
 
 	}
@@ -189,14 +193,15 @@ public class FriendListActivity extends Activity implements
 	public void onStart() {
 		super.onStart();
 		TrackingUtil.trackActivityStart(this);
-		
+
 		checkGPSAndRequestUserData();
-		
+
 	}
 
 	public void onStop() {
 		super.onStop();
 		TrackingUtil.trackActivityStop(this);
+
 	}
 
 	@Override
@@ -227,6 +232,12 @@ public class FriendListActivity extends Activity implements
 		super.onPause();
 
 		mManager.removeFriendDataManagerListener(this);
+
+		// To avoid showing more than 2 dialog, we try to dismiss dialog
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
+			mProgressDialog.dismiss();
+		}
 
 		// Initialize flag
 		isNewDataAvailable = false;

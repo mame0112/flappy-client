@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//src/com/mame/lcom/FlappyApplication.java=UTF-8
 encoding//src/com/mame/lcom/server/GCMIntentService.java=UTF-8
+encoding//src/com/mame/lcom/ui/InvitationConfirmDialog.java=UTF-8
 encoding//src/com/mame/lcom/util/HttpClientUtil.java=UTF-8
 encoding//src/com/mame/lcom/web/LcomWebAPI.java=UTF-8

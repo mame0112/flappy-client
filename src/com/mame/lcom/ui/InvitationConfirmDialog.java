@@ -250,22 +250,22 @@ public class InvitationConfirmDialog extends DialogFragment implements
 											"Failed t store data to DB.");
 									showFeedbackToast(R.string.str_contactslist_confirm_failed_to_store_data);
 								}
-								dismiss();
 								// getActivity().finish();
 								break;
 							case LcomConst.INVITATION_CONFIRMED_UNKNOWN_ERROR:
 								DbgUtil.showDebug(TAG,
 										"INVITATION_CONFIRMED_UNKNOWN_ERROR");
 								showFeedbackToast(R.string.str_contactslist_confirm_unknown_error);
-								dismiss();
 								break;
 							case LcomConst.INVITATION_CONFIRMED_MAIL_CANNOT_BE_SENT:
 								DbgUtil.showDebug(TAG,
 										"INVITATION_CONFIRMED_MAIL_CANNOT_BE_SENT");
 								showFeedbackToast(R.string.str_contactslist_confirm_maiL_cannot_be_sent);
-								dismiss();
 								break;
 							}
+//							if (isAdded()) {
+//								dismissAllowingStateLoss();
+//							}
 						}
 					}
 				}
@@ -419,5 +419,4 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
 	}
-
 }

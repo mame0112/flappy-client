@@ -211,7 +211,15 @@ public class ConversationActivity extends Activity implements
 					TrackingUtil.trackNumberOfCharInOneMessage(
 							getApplicationContext(), message.length());
 
-					mProgressDialog.show(getFragmentManager(), "progress");
+					// Dismiss dialog if it is being shown
+					if (!mActivity.isFinishing() && mProgressDialog != null
+							&& mProgressDialog.isShowing()) {
+						mProgressDialog.dismiss();
+					}
+
+					if (mProgressDialog != null) {
+						mProgressDialog.show(getFragmentManager(), "progress");
+					}
 
 					long date = TimeUtil.getCurrentDate();
 					sendAndRegisterMessage(mUserId, mTargetUserId, mUserName,
@@ -240,6 +248,12 @@ public class ConversationActivity extends Activity implements
 		try {
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
+
+			// Dismiss dialog if it is being shown
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
 
 			// Show prgoress dialog
 			mProgressDialog.show(getFragmentManager(), "progress");
