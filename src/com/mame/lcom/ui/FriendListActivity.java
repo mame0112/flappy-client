@@ -156,8 +156,6 @@ public class FriendListActivity extends Activity implements
 			}
 		});
 
-		checkGPSAndRequestUserData();
-
 	}
 
 	private void checkGPSAndRequestUserData() {
@@ -191,6 +189,9 @@ public class FriendListActivity extends Activity implements
 	public void onStart() {
 		super.onStart();
 		TrackingUtil.trackActivityStart(this);
+		
+		checkGPSAndRequestUserData();
+		
 	}
 
 	public void onStop() {
