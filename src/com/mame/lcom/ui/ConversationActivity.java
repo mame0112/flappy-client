@@ -83,8 +83,6 @@ public class ConversationActivity extends Activity implements
 
 	private boolean mIsNewDataReady = false;
 
-	private TextView mNumOfMessage = null;
-
 	private String mPageNum = null;
 
 	private Bitmap mThumbnail = null;
@@ -183,7 +181,6 @@ public class ConversationActivity extends Activity implements
 					int count) {
 				if (s.length() >= 1) {
 					mConversationSendButton.setEnabled(true);
-					changePageNumber(s.length());
 				} else {
 					mConversationSendButton.setEnabled(false);
 				}
@@ -236,10 +233,6 @@ public class ConversationActivity extends Activity implements
 
 		mPageNum = getString(R.string.str_conversation_message_page, 1);
 
-		mNumOfMessage = (TextView) findViewById(R.id.conversationMsgNum);
-		mNumOfMessage.setText(mPageNum);
-		mNumOfMessage.setVisibility(View.GONE);
-
 		requestThreadData();
 
 	}
@@ -264,20 +257,6 @@ public class ConversationActivity extends Activity implements
 					"FriendDataManagerException: " + e.getMessage());
 		}
 
-	}
-
-	private void changePageNumber(int length) {
-		int pageNum = (int) (length / LcomConst.MAX_MESSAGE_LENGTH) + 1;
-		if (pageNum > 1) {
-			mPageNum = getString(R.string.str_conversation_message_page,
-					pageNum);
-			mNumOfMessage = (TextView) findViewById(R.id.conversationMsgNum);
-			mNumOfMessage.setText(mPageNum);
-			mNumOfMessage.setVisibility(View.VISIBLE);
-		} else {
-			// If the user is in first page, we shall make it invisible.
-			mNumOfMessage.setVisibility(View.GONE);
-		}
 	}
 
 	@Override
