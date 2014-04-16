@@ -65,28 +65,31 @@ public class GCMIntentService extends IntentService {
 				try {
 					String[] parsed = parseJSON(extras.toString());
 					// Because parsed[0] is "my id" from friend perspective.
-					String friendUserId = parsed[0];
-					String userId = parsed[1];
-					String userName = parsed[2];
-					String targetUserName = parsed[3];
-					String message = parsed[4];
-					DbgUtil.showDebug(TAG, "userId: " + userId);
-					DbgUtil.showDebug(TAG, "friendUserId: " + friendUserId);
-					DbgUtil.showDebug(TAG, "userName: " + userName);
-					DbgUtil.showDebug(TAG, "targetUserName: " + targetUserName);
-					DbgUtil.showDebug(TAG, "message: " + message);
+					if (parsed != null) {
+						String friendUserId = parsed[0];
+						String userId = parsed[1];
+						String userName = parsed[2];
+						String targetUserName = parsed[3];
+						String message = parsed[4];
+						DbgUtil.showDebug(TAG, "userId: " + userId);
+						DbgUtil.showDebug(TAG, "friendUserId: " + friendUserId);
+						DbgUtil.showDebug(TAG, "userName: " + userName);
+						DbgUtil.showDebug(TAG, "targetUserName: "
+								+ targetUserName);
+						DbgUtil.showDebug(TAG, "message: " + message);
 
-					long currentTime = TimeUtil.getCurrentDate();
-					NewMessageNotificationManager
-							.handleLastetMessageAndShowNotification(
-									getApplicationContext(),
-									Integer.valueOf(userId),
-									Integer.valueOf(friendUserId), currentTime);
+						long currentTime = TimeUtil.getCurrentDate();
+						NewMessageNotificationManager
+								.handleLastetMessageAndShowNotification(
+										getApplicationContext(),
+										Integer.valueOf(userId),
+										Integer.valueOf(friendUserId),
+										currentTime);
 
-					sendBroadcast(Integer.valueOf(userId),
-							Integer.valueOf(friendUserId), userName,
-							targetUserName, message);
-
+						sendBroadcast(Integer.valueOf(userId),
+								Integer.valueOf(friendUserId), userName,
+								targetUserName, message);
+					}
 				} catch (IndexOutOfBoundsException e) {
 					DbgUtil.showDebug(TAG,
 							"IndexOutOfBoundsException: " + e.getMessage());
@@ -117,7 +120,7 @@ public class GCMIntentService extends IntentService {
 	}
 
 	private String[] parseJSON(String json) {
-		String tmp = json.substring(7, json.length() - 1);
+		String tmp = json.substring(7, json.length());
 		try {
 			JSONObject rootObject = new JSONObject(tmp);
 			if (rootObject != null) {
