@@ -28,6 +28,7 @@ import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.FileUtil;
 import com.mame.lcom.util.ImageUtil;
+import com.mame.lcom.util.LocaleUtil;
 import com.mame.lcom.util.NetworkUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.StringUtil;
@@ -473,13 +474,15 @@ public class CreateAccountCompleteActivity extends Activity implements
 
 		String thumbnailString = ImageUtil.encodeTobase64(thumbnailData);
 
+		LcomConst.LOCALE_SETTING locale = LocaleUtil.getCurrentLocale();
+
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
 				LcomConst.SERVLET_PASSWORD, LcomConst.SERVLET_MAILADDRESS,
-				LcomConst.SERVLET_THUMBNAIL };
+				LcomConst.SERVLET_THUMBNAIL, LcomConst.SERVLET_LANGUAGE };
 
 		String value[] = { origin, userName, password, mailAddress,
-				thumbnailString };
+				thumbnailString, locale.toString() };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT, key, value);
 	}
 
