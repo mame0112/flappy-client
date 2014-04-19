@@ -195,6 +195,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 		} else {
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"targetUserIds is null");
+			notifyNewFriendThumbnails(null);
 		}
 
 	}

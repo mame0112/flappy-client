@@ -109,7 +109,8 @@ public class FriendListActivity extends Activity implements
 		mHelper = new LcomDeviceIdRegisterHelper(this);
 		mHelper.setPushRegistrationListener(this);
 
-		FriendDataManager.initializeFriendDataManager(getApplicationContext());
+		FriendDataManager.initializeFriendDataManager(mUserId,
+				getApplicationContext());
 		mManager = FriendDataManager.getInstance();
 		mManager.setFriendDataManagerListener(FriendListActivity.this);
 

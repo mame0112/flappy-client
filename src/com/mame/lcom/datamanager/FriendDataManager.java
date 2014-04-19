@@ -41,12 +41,15 @@ public class FriendDataManager implements UserServerDataListener,
 
 	private static Context mContext = null;
 
+	private static int mUserId = LcomConst.NO_USER;
+
 	public static FriendDataManager getInstance() {
 		return sDataManager;
 	}
 
-	public static void initializeFriendDataManager(Context context) {
+	public static void initializeFriendDataManager(int userId, Context context) {
 		mContext = context;
+		mUserId = userId;
 		mServerDataHandler = new UserServerDataHandler(context);
 		mServerDataHandler.setFriendListUpdateDataListener(sDataManager);
 		mLocalDataHandler = new UserLocalDataHandler(context);
@@ -157,28 +160,27 @@ public class FriendDataManager implements UserServerDataListener,
 		DbgUtil.showDebug(TAG, "currentTime: " + currentTime);
 		DbgUtil.showDebug(TAG, "lastTIme: " + lastTime);
 
-		if (currentTime > lastTime + LcomConst.THUMBNAIL_CHECK_INTERVAL) {
-			try {
-				ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
-						.getFriendUseridThumbnailNotRegistered(targetUserIds);
+		// if (currentTime > lastTime + LcomConst.THUMBNAIL_CHECK_INTERVAL) {
+		try {
+			ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
+					.getFriendUseridThumbnailNotRegistered(targetUserIds);
 
-				// Update preference
-				PreferenceUtil.setLastThumbnailCheckTime(mContext, currentTime);
+			// Update preference
+			PreferenceUtil.setLastThumbnailCheckTime(mContext, currentTime);
 
-				// Check thumbnail
-				mServerDataHandler
-						.requestNewFriendThumbnails(notRegisteredUserIds);
-			} catch (UserLocalDataHandlerException e) {
-				DbgUtil.showDebug(TAG,
-						"UserLocalDataHandlerException: " + e.getMessage());
-				mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
-			}
-		} else {
-			for (FriendDataManagerListener listener : mListeners) {
-				listener.notifyFriendThubmailsLoaded(null);
-			}
-
+			// Check thumbnail
+			mServerDataHandler.requestNewFriendThumbnails(notRegisteredUserIds);
+		} catch (UserLocalDataHandlerException e) {
+			DbgUtil.showDebug(TAG,
+					"UserLocalDataHandlerException: " + e.getMessage());
+			mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
 		}
+		// } else {
+		// for (FriendDataManagerListener listener : mListeners) {
+		// listener.notifyFriendThubmailsLoaded(null);
+		// }
+		//
+		// }
 
 	}
 
@@ -388,7 +390,7 @@ public class FriendDataManager implements UserServerDataListener,
 
 	@Override
 	public void notifyMessageSend(int result, MessageItemData postedMessageData) {
-		DbgUtil.showDebug(TAG, "notifyMessageSend");
+		DbgUtil.showDebug(TAG, "notifyMessageSend result: " + result);
 		switch (Integer.valueOf(result)) {
 		case LcomConst.SEND_MESSAGE_RESULT_OK:
 			// We have successfully sent message and it has been stored on
@@ -424,9 +426,24 @@ public class FriendDataManager implements UserServerDataListener,
 	public void notifyConversationServerDataSet(
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyConversationServerDataSet");
+
+		// Notify new m data to UI
 		for (FriendDataManagerListener listener : mListeners) {
 			listener.notifyNewConversationDataLoaded(messageData);
 		}
+
+		// Add new message and user data onto local DB
+		try {
+			if (mLocalDataHandler != null && messageData != null
+					&& messageData.size() != 0) {
+				mLocalDataHandler.addMultipleNewMessagesAndFriendIfNecessary(
+						mUserId, messageData);
+			}
+		} catch (UserLocalDataHandlerException e) {
+			DbgUtil.showDebug(TAG,
+					"UserLocalDataHandlerException: " + e.getMessage());
+		}
+
 	}
 
 	@Override

@@ -83,7 +83,8 @@ public class InvitationConfirmDialog extends DialogFragment implements
 
 		mManager = FriendDataManager.getInstance();
 
-		mManager.initializeFriendDataManager(getActivity());
+		mManager.initializeFriendDataManager(Integer.valueOf(userId),
+				getActivity());
 		mManager.setFriendDataManagerListener(this);
 
 		LayoutInflater factory = LayoutInflater.from(getActivity()
@@ -263,9 +264,9 @@ public class InvitationConfirmDialog extends DialogFragment implements
 								showFeedbackToast(R.string.str_contactslist_confirm_maiL_cannot_be_sent);
 								break;
 							}
-//							if (isAdded()) {
-//								dismissAllowingStateLoss();
-//							}
+							// if (isAdded()) {
+							// dismissAllowingStateLoss();
+							// }
 						}
 					}
 				}

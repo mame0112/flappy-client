@@ -53,7 +53,8 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	public ArrayList<MessageItemData> getLocalMessageDataset(int targetUserId) {
+	public synchronized ArrayList<MessageItemData> getLocalMessageDataset(
+			int targetUserId) {
 		DbgUtil.showDebug(TAG, "getLocalMessageDataset");
 		Cursor cursor = null;
 		ArrayList<MessageItemData> datas = new ArrayList<MessageItemData>();
@@ -303,8 +304,104 @@ public class UserLocalDataHandler {
 		}
 	}
 
+	public void addMultipleNewMessagesAndFriendIfNecessary(int userId,
+			ArrayList<MessageItemData> newMessages)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "addMultipleNewMessagesAndFriendIfNecessary");
+		try {
+			if (newMessages != null && newMessages.size() != 0) {
+
+				setDatabase();
+
+				MessageItemData data = newMessages.get(0);
+				int senderId = data.getFromUserId();
+				int toUserId = data.getTargetUserId();
+				String senderName = data.getFromUserName();
+				String toUserName = data.getToUserName();
+				String messageData = data.getMessage();
+				String date = String.valueOf(data.getPostedDate());
+
+				// Set friendship infoto Message DB
+				// Need to check if the target friend has already been in DB
+
+				// If myself is receiver (meaning sender id friend)
+				ContentValues valuesForFriendship = null;
+				if (userId != senderId) {
+					valuesForFriendship = getInsertContentValuesForFriendship(
+							senderId, senderName, null, senderId, messageData,
+							null);
+				} else {
+					// If myself is sender (but this case should be eliminated
+					// in server side)
+					DbgUtil.showDebug(TAG, "something worng");
+					valuesForFriendship = getInsertContentValuesForFriendship(
+							toUserId, toUserName, null, senderId, messageData,
+							null);
+				}
+
+				long friendshipId = sDatabase.insert(
+						DatabaseDef.FriendshipTable.TABLE_NAME, null,
+						valuesForFriendship);
+				DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+				if (friendshipId < 0) {
+					// Failed.
+					DbgUtil.showDebug(TAG,
+							"Failed to insert data into Friendship DB");
+					TrackingUtil
+							.trackExceptionMessage(mContext, TAG,
+									"illegal id for addNewMessageAndFriendIfNecessary - 2");
+					throw new UserLocalDataHandlerException(
+							"id is less than 0. Failed to insert data");
+				}
+
+				// Set data to Message DB
+				for (MessageItemData message : newMessages) {
+					int senderIdForMsg = message.getFromUserId();
+					int toUserIdForMsg = message.getTargetUserId();
+					String senderNameForMsg = message.getFromUserName();
+					String toUserNameForMsg = message.getToUserName();
+					String messageDataForMsg = message.getMessage();
+					String dateForMsg = String.valueOf(message.getPostedDate());
+
+					ContentValues valuesForMessage = null;
+					// this case should be removed in server side...
+					DbgUtil.showDebug(TAG, "Something wrong...");
+					valuesForMessage = getInsertContentValuesForMessage(
+							senderIdForMsg, toUserIdForMsg, senderNameForMsg,
+							toUserNameForMsg, messageDataForMsg, dateForMsg);
+
+					long id = sDatabase.insert(
+							DatabaseDef.MessageTable.TABLE_NAME, null,
+							valuesForMessage);
+					DbgUtil.showDebug(TAG, "id: " + id);
+					if (id < 0) {
+						// Failed.
+						DbgUtil.showDebug(TAG,
+								"Failed to insert data into Message DB");
+						TrackingUtil
+								.trackExceptionMessage(mContext, TAG,
+										"illegal id for addNewMessageAndFriendIfNecessary - 1");
+						throw new UserLocalDataHandlerException(
+								"id is less than 0. Failed to insert data");
+					}
+				}
+
+			}
+		} catch (IndexOutOfBoundsException e) {
+			DbgUtil.showDebug(TAG,
+					"IndexOutOfBoundsException: " + e.getMessage());
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for  for addNewMessageAndFriendIfNecessary insert: "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException: "
+					+ e.getMessage());
+		}
+	}
+
 	public void addNewMessage(MessageItemData messageData) {
-		DbgUtil.showDebug(TAG, "addNewMessage (with MessageData class");
+		DbgUtil.showDebug(TAG, "addNewMessage (with MessageData class)");
 		if (messageData != null) {
 			int userId = messageData.getFromUserId();
 			int friendId = messageData.getTargetUserId();
@@ -348,7 +445,7 @@ public class UserLocalDataHandler {
 		DbgUtil.showDebug(TAG, "senderIde: " + senderId);
 		try {
 			setDatabase();
-			sDatabase.beginTransaction();
+			// sDatabase.beginTransaction();
 
 			// Set data to Message DB
 			ContentValues valuesForMessage = null;
@@ -373,27 +470,27 @@ public class UserLocalDataHandler {
 			}
 
 			// Commit change
-			sDatabase.setTransactionSuccessful();
+			// sDatabase.setTransactionSuccessful();
 
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"SQLExeption for addNewMessage insert: " + e.getMessage());
 		} finally {
-			try {
-				if (sDatabase != null) {
-					DbgUtil.showDebug(TAG, "endTransaction");
-					sDatabase.endTransaction();
-				}
-			} catch (SQLException e) {
-				DbgUtil.showDebug(TAG,
-						"SQLException: Database is null" + e.getMessage());
-				TrackingUtil.trackExceptionMessage(
-						mContext,
-						TAG,
-						"SQLExeption for addNewMessage endTransition: "
-								+ e.getMessage());
-			}
+			// try {
+			// if (sDatabase != null) {
+			// DbgUtil.showDebug(TAG, "endTransaction");
+			// sDatabase.endTransaction();
+			// }
+			// } catch (SQLException e) {
+			// DbgUtil.showDebug(TAG,
+			// "SQLException: Database is null" + e.getMessage());
+			// TrackingUtil.trackExceptionMessage(
+			// mContext,
+			// TAG,
+			// "SQLExeption for addNewMessage endTransition: "
+			// + e.getMessage());
+			// }
 		}
 	}
 

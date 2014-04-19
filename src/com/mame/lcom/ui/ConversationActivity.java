@@ -157,7 +157,8 @@ public class ConversationActivity extends Activity implements
 		mListView = (ListView) findViewById(R.id.conversationListView);
 		mListView.setAdapter(mAdapter);
 
-		FriendDataManager.initializeFriendDataManager(getApplicationContext());
+		FriendDataManager.initializeFriendDataManager(mUserId,
+				getApplicationContext());
 		mManager = FriendDataManager.getInstance();
 		mManager.setFriendDataManagerListener(this);
 
