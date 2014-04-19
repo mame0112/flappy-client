@@ -10,6 +10,7 @@ import com.mame.lcom.util.DbgUtil;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,11 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 		int numOfMessage = item.getNumOfNewMessage();
 		if (numOfMessage == 0) {
 			// Nothing to do
-			numOfNewMessageView.setBackground(null);
-			;
+			if (Build.VERSION.SDK_INT >= 16) {
+				numOfNewMessageView.setBackground(null);
+			} else {
+				numOfNewMessageView.setBackgroundDrawable(null);
+			}
 		} else if (numOfMessage >= 1 && numOfMessage <= 10) {
 			// If the number of message is between 1 and 10
 			numOfNewMessageView.setText(String.valueOf(numOfMessage));

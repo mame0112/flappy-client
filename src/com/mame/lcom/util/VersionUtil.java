@@ -1,10 +1,10 @@
 package com.mame.lcom.util;
 
-import com.mame.lcom.constant.LcomConst;
-
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+
+import com.mame.lcom.constant.LcomConst;
 
 public class VersionUtil {
 
