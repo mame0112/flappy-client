@@ -464,8 +464,19 @@ public class FriendListActivity extends Activity implements
 
 					int friendUserId = data.getFriendId();
 
-					if (mFriendTmpData.get(friendUserId) == null) {
+					FriendListData registeredData = mFriendTmpData
+							.get(friendUserId);
+					if (registeredData == null) {
 						mFriendTmpData.put(friendUserId, data);
+					} else {
+						// If new data is already in tmpData, we try to put
+						// thumbnail.
+
+						// First, we check if local data has thumbnail data
+						if (data.getThumbnail() != null) {
+							registeredData.setThumbnail(data.getThumbnail());
+							mFriendTmpData.put(friendUserId, registeredData);
+						}
 					}
 				}
 			}
@@ -483,7 +494,14 @@ public class FriendListActivity extends Activity implements
 				// TODO We need to check if thumbnail is available in local
 				// before accessing server
 				DbgUtil.showDebug(TAG, "friendId: " + friendId);
-				targetUserIds.add(friendId);
+				if (data != null) {
+					Bitmap bm = data.getThumbnail();
+					// In case bitmap is null (it means bitmap is null in
+					// local), we need to request thumbnail data
+					if (bm == null) {
+						targetUserIds.add(friendId);
+					}
+				}
 
 				mFriendListData.add(data);
 				DbgUtil.showDebug(TAG, "id: " + friendId);
