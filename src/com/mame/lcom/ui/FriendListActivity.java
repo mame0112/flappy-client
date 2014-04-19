@@ -271,7 +271,15 @@ public class FriendListActivity extends Activity implements
 					mUserData.clear();
 				}
 
-				mFriendListData.clear();
+				// Clear data
+				if (mFriendListData != null) {
+					mFriendListData.clear();
+				}
+
+				if (mAdapter != null) {
+					mAdapter.notifyDataSetChanged();
+				}
+
 				mManager.setFriendDataManagerListener(this);
 			}
 
@@ -330,10 +338,6 @@ public class FriendListActivity extends Activity implements
 
 			// Id list for getting thumbnail
 			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
-
-			if (mFriendListData != null) {
-				mFriendListData.clear();
-			}
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
@@ -451,10 +455,6 @@ public class FriendListActivity extends Activity implements
 
 			// Id list for getting thumbnail
 			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
-
-			if (mFriendListData != null) {
-				mFriendListData.clear();
-			}
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
