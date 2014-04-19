@@ -21,39 +21,7 @@ public class FlappyApplication extends Application {
 
 		// Track device information
 		TrackingUtil.trackModel(getApplicationContext());
-
-		// // Check for device manifest
-		// mGcm = GoogleCloudMessaging.getInstance(this);
-		// registerInBackground();
 	}
-
-	// private void registerInBackground() {
-	// new AsyncTask<Void, Void, String>() {
-	// @Override
-	// protected String doInBackground(Void... params) {
-	// String msg = "";
-	// try {
-	// if (mGcm == null) {
-	// mGcm = GoogleCloudMessaging
-	// .getInstance(getApplicationContext());
-	// }
-	// String regid = mGcm.register(LcomConst.PROJECT_NUMBER);
-	// msg = "Device registered, registration ID=" + regid;
-	// // sendMessage(regid);
-	// } catch (IOException ex) {
-	// msg = "Error :" + ex.getMessage();
-	// }
-	// DbgUtil.showDebug(TAG, "msg: " + msg);
-	// return msg;
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(String msg) {
-	// }
-	// }.execute(null, null, null);
-	// }
-
-
 
 	@Override
 	public void onTerminate() {

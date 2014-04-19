@@ -305,6 +305,14 @@ public class FriendListActivity extends Activity implements
 				mFriendTmpData.clear();
 			}
 
+			if (mFriendListData != null) {
+				mFriendListData.clear();
+			}
+
+			if (mAdapter != null) {
+				mAdapter.notifyDataSetChanged();
+			}
+
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				for (FriendListData data : mNewUserData) {
 
@@ -428,6 +436,14 @@ public class FriendListActivity extends Activity implements
 			// Initialize
 			if (mFriendTmpData != null) {
 				mFriendTmpData.clear();
+			}
+
+			if (mFriendListData != null) {
+				mFriendListData.clear();
+			}
+
+			if (mAdapter != null) {
+				mAdapter.notifyDataSetChanged();
 			}
 
 			if (newUserData != null && newUserData.size() != 0) {
