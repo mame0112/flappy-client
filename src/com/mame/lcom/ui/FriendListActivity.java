@@ -83,6 +83,11 @@ public class FriendListActivity extends Activity implements
 
 	private boolean isExistingDataAvailable = false;
 
+	/**
+	 * Flag to judge whether now loading data or not. True while loading.
+	 */
+	private boolean isNowLoading = false;
+
 	private ProgressDialogFragment mProgressDialog = null;
 
 	private LcomDeviceIdRegisterHelper mHelper = null;
@@ -222,6 +227,9 @@ public class FriendListActivity extends Activity implements
 		isNewDataAvailable = false;
 		isExistingDataAvailable = false;
 
+		isNowLoading = false;
+		invalidateOptionsMenu();
+
 		IntentFilter filter = new IntentFilter(
 				LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
 		mPushReceiver = new FriendListBroadcastReceiver();
@@ -243,6 +251,9 @@ public class FriendListActivity extends Activity implements
 		// Initialize flag
 		isNewDataAvailable = false;
 		isExistingDataAvailable = false;
+
+		isNowLoading = false;
+		invalidateOptionsMenu();
 
 		unregisterReceiver(mPushReceiver);
 	}
@@ -287,6 +298,9 @@ public class FriendListActivity extends Activity implements
 			// Initialize flag before requesting data
 			isNewDataAvailable = false;
 			isExistingDataAvailable = false;
+
+			isNowLoading = true;
+			invalidateOptionsMenu();
 
 			mManager.requestFriendListDataset(mUserId, true, true);
 		} catch (FriendDataManagerException e) {
@@ -418,6 +432,10 @@ public class FriendListActivity extends Activity implements
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				handleNotification();
 			}
+
+			isNowLoading = false;
+			invalidateOptionsMenu();
+
 		} else {
 			// If new data is not ready yet, just keep old data
 			if (mUserData != null) {
@@ -565,6 +583,10 @@ public class FriendListActivity extends Activity implements
 			if (newUserData != null && newUserData.size() != 0) {
 				handleNotification();
 			}
+
+			isNowLoading = false;
+			invalidateOptionsMenu();
+
 		} else {
 			// If existing data is not ready yet, just keep new data
 			if (mNewUserData != null) {
@@ -642,6 +664,22 @@ public class FriendListActivity extends Activity implements
 	public void notifyPresentMessageDataLoaded(
 			ArrayList<MessageItemData> messageData) {
 		DbgUtil.showDebug(TAG, "notifyPresentMessageData : not to be used");
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		MenuItem refreshButton = menu.findItem(R.id.menu_friendlist_update);
+
+		// Disable refresh button while loading item
+		if (isNowLoading) {
+			DbgUtil.showDebug(TAG, "disable");
+			refreshButton.setEnabled(false);
+		} else {
+			refreshButton.setEnabled(true);
+			DbgUtil.showDebug(TAG, "enable");
+		}
+		super.onPrepareOptionsMenu(menu);
+		return true;
 	}
 
 	@Override
