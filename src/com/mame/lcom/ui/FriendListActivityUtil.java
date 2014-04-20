@@ -55,6 +55,7 @@ public class FriendListActivityUtil {
 		activity.startActivity(intent);
 	}
 
+	// Not used now
 	public static long getLatestMessageDate(
 			ArrayList<FriendListData> friendListData) {
 
@@ -75,8 +76,20 @@ public class FriendListActivityUtil {
 			return latestDate;
 
 		}
-
 		return 0L;
+	}
 
+	public static ArrayList<Long> getTimeListFromFrinedListData(
+			ArrayList<FriendListData> listData) {
+
+		ArrayList<Long> result = new ArrayList<Long>();
+
+		if (listData != null && listData.size() != 0) {
+			for (FriendListData data : listData) {
+				result.add(data.getMessagDate());
+			}
+			return result;
+		}
+		return null;
 	}
 }

@@ -612,15 +612,15 @@ public class FriendListActivity extends Activity implements
 	private void handleNotification() {
 		DbgUtil.showDebug(TAG, "handleNotification");
 		// Before get notification, we check latest message date
-		long lastMessageDate = FriendListActivityUtil
-				.getLatestMessageDate(mFriendListData);
+		ArrayList<Long> timeList = FriendListActivityUtil
+				.getTimeListFromFrinedListData(mFriendListData);
 
 		// Show Notification if necessary
 		try {
 			NewMessageNotificationManager
-					.handleLastetMessageAndShowNotification(
+					.handleLastetMessagesAndShowNotification(
 							getApplicationContext(), Integer.valueOf(mUserId),
-							LcomConst.NO_USER, lastMessageDate);
+							timeList);
 		} catch (NewMessageNotificationManagerException e) {
 			DbgUtil.showDebug(TAG, "NewMessageNotificationManagerException: "
 					+ e.getMessage());

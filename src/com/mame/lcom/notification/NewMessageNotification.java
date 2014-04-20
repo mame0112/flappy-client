@@ -21,7 +21,7 @@ public class NewMessageNotification {
 	private static NotificationManager mNotificationManager = null;
 
 	public void showNotiofication(Context context, int userId,
-			int targetUserId, int notificationId) {
+			int notificationId) {
 
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context)
