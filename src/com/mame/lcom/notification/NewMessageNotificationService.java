@@ -23,6 +23,7 @@ public class NewMessageNotificationService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		DbgUtil.showDebug(TAG, "onHandleIntent");
+		NewMessageNotificationManager.removeNotification();
 
 	}
 

@@ -71,20 +71,21 @@ public class GCMIntentService extends IntentService {
 						String userName = parsed[2];
 						String targetUserName = parsed[3];
 						String message = parsed[4];
+						String expireDate = parsed[5];
 						DbgUtil.showDebug(TAG, "userId: " + userId);
 						DbgUtil.showDebug(TAG, "friendUserId: " + friendUserId);
 						DbgUtil.showDebug(TAG, "userName: " + userName);
 						DbgUtil.showDebug(TAG, "targetUserName: "
 								+ targetUserName);
+						DbgUtil.showDebug(TAG, "expireDate: " + expireDate);
 						DbgUtil.showDebug(TAG, "message: " + message);
 
-						long currentTime = TimeUtil.getCurrentDate();
 						NewMessageNotificationManager
 								.handleLastetMessageAndShowNotification(
 										getApplicationContext(),
 										Integer.valueOf(userId),
 										Integer.valueOf(friendUserId),
-										currentTime);
+										Long.valueOf(expireDate));
 
 						sendBroadcast(Integer.valueOf(userId),
 								Integer.valueOf(friendUserId), userName,

@@ -4,11 +4,13 @@ import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.exception.NewMessageNotificationManagerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.PreferenceUtil;
+import com.mame.lcom.util.TimeUtil;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 
 public class NewMessageNotificationManager {
 
@@ -97,15 +99,14 @@ public class NewMessageNotificationManager {
 	private static void setAlarmManagerForRemoveNotification(Context context,
 			long triggerTime) {
 		DbgUtil.showDebug(TAG, "setAlarmManagerForRemoveNotification");
-		Intent intent = new Intent(context, NewMessageNotificationService.class);
-		// TODO Need to add service int AndroidManifest
+		Intent intent = new Intent(context,
+				NewMessageNotificationReceiver.class);
 
-		PendingIntent pendingIntent = PendingIntent.getService(context, 0,
-				intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
+				intent, 0);
 		AlarmManager am = (AlarmManager) context
 				.getSystemService(Context.ALARM_SERVICE);
 		am.set(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent);
-
 	}
 
 	private static void showNotification(Context context, int userId,
@@ -122,6 +123,7 @@ public class NewMessageNotificationManager {
 	 * alarm managers shall be removed
 	 */
 	public static void removeNotification() {
+		DbgUtil.showDebug(TAG, "removeNotification");
 
 		// Remove all notification
 		if (mNotification != null) {

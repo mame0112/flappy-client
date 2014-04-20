@@ -430,6 +430,7 @@ public class FriendListActivity extends Activity implements
 
 			// Handle notification
 			if (mNewUserData != null && mNewUserData.size() != 0) {
+				DbgUtil.showDebug(TAG, "mNewUserdata is null or 0");
 				handleNotification();
 			}
 
@@ -581,6 +582,7 @@ public class FriendListActivity extends Activity implements
 
 			// Handle notification
 			if (newUserData != null && newUserData.size() != 0) {
+				DbgUtil.showDebug(TAG, "newUserdata is not null or 0");
 				handleNotification();
 			}
 

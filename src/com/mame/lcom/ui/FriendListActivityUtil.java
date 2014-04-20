@@ -65,6 +65,7 @@ public class FriendListActivityUtil {
 			for (FriendListData data : friendListData) {
 				if (data != null) {
 					long date = data.getMessagDate();
+					DbgUtil.showDebug(TAG, "date: " + date);
 
 					if (latestDate <= date) {
 						latestDate = date;
