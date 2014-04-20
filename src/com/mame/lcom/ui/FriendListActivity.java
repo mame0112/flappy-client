@@ -284,6 +284,10 @@ public class FriendListActivity extends Activity implements
 				mManager.setFriendDataManagerListener(this);
 			}
 
+			// Initialize flag before requesting data
+			isNewDataAvailable = false;
+			isExistingDataAvailable = false;
+
 			mManager.requestFriendListDataset(mUserId, true, true);
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
@@ -309,9 +313,9 @@ public class FriendListActivity extends Activity implements
 				mFriendListData.clear();
 			}
 
-			if (mAdapter != null) {
-				mAdapter.notifyDataSetChanged();
-			}
+			// if (mAdapter != null) {
+			// mAdapter.notifyDataSetChanged();
+			// }
 
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				for (FriendListData data : mNewUserData) {
@@ -444,19 +448,19 @@ public class FriendListActivity extends Activity implements
 			}
 
 			// Notify to list view and adapter
-			new Thread(new Runnable() {
-				@Override
-				public void run() {
-					mHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							if (mAdapter != null) {
-								mAdapter.notifyDataSetChanged();
-							}
-						}
-					});
-				}
-			}).start();
+			// new Thread(new Runnable() {
+			// @Override
+			// public void run() {
+			// mHandler.post(new Runnable() {
+			// @Override
+			// public void run() {
+			// if (mAdapter != null) {
+			// mAdapter.notifyDataSetChanged();
+			// }
+			// }
+			// });
+			// }
+			// }).start();
 
 			if (newUserData != null && newUserData.size() != 0) {
 				for (FriendListData data : newUserData) {
@@ -568,6 +572,12 @@ public class FriendListActivity extends Activity implements
 			}
 
 			mNewUserData = newUserData;
+
+			if (mNewUserData != null) {
+				DbgUtil.showDebug(TAG, "mNewUserData: " + mNewUserData.size());
+			} else {
+				DbgUtil.showDebug(TAG, "mNewUserData is null");
+			}
 
 			// Set flag true
 			isNewDataAvailable = true;
