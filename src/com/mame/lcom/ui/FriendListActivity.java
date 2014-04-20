@@ -411,8 +411,9 @@ public class FriendListActivity extends Activity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-			handleNotification();
-
+			if (mNewUserData != null && mNewUserData.size() != 0) {
+				handleNotification();
+			}
 		} else {
 			// If new data is not ready yet, just keep old data
 			if (mUserData != null) {
@@ -557,8 +558,9 @@ public class FriendListActivity extends Activity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-			handleNotification();
-
+			if (newUserData != null && newUserData.size() != 0) {
+				handleNotification();
+			}
 		} else {
 			// If existing data is not ready yet, just keep new data
 			if (mNewUserData != null) {
