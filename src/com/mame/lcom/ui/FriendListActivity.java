@@ -442,9 +442,20 @@ public class FriendListActivity extends Activity implements
 				mFriendListData.clear();
 			}
 
-			if (mAdapter != null) {
-				mAdapter.notifyDataSetChanged();
-			}
+			// Notify to list view and adapter
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (mAdapter != null) {
+								mAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+				}
+			}).start();
 
 			if (newUserData != null && newUserData.size() != 0) {
 				for (FriendListData data : newUserData) {
