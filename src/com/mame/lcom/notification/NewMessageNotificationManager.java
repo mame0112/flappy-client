@@ -1,20 +1,15 @@
 package com.mame.lcom.notification;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.exception.NewMessageNotificationManagerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TimeUtil;
-
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.os.SystemClock;
 
 public class NewMessageNotificationManager {
 
@@ -27,9 +22,7 @@ public class NewMessageNotificationManager {
 
 	private static NewMessageNotificationManager sManager = new NewMessageNotificationManager();
 
-	private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
-
-	private static Context mContext = null;
+	// private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
 
 	/**
 	 * Singletone
@@ -71,74 +64,19 @@ public class NewMessageNotificationManager {
 					"latestPostedDate is illegal (less than 0)");
 		}
 
-		mContext = context;
-
-		mAlarmCandidates.add(latestPostedDate);
-
-		// Sort time array
-		Collections.sort(mAlarmCandidates, new NotificationTimeComparator());
-
-		// Set AlarmManager by using earliest message
-		if (mAlarmCandidates != null && mAlarmCandidates.size() != 0) {
-			operateNotification(context, mAlarmCandidates.get(0), userId);
-
-			// And finally remove latest one
-			mAlarmCandidates.remove(0);
+		// Set AlarmManager if latestPostedDate is later than current time
+		long current = TimeUtil.getCurrentDate();
+		if (current < latestPostedDate) {
+			operateNotification(context, latestPostedDate, userId);
 		}
 
-	}
-
-	public static void handleLastetMessagesAndShowNotification(Context context,
-			int userId, ArrayList<Long> postedDates)
-			throws NewMessageNotificationManagerException {
-		DbgUtil.showDebug(TAG, "handleLastetMessageAndShowNotification");
-
-		if (context == null) {
-			throw new NewMessageNotificationManagerException("Context is null");
-		}
-
-		if (postedDates == null || postedDates.size() == 0) {
-			throw new NewMessageNotificationManagerException(
-					"postedDates is null or size 0");
-		}
-
-		mContext = context;
-
-		long currentTime = TimeUtil.getCurrentDate();
-
-		for (long time : postedDates) {
-			// We need not to care about already expire message.
-			// Then, we don't consider it as candidate
-			if (currentTime < time) {
-				mAlarmCandidates.add(time);
-			}
-		}
-
-		// Sort time array
-		Collections.sort(mAlarmCandidates, new NotificationTimeComparator());
-
-		// First, we update latest message expire date.
-
-		for (long tmp : mAlarmCandidates) {
-			DbgUtil.showDebug(TAG, "tmp: " + tmp);
-		}
-
-		if (mAlarmCandidates != null && mAlarmCandidates.size() != 0) {
-
-			// Set AlarmManager by using earliest message
-			operateNotification(context, mAlarmCandidates.get(0), userId);
-
-			// And finally remove latest one
-			mAlarmCandidates.remove(0);
-
-		}
 	}
 
 	private static void operateNotification(Context context,
 			long latestPostedDate, int userId) {
-		
+
 		DbgUtil.showDebug(TAG, "operateNotification");
-		
+
 		// If inputted date is much more later than current latest message, we
 		// update Shared preference so that we can update expire timing for
 		// Notification
@@ -176,7 +114,6 @@ public class NewMessageNotificationManager {
 		DbgUtil.showDebug(TAG, "setAlarmManagerForRemoveNotification");
 		Intent intent = new Intent(context,
 				NewMessageNotificationReceiver.class);
-		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
 
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
 				intent, 0);
@@ -208,35 +145,22 @@ public class NewMessageNotificationManager {
 		removeCurrentAlarmManager();
 	}
 
-	public static void setNextNotification(int userId) {
-		DbgUtil.showDebug(TAG, "setNextNotification");
-		if (mAlarmCandidates != null && mAlarmCandidates.size() != 0) {
-
-			// Set AlarmManager by using earliest message
-			operateNotification(mContext, mAlarmCandidates.get(0), userId);
-
-			// And finally remove latest one
-			mAlarmCandidates.remove(0);
-
-		}
-
-	}
-
-	public static class NotificationTimeComparator implements Comparator<Long> {
-
-		@Override
-		public int compare(Long lhs, Long rhs) {
-			if (lhs > rhs) {
-				return 1;
-
-			} else if (lhs == rhs) {
-				return 0;
-
-			} else {
-				return -1;
-
-			}
-		}
-
-	}
+	// public static class NotificationTimeComparator implements
+	// Comparator<Long> {
+	//
+	// @Override
+	// public int compare(Long lhs, Long rhs) {
+	// if (lhs > rhs) {
+	// return 1;
+	//
+	// } else if (lhs == rhs) {
+	// return 0;
+	//
+	// } else {
+	// return -1;
+	//
+	// }
+	// }
+	//
+	// }
 }

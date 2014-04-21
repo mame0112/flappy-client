@@ -79,17 +79,17 @@ public class FriendListActivityUtil {
 		return 0L;
 	}
 
-	public static ArrayList<Long> getTimeListFromFrinedListData(
-			ArrayList<FriendListData> listData) {
-
-		ArrayList<Long> result = new ArrayList<Long>();
-
-		if (listData != null && listData.size() != 0) {
-			for (FriendListData data : listData) {
-				result.add(data.getMessagDate());
-			}
-			return result;
-		}
-		return null;
-	}
+//	public static ArrayList<Long> getTimeListFromFrinedListData(
+//			ArrayList<FriendListData> listData) {
+//
+//		ArrayList<Long> result = new ArrayList<Long>();
+//
+//		if (listData != null && listData.size() != 0) {
+//			for (FriendListData data : listData) {
+//				result.add(data.getMessagDate());
+//			}
+//			return result;
+//		}
+//		return null;
+//	}
 }

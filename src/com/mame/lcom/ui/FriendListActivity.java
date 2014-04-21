@@ -431,7 +431,7 @@ public class FriendListActivity extends Activity implements
 			// Handle notification
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				DbgUtil.showDebug(TAG, "mNewUserdata is null or 0");
-				handleNotification();
+				handleNotification(mNewUserData);
 			}
 
 			isNowLoading = false;
@@ -465,21 +465,6 @@ public class FriendListActivity extends Activity implements
 			if (mFriendListData != null) {
 				mFriendListData.clear();
 			}
-
-			// Notify to list view and adapter
-			// new Thread(new Runnable() {
-			// @Override
-			// public void run() {
-			// mHandler.post(new Runnable() {
-			// @Override
-			// public void run() {
-			// if (mAdapter != null) {
-			// mAdapter.notifyDataSetChanged();
-			// }
-			// }
-			// });
-			// }
-			// }).start();
 
 			if (newUserData != null && newUserData.size() != 0) {
 				for (FriendListData data : newUserData) {
@@ -582,8 +567,9 @@ public class FriendListActivity extends Activity implements
 
 			// Handle notification
 			if (newUserData != null && newUserData.size() != 0) {
-				DbgUtil.showDebug(TAG, "newUserdata is not null or 0");
-				handleNotification();
+				DbgUtil.showDebug(TAG,
+						"newUserData size: " + newUserData.size());
+				handleNotification(newUserData);
 			}
 
 			isNowLoading = false;
@@ -609,18 +595,20 @@ public class FriendListActivity extends Activity implements
 
 	}
 
-	private void handleNotification() {
+	private void handleNotification(ArrayList<FriendListData> newUserData) {
 		DbgUtil.showDebug(TAG, "handleNotification");
 		// Before get notification, we check latest message date
-		ArrayList<Long> timeList = FriendListActivityUtil
-				.getTimeListFromFrinedListData(mFriendListData);
+		long latestMessageDate = FriendListActivityUtil
+				.getLatestMessageDate(newUserData);
+
+		DbgUtil.showDebug(TAG, "latestMessageDate: " + latestMessageDate);
 
 		// Show Notification if necessary
 		try {
 			NewMessageNotificationManager
-					.handleLastetMessagesAndShowNotification(
+					.handleLastetMessageAndShowNotification(
 							getApplicationContext(), Integer.valueOf(mUserId),
-							timeList);
+							latestMessageDate);
 		} catch (NewMessageNotificationManagerException e) {
 			DbgUtil.showDebug(TAG, "NewMessageNotificationManagerException: "
 					+ e.getMessage());
