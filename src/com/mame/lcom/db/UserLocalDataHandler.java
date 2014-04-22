@@ -56,13 +56,18 @@ public class UserLocalDataHandler {
 	public synchronized ArrayList<MessageItemData> getLocalMessageDataset(
 			int targetUserId) {
 		DbgUtil.showDebug(TAG, "getLocalMessageDataset");
+		DbgUtil.showDebug(TAG, "targetUserId:  " + targetUserId);
 		Cursor cursor = null;
 		ArrayList<MessageItemData> datas = new ArrayList<MessageItemData>();
 		try {
-			String selection = DatabaseDef.MessageColumns.TO_USER_ID + "=?";
-			String selectionArgs[] = { String.valueOf(targetUserId) };
+			// String selection = DatabaseDef.MessageColumns.TO_USER_ID + "=?";
+			String selection = DatabaseDef.MessageColumns.FROM_USER_ID + "=?"
+					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
+			String selectionArgs[] = { String.valueOf(targetUserId),
+					String.valueOf(targetUserId) };
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					selection, selectionArgs, null);
+			DbgUtil.showDebug(TAG, "cursor:  " + cursor.getCount());
 			while (cursor != null && cursor.moveToNext()) {
 				String fromUserId = cursor
 						.getString(cursor

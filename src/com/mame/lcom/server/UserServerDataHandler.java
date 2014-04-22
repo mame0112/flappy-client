@@ -1,28 +1,20 @@
 package com.mame.lcom.server;
 
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
-import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
-import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.ui.ConversationActivityUtil;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
-import com.mame.lcom.util.PreferenceUtil;
-import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 import com.mame.lcom.web.LcomWebAPI;
 import com.mame.lcom.web.LcomWebAPI.LcomWebAPIListener;
@@ -492,7 +484,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	private void notifyNewFriendThumbnails(
 			final List<HashMap<Integer, Bitmap>> result) {
-		DbgUtil.showDebug(TAG, "notifyConversationDataset");
+		DbgUtil.showDebug(TAG, "notifyNewFriendThumbnails");
 		new Thread(new Runnable() {
 			@Override
 			public void run() {

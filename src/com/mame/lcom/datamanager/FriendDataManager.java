@@ -175,13 +175,6 @@ public class FriendDataManager implements UserServerDataListener,
 					"UserLocalDataHandlerException: " + e.getMessage());
 			mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
 		}
-		// } else {
-		// for (FriendDataManagerListener listener : mListeners) {
-		// listener.notifyFriendThubmailsLoaded(null);
-		// }
-		//
-		// }
-
 	}
 
 	/**
