@@ -16,8 +16,6 @@ public class NewMessageNotificationReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		DbgUtil.showDebug(TAG, "onReceive");
 
-		// TODO need to add more identification.
-
 		Intent i = new Intent(context, NewMessageNotificationService.class);
 		context.startService(i);
 

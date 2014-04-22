@@ -31,11 +31,9 @@ import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.exception.NewMessageNotificationManagerException;
-import com.mame.lcom.notification.NewMessageNotification;
 import com.mame.lcom.notification.NewMessageNotificationManager;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper;
 import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
-import com.mame.lcom.ui.ConversationActivity.ConversationBroadcastReceiver;
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.PreferenceUtil;
@@ -231,7 +229,8 @@ public class FriendListActivity extends Activity implements
 		invalidateOptionsMenu();
 
 		IntentFilter filter = new IntentFilter(
-				LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+				LcomConst.ACTION_PUSH_NOTIFICATION);
+		filter.addAction(LcomConst.ACTION_MESSAGE_EXPIRE);
 		mPushReceiver = new FriendListBroadcastReceiver();
 		registerReceiver(mPushReceiver, filter);
 	}
@@ -815,7 +814,19 @@ public class FriendListActivity extends Activity implements
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			DbgUtil.showDebug(TAG, "onReceive");
-			checkGPSAndRequestUserData();
+			if (intent != null) {
+				String action = intent.getAction();
+				if (action != null) {
+					if (action.equals(LcomConst.ACTION_PUSH_NOTIFICATION)) {
+						DbgUtil.showDebug(TAG, "PUSH_NOTIFICATION_IDENTIFIER");
+						checkGPSAndRequestUserData();
+					} else if (action.equals(LcomConst.ACTION_MESSAGE_EXPIRE)) {
+						DbgUtil.showDebug(TAG, "ACTION_MESSAGE_EXPIRE");
+						checkGPSAndRequestUserData();
+					}
+				}
+			}
+
 		}
 	}
 }

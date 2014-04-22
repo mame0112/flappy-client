@@ -205,8 +205,12 @@ public class LcomConst {
 	/**
 	 * Broadcast receiver name for Push notification
 	 */
+	public final static String ACTION_PUSH_NOTIFICATION = "com.mame.lcom.server.push_notification";
 
-	public final static String PUSH_NOTIFICATION_IDENTIFIER = "com.mame.lcom.server.push_notification";
+	/**
+	 * Broadcast action name for new message expire
+	 */
+	public final static String ACTION_MESSAGE_EXPIRE = "com.mame.lcom.server.message_expire";
 
 	/**
 	 * Debug constants

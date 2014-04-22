@@ -265,7 +265,7 @@ public class ConversationActivity extends Activity implements
 		super.onResume();
 
 		IntentFilter filter = new IntentFilter(
-				LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+				LcomConst.ACTION_PUSH_NOTIFICATION);
 		mPushReceiver = new ConversationBroadcastReceiver();
 		registerReceiver(mPushReceiver, filter);
 

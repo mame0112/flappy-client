@@ -110,7 +110,7 @@ public class GCMIntentService extends IntentService {
 	private void sendBroadcast(int userId, int targetUserId, String userName,
 			String targetUserName, String message) {
 		DbgUtil.showDebug(TAG, "sendBroadcast");
-		Intent intent = new Intent(LcomConst.PUSH_NOTIFICATION_IDENTIFIER);
+		Intent intent = new Intent(LcomConst.ACTION_PUSH_NOTIFICATION);
 		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
 		intent.putExtra(LcomConst.EXTRA_USER_NAME, userName);
 		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);

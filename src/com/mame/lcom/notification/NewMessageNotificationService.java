@@ -24,6 +24,10 @@ public class NewMessageNotificationService extends IntentService {
 	protected void onHandleIntent(Intent intent) {
 		DbgUtil.showDebug(TAG, "onHandleIntent");
 		NewMessageNotificationManager.removeNotification();
+
+		// Send brodcast to Activity
+		Intent bcastIntent = new Intent(LcomConst.ACTION_MESSAGE_EXPIRE);
+		sendBroadcast(bcastIntent);
 	}
 
 }
