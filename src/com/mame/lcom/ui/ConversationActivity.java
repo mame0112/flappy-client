@@ -435,9 +435,14 @@ public class ConversationActivity extends Activity implements
 			// Initialize flag
 			mIsNewDataReady = false;
 
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				mProgressDialog.getDialog().dismiss();
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
 			}
+			
+			// if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			// mProgressDialog.getDialog().dismiss();
+			// }
 
 		} else {
 			// If new data is not available yet.
