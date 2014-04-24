@@ -1,6 +1,5 @@
 package com.mame.lcom.ui;
 
-import com.mame.lcom.LoginActivity;
 import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;

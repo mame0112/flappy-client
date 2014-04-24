@@ -1,4 +1,4 @@
-package com.mame.lcom;
+package com.mame.lcom.ui;
 
 import java.util.List;
 
@@ -18,12 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mame.lcom.R;
+import com.mame.lcom.R.id;
+import com.mame.lcom.R.layout;
+import com.mame.lcom.R.menu;
+import com.mame.lcom.R.string;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.exception.WebAPIException;
-import com.mame.lcom.ui.FriendListActivity;
-import com.mame.lcom.ui.FriendListActivityUtil;
-import com.mame.lcom.ui.LoginActivityUtil;
-import com.mame.lcom.ui.ProgressDialogFragment;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.NetworkUtil;

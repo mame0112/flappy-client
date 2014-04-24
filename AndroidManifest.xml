@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mame.lcom.LoginActivity"
+            android:name="com.mame.lcom.ui.LoginActivity"
             android:label="@string/str_login_name" >
         </activity>
         <activity
