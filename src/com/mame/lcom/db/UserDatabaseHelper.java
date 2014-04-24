@@ -1,9 +1,12 @@
 package com.mame.lcom.db;
 
 import android.content.Context;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+//import android.database.SQLException;
+//import android.database.sqlite.SQLiteDatabase;
+//import android.database.sqlite.SQLiteOpenHelper;
+
+import net.sqlcipher.SQLException;
+import net.sqlcipher.database.SQLiteOpenHelper;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
@@ -39,10 +42,35 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 		super(context, DatabaseDef.DATABASE_NAME, null,
 				DatabaseDef.DATABASE_VERSION);
 		DbgUtil.showDebug(TAG, "UserLocalDataHandler constructor");
+		// try {
+		// sqliteDatabase.execSQL(FRIENDSHIP_DATA_SQL);
+		// sqliteDatabase.execSQL(MESSAGE_DATA_SQL);
+		// } catch (SQLException e) {
+		// DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+		// }
+		//
 	}
 
+	// @Override
+	// public void onCreate(SQLiteDatabase sqliteDatabase) {
+	// DbgUtil.showDebug(TAG, "onCreate");
+	// try {
+	// sqliteDatabase.execSQL(FRIENDSHIP_DATA_SQL);
+	// sqliteDatabase.execSQL(MESSAGE_DATA_SQL);
+	// } catch (SQLException e) {
+	// DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+	// }
+	//
+	// }
+
+	// @Override
+	// public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+
 	@Override
-	public void onCreate(SQLiteDatabase sqliteDatabase) {
+	public void onCreate(net.sqlcipher.database.SQLiteDatabase sqliteDatabase) {
 		DbgUtil.showDebug(TAG, "onCreate");
 		try {
 			sqliteDatabase.execSQL(FRIENDSHIP_DATA_SQL);
@@ -54,7 +82,8 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
+	public void onUpgrade(net.sqlcipher.database.SQLiteDatabase arg0, int arg1,
+			int arg2) {
 		// TODO Auto-generated method stub
 
 	}

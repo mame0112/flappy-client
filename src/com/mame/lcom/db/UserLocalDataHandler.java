@@ -1,22 +1,18 @@
 package com.mame.lcom.db;
 
-import java.io.File;
-import java.sql.Blob;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sqlcipher.database.SQLiteDatabase;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
+//import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 
 import com.mame.lcom.constant.LcomConst;
@@ -25,7 +21,6 @@ import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
-import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 public class UserLocalDataHandler {
@@ -49,7 +44,8 @@ public class UserLocalDataHandler {
 	private synchronized void setDatabase() {
 		if (sDatabase == null || !sDatabase.isOpen()) {
 			UserDatabaseHelper helper = new UserDatabaseHelper(mContext);
-			sDatabase = helper.getWritableDatabase();
+			sDatabase.loadLibs(mContext);
+			sDatabase = helper.getWritableDatabase("test");
 		}
 	}
 

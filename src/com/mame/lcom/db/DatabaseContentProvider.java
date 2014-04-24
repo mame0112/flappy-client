@@ -1,5 +1,8 @@
 package com.mame.lcom.db;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteOpenHelper;
+
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
 
@@ -9,8 +12,8 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+//import android.database.sqlite.SQLiteDatabase;
+//import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 
 public class DatabaseContentProvider extends ContentProvider {
@@ -23,14 +26,16 @@ public class DatabaseContentProvider extends ContentProvider {
 
 	@Override
 	public boolean onCreate() {
+		if (mDatabase == null) {
+			SQLiteOpenHelper helper = new UserDatabaseHelper(getContext());
+			SQLiteDatabase.loadLibs(getContext());
+			mDatabase = helper.getWritableDatabase("test");
+		}
+
 		return true;
 	}
 
 	public synchronized SQLiteDatabase getWritableDatabase() {
-		if (mDatabase == null) {
-			SQLiteOpenHelper helper = new UserDatabaseHelper(getContext());
-			mDatabase = helper.getWritableDatabase();
-		}
 		return mDatabase;
 	}
 
