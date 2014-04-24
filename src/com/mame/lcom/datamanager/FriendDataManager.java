@@ -311,6 +311,12 @@ public class FriendDataManager implements UserServerDataListener,
 		 */
 		public void notifyFriendThubmailsLoaded(
 				List<HashMap<Integer, Bitmap>> thumbnailsthumbnails);
+
+		/**
+		 * To be called when FriendDataManager finished to load latest message
+		 * for targetUserId
+		 */
+		public void notifyLatestStoredMessage(String message);
 	}
 
 	private class LoadLocalFriendListAsyncTask extends
@@ -352,6 +358,43 @@ public class FriendDataManager implements UserServerDataListener,
 		DbgUtil.showDebug(TAG, "removeUserPreferenceData");
 		if (userId != LcomConst.NO_USER) {
 			mLocalDataHandler.removeLocalUserPreferenceData(context);
+		}
+	}
+
+	public void requestLatestStoredMessage(int targetUserId) {
+		DbgUtil.showDebug(TAG, "requestLatestStoredMessage");
+		new LoadLatestStoredMessagesAsyncTask().execute(targetUserId);
+	}
+
+	private class LoadLatestStoredMessagesAsyncTask extends
+			AsyncTask<Integer, Void, String> {
+
+		public LoadLatestStoredMessagesAsyncTask() {
+			DbgUtil.showDebug(TAG, "LoadLatestStoredMessagesAsyncTask");
+		}
+
+		@Override
+		protected String doInBackground(Integer... targetUserId) {
+			DbgUtil.showDebug(TAG, "doInBackground");
+			try {
+				return mLocalDataHandler
+						.getLatestStoredMessage(targetUserId[0]);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			DbgUtil.showDebug(TAG, "onPostExecute");
+			if (result != null) {
+				DbgUtil.showDebug(TAG, "result: " + result);
+			}
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifyLatestStoredMessage(result);
+			}
 		}
 	}
 

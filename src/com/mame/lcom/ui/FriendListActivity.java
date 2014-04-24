@@ -809,6 +809,19 @@ public class FriendListActivity extends Activity implements
 		requestUserData();
 	}
 
+	@Override
+	public void notifyLatestStoredMessage(String message) {
+		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage");
+		if (message != null) {
+			DbgUtil.showDebug(TAG, "message: " + message);
+		}
+	}
+
+	private void revertLatestMessage(int targetUserId) {
+		DbgUtil.showDebug(TAG, "revertLatestMessage");
+		mManager.requestLatestStoredMessage(targetUserId);
+	}
+
 	public class FriendListBroadcastReceiver extends BroadcastReceiver {
 
 		@Override
@@ -822,7 +835,16 @@ public class FriendListActivity extends Activity implements
 						checkGPSAndRequestUserData();
 					} else if (action.equals(LcomConst.ACTION_MESSAGE_EXPIRE)) {
 						DbgUtil.showDebug(TAG, "ACTION_MESSAGE_EXPIRE");
-						checkGPSAndRequestUserData();
+
+						int targetUserId = intent.getIntExtra(
+								LcomConst.EXTRA_TARGET_USER_ID,
+								LcomConst.NO_USER);
+						if (targetUserId != LcomConst.NO_USER) {
+
+							// Get back to latest stored message
+							revertLatestMessage(targetUserId);
+						}
+
 					}
 				}
 			}

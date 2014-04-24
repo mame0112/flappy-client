@@ -420,4 +420,9 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded - not to be used");
 
 	}
+
+	@Override
+	public void notifyLatestStoredMessage(String message) {
+		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
+	}
 }

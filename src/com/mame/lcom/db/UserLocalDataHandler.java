@@ -585,6 +585,85 @@ public class UserLocalDataHandler {
 		return null;
 	}
 
+	public String getLatestStoredMessage(int targetUserId)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getLatestStoredMessage");
+		if (targetUserId != LcomConst.NO_USER) {
+			Cursor cursor = null;
+			try {
+				String projection[] = {
+						DatabaseDef.MessageColumns.FROM_USER_ID,
+						DatabaseDef.MessageColumns.TO_USER_ID,
+						DatabaseDef.MessageColumns.MESSAGE,
+						DatabaseDef.MessageColumns.DATE };
+				String selection = DatabaseDef.MessageColumns.FROM_USER_ID
+						+ "=?" + " OR " + DatabaseDef.MessageColumns.TO_USER_ID
+						+ "=?";
+				String selectionArgs[] = { String.valueOf(targetUserId),
+						String.valueOf(targetUserId) };
+				cursor = mContentResolver.query(DatabaseDef.MessageTable.URI,
+						projection, selection, selectionArgs, null);
+				if (cursor == null) {
+					DbgUtil.showDebug(TAG, "cursor is null");
+					throw new UserLocalDataHandlerException("Cursor is null");
+				}
+				try {
+					if (cursor != null) {
+						long latestMessageTime = 0L;
+						String latestMessage = null;
+						if (cursor.moveToFirst()) {
+							do {
+								DbgUtil.showDebug(TAG,
+										"A: " + cursor.getCount());
+
+								String message = cursor
+										.getString(cursor
+												.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+								String time = cursor
+										.getString(cursor
+												.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+								if (message != null) {
+									DbgUtil.showDebug(TAG, "message: "
+											+ message);
+									DbgUtil.showDebug(TAG, "time: " + time);
+									long tmpTime = Long.valueOf(time);
+									if (latestMessageTime < tmpTime) {
+										latestMessageTime = tmpTime;
+										latestMessage = message;
+									}
+								} else {
+									DbgUtil.showDebug(TAG, "message is null");
+								}
+
+							} while (cursor.moveToNext());
+							return latestMessage;
+						}
+					}
+					// }
+				} catch (SQLException e) {
+					DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+					TrackingUtil.trackExceptionMessage(mContext, TAG,
+							"SQLExeption: " + e.getMessage());
+					TrackingUtil.trackExceptionMessage(mContext, TAG,
+							"SQLExeption for getLatestStoredMessage cursor move: "
+									+ e.getMessage());
+					throw new UserLocalDataHandlerException("SQLException:"
+							+ e.getMessage());
+				}
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for getLatestStoredMessage query: "
+								+ e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		}
+		return null;
+	}
+
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
 			int toUserId, String fromUserName, String toUserName,
 			String message, String date) {

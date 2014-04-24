@@ -439,7 +439,7 @@ public class ConversationActivity extends Activity implements
 					&& mProgressDialog.isShowing()) {
 				mProgressDialog.dismiss();
 			}
-			
+
 			// if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			// mProgressDialog.getDialog().dismiss();
 			// }
@@ -541,6 +541,11 @@ public class ConversationActivity extends Activity implements
 			DbgUtil.showDebug(TAG, "onReceive");
 			requestThreadData();
 		}
+	}
+
+	@Override
+	public void notifyLatestStoredMessage(String message) {
+		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
 	}
 
 }
