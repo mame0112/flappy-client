@@ -21,6 +21,7 @@ import com.mame.lcom.data.MessageItemData;
 import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
+import com.mame.lcom.util.SecurityUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 public class UserLocalDataHandler {
@@ -45,7 +46,8 @@ public class UserLocalDataHandler {
 		if (sDatabase == null || !sDatabase.isOpen()) {
 			UserDatabaseHelper helper = new UserDatabaseHelper(mContext);
 			sDatabase.loadLibs(mContext);
-			sDatabase = helper.getWritableDatabase("test");
+			String UUID = SecurityUtil.getUniqueId(mContext);
+			sDatabase = helper.getWritableDatabase(UUID);
 		}
 	}
 

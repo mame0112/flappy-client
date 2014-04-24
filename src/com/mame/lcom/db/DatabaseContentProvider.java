@@ -5,6 +5,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.SecurityUtil;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -29,7 +30,8 @@ public class DatabaseContentProvider extends ContentProvider {
 		if (mDatabase == null) {
 			SQLiteOpenHelper helper = new UserDatabaseHelper(getContext());
 			SQLiteDatabase.loadLibs(getContext());
-			mDatabase = helper.getWritableDatabase("test");
+			String UUID = SecurityUtil.getUniqueId(getContext());
+			mDatabase = helper.getWritableDatabase(UUID);
 		}
 
 		return true;
