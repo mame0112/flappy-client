@@ -103,10 +103,53 @@ public class DatabaseDef {
 		static final String DATE = "message_date";
 	}
 
+	/**
+	 * Notification for the number of new message
+	 */
+	public interface NotificationTable {
+		/**
+		 * The Notification table name
+		 */
+		static final String TABLE_NAME = "notificarion";
+
+		/**
+		 * Data row MIME type
+		 */
+		static final String MIME_TYPE = "lcom-notificarion";
+
+		/**
+		 * Path segment
+		 */
+		static final String NOTIFICATION_PATH = "notificarion";
+
+		static final String SINGLE_NOTIFICATION_PATH = "notificarion/#";
+
+		/**
+		 * Content URI
+		 */
+		static final Uri URI = Uri
+				.withAppendedPath(BASE_URI, NOTIFICATION_PATH);
+	}
+
+	/**
+	 * Column definitions for the Notification table
+	 */
+	public interface NotificationColumns extends BaseColumns {
+		static final String FROM_USER_ID = "from_user_id";
+
+		static final String TO_USER_ID = "to_user_id";
+
+		static final String NUMBER = "number";
+
+		static final String EXPIRE_DATE = "expire_date";
+	}
+
 	public interface Constants {
 		static final int FRIENDSHIP_MATCH = 10;
 
 		static final int MESSAGE_MATCH = 20;
+
+		static final int NOTIFICATION_MATCH = 20;
 	}
 
 }

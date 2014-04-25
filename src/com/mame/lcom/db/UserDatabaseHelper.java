@@ -38,6 +38,17 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 			+ DatabaseDef.MessageColumns.MESSAGE + " TEXT, "
 			+ DatabaseDef.MessageColumns.DATE + " TEXT)";
 
+	static final String NOTIFICATION_SQL = "CREATE TABLE IF NOT EXISTS "
+			+ DatabaseDef.NotificationTable.TABLE_NAME + " ("
+			+ DatabaseDef.NotificationColumns._ID
+			+ " INTEGER PRIMARY KEY AUTOINCREMENT,"
+			+ DatabaseDef.NotificationColumns.FROM_USER_ID
+			+ " INTEGER DEFAULT 0, "
+			+ DatabaseDef.NotificationColumns.TO_USER_ID
+			+ " INTEGER DEFAULT 0, " + DatabaseDef.NotificationColumns.NUMBER
+			+ " INTEGER DEFAULT 0, "
+			+ DatabaseDef.NotificationColumns.EXPIRE_DATE + " LONG DEFAULT 0)";
+
 	public UserDatabaseHelper(Context context) {
 		super(context, DatabaseDef.DATABASE_NAME, null,
 				DatabaseDef.DATABASE_VERSION);
@@ -75,6 +86,7 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 		try {
 			sqliteDatabase.execSQL(FRIENDSHIP_DATA_SQL);
 			sqliteDatabase.execSQL(MESSAGE_DATA_SQL);
+			sqliteDatabase.execSQL(NOTIFICATION_SQL);
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 		}

@@ -361,8 +361,13 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 	}
 
-	public void requestLatestStoredMessage(int targetUserId) {
+	public void requestLatestStoredMessage(int targetUserId)
+			throws FriendDataManagerException {
 		DbgUtil.showDebug(TAG, "requestLatestStoredMessage");
+		if (targetUserId == LcomConst.NO_USER) {
+			throw new FriendDataManagerException(
+					"Illegal targetUser id. targetUserId:  " + targetUserId);
+		}
 		new LoadLatestStoredMessagesAsyncTask().execute(targetUserId);
 	}
 

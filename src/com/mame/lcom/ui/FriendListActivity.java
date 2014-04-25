@@ -814,12 +814,18 @@ public class FriendListActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage");
 		if (message != null) {
 			DbgUtil.showDebug(TAG, "message: " + message);
+			// TODO
 		}
 	}
 
 	private void revertLatestMessage(int targetUserId) {
 		DbgUtil.showDebug(TAG, "revertLatestMessage");
-		mManager.requestLatestStoredMessage(targetUserId);
+		try {
+			mManager.requestLatestStoredMessage(targetUserId);
+		} catch (FriendDataManagerException e) {
+			DbgUtil.showDebug(TAG,
+					"FriendDataManagerException: " + e.getMessage());
+		}
 	}
 
 	public class FriendListBroadcastReceiver extends BroadcastReceiver {
