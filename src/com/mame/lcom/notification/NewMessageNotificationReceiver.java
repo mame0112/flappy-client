@@ -16,9 +16,16 @@ public class NewMessageNotificationReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		DbgUtil.showDebug(TAG, "onReceive");
 
-		Intent i = new Intent(context, NewMessageNotificationService.class);
-		context.startService(i);
+		if (intent != null) {
+			int targetUserId = intent.getIntExtra(
+					LcomConst.EXTRA_TARGET_USER_ID, LcomConst.NO_USER);
+			int fromUserId = intent.getIntExtra(LcomConst.EXTRA_USER_ID,
+					LcomConst.NO_USER);
 
+			Intent i = new Intent(context, NewMessageNotificationService.class);
+			i.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);
+			i.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
+			context.startService(i);
+		}
 	}
-
 }

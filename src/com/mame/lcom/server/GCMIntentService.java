@@ -84,6 +84,7 @@ public class GCMIntentService extends IntentService {
 								.handleLastetMessageAndShowNotification(
 										getApplicationContext(),
 										Integer.valueOf(userId),
+										Integer.valueOf(friendUserId), 1,
 										Long.valueOf(expireDate));
 
 						sendBroadcast(Integer.valueOf(userId),

@@ -1,6 +1,8 @@
 package com.mame.lcom.ui;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.data.NotificationContentData;
+import com.mame.lcom.db.UserLocalDataHandlerHelper.NotificationTimeComparator;
 import com.mame.lcom.util.DbgUtil;
 
 public class FriendListActivityUtil {
@@ -55,41 +59,74 @@ public class FriendListActivityUtil {
 		activity.startActivity(intent);
 	}
 
-	// Not used now
-	public static long getLatestMessageDate(
-			ArrayList<FriendListData> friendListData) {
+	public static ArrayList<NotificationContentData> getNotificationDate(
+			ArrayList<FriendListData> friendListData, int userId) {
 
 		if (friendListData != null && friendListData.size() != 0) {
 
-			long latestDate = 0L;
+			ArrayList<NotificationContentData> result = new ArrayList<NotificationContentData>();
 
 			for (FriendListData data : friendListData) {
 				if (data != null) {
-					long date = data.getMessagDate();
-					DbgUtil.showDebug(TAG, "date: " + date);
-
-					if (latestDate <= date) {
-						latestDate = date;
-					}
+					int fromUserId = data.getFriendId();
+					int numOfMessage = data.getNumOfNewMessage();
+					long expireDate = data.getMessagDate();
+					NotificationContentData notificationData = new NotificationContentData(
+							userId, fromUserId, numOfMessage, expireDate);
+					result.add(notificationData);
 				}
 			}
-			return latestDate;
+			return result;
+
+			// long latestDate = 0L;
+			//
+			// for (FriendListData data : friendListData) {
+			// if (data != null) {
+			// long date = data.getMessagDate();
+			// DbgUtil.showDebug(TAG, "date: " + date);
+			//
+			// if (latestDate <= date) {
+			// latestDate = date;
+			// }
+			// }
+			// }
+			// return latestDate;
 
 		}
-		return 0L;
+		return null;
 	}
 
-//	public static ArrayList<Long> getTimeListFromFrinedListData(
-//			ArrayList<FriendListData> listData) {
-//
-//		ArrayList<Long> result = new ArrayList<Long>();
-//
-//		if (listData != null && listData.size() != 0) {
-//			for (FriendListData data : listData) {
-//				result.add(data.getMessagDate());
-//			}
-//			return result;
-//		}
-//		return null;
-//	}
+	public static ArrayList<FriendListData> sortMessageByTime(
+			ArrayList<FriendListData> data) {
+		DbgUtil.showDebug(TAG, "sortMessageByTime");
+
+		if (data != null && data.size() != 0) {
+			Collections.sort(data, new TargetFriendMessageComparator());
+			return data;
+		}
+
+		return null;
+	}
+
+	private static class TargetFriendMessageComparator implements
+			Comparator<FriendListData> {
+
+		@Override
+		public int compare(FriendListData lhs, FriendListData rhs) {
+
+			long time1 = lhs.getMessagDate();
+			long time2 = rhs.getMessagDate();
+
+			if (time1 > time2) {
+				return 1;
+
+			} else if (time1 == time2) {
+				return 0;
+
+			} else {
+				return -1;
+
+			}
+		}
+	}
 }

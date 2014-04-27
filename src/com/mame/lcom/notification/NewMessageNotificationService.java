@@ -25,8 +25,22 @@ public class NewMessageNotificationService extends IntentService {
 		DbgUtil.showDebug(TAG, "onHandleIntent");
 		NewMessageNotificationManager.removeNotification();
 
+		int targetUserId = intent.getIntExtra(LcomConst.EXTRA_TARGET_USER_ID,
+				LcomConst.NO_USER);
+		int fromUserId = intent.getIntExtra(LcomConst.EXTRA_USER_ID,
+				LcomConst.NO_USER);
+
+		DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
+		DbgUtil.showDebug(TAG, "fromUserId: " + fromUserId);
+
+		// set next notification (AlarmManager)
+		NewMessageNotificationManager
+				.setNextNotification(getApplicationContext());
+
 		// Send brodcast to Activity
 		Intent bcastIntent = new Intent(LcomConst.ACTION_MESSAGE_EXPIRE);
+		bcastIntent.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);
+		bcastIntent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
 		sendBroadcast(bcastIntent);
 	}
 

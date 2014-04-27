@@ -36,6 +36,7 @@ import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.FriendListDataComparator;
 import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
 import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
@@ -544,8 +545,15 @@ public class ConversationActivity extends Activity implements
 	}
 
 	@Override
-	public void notifyLatestStoredMessage(String message) {
+	public void notifyLatestStoredMessage(FriendListData result) {
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
+	}
+
+	@Override
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+		DbgUtil.showDebug(TAG,
+				"notifiyNearlestExpireNotification - not to be used");
+
 	}
 
 }

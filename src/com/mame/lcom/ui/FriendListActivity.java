@@ -27,6 +27,7 @@ import com.mame.lcom.R;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
 import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.FriendDataManagerException;
@@ -37,6 +38,7 @@ import com.mame.lcom.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelpe
 import com.mame.lcom.ui.view.FriendListCustomAdapter;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.PreferenceUtil;
+import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 public class FriendListActivity extends Activity implements
@@ -456,6 +458,8 @@ public class FriendListActivity extends Activity implements
 		// If existing data is already ready
 		if (isExistingDataAvailable) {
 
+			mNewUserData = newUserData;
+
 			// Initialize
 			if (mFriendTmpData != null) {
 				mFriendTmpData.clear();
@@ -597,17 +601,14 @@ public class FriendListActivity extends Activity implements
 	private void handleNotification(ArrayList<FriendListData> newUserData) {
 		DbgUtil.showDebug(TAG, "handleNotification");
 		// Before get notification, we check latest message date
-		long latestMessageDate = FriendListActivityUtil
-				.getLatestMessageDate(newUserData);
-
-		DbgUtil.showDebug(TAG, "latestMessageDate: " + latestMessageDate);
+		ArrayList<NotificationContentData> notifications = FriendListActivityUtil
+				.getNotificationDate(newUserData, mUserId);
 
 		// Show Notification if necessary
 		try {
 			NewMessageNotificationManager
-					.handleLastetMessageAndShowNotification(
-							getApplicationContext(), Integer.valueOf(mUserId),
-							latestMessageDate);
+					.handleLastetMessagesAndShowNotification(
+							getApplicationContext(), notifications);
 		} catch (NewMessageNotificationManagerException e) {
 			DbgUtil.showDebug(TAG, "NewMessageNotificationManagerException: "
 					+ e.getMessage());
@@ -810,16 +811,126 @@ public class FriendListActivity extends Activity implements
 	}
 
 	@Override
-	public void notifyLatestStoredMessage(String message) {
+	public void notifyLatestStoredMessage(FriendListData input) {
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage");
-		if (message != null) {
-			DbgUtil.showDebug(TAG, "message: " + message);
-			// TODO
+		if (input != null) {
+			String message = input.getLastMessage();
+			int friendId = input.getFriendId();
+			// DbgUtil.showDebug(TAG, "message: " + message);
+			if (message != null && friendId != LcomConst.NO_USER) {
+				// If friendListData exist
+				if (mFriendListData != null && mFriendListData.size() != 0) {
+					for (FriendListData data : mFriendListData) {
+						int currentFriendId = data.getFriendId();
+						int numOfMessage = input.getNumOfNewMessage();
+						if (friendId == currentFriendId) {
+							data.setLastMessage(message);
+							data.setNumOfNewMessage(numOfMessage);
+						}
+					}
+				} else {
+					// If no friendListData exist
+					if (mFriendListData == null) {
+						mFriendListData = new ArrayList<FriendListData>();
+						mFriendListData.add(input);
+					} else {
+						mFriendListData.add(input);
+					}
+				}
+
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								// mFriendListData.addAll(userData);
+								// mFriendListData.addAll(userData);
+								if (mAdapter != null) {
+									mListView.setAdapter(mAdapter);
+									mAdapter.notifyDataSetChanged();
+								}
+							}
+						});
+					}
+				}).start();
+			}
 		}
 	}
 
 	private void revertLatestMessage(int targetUserId) {
-		DbgUtil.showDebug(TAG, "revertLatestMessage");
+		DbgUtil.showDebug(TAG, "revertLatestMessage: " + targetUserId);
+
+		long current = TimeUtil.getCurrentDate();
+
+		if (mFriendListData != null && mFriendListData.size() != 0) {
+			for (FriendListData data : mFriendListData) {
+				if (data != null) {
+					int targetId = data.getFriendId();
+					// Update target user Id list item data.
+					if (targetId == targetUserId) {
+
+						// Update the number of new message
+						int numOfNewMessage = data.getNumOfNewMessage();
+						int newNum = numOfNewMessage - 1;
+						if (newNum <= 0) {
+							DbgUtil.showDebug(TAG, "newNum: " + newNum);
+							data.setNumOfNewMessage(newNum);
+						} else {
+							DbgUtil.showDebug(TAG, "newNum is 0");
+							data.setNumOfNewMessage(0);
+						}
+
+						// Update latest message
+						// First we try to get it from mNewUserData.
+						if (mNewUserData != null && mNewUserData.size() != 0) {
+							ArrayList<FriendListData> dataForTarget = new ArrayList<FriendListData>();
+							for (FriendListData newData : mNewUserData) {
+
+								// First, we try to get data for target user
+								int newTargetId = newData.getFriendId();
+								if (newTargetId == targetUserId) {
+									dataForTarget.add(newData);
+								}
+							}
+
+							// Sort by time
+							ArrayList<FriendListData> result = FriendListActivityUtil
+									.sortMessageByTime(dataForTarget);
+
+							boolean isFound = false;
+							for (FriendListData sortedData : result) {
+								long sortedTime = sortedData.getMessagDate();
+								if (current > sortedTime) {
+									isFound = true;
+									notifyLatestStoredMessage(sortedData);
+									break;
+								}
+							}
+
+							if (isFound == false) {
+								// If all message has expired
+								getLatestLocalStoredMessage(targetUserId);
+							}
+						} else {
+							DbgUtil.showDebug(TAG,
+									"mNewUserData is null or size 0");
+							getLatestLocalStoredMessage(targetUserId);
+						}
+
+					}
+
+				}
+			}
+
+		} else {
+			DbgUtil.showDebug(TAG, "mFriendListData is null or size 0");
+			getLatestLocalStoredMessage(targetUserId);
+		}
+
+	}
+
+	private void getLatestLocalStoredMessage(int targetUserId) {
 		try {
 			mManager.requestLatestStoredMessage(targetUserId);
 		} catch (FriendDataManagerException e) {
@@ -845,10 +956,13 @@ public class FriendListActivity extends Activity implements
 						int targetUserId = intent.getIntExtra(
 								LcomConst.EXTRA_TARGET_USER_ID,
 								LcomConst.NO_USER);
+						int fromUserId = intent.getIntExtra(
+								LcomConst.EXTRA_USER_ID, LcomConst.NO_USER);
 						if (targetUserId != LcomConst.NO_USER) {
 
-							// Get back to latest stored message
-							revertLatestMessage(targetUserId);
+							// Get back to previous recieved message or latest
+							// stored message
+							revertLatestMessage(fromUserId);
 						}
 
 					}
@@ -856,5 +970,11 @@ public class FriendListActivity extends Activity implements
 			}
 
 		}
+	}
+
+	@Override
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+
 	}
 }

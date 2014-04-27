@@ -149,7 +149,7 @@ public class DatabaseDef {
 
 		static final int MESSAGE_MATCH = 20;
 
-		static final int NOTIFICATION_MATCH = 20;
+		static final int NOTIFICATION_MATCH = 30;
 	}
 
 }

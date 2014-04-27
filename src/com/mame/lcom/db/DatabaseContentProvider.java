@@ -58,8 +58,24 @@ public class DatabaseContentProvider extends ContentProvider {
 	// }
 
 	@Override
-	public int delete(Uri arg0, String arg1, String[] arg2) {
-		// TODO Auto-generated method stub
+	public int delete(Uri uri, String selection, String[] selectionArgs) {
+		DbgUtil.showDebug(TAG, "delete");
+		int match = sUriMatcher.match(uri);
+		if (match == -1) {
+			throw new IllegalArgumentException("unknown URI: " + uri);
+		}
+
+		String table = tableFromMatch(match);
+		if (table != null) {
+			int id = 0;
+			SQLiteDatabase database = getWritableDatabase();
+			id = database.delete(table, selection, selectionArgs);
+			if (id > 0) {
+				Uri resultUri = ContentUris.withAppendedId(uri, id);
+				getContext().getContentResolver().notifyChange(resultUri, null);
+				return id;
+			}
+		}
 		return 0;
 	}
 
@@ -127,6 +143,9 @@ public class DatabaseContentProvider extends ContentProvider {
 		case DatabaseDef.Constants.MESSAGE_MATCH:
 			table = DatabaseDef.MessageTable.TABLE_NAME;
 			break;
+		case DatabaseDef.Constants.NOTIFICATION_MATCH:
+			table = DatabaseDef.NotificationTable.TABLE_NAME;
+			break;
 		}
 		return table;
 
@@ -140,5 +159,8 @@ public class DatabaseContentProvider extends ContentProvider {
 		sUriMatcher.addURI(DatabaseDef.AUTHORITY,
 				DatabaseDef.MessageTable.MESSAGE_PATH,
 				DatabaseDef.Constants.MESSAGE_MATCH);
+		sUriMatcher.addURI(DatabaseDef.AUTHORITY,
+				DatabaseDef.NotificationTable.NOTIFICATION_PATH,
+				DatabaseDef.Constants.NOTIFICATION_MATCH);
 	}
 }

@@ -1,17 +1,29 @@
 package com.mame.lcom.notification;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 import com.mame.lcom.constant.LcomConst;
+import com.mame.lcom.data.FriendListData;
+import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
+import com.mame.lcom.datamanager.FriendDataManager;
+import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.NewMessageNotificationManagerException;
+import com.mame.lcom.ui.FriendListActivity;
 import com.mame.lcom.util.DbgUtil;
+import com.mame.lcom.util.PackageUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TimeUtil;
 
-public class NewMessageNotificationManager {
+public class NewMessageNotificationManager implements FriendDataManagerListener {
 
 	private final static String TAG = LcomConst.TAG
 			+ "/NewMessageNotificationManager";
@@ -21,6 +33,10 @@ public class NewMessageNotificationManager {
 	private final static int NOTIFICATION_ID = 1;
 
 	private static NewMessageNotificationManager sManager = new NewMessageNotificationManager();
+
+	private static FriendDataManager mDataManager = null;
+
+	private static Context mContext = null;
 
 	// private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
 
@@ -51,7 +67,7 @@ public class NewMessageNotificationManager {
 	 * @param latestPostedDate
 	 */
 	public static void handleLastetMessageAndShowNotification(Context context,
-			int userId, long latestPostedDate)
+			int fromUserId, int toUserId, int number, long expireDate)
 			throws NewMessageNotificationManagerException {
 		DbgUtil.showDebug(TAG, "handleLastetMessageAndShowNotification");
 
@@ -59,49 +75,116 @@ public class NewMessageNotificationManager {
 			throw new NewMessageNotificationManagerException("Context is null");
 		}
 
-		if (latestPostedDate <= 0L) {
+		if (expireDate <= 0L) {
 			throw new NewMessageNotificationManagerException(
 					"latestPostedDate is illegal (less than 0)");
 		}
 
 		// Set AlarmManager if latestPostedDate is later than current time
 		long current = TimeUtil.getCurrentDate();
-		if (current < latestPostedDate) {
-			operateNotification(context, latestPostedDate, userId);
+		if (current < expireDate) {
+
+			mDataManager = FriendDataManager.getInstance();
+
+			if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
+				DbgUtil.showDebug(
+						TAG,
+						"registered: "
+								+ mDataManager
+										.isListenerAlreadyRegistered(sManager));
+				mDataManager.setFriendDataManagerListener(sManager);
+			}
+
+			if (PackageUtil.isFriendListForeground(context) == false) {
+				DbgUtil.showDebug(TAG, "false");
+				if (mDataManager != null) {
+					mDataManager.addNewNotification(fromUserId, toUserId,
+							number, expireDate);
+					operateNotification(context);
+				}
+			} else {
+				DbgUtil.showDebug(TAG, "true");
+			}
+
+		}
+	}
+
+	/**
+	 * Show notification depends on arguments. If the client calls this method,
+	 * this NewMessageNotificationManager will handle not only showing
+	 * notification, but alos remove it if the message is expires. And
+	 * targetUserId and targetUserName is not LcomConst.NoUser and null, this
+	 * manager will launch ConversationActivity. Otherwise, it shall launch
+	 * FriendListActivity
+	 * 
+	 * @param context
+	 * @param userId
+	 * @param targetUserId
+	 * @param latestPostedDate
+	 */
+	public static void handleLastetMessagesAndShowNotification(Context context,
+			ArrayList<NotificationContentData> datas)
+			throws NewMessageNotificationManagerException {
+		DbgUtil.showDebug(TAG, "handleLastetMessagesAndShowNotification");
+
+		if (context == null) {
+			throw new NewMessageNotificationManagerException("Context is null");
+		}
+
+		if (datas == null || datas.size() == 0) {
+			throw new NewMessageNotificationManagerException(
+					"NotificationContentData is null or size 0");
+		}
+
+		mDataManager = FriendDataManager.getInstance();
+
+		if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
+			DbgUtil.showDebug(
+					TAG,
+					"registered: "
+							+ mDataManager
+									.isListenerAlreadyRegistered(sManager));
+			mDataManager.setFriendDataManagerListener(sManager);
+		}
+
+		if (mDataManager != null) {
+			long current = TimeUtil.getCurrentDate();
+			for (NotificationContentData data : datas) {
+				long expireDate = data.getExpireData();
+				// Set AlarmManager if expireDate is later than current
+				// time
+				if (current < expireDate) {
+					int fromUserId = data.getFromUserId();
+					int toUserId = data.getToUserId();
+					int number = data.getNumberOfMesage();
+					mDataManager.addNewNotification(fromUserId, toUserId,
+							number, expireDate);
+				}
+			}
+
+			operateNotification(context);
 		}
 
 	}
 
-	private static void operateNotification(Context context,
-			long latestPostedDate, int userId) {
-
+	private static void operateNotification(Context context) {
 		DbgUtil.showDebug(TAG, "operateNotification");
 
-		// If inputted date is much more later than current latest message, we
-		// update Shared preference so that we can update expire timing for
-		// Notification
-		long currentLatestDate = PreferenceUtil
-				.getLatestMessagePostedTime(context);
+		mContext = context;
 
-		DbgUtil.showDebug(TAG, "currentLatestDate: " + currentLatestDate);
+		// Get nearlest expire notification data
+		mDataManager.requestNotificationNearestExpireData();
+	}
 
-		if (currentLatestDate < latestPostedDate) {
-			DbgUtil.showDebug(TAG, "latestPostedDate: " + latestPostedDate);
-			// Update Share Preference
-			PreferenceUtil.updateLatestMessagePostedTime(context,
-					latestPostedDate);
-
-			// Cancel current AlarmManager
-			// removeCurrentAlarmManager();
-
-			// Set new AlarmManager.
-			setAlarmManagerForRemoveNotification(context, userId,
-					latestPostedDate);
-
-			// Finally show notification
-			// TODO we need to show message in case of ConversationActivity
-			showNotification(context, userId);
-		}
+	/**
+	 * API to be called when current AlarmManager expires and need to set next
+	 * AlarmManager
+	 * 
+	 * @param context
+	 */
+	public static void setNextNotification(Context context) {
+		DbgUtil.showDebug(TAG, "setNextNotification");
+		operateNotification(context);
 	}
 
 	private static void removeCurrentAlarmManager() {
@@ -110,10 +193,12 @@ public class NewMessageNotificationManager {
 	}
 
 	private static void setAlarmManagerForRemoveNotification(Context context,
-			int userId, long triggerTime) {
+			int fromUserId, int toUserId, long triggerTime) {
 		DbgUtil.showDebug(TAG, "setAlarmManagerForRemoveNotification");
 		Intent intent = new Intent(context,
 				NewMessageNotificationReceiver.class);
+		intent.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);
+		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, toUserId);
 
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0,
 				intent, 0);
@@ -145,22 +230,60 @@ public class NewMessageNotificationManager {
 		removeCurrentAlarmManager();
 	}
 
-	// public static class NotificationTimeComparator implements
-	// Comparator<Long> {
-	//
-	// @Override
-	// public int compare(Long lhs, Long rhs) {
-	// if (lhs > rhs) {
-	// return 1;
-	//
-	// } else if (lhs == rhs) {
-	// return 0;
-	//
-	// } else {
-	// return -1;
-	//
-	// }
-	// }
-	//
-	// }
+	@Override
+	public void notifyPresentDataset(ArrayList<FriendListData> userData) {
+
+	}
+
+	@Override
+	public void notifyNewDataset(ArrayList<FriendListData> newUserData) {
+
+	}
+
+	@Override
+	public void notifyAddPresentDataFinished(boolean result,
+			MessageItemData messageData) {
+
+	}
+
+	@Override
+	public void notifyPresentMessageDataLoaded(
+			ArrayList<MessageItemData> messageData) {
+
+	}
+
+	@Override
+	public void notifyNewConversationDataLoaded(
+			ArrayList<MessageItemData> messageData) {
+
+	}
+
+	@Override
+	public void notifyFriendThubmailsLoaded(
+			List<HashMap<Integer, Bitmap>> thumbnailsthumbnails) {
+
+	}
+
+	@Override
+	public void notifyLatestStoredMessage(FriendListData result) {
+		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage");
+	}
+
+	@Override
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+
+		if (data != null) {
+			// Set new AlarmManager.
+			int fromUserId = data.getFromUserId();
+			int toUserId = data.getToUserId();
+			long expireDate = data.getExpireData();
+			setAlarmManagerForRemoveNotification(mContext, fromUserId,
+					toUserId, expireDate);
+
+			// Finally show notification
+			// TODO we need to show message in case of ConversationActivity
+			showNotification(mContext, fromUserId);
+		}
+	}
 }

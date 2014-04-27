@@ -1,6 +1,7 @@
 package com.mame.lcom.db;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -18,10 +19,12 @@ import android.graphics.Bitmap;
 import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
 import com.mame.lcom.exception.UserLocalDataHandlerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.ImageUtil;
 import com.mame.lcom.util.SecurityUtil;
+import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
 
 public class UserLocalDataHandler {
@@ -585,10 +588,10 @@ public class UserLocalDataHandler {
 		return null;
 	}
 
-	public String getLatestStoredMessage(int targetUserId)
+	public synchronized FriendListData getLatestStoredMessage(int friendUserId)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "getLatestStoredMessage");
-		if (targetUserId != LcomConst.NO_USER) {
+		if (friendUserId != LcomConst.NO_USER) {
 			Cursor cursor = null;
 			try {
 				String projection[] = {
@@ -599,8 +602,8 @@ public class UserLocalDataHandler {
 				String selection = DatabaseDef.MessageColumns.FROM_USER_ID
 						+ "=?" + " OR " + DatabaseDef.MessageColumns.TO_USER_ID
 						+ "=?";
-				String selectionArgs[] = { String.valueOf(targetUserId),
-						String.valueOf(targetUserId) };
+				String selectionArgs[] = { String.valueOf(friendUserId),
+						String.valueOf(friendUserId) };
 				cursor = mContentResolver.query(DatabaseDef.MessageTable.URI,
 						projection, selection, selectionArgs, null);
 				if (cursor == null) {
@@ -611,11 +614,16 @@ public class UserLocalDataHandler {
 					if (cursor != null) {
 						long latestMessageTime = 0L;
 						String latestMessage = null;
+						int lastFromId = LcomConst.NO_USER;
+						int lastToId = LcomConst.NO_USER;
 						if (cursor.moveToFirst()) {
 							do {
-								DbgUtil.showDebug(TAG,
-										"A: " + cursor.getCount());
-
+								String fromUserId = cursor
+										.getString(cursor
+												.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+								String toUserId = cursor
+										.getString(cursor
+												.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
 								String message = cursor
 										.getString(cursor
 												.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
@@ -630,13 +638,37 @@ public class UserLocalDataHandler {
 									if (latestMessageTime < tmpTime) {
 										latestMessageTime = tmpTime;
 										latestMessage = message;
+										lastFromId = Integer
+												.valueOf(fromUserId);
+										lastToId = Integer.valueOf(toUserId);
 									}
 								} else {
 									DbgUtil.showDebug(TAG, "message is null");
 								}
 
 							} while (cursor.moveToNext());
-							return latestMessage;
+							// int friendId, String friendName, int
+							// lastSenderId,
+							// String lastMessage, long lastMsgDate,
+							// int numOfNewMessage,
+							// String mailAddress, Bitmap thumbnail
+
+							DbgUtil.showDebug(TAG, "latestMessage: "
+									+ latestMessage);
+
+							FriendListData data = null;
+							// If last sender is friend
+							if (friendUserId == lastFromId) {
+								data = new FriendListData(lastFromId, null,
+										lastFromId, latestMessage,
+										latestMessageTime, 0, null, null);
+							} else {
+								// If last sender is myself
+								data = new FriendListData(lastFromId, null,
+										lastFromId, latestMessage,
+										latestMessageTime, 0, null, null);
+							}
+							return data;
 						}
 					}
 					// }
@@ -662,6 +694,198 @@ public class UserLocalDataHandler {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * We need to check if target new notification is registered or not before
+	 * store it onto Database
+	 * 
+	 * @param expireDate
+	 */
+	// public synchronized boolean isTargetNewNotificationAlreadyStored(
+	// long expireDate) throws UserLocalDataHandlerException {
+	// DbgUtil.showDebug(TAG, "isTargetNewNotificationAlreadyStored: "
+	// + expireDate);
+
+	// return UserLocalDataHandlerHelper.isFriendListForeground(mContext);
+
+	// if (expireDate < 0L) {
+	// throw new UserLocalDataHandlerException("Illegal expireDate");
+	// }
+	//
+	// Cursor cursor = null;
+	// try {
+	// String projection[] = { DatabaseDef.NotificationColumns.EXPIRE_DATE
+	// };
+	// String selection = DatabaseDef.NotificationColumns.EXPIRE_DATE
+	// + "=?";
+	// String selectionArgs[] = { String.valueOf(expireDate) };
+	//
+	// cursor = mContentResolver.query(DatabaseDef.NotificationTable.URI,
+	// projection, selection, selectionArgs, null);
+	//
+	// if (cursor == null) {
+	// DbgUtil.showDebug(TAG, "cursor is null");
+	// throw new UserLocalDataHandlerException("Cursor is null");
+	// }
+	//
+	// if (cursor != null) {
+	// int count = cursor.getCount();
+	// if (count == 0) {
+	// DbgUtil.showDebug(TAG, "false");
+	// return false;
+	// } else {
+	// DbgUtil.showDebug(TAG, "true");
+	// return true;
+	// }
+	// }
+	// } catch (SQLException e) {
+	// DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+	// TrackingUtil.trackExceptionMessage(mContext, TAG,
+	// "SQLExeption for getNotificationNearestExpireData query: "
+	// + e.getMessage());
+	// throw new UserLocalDataHandlerException("SQLException:"
+	// + e.getMessage());
+	// }
+	// return false;
+	// }
+
+	public synchronized void addNewNotification(int fromUserId, int toUserId,
+			int number, long expireDate) {
+		DbgUtil.showDebug(TAG, "addNewNotification");
+		try {
+			setDatabase();
+			// sDatabase.beginTransaction();
+
+			// Set data to Message DB
+			ContentValues valuesForMessage = null;
+
+			valuesForMessage = getInsertContentValuesForNotification(
+					fromUserId, toUserId, number, expireDate);
+
+			long id = sDatabase.insert(
+					DatabaseDef.NotificationTable.TABLE_NAME, null,
+					valuesForMessage);
+			DbgUtil.showDebug(TAG, "id: " + id);
+			if (id < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG,
+						"Failed to insert data into notification DB");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"illegal id for addNewMessage");
+			}
+
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(
+					mContext,
+					TAG,
+					"SQLExeption for addNewNotification insert: "
+							+ e.getMessage());
+		} finally {
+
+		}
+	}
+
+	public NotificationContentData getNotificationNearestExpireData()
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getNotificationNearestExpireData");
+		Cursor cursor = null;
+		try {
+			cursor = mContentResolver.query(DatabaseDef.NotificationTable.URI,
+					null, null, null, null);
+			if (cursor == null) {
+				DbgUtil.showDebug(TAG, "cursor is null");
+				throw new UserLocalDataHandlerException("Cursor is null");
+			}
+			try {
+				if (cursor != null) {
+
+					ArrayList<NotificationContentData> tmpDatas = new ArrayList<NotificationContentData>();
+
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+
+							int fromUserId = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.FROM_USER_ID));
+							int toUserId = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.TO_USER_ID));
+							int number = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.NUMBER));
+							long expireDate = cursor
+									.getLong(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.EXPIRE_DATE));
+							DbgUtil.showDebug(TAG, "expireDate:: " + expireDate);
+
+							NotificationContentData data = new NotificationContentData(
+									toUserId, fromUserId, number, expireDate);
+							tmpDatas.add(data);
+						} while (cursor.moveToNext());
+					}
+
+					// First, sort notificatons based on time
+					UserLocalDataHandlerHelper helper = new UserLocalDataHandlerHelper();
+					helper.sortNotificationBasedOnExpireTime(tmpDatas);
+
+					// Try to return most nearlest but i has not expired
+					// notification data
+					long current = TimeUtil.getCurrentDate();
+
+					for (NotificationContentData data : tmpDatas) {
+						if (data != null) {
+							long expire = data.getExpireData();
+							if (current < expire) {
+								DbgUtil.showDebug(TAG, "valid notification: "
+										+ expire);
+								return data;
+							} else {
+								// If expire time is less than current time, we
+								// remove it from Database
+								removeObsoleteNotification(expire);
+							}
+						}
+					}
+				}
+
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption for getNotificationNearestExpireData cursor move: "
+								+ e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for getNotificationNearestExpireData query: "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException:"
+					+ e.getMessage());
+		}
+		return null;
+	}
+
+	private void removeObsoleteNotification(long expireDate)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "removeObsoleteNotification: " + expireDate);
+
+		String where = DatabaseDef.NotificationColumns.EXPIRE_DATE + "="
+				+ expireDate;
+
+		int id = mContentResolver.delete(DatabaseDef.NotificationTable.URI,
+				where, null);
+		DbgUtil.showDebug(TAG, "id: " + id);
+		if (id < 0) {
+			DbgUtil.showDebug(TAG, "delete id is less than 0");
+			throw new UserLocalDataHandlerException("delete id is less than 0");
+		}
 	}
 
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
@@ -716,6 +940,7 @@ public class UserLocalDataHandler {
 		setDatabase();
 		sDatabase.delete(DatabaseDef.FriendshipTable.TABLE_NAME, null, null);
 		sDatabase.delete(DatabaseDef.MessageTable.TABLE_NAME, null, null);
+		sDatabase.delete(DatabaseDef.NotificationTable.TABLE_NAME, null, null);
 		doVacuum();
 
 		// File path = context.getDatabasePath(LcomConst.DATABASE_NAME);
@@ -723,6 +948,18 @@ public class UserLocalDataHandler {
 		// File file = new File(path + "/databases/friendship.db");
 		// file.delete();
 
+	}
+
+	private ContentValues getInsertContentValuesForNotification(int fromUserId,
+			int toUserId, int number, long expireDate) {
+		ContentValues values = new ContentValues();
+
+		values.put(DatabaseDef.NotificationColumns.FROM_USER_ID, fromUserId);
+		values.put(DatabaseDef.NotificationColumns.TO_USER_ID, toUserId);
+		values.put(DatabaseDef.NotificationColumns.NUMBER, number);
+		values.put(DatabaseDef.NotificationColumns.EXPIRE_DATE, expireDate);
+
+		return values;
 	}
 
 	private void doVacuum() {

@@ -13,6 +13,7 @@ import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
 import com.mame.lcom.db.UserLocalDataHandler;
 import com.mame.lcom.db.UserLocalDataHandler.UserLocalDataListener;
 import com.mame.lcom.exception.FriendDataManagerException;
@@ -316,7 +317,14 @@ public class FriendDataManager implements UserServerDataListener,
 		 * To be called when FriendDataManager finished to load latest message
 		 * for targetUserId
 		 */
-		public void notifyLatestStoredMessage(String message);
+		public void notifyLatestStoredMessage(FriendListData message);
+
+		/**
+		 * To be called when FriendDataManager finished to load nearlest expire
+		 * notification data
+		 */
+		public void notifiyNearlestExpireNotification(
+				NotificationContentData data);
 	}
 
 	private class LoadLocalFriendListAsyncTask extends
@@ -371,15 +379,52 @@ public class FriendDataManager implements UserServerDataListener,
 		new LoadLatestStoredMessagesAsyncTask().execute(targetUserId);
 	}
 
+	public void requestNotificationNearestExpireData() {
+		DbgUtil.showDebug(TAG, "getNotificationNearestExpireData");
+
+		new LoadNearlestExpireNotificationAsyncTask().execute();
+	}
+
+	private class LoadNearlestExpireNotificationAsyncTask extends
+			AsyncTask<Void, Void, NotificationContentData> {
+
+		public LoadNearlestExpireNotificationAsyncTask() {
+			DbgUtil.showDebug(TAG, "LoadNearlestExpireNotificationAsyncTask");
+		}
+
+		@Override
+		protected NotificationContentData doInBackground(Void... params) {
+			DbgUtil.showDebug(TAG, "doInBackground");
+			try {
+				return mLocalDataHandler.getNotificationNearestExpireData();
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(NotificationContentData result) {
+			DbgUtil.showDebug(TAG, "onPostExecute");
+			if (result != null) {
+				DbgUtil.showDebug(TAG, "result: " + result);
+			}
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifiyNearlestExpireNotification(result);
+			}
+		}
+	}
+
 	private class LoadLatestStoredMessagesAsyncTask extends
-			AsyncTask<Integer, Void, String> {
+			AsyncTask<Integer, Void, FriendListData> {
 
 		public LoadLatestStoredMessagesAsyncTask() {
 			DbgUtil.showDebug(TAG, "LoadLatestStoredMessagesAsyncTask");
 		}
 
 		@Override
-		protected String doInBackground(Integer... targetUserId) {
+		protected FriendListData doInBackground(Integer... targetUserId) {
 			DbgUtil.showDebug(TAG, "doInBackground");
 			try {
 				return mLocalDataHandler
@@ -392,7 +437,7 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 
 		@Override
-		protected void onPostExecute(String result) {
+		protected void onPostExecute(FriendListData result) {
 			DbgUtil.showDebug(TAG, "onPostExecute");
 			if (result != null) {
 				DbgUtil.showDebug(TAG, "result: " + result);
@@ -427,6 +472,32 @@ public class FriendDataManager implements UserServerDataListener,
 				listener.notifyPresentMessageDataLoaded(result);
 			}
 		}
+	}
+
+	public synchronized void addNewNotification(int fromUserId, int toUserId,
+			int number, long expireDate) {
+		DbgUtil.showDebug(TAG, "addNewNotification");
+		if (mLocalDataHandler != null) {
+			mLocalDataHandler.addNewNotification(fromUserId, toUserId, number,
+					expireDate);
+		}
+		// boolean isRegistered = false;
+		// try {
+		// isRegistered = mLocalDataHandler
+		// .isTargetNewNotificationAlreadyStored(expireDate);
+		// DbgUtil.showDebug(TAG, "isRegistered: " + isRegistered);
+		//
+		// } catch (UserLocalDataHandlerException e) {
+		// DbgUtil.showDebug(TAG,
+		// "UserLocalDataHandlerExceptio: " + e.getMessage());
+		// }
+		//
+		// // In case target expireDate is null, we try to register it to DB.
+		// if (isRegistered == false) {
+		// mLocalDataHandler.addNewNotification(fromUserId, toUserId,
+		// number, expireDate);
+		// }
+		// }
 	}
 
 	@Override

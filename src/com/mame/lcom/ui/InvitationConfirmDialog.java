@@ -25,6 +25,7 @@ import com.mame.lcom.constant.LcomConst;
 import com.mame.lcom.data.FriendListData;
 import com.mame.lcom.data.FriendListUpdateData;
 import com.mame.lcom.data.MessageItemData;
+import com.mame.lcom.data.NotificationContentData;
 import com.mame.lcom.datamanager.FriendDataManager;
 import com.mame.lcom.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.lcom.exception.WebAPIException;
@@ -422,7 +423,14 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	}
 
 	@Override
-	public void notifyLatestStoredMessage(String message) {
+	public void notifyLatestStoredMessage(FriendListData result) {
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
+	}
+	
+	@Override
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+		DbgUtil.showDebug(TAG,
+				"notifiyNearlestExpireNotification - not to be used");
+
 	}
 }
