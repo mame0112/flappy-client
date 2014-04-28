@@ -27,9 +27,12 @@
     <!-- For About view specific -->
     <dimen name="about_flappy_horizontal_margin">12dp</dimen>
     <dimen name="about_flappy_horizontal_padding">6dp</dimen>
-    
-    <!-- For Friend List specific-->
+
+    <!-- For Friend List specific -->
     <dimen name="friend_list_image_size">52dp</dimen>
+
+    <!-- For Conversation list specific -->
+    <dimen name="conversation_list_image_size">42dp</dimen>
 
     <!-- Generic -->
     <dimen name="default_font_size_larze">18sp</dimen>
