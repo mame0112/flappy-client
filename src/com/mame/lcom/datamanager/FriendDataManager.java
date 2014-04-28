@@ -259,7 +259,7 @@ public class FriendDataManager implements UserServerDataListener,
 
 	@Override
 	public void notifyLocalUserDataSet(ArrayList<FriendListData> userData) {
-		DbgUtil.showDebug(TAG, "notifyNewLocalUserDataSet");
+		DbgUtil.showDebug(TAG, "notifyLocalUserDataSet");
 		if (userData != null) {
 			DbgUtil.showDebug(TAG, "userData size:: " + userData.size());
 		}

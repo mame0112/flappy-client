@@ -572,7 +572,7 @@ public class FriendListActivity extends Activity implements
 			if (newUserData != null && newUserData.size() != 0) {
 				DbgUtil.showDebug(TAG,
 						"newUserData size: " + newUserData.size());
-				handleNotification(newUserData);
+				handleNotification(mNewUserData);
 			}
 
 			isNowLoading = false;
@@ -862,6 +862,7 @@ public class FriendListActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "revertLatestMessage: " + targetUserId);
 
 		long current = TimeUtil.getCurrentDate();
+		DbgUtil.showDebug(TAG, "currente:" + current);
 
 		if (mFriendListData != null && mFriendListData.size() != 0) {
 			for (FriendListData data : mFriendListData) {
@@ -870,54 +871,60 @@ public class FriendListActivity extends Activity implements
 					// Update target user Id list item data.
 					if (targetId == targetUserId) {
 
-						// Update the number of new message
-						int numOfNewMessage = data.getNumOfNewMessage();
-						int newNum = numOfNewMessage - 1;
-						if (newNum <= 0) {
-							DbgUtil.showDebug(TAG, "newNum: " + newNum);
-							data.setNumOfNewMessage(newNum);
-						} else {
-							DbgUtil.showDebug(TAG, "newNum is 0");
-							data.setNumOfNewMessage(0);
+						// Update message
+						// At first, sort by time
+						ArrayList<FriendListData> result = FriendListActivityUtil
+								.sortMessageByTime(mNewUserData);
+
+						for (FriendListData tmp : result) {
+							DbgUtil.showDebug(TAG,
+									"time: " + tmp.getMessagDate());
+							DbgUtil.showDebug(TAG,
+									"number: " + tmp.getNumOfNewMessage());
+							DbgUtil.showDebug(TAG,
+									"message: " + tmp.getLastMessage());
 						}
 
 						// Update latest message
 						// First we try to get it from mNewUserData.
-						if (mNewUserData != null && mNewUserData.size() != 0) {
-							ArrayList<FriendListData> dataForTarget = new ArrayList<FriendListData>();
-							for (FriendListData newData : mNewUserData) {
-
-								// First, we try to get data for target user
+						if (result != null && result.size() != 0) {
+							boolean isFound = false;
+							for (FriendListData newData : result) {
 								int newTargetId = newData.getFriendId();
 								if (newTargetId == targetUserId) {
-									dataForTarget.add(newData);
+									// Update num of message
+									int numOfMessage = newData
+											.getNumOfNewMessage();
+									numOfMessage = numOfMessage - 1;
+									if (numOfMessage <= 0) {
+										DbgUtil.showDebug(TAG, "numOfMessage: "
+												+ numOfMessage);
+										data.setNumOfNewMessage(numOfMessage);
+									} else {
+										DbgUtil.showDebug(TAG,
+												"numOfMessage is 0");
+										data.setNumOfNewMessage(numOfMessage);
+									}
+
+									long sortedTime = newData.getMessagDate();
+									DbgUtil.showDebug(TAG, "sortedTime:"
+											+ sortedTime);
+									if (current < sortedTime) {
+										isFound = true;
+										data.setLastMessage(newData
+												.getLastMessage());
+										break;
+									}
 								}
 							}
-
-							// Sort by time
-							ArrayList<FriendListData> result = FriendListActivityUtil
-									.sortMessageByTime(dataForTarget);
-
-							boolean isFound = false;
-							for (FriendListData sortedData : result) {
-								long sortedTime = sortedData.getMessagDate();
-								if (current > sortedTime) {
-									isFound = true;
-									notifyLatestStoredMessage(sortedData);
-									break;
-								}
-							}
-
 							if (isFound == false) {
 								// If all message has expired
 								getLatestLocalStoredMessage(targetUserId);
+							} else {
+								DbgUtil.showDebug(TAG,
+										"mNewUserData is null or size 0");
 							}
-						} else {
-							DbgUtil.showDebug(TAG,
-									"mNewUserData is null or size 0");
-							getLatestLocalStoredMessage(targetUserId);
 						}
-
 					}
 
 				}
@@ -927,6 +934,23 @@ public class FriendListActivity extends Activity implements
 			DbgUtil.showDebug(TAG, "mFriendListData is null or size 0");
 			getLatestLocalStoredMessage(targetUserId);
 		}
+
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						// mFriendListData.addAll(userData);
+						// mFriendListData.addAll(userData);
+						if (mAdapter != null) {
+							mListView.setAdapter(mAdapter);
+							mAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+			}
+		}).start();
 
 	}
 

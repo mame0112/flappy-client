@@ -233,12 +233,6 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 						if (userId != null && targetUserId != null) {
 							long date2 = Long.valueOf(date);
-							// try {
-							// date2 = TimeUtil.parseDateInStringToDate(date);
-							// } catch (ParseException e) {
-							// DbgUtil.showDebug(TAG,
-							// "ParseException: " + e.getMessage());
-							// }
 
 							MessageItemData mesageData = new MessageItemData(
 									Integer.valueOf(userId),
@@ -275,16 +269,13 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 						handleErrorCase();
 						TrackingUtil.trackExceptionMessage(mContext, TAG,
 								"origin is unexpected case: " + origin);
-						mDataListener.notifyNewServerUserDataSet(null);
 					}
 				} else {
 					handleErrorCase();
 					TrackingUtil.trackExceptionMessage(mContext, TAG,
 							"origin is null");
-					mDataListener.notifyNewServerUserDataSet(null);
 				}
 			} catch (IndexOutOfBoundsException e) {
-				mDataListener.notifyNewServerUserDataSet(null);
 				DbgUtil.showDebug(TAG,
 						"IndexOutOfBoundsException: " + e.getMessage());
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
@@ -298,7 +289,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 			handleErrorCase();
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"respList is null or size is 0");
-			mDataListener.notifyNewServerUserDataSet(null);
+			handleErrorCase();
 		}
 
 		// Initialize request context
