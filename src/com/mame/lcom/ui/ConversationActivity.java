@@ -43,6 +43,7 @@ import com.mame.lcom.exception.FriendDataManagerException;
 import com.mame.lcom.util.DbgUtil;
 import com.mame.lcom.util.FeedbackUtil;
 import com.mame.lcom.util.HttpClientUtil;
+import com.mame.lcom.util.NetworkUtil;
 import com.mame.lcom.util.PreferenceUtil;
 import com.mame.lcom.util.TimeUtil;
 import com.mame.lcom.util.TrackingUtil;
@@ -201,35 +202,38 @@ public class ConversationActivity extends Activity implements
 						TrackingUtil.EVENT_ACTION_CONVERSATION,
 						TrackingUtil.EVENT_LABEL_CONVERSATION_SEND_BUTTON, 1);
 
-				SpannableStringBuilder sbMessage = (SpannableStringBuilder) mConversationEditText
-						.getText();
-				String message = sbMessage.toString();
-				if (message != null) {
+				if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
+					SpannableStringBuilder sbMessage = (SpannableStringBuilder) mConversationEditText
+							.getText();
+					String message = sbMessage.toString();
+					if (message != null) {
 
-					// Track the number of texts in one message
-					TrackingUtil.trackNumberOfCharInOneMessage(
-							getApplicationContext(), message.length());
+						// Track the number of texts in one message
+						TrackingUtil.trackNumberOfCharInOneMessage(
+								getApplicationContext(), message.length());
 
-					// Dismiss dialog if it is being shown
-					if (!mActivity.isFinishing() && mProgressDialog != null
-							&& mProgressDialog.isShowing()) {
-						mProgressDialog.dismiss();
+						// Dismiss dialog if it is being shown
+						if (!mActivity.isFinishing() && mProgressDialog != null
+								&& mProgressDialog.isShowing()) {
+							mProgressDialog.dismiss();
+						}
+
+						if (mProgressDialog != null) {
+							mProgressDialog.show(getFragmentManager(),
+									"progress");
+						}
+
+						long date = TimeUtil.getCurrentDate();
+						sendAndRegisterMessage(mUserId, mTargetUserId,
+								mUserName, mTargetUserName, message,
+								String.valueOf(date));
+
+					} else {
+						Toast.makeText(getApplicationContext(),
+								R.string.str_conversation_no_text_input,
+								Toast.LENGTH_SHORT).show();
 					}
-
-					if (mProgressDialog != null) {
-						mProgressDialog.show(getFragmentManager(), "progress");
-					}
-
-					long date = TimeUtil.getCurrentDate();
-					sendAndRegisterMessage(mUserId, mTargetUserId, mUserName,
-							mTargetUserName, message, String.valueOf(date));
-
-				} else {
-					Toast.makeText(getApplicationContext(),
-							R.string.str_conversation_no_text_input,
-							Toast.LENGTH_SHORT).show();
 				}
-
 			}
 		});
 
