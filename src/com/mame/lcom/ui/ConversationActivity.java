@@ -389,6 +389,7 @@ public class ConversationActivity extends Activity implements
 							}
 
 							mAdapter.notifyDataSetChanged();
+							mListView.setSelection(mListView.getCount() - 1);
 							mConversationEditText.getEditableText().clear();
 							DbgUtil.showDebug(TAG, "mConversationData: "
 									+ mConversationData.size());
