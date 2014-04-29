@@ -17,6 +17,3 @@ before_install:
   - ls ${ANDROID_HOME}/platforms
   # Make build.xml
 
-script:
-  - ant debug
-
