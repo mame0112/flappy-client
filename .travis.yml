@@ -19,5 +19,5 @@ before_install:
 - android update project --path . --target android-19
 
 script:
-  - ant release
+  - ant debug
 
