@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mame.lcom"
+    package="com.mame.flappy"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -9,10 +9,10 @@
         android:targetSdkVersion="17" />
 
     <permission
-        android:name="com.mame.lcom.permission.C2D_MESSAGE"
+        android:name="com.mame.flappy.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.mame.lcom.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.mame.flappy.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -32,7 +32,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.mame.lcom.ui.WelcomeActivity"
+            android:name="com.mame.flappy.ui.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,47 +41,47 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.LoginActivity"
+            android:name="com.mame.flappy.ui.LoginActivity"
             android:label="@string/str_login_name" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.FriendListActivity"
+            android:name="com.mame.flappy.ui.FriendListActivity"
             android:label="@string/str_friendlist_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.CreateAccountActivity"
+            android:name="com.mame.flappy.ui.CreateAccountActivity"
             android:label="@string/str_create_account_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.CreateAccountCompleteActivity"
+            android:name="com.mame.flappy.ui.CreateAccountCompleteActivity"
             android:label="@string/str_create_account_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.ConversationActivity"
+            android:name="com.mame.flappy.ui.ConversationActivity"
             android:label="@string/str_conversation_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.StartNewConversationActivity"
+            android:name="com.mame.flappy.ui.StartNewConversationActivity"
             android:label="@string/str_invitation_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.ContactListActivity"
+            android:name="com.mame.flappy.ui.ContactListActivity"
             android:label="@string/str_contactslist_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.HelpActivity"
+            android:name="com.mame.flappy.ui.HelpActivity"
             android:label="@string/str_help_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.ContactToUsActivity"
+            android:name="com.mame.flappy.ui.ContactToUsActivity"
             android:label="@string/str_contact_us_title" >
         </activity>
         <activity
-            android:name="com.mame.lcom.ui.FlappyAboutActivity"
+            android:name="com.mame.flappy.ui.FlappyAboutActivity"
             android:label="@string/str_flappy_about_main_itle" >
         </activity>
         <activity
-            android:name="com.mame.lcom.tool.DebugMainActivity"
+            android:name="com.mame.flappy.tool.DebugMainActivity"
             android:label="flippy debug" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -90,19 +90,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mame.lcom.tool.DebugConversationActivity"
+            android:name="com.mame.flappy.tool.DebugConversationActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.mame.lcom.tool.DebugFriendshipActivity"
+            android:name="com.mame.flappy.tool.DebugFriendshipActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.mame.lcom.tool.DebugAllUserDataActivity"
+            android:name="com.mame.flappy.tool.DebugAllUserDataActivity"
             android:label="@string/app_name" >
         </activity>
 
-        <service android:name="com.mame.lcom.gcm.GCMIntentService" />
+        <service android:name="com.mame.flappy.gcm.GCMIntentService" />
         <!--
         <receiver
             android:name="com.google.android.gcm.GCMBroadcastReceiver"
@@ -111,22 +111,22 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.mame.lcom" />
+                <category android:name="com.mame.flappy" />
             </intent-filter>
         </receiver>
         -->
 
         <receiver
-            android:name="com.mame.lcom.server.GcmBroadcastReceiver"
+            android:name="com.mame.flappy.server.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
-                <category android:name="com.mame.lcom" />
+                <category android:name="com.mame.flappy" />
             </intent-filter>
         </receiver>
 
-        <service android:name="com.mame.lcom.server.GCMIntentService" />
+        <service android:name="com.mame.flappy.server.GCMIntentService" />
 
         <!--
         <receiver
@@ -136,22 +136,22 @@
                  <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
 
-                <category android:name="com.mame.lcom.server.GCMIntentService" />
+                <category android:name="com.mame.flappy.server.GCMIntentService" />
             </intent-filter>
         </receiver>
         -->
 
         <provider
-            android:name="com.mame.lcom.db.DatabaseContentProvider"
-            android:authorities="com.mame.lcom.db"
+            android:name="com.mame.flappy.db.DatabaseContentProvider"
+            android:authorities="com.mame.flappy.db"
             android:exported="false"
             android:syncable="true" />
 
         <receiver
-            android:name="com.mame.lcom.notification.NewMessageNotificationReceiver"
+            android:name="com.mame.flappy.notification.NewMessageNotificationReceiver"
             android:process=":remote" />
 
-        <service android:name="com.mame.lcom.notification.NewMessageNotificationService" >
+        <service android:name="com.mame.flappy.notification.NewMessageNotificationService" >
         </service>
     </application>
 
