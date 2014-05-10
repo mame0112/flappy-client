@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 
 public class DatabaseDef {
 
-	public static final String AUTHORITY = "com.mame.lcom.db";
+	public static final String AUTHORITY = "com.mame.flappy.db";
 
 	protected static final Uri BASE_URI = Uri.parse("content://" + AUTHORITY);
 
