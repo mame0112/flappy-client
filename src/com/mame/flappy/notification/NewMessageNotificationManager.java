@@ -173,7 +173,9 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		mContext = context;
 
 		// Get nearlest expire notification data
-		mDataManager.requestNotificationNearestExpireData();
+		if (mDataManager != null) {
+			mDataManager.requestNotificationNearestExpireData();
+		}
 	}
 
 	/**

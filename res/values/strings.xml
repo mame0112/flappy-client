@@ -95,6 +95,7 @@
     <string name="str_friendlist_first_add_text">Let\'s add friend and enjoy!</string>
     <string name="str_friendlist_progress_title">Getting friend info</string>
     <string name="str_friendlist_progress_desc">Wait for a moment</string>
+    <string name="str_friendlist_message_disappeared">(Message disappeared)</string>
 
     <!-- New invitation message -->
     <string name="str_invitation_title">Invite friend</string>
