@@ -64,7 +64,7 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 		}
 		userNameView.setText(name);
 		int numOfMessage = item.getNumOfNewMessage();
-		if (numOfMessage == 0) {
+		if (numOfMessage <= 0) {
 			// Nothing to do
 			if (Build.VERSION.SDK_INT >= 16) {
 				numOfNewMessageView.setBackground(null);
@@ -76,11 +76,17 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 			numOfNewMessageView.setText(String.valueOf(numOfMessage));
 			numOfNewMessageView
 					.setBackgroundResource(R.drawable.flappy_new_message_number_bg);
-		} else {
+		} else if (numOfMessage > 10) {
 			// If the number of message is more than 10
 			numOfNewMessageView
 					.setBackgroundResource(R.drawable.flappy_new_message_number_10plus);
 
+		} else {
+			if (Build.VERSION.SDK_INT >= 16) {
+				numOfNewMessageView.setBackground(null);
+			} else {
+				numOfNewMessageView.setBackgroundDrawable(null);
+			}
 		}
 
 		lastMessageView.setText(item.getLastMessage());
