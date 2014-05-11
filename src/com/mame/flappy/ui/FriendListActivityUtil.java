@@ -77,21 +77,6 @@ public class FriendListActivityUtil {
 				}
 			}
 			return result;
-
-			// long latestDate = 0L;
-			//
-			// for (FriendListData data : friendListData) {
-			// if (data != null) {
-			// long date = data.getMessagDate();
-			// DbgUtil.showDebug(TAG, "date: " + date);
-			//
-			// if (latestDate <= date) {
-			// latestDate = date;
-			// }
-			// }
-			// }
-			// return latestDate;
-
 		}
 		return null;
 	}

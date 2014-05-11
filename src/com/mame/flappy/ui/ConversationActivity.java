@@ -245,6 +245,11 @@ public class ConversationActivity extends Activity implements
 
 	private void requestThreadData() {
 		try {
+
+			// Initialize flag
+			mIsNewDataReady = false;
+			mIsPresentDataReady = false;
+
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
 

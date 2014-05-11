@@ -93,7 +93,7 @@ public class FriendListActivity extends Activity implements
 	private LcomDeviceIdRegisterHelper mHelper = null;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.friendlist);
@@ -211,7 +211,7 @@ public class FriendListActivity extends Activity implements
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
 
 		// If this activity's listener is not registered yet, register. (For
@@ -436,7 +436,17 @@ public class FriendListActivity extends Activity implements
 			}
 
 			isNowLoading = false;
-			invalidateOptionsMenu();
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							invalidateOptionsMenu();
+						}
+					});
+				}
+			}).start();
 
 		} else {
 			// If new data is not ready yet, just keep old data
