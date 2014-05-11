@@ -111,7 +111,12 @@ public class ConversationListCustonAdapter extends
 			} else {
 				// If sender if friend
 
-				userNameView.setText(item.getFromUserName());
+				String friendName = item.getFromUserName();
+				if (friendName == null || friendName.equals("")) {
+					friendName = mContext
+							.getString(R.string.str_conversation_user_name_not_set);
+				}
+				userNameView.setText(friendName);
 
 				myLayout.setVisibility(View.VISIBLE);
 				friendLayout.setVisibility(View.GONE);

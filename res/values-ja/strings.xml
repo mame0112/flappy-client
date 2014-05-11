@@ -122,6 +122,7 @@
     <string name="str_conversation_title">トーク</string>
     <string name="str_conversation_progress_title">データ送信中</string>
     <string name="str_conversation_progress_desc">少々お待ちください</string>
+    <string name="str_conversation_user_name_not_set">(未設定)</string>
 
     <!-- Contacts list -->
     <string name="str_contactslist_title">メッセージを送信する友達を選んでください</string>
