@@ -219,9 +219,9 @@ public class FriendListActivityTest extends
 		//
 		// }
 		// });
-		
-		ReflectionUtil.setFieldValue(ConversationActivity.class,
-				friendList, "mProgressDialog", mProgressDialog);
+
+		ReflectionUtil.setFieldValue(ConversationActivity.class, friendList,
+				"mProgressDialog", mProgressDialog);
 
 		FriendDataManager manager = FriendDataManager.getInstance();
 		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
@@ -231,11 +231,11 @@ public class FriendListActivityTest extends
 
 		ArrayList<FriendListData> mUserData = (ArrayList<FriendListData>) ReflectionUtil
 				.getValue(FriendListActivity.class, "mUserData", friendList);
-		assertTrue(mUserData.size() == 3);
+		assertTrue(mUserData == null);
 
 		boolean isExistingDataAvailable = (Boolean) ReflectionUtil
 				.getValue(FriendListActivity.class, "isExistingDataAvailable",
 						friendList);
-		assertTrue(isExistingDataAvailable == true);
+		assertTrue(isExistingDataAvailable == false);
 	}
 }

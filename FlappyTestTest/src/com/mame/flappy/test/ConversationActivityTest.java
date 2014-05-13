@@ -101,6 +101,9 @@ public class ConversationActivityTest extends
 		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
 				"mActivity", mActivity);
 
+		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+				"mProgressDialog", mProgressDialog);
+
 		mActivity.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
