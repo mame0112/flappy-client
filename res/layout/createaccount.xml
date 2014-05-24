@@ -17,10 +17,10 @@
         android:layout_marginTop="@dimen/create_account_block_padding" />
 
     <TextView
+        style="@style/GeneralInageDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/create_account_block_padding"
-        style="@style/GeneralInageDescription"
         android:text="@string/str_create_account_photo_desc" />
 
     <ImageButton
@@ -45,7 +45,7 @@
         android:layout_marginTop="@dimen/default_margin_vertical"
         android:background="@drawable/edittext_frame"
         android:hint="@string/str_create_account_username_hint"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:maxLength="16" />
 
     <LinearLayout

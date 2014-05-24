@@ -30,7 +30,7 @@
 
     <!-- Welcome activity -->
     <string name="str_welcome_title">flappy</string>
-    <string name="str_welcome_desc">メッセージを読まないと自動で消える。既読スルーのできる、ゆるいコミュニケーションツール</string>
+    <string name="str_welcome_desc">既読スルーのできる、ゆるふわコミュニケーションツール</string>
     <string name="str_welcome_signin_button">サインイン</string>
     <string name="str_welcome_create_account_button">アカウント作成</string>
     <string name="str_welcome_already_have_account">アカウントを持っている方</string>
@@ -85,7 +85,7 @@
     <string name="str_create_account_tos_privacy_desc2">に同意したものとみなします</string>
     <string name="str_create_account_tearms_of_service">利用規約</string>
     <string name="str_create_account_privacy_policy">プライバシーポリシー</string>
-    <string name="str_create_account_next_button">次</string>
+    <string name="str_create_account_next_button">次へ</string>
     <string name="str_create_account_check_name_title">ユーザ名のチェック中です</string>
     <string name="str_create_account_check_name_desc">少々お待ちください</string>
 

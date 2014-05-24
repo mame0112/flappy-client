@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
+import com.mame.flappy.util.AlphaNumericFilter;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.TrackingUtil;
@@ -99,6 +102,8 @@ public class CreateAccountActivity extends Activity implements
 		});
 
 		mUserNameEditText = (EditText) findViewById(R.id.createUserName);
+		// mUserNameEditText
+		// .setFilters(new InputFilter[] { new AlphaNumericFilter() });
 		mUserNameEditText.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void afterTextChanged(Editable s) {

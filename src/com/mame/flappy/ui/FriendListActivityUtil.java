@@ -61,6 +61,7 @@ public class FriendListActivityUtil {
 
 	public static ArrayList<NotificationContentData> getNotificationDate(
 			ArrayList<FriendListData> friendListData, int userId) {
+		DbgUtil.showDebug(TAG, "getNotificationDate: " + userId);
 
 		if (friendListData != null && friendListData.size() != 0) {
 
@@ -68,12 +69,18 @@ public class FriendListActivityUtil {
 
 			for (FriendListData data : friendListData) {
 				if (data != null) {
-					int fromUserId = data.getFriendId();
-					int numOfMessage = data.getNumOfNewMessage();
-					long expireDate = data.getMessagDate();
-					NotificationContentData notificationData = new NotificationContentData(
-							userId, fromUserId, numOfMessage, expireDate);
-					result.add(notificationData);
+					int senderId = data.getLastSender();
+					DbgUtil.showDebug(TAG, "senderId: " + senderId);
+
+					// If sender is myself, we should not show notification.
+					if (senderId != userId) {
+						int fromUserId = data.getFriendId();
+						int numOfMessage = data.getNumOfNewMessage();
+						long expireDate = data.getMessagDate();
+						NotificationContentData notificationData = new NotificationContentData(
+								userId, fromUserId, numOfMessage, expireDate);
+						result.add(notificationData);
+					}
 				}
 			}
 			return result;
