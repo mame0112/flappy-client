@@ -579,9 +579,9 @@ public class FriendListActivity extends Activity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-			if (newUserData != null && newUserData.size() != 0) {
+			if (mNewUserData != null && mNewUserData.size() != 0) {
 				DbgUtil.showDebug(TAG,
-						"newUserData size: " + newUserData.size());
+						"newUserData size: " + mNewUserData.size());
 				handleNotification(mNewUserData);
 			}
 
@@ -610,18 +610,23 @@ public class FriendListActivity extends Activity implements
 
 	private void handleNotification(ArrayList<FriendListData> newUserData) {
 		DbgUtil.showDebug(TAG, "handleNotification");
+
 		// Before get notification, we check latest message date
 		ArrayList<NotificationContentData> notifications = FriendListActivityUtil
 				.getNotificationDate(newUserData, mUserId);
 
 		// Show Notification if necessary
-		try {
-			NewMessageNotificationManager
-					.handleLastetMessagesAndShowNotification(
-							getApplicationContext(), notifications);
-		} catch (NewMessageNotificationManagerException e) {
-			DbgUtil.showDebug(TAG, "NewMessageNotificationManagerException: "
-					+ e.getMessage());
+		if (notifications != null && notifications.size() != 0) {
+			try {
+				NewMessageNotificationManager
+						.handleLastetMessagesAndShowNotification(
+								getApplicationContext(), notifications);
+			} catch (NewMessageNotificationManagerException e) {
+				DbgUtil.showDebug(
+						TAG,
+						"NewMessageNotificationManagerException: "
+								+ e.getMessage());
+			}
 		}
 	}
 

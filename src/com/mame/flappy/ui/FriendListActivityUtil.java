@@ -73,14 +73,15 @@ public class FriendListActivityUtil {
 					DbgUtil.showDebug(TAG, "senderId: " + senderId);
 
 					// If sender is myself, we should not show notification.
-					if (senderId != userId) {
-						int fromUserId = data.getFriendId();
-						int numOfMessage = data.getNumOfNewMessage();
-						long expireDate = data.getMessagDate();
-						NotificationContentData notificationData = new NotificationContentData(
-								userId, fromUserId, numOfMessage, expireDate);
-						result.add(notificationData);
-					}
+					// if (senderId != userId) {
+					DbgUtil.showDebug(TAG, "AA");
+					int fromUserId = data.getFriendId();
+					int numOfMessage = data.getNumOfNewMessage();
+					long expireDate = data.getMessagDate();
+					NotificationContentData notificationData = new NotificationContentData(
+							userId, fromUserId, numOfMessage, expireDate);
+					result.add(notificationData);
+					// }
 				}
 			}
 			return result;

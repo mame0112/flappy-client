@@ -149,20 +149,27 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 		if (mDataManager != null) {
 			long current = TimeUtil.getCurrentDate();
+			boolean isMoreThanOneNew = false;
 			for (NotificationContentData data : datas) {
 				long expireDate = data.getExpireData();
 				// Set AlarmManager if expireDate is later than current
 				// time
 				if (current < expireDate) {
-					int fromUserId = data.getFromUserId();
-					int toUserId = data.getToUserId();
 					int number = data.getNumberOfMesage();
-					mDataManager.addNewNotification(fromUserId, toUserId,
-							number, expireDate);
+					if (number != 0) {
+						isMoreThanOneNew = true;
+						int fromUserId = data.getFromUserId();
+						int toUserId = data.getToUserId();
+						mDataManager.addNewNotification(fromUserId, toUserId,
+								number, expireDate);
+					}
 				}
 			}
 
-			operateNotification(context);
+			if (isMoreThanOneNew == true) {
+				isMoreThanOneNew = false;
+				operateNotification(context);
+			}
 		}
 
 	}
@@ -175,6 +182,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		// Get nearlest expire notification data
 		if (mDataManager != null) {
 			mDataManager.requestNotificationNearestExpireData();
+
 		}
 	}
 

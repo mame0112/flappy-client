@@ -310,9 +310,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 						String[] parsed = newMessage[i]
 								.split(LcomConst.SEPARATOR);
-						// DbgUtil.showDebug(TAG, "parsed[0]: " + parsed[0]
-						// + "parsed[2]: " + parsed[2]);
-						// String senderId = parsed[0];
+
 						String userId = parsed[0];
 						String userName = parsed[1];
 						String friendId = parsed[2];
@@ -411,21 +409,21 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 					// DbgUtil.showDebug(TAG, "parsed[0]: " + parsed[0]
 					// + "parsed[2]: " + parsed[2]);
 					// String senderId = parsed[0];
-					String userId = parsed[0];
-					String userName = parsed[1];
-					String targetUserId = parsed[2];
-					String targetUserName = parsed[3];
+					String firstId = parsed[0];
+					String firstName = parsed[1];
+					String secondUserId = parsed[2];
+					String secondUserName = parsed[3];
 					String message = parsed[4];
 					String date = parsed[5];
 
-					DbgUtil.showDebug(TAG, "parsed:" + userId + " " + userName
-							+ " " + targetUserId + " " + targetUserName + " "
-							+ message + " " + date);
+					DbgUtil.showDebug(TAG, "parsed:" + firstId + " "
+							+ firstName + " " + secondUserId + " "
+							+ secondUserName + " " + message + " " + date);
 
 					MessageItemData data = new MessageItemData(
-							Integer.valueOf(userId),
-							Integer.valueOf(targetUserId), userName,
-							targetUserName, message, Long.valueOf(date), null);
+							Integer.valueOf(firstId),
+							Integer.valueOf(secondUserId), firstName,
+							secondUserName, message, Long.valueOf(date), null);
 
 					// data.setNewMessage(message);
 					// data.setNewMessageDate(date);
