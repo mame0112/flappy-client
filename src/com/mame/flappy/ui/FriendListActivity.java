@@ -301,7 +301,18 @@ public class FriendListActivity extends Activity implements
 			isExistingDataAvailable = false;
 
 			isNowLoading = true;
-			invalidateOptionsMenu();
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							invalidateOptionsMenu();
+						}
+					});
+				}
+			}).start();
 
 			mManager.requestFriendListDataset(mUserId, true, true);
 		} catch (FriendDataManagerException e) {
