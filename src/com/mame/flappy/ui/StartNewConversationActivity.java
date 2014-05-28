@@ -380,9 +380,10 @@ public class StartNewConversationActivity extends Activity implements
 		DbgUtil.showDebug(TAG, "Mail address: " + mailAddress);
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
-				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS };
+				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS,
+				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId), userName,
-				mailAddress };
+				mailAddress, String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value);
 	}
 
@@ -401,9 +402,9 @@ public class StartNewConversationActivity extends Activity implements
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
 				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS,
-				LcomConst.SERVLET_MESSAGE_BODY };
+				LcomConst.SERVLET_MESSAGE_BODY, LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId), userName,
-				mailAddress, message };
+				mailAddress, message, String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value);
 	}
 

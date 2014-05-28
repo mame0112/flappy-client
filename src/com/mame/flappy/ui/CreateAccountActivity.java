@@ -188,8 +188,10 @@ public class CreateAccountActivity extends Activity implements
 	private void sendcheckUserNameData(String userName) throws WebAPIException {
 		DbgUtil.showDebug(TAG, "sendcheckUserNameData");
 		String origin = TAG;
-		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME, };
-		String value[] = { origin, userName };
+		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
+				LcomConst.SERVLET_API_LEVEL };
+		String value[] = { origin, userName,
+				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT_CHECK_USER_NAME,
 				key, value);
 	}

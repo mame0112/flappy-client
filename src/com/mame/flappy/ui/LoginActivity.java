@@ -303,9 +303,11 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 		if (activity != null) {
 			// String origin = activity.getPackageName()
 			// + activity.getApplicationInfo().getClass();
-			String value[] = { TAG, userName, password };
+			String value[] = { TAG, userName, password,
+					String.valueOf(LcomConst.API_LEVEL) };
 			String key[] = { LcomConst.SERVLET_ORIGIN,
-					LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_PASSWORD };
+					LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_PASSWORD,
+					LcomConst.SERVLET_API_LEVEL };
 
 			if (webAPI == null) {
 				throw new WebAPIException("WebAPI instance is null");

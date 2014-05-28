@@ -160,8 +160,10 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 
 			String origin = TAG;
 			String key[] = { LcomConst.SERVLET_ORIGIN,
-					LcomConst.SERVLET_USER_ID, LcomConst.SERVLET_DEVICE_ID };
-			String value[] = { origin, String.valueOf(userId), deviceId };
+					LcomConst.SERVLET_USER_ID, LcomConst.SERVLET_DEVICE_ID,
+					LcomConst.SERVLET_API_LEVEL };
+			String value[] = { origin, String.valueOf(userId), deviceId,
+					String.valueOf(LcomConst.API_LEVEL) };
 			mWebAPI.sendData(LcomConst.SERVLET_REGISTER_DEVICE_ID, key, value);
 
 		}

@@ -56,9 +56,10 @@ public class DebugAllUserDataActivity extends Activity implements
 	}
 
 	private void sendLoginData(String totalNum) {
-		String value[] = { "ALL_USER_DATA", totalNum };
+		String value[] = { "ALL_USER_DATA", totalNum,
+				String.valueOf(LcomConst.API_LEVEL) };
 		String key[] = { LcomConst.SERVLET_ORIGIN,
-				LcomConst.SERVLET_TOTAL_USER_NUM };
+				LcomConst.SERVLET_TOTAL_USER_NUM, LcomConst.SERVLET_API_LEVEL };
 		mWebAPI.sendData(LcomConst.DEBUG_SERVLET, key, value);
 	}
 

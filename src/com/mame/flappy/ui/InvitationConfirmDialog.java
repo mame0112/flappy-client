@@ -365,9 +365,11 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				LcomConst.SERVLET_USER_NAME, LcomConst.SERVLET_MAILADDRESS,
 				LcomConst.SERVLET_MESSAGE_BODY,
 				LcomConst.SERVLET_TARGET_USER_ID,
-				LcomConst.SERVLET_TARGET_USER_NAME, LcomConst.SERVLET_LANGUAGE };
+				LcomConst.SERVLET_TARGET_USER_NAME, LcomConst.SERVLET_LANGUAGE,
+				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, userId, userName, targetMailAddress,
-				targetMessage, targetUserId, targetUserName, locale.toString() };
+				targetMessage, targetUserId, targetUserName, locale.toString(),
+				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION_CONFIRMED, key,
 				value);
 	}
@@ -426,7 +428,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	public void notifyLatestStoredMessage(FriendListData result) {
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
 	}
-	
+
 	@Override
 	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG,

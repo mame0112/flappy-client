@@ -92,10 +92,10 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 					LcomConst.SERVLET_TARGET_USER_ID,
 					LcomConst.SERVLET_TARGET_USER_NAME,
 					LcomConst.SERVLET_MESSAGE_BODY,
-					LcomConst.SERVLET_MESSAGE_DATE };
+					LcomConst.SERVLET_MESSAGE_DATE, LcomConst.SERVLET_API_LEVEL };
 			String value[] = { origin, String.valueOf(userId), userName,
 					String.valueOf(targetUserId), targetUserName,
-					parsedMessage, date };
+					parsedMessage, date, String.valueOf(LcomConst.API_LEVEL) };
 			mWebAPI.sendData(LcomConst.SERVLET_NAME_SEND_ADD_MESSAGE, key,
 					value);
 			return true;
@@ -119,8 +119,10 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 		mRequestContext = LcomConst.ServerRequestContext.requestNewUserData;
 
 		String origin = TAG + REQUEST_NEW_USER_DATA;
-		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID, };
-		String value[] = { origin, String.valueOf(userId) };
+		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
+				LcomConst.SERVLET_API_LEVEL };
+		String value[] = { origin, String.valueOf(userId),
+				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_MESSAGE, key, value);
 
 	}
@@ -138,9 +140,10 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 		String origin = TAG + REQUEST_CONVERSATION_DATA;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
-				LcomConst.SERVLET_TARGET_USER_ID };
+				LcomConst.SERVLET_TARGET_USER_ID, LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId),
-				String.valueOf(targetUserId) };
+				String.valueOf(targetUserId),
+				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_CONVERSATION_DATA, key, value);
 
 	}
@@ -178,8 +181,10 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 				// Remove first "a" and last separetor
 				String origin = TAG + REQUEST_FRIEND_THUMBNAILS;
 				String key[] = { LcomConst.SERVLET_ORIGIN,
-						LcomConst.SERVLET_TARGET_USER_ID };
-				String value[] = { origin, parsedId };
+						LcomConst.SERVLET_TARGET_USER_ID,
+						LcomConst.SERVLET_API_LEVEL };
+				String value[] = { origin, parsedId,
+						String.valueOf(LcomConst.API_LEVEL) };
 				mWebAPI.sendData(LcomConst.SERVLET_FRIEBD_THUMBNAILS, key,
 						value);
 			}

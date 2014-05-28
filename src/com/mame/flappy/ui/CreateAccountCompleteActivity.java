@@ -479,10 +479,12 @@ public class CreateAccountCompleteActivity extends Activity implements
 		String origin = TAG;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
 				LcomConst.SERVLET_PASSWORD, LcomConst.SERVLET_MAILADDRESS,
-				LcomConst.SERVLET_THUMBNAIL, LcomConst.SERVLET_LANGUAGE };
+				LcomConst.SERVLET_THUMBNAIL, LcomConst.SERVLET_LANGUAGE,
+				LcomConst.SERVLET_API_LEVEL };
 
 		String value[] = { origin, userName, password, mailAddress,
-				thumbnailString, locale.toString() };
+				thumbnailString, locale.toString(),
+				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT, key, value);
 	}
 
