@@ -2,6 +2,7 @@ package com.mame.flappy.ui;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 
@@ -25,6 +26,15 @@ public class ProgressDialogFragment extends DialogFragment {
 		instance.setArguments(arguments);
 
 		return instance;
+	}
+
+	@Override
+	public void show(FragmentManager manager, String tag) {
+		if (progressDialog != null) {
+			progressDialog.dismiss();
+		}
+
+		super.show(manager, tag);
 	}
 
 	@Override

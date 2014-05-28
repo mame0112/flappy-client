@@ -396,7 +396,9 @@ public class FriendDataManager implements UserServerDataListener,
 		protected NotificationContentData doInBackground(Void... params) {
 			DbgUtil.showDebug(TAG, "doInBackground");
 			try {
-				return mLocalDataHandler.getNotificationNearestExpireData();
+				if (mLocalDataHandler != null) {
+					return mLocalDataHandler.getNotificationNearestExpireData();
+				}
 			} catch (UserLocalDataHandlerException e) {
 				DbgUtil.showDebug(TAG,
 						"UserLocalDataHandlerException: " + e.getMessage());
