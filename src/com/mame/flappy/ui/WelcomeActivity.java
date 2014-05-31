@@ -1,10 +1,19 @@
 package com.mame.flappy.ui;
 
+import java.io.UnsupportedEncodingException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import org.apache.http.HttpStatus;
+
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TrackingUtil;
+import com.mame.flappy.web.LcomHttpsWebAPI;
+import com.mame.flappy.web.LcomHttpsWebAPI.HttpResult;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -83,6 +92,32 @@ public class WelcomeActivity extends Activity {
 	public void onStart() {
 		super.onStart();
 		TrackingUtil.trackActivityStart(this);
+
+//		String url = "https://loosecommunication.appspot.com/" + LcomConst.SERVLET_NAME_LOGIN;
+//		DbgUtil.showDebug(TAG, "url: " + url);
+//
+//		Future<LcomHttpsWebAPI.HttpResult> future = Executors
+//				.newSingleThreadExecutor().submit(new LcomHttpsWebAPI(url));
+//		HttpResult result;
+//		try {
+//			result = future.get();
+//			DbgUtil.showDebug(TAG, "statuscode: " + result.getStatusCode());
+//			if (result.getStatusCode() == HttpStatus.SC_OK) {
+//				byte[] tmp = result.getBytes();
+//				try {
+//					DbgUtil.showDebug(TAG, "byte: " + new String(tmp, "UTF-8"));
+//				} catch (UnsupportedEncodingException e) {
+//					DbgUtil.showDebug(TAG,
+//							"UnsupportedEncodingException: " + e.getMessage());
+//				}
+//				DbgUtil.showDebug(TAG, "string: " + result.getString());
+//			}
+//		} catch (InterruptedException e) {
+//			DbgUtil.showDebug(TAG, "InterruptedException: " + e.getMessage());
+//		} catch (ExecutionException e) {
+//			DbgUtil.showDebug(TAG, "ExecutionException: " + e.getMessage());
+//		}
+
 	}
 
 	public void onStop() {
