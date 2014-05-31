@@ -6,6 +6,8 @@ public class LcomConst {
 
 	public final static String BASE_URL = "http://loosecommunication.appspot.com/";
 
+	public final static String BASE_HTTPS_URL = "https://loosecommunication.appspot.com/";
+
 	public final static String FLAPPY_MAIL_ADDRESS = "flappy.communication@gmail.com";
 
 	public final static String TOC_AUTOHRITY = "tos.html";
@@ -61,27 +63,27 @@ public class LcomConst {
 	// public final static String SERVLET_CONTEXT_IDENTIFIER =
 	// "servlet_identifier";
 
-	public final static String SERVLET_NAME_LOGIN = "login";
+	public final static String SERVLET_NAME_LOGIN = "servlet/login";
 
-	public final static String SERVLET_NAME_CREATE_ACCOUNT_CHECK_USER_NAME = "create_account_check_name";
+	public final static String SERVLET_NAME_CREATE_ACCOUNT_CHECK_USER_NAME = "servlet/create_account_check_name";
 
-	public final static String SERVLET_NAME_CREATE_ACCOUNT = "create_account";
+	public final static String SERVLET_NAME_CREATE_ACCOUNT = "servlet/create_account";
 
-	public final static String SERVLET_NAME_NEW_INVITATION = "new_invitation";
+	public final static String SERVLET_NAME_NEW_INVITATION = "servlet/new_invitation";
 
-	public final static String SERVLET_NAME_NEW_INVITATION_CONFIRMED = "new_invitation_confirmed";
+	public final static String SERVLET_NAME_NEW_INVITATION_CONFIRMED = "servlet/new_invitation_confirmed";
 
-	public final static String SERVLET_NAME_NEW_MESSAGE = "new_message";
+	public final static String SERVLET_NAME_NEW_MESSAGE = "servlet/new_message";
 
-	public final static String SERVLET_NAME_NEW_MESSAGE_DATE = "new_message_date";
+	public final static String SERVLET_NAME_NEW_MESSAGE_DATE = "servlet/new_message_date";
 
-	public final static String SERVLET_NAME_SEND_ADD_MESSAGE = "send_add_message";
+	public final static String SERVLET_NAME_SEND_ADD_MESSAGE = "servlet/send_add_message";
 
-	public final static String SERVLET_CONVERSATION_DATA = "conversation_data";
+	public final static String SERVLET_CONVERSATION_DATA = "servlet/conversation_data";
 
-	public final static String SERVLET_FRIEBD_THUMBNAILS = "friend_thumbnails";
+	public final static String SERVLET_FRIEBD_THUMBNAILS = "servlet/friend_thumbnails";
 
-	public final static String SERVLET_REGISTER_DEVICE_ID = "deviceid_register";
+	public final static String SERVLET_REGISTER_DEVICE_ID = "servlet/deviceid_register";
 
 	public final static int MAX_USER_NAME_LENGTH = 16;
 

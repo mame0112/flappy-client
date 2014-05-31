@@ -1,6 +1,7 @@
 package com.mame.flappy.ui;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -13,7 +14,9 @@ import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TrackingUtil;
 import com.mame.flappy.web.LcomHttpsWebAPI;
+import com.mame.flappy.web.LcomWebAPI;
 import com.mame.flappy.web.LcomHttpsWebAPI.HttpResult;
+import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,7 +25,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends Activity implements
+		LcomHttpsWebAPI.LcomWebAPIListener {
 
 	private final String TAG = LcomConst.TAG + "/WelcomeActivity";
 
@@ -93,35 +97,35 @@ public class WelcomeActivity extends Activity {
 		super.onStart();
 		TrackingUtil.trackActivityStart(this);
 
-//		String url = "https://loosecommunication.appspot.com/" + LcomConst.SERVLET_NAME_LOGIN;
-//		DbgUtil.showDebug(TAG, "url: " + url);
-//
-//		Future<LcomHttpsWebAPI.HttpResult> future = Executors
-//				.newSingleThreadExecutor().submit(new LcomHttpsWebAPI(url));
-//		HttpResult result;
-//		try {
-//			result = future.get();
-//			DbgUtil.showDebug(TAG, "statuscode: " + result.getStatusCode());
-//			if (result.getStatusCode() == HttpStatus.SC_OK) {
-//				byte[] tmp = result.getBytes();
-//				try {
-//					DbgUtil.showDebug(TAG, "byte: " + new String(tmp, "UTF-8"));
-//				} catch (UnsupportedEncodingException e) {
-//					DbgUtil.showDebug(TAG,
-//							"UnsupportedEncodingException: " + e.getMessage());
-//				}
-//				DbgUtil.showDebug(TAG, "string: " + result.getString());
-//			}
-//		} catch (InterruptedException e) {
-//			DbgUtil.showDebug(TAG, "InterruptedException: " + e.getMessage());
-//		} catch (ExecutionException e) {
-//			DbgUtil.showDebug(TAG, "ExecutionException: " + e.getMessage());
-//		}
+		String value[] = { TAG, "aaaa", "bbbb",
+				String.valueOf(LcomConst.API_LEVEL) };
+		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
+				LcomConst.SERVLET_PASSWORD, LcomConst.SERVLET_API_LEVEL };
 
+		LcomHttpsWebAPI mWebAPI = new LcomHttpsWebAPI();
+		mWebAPI.setListener(this);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
 	}
 
 	public void onStop() {
 		super.onStop();
 		TrackingUtil.trackActivityStop(this);
+	}
+
+	@Override
+	public void onResponseReceived(List<String> respList) {
+		DbgUtil.showDebug(TAG, "onResponse");
+		if (respList != null) {
+			for (String str : respList) {
+				DbgUtil.showDebug(TAG, "size: " + str);
+			}
+		}
+
+	}
+
+	@Override
+	public void onAPITimeout() {
+		DbgUtil.showDebug(TAG, "onAPITimeout");
+
 	}
 }
