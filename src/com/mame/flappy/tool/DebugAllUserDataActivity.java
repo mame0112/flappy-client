@@ -15,11 +15,12 @@ import android.widget.Toast;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class DebugAllUserDataActivity extends Activity implements
-		LcomWebAPIListener {
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/DebugAllUserDataActivity";
 
@@ -27,7 +28,7 @@ public class DebugAllUserDataActivity extends Activity implements
 
 	private Button mChangeUserNumberButton = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private Handler mHandler = new Handler();
 
@@ -36,7 +37,7 @@ public class DebugAllUserDataActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.debug_alluser);
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 		mAllUserNumberExitText = (EditText) findViewById(R.id.debugAllUserNumberText);

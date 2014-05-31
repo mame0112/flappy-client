@@ -47,8 +47,8 @@ import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TimeUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class ConversationActivity extends Activity implements
 		FriendDataManagerListener {

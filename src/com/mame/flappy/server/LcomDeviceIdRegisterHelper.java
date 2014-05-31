@@ -20,10 +20,11 @@ import com.mame.flappy.util.LcomGPServiceUtil;
 import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.VersionUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
+public class LcomDeviceIdRegisterHelper implements LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/LcomDeviceIdRegisterHelper";
 
@@ -31,7 +32,7 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 
 	private ArrayList<LcomPushRegistrationHelperListener> mListeners = new ArrayList<LcomPushRegistrationHelperListener>();
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private ProgressDialogFragment mProgressDialog = null;
 
@@ -44,7 +45,7 @@ public class LcomDeviceIdRegisterHelper implements LcomWebAPIListener {
 	private Handler mHandler = new Handler();
 
 	public LcomDeviceIdRegisterHelper(Activity activity) {
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 		mActivity = activity;

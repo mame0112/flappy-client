@@ -34,15 +34,17 @@ import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.LocaleUtil;
 import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class InvitationConfirmDialog extends DialogFragment implements
-		LcomWebAPIListener, FriendDataManagerListener {
+		LcomServerAccessor.LcomServerAccessorListener,
+		FriendDataManagerListener {
 
 	private final String TAG = LcomConst.TAG + "/InvitationConfirmDialog";
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private EditText mMessageEditText = null;
 
@@ -59,7 +61,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	private Handler mHandler = new Handler();
 
 	public InvitationConfirmDialog() {
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 	}

@@ -30,11 +30,12 @@ import com.mame.flappy.util.AlphaNumericFilter;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class CreateAccountActivity extends Activity implements
-		LcomWebAPIListener {
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/CreateAccountActivity";
 
@@ -56,7 +57,7 @@ public class CreateAccountActivity extends Activity implements
 
 	private Handler mHandler = new Handler();
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private Bitmap mThumbBitmap = null;
 
@@ -70,8 +71,11 @@ public class CreateAccountActivity extends Activity implements
 
 		mActivity = this;
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
+
+		// mWebAPI = new LcomHttpWebAPI();
+		// mWebAPI.setListener(this);
 
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);

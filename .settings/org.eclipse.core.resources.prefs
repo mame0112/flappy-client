@@ -3,5 +3,5 @@ encoding//src/com/mame/flappy/FlappyApplication.java=UTF-8
 encoding//src/com/mame/flappy/server/GCMIntentService.java=UTF-8
 encoding//src/com/mame/flappy/ui/InvitationConfirmDialog.java=UTF-8
 encoding//src/com/mame/flappy/util/HttpClientUtil.java=UTF-8
+encoding//src/com/mame/flappy/web/LcomHttpWebAPI.java=UTF-8
 encoding//src/com/mame/flappy/web/LcomHttpsWebAPI.java=UTF-8
-encoding//src/com/mame/flappy/web/LcomWebAPI.java=UTF-8

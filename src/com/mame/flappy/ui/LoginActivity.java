@@ -29,10 +29,12 @@ import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomServerAccessor;
 
-public class LoginActivity extends Activity implements LcomWebAPIListener {
+public class LoginActivity extends Activity implements
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/LoginActivity";
 
@@ -44,7 +46,7 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 	private TextView mSignInResultView = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private Handler mHandler = new Handler();
 
@@ -63,7 +65,7 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 
 		final Activity activity = this;
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 		ActionBar actionbar = getActionBar();
@@ -298,7 +300,7 @@ public class LoginActivity extends Activity implements LcomWebAPIListener {
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 
-	private void sendLoginData(LcomWebAPI webAPI, Activity activity,
+	private void sendLoginData(LcomServerAccessor webAPI, Activity activity,
 			String userName, String password) throws WebAPIException {
 		if (activity != null) {
 			// String origin = activity.getPackageName()

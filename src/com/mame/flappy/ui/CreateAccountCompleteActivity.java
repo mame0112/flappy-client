@@ -33,11 +33,12 @@ import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.StringUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class CreateAccountCompleteActivity extends Activity implements
-		LcomWebAPIListener {
+		LcomServerAccessor.LcomServerAccessorListener {
 	private final String TAG = LcomConst.TAG + "/CreateAccountCompleteActivity";
 
 	private EditText mPasswordEditText = null;
@@ -52,7 +53,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 
 	private Button mPrivacyPolicyButtoon = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private Handler mHandler = new Handler();
 
@@ -222,7 +223,7 @@ public class CreateAccountCompleteActivity extends Activity implements
 
 		});
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 	}

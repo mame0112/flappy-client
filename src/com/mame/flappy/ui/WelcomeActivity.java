@@ -1,22 +1,6 @@
 package com.mame.flappy.ui;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import org.apache.http.HttpStatus;
-
-import com.mame.flappy.R;
-import com.mame.flappy.constant.LcomConst;
-import com.mame.flappy.util.DbgUtil;
-import com.mame.flappy.util.PreferenceUtil;
-import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomHttpsWebAPI;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomHttpsWebAPI.HttpResult;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -25,8 +9,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.mame.flappy.R;
+import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.DbgUtil;
+import com.mame.flappy.util.PreferenceUtil;
+import com.mame.flappy.util.TrackingUtil;
+import com.mame.flappy.web.LcomServerAccessor;
+
 public class WelcomeActivity extends Activity implements
-		LcomHttpsWebAPI.LcomWebAPIListener {
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/WelcomeActivity";
 
@@ -102,9 +93,13 @@ public class WelcomeActivity extends Activity implements
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
 				LcomConst.SERVLET_PASSWORD, LcomConst.SERVLET_API_LEVEL };
 
-		LcomHttpsWebAPI mWebAPI = new LcomHttpsWebAPI();
-		mWebAPI.setListener(this);
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
+		LcomServerAccessor accessor = new LcomServerAccessor();
+		accessor.setListener(this);
+		accessor.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
+
+		// LcomHttpsWebAPI mWebAPI = new LcomHttpsWebAPI();
+		// mWebAPI.setListener(this);
+		// mWebAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
 	}
 
 	public void onStop() {

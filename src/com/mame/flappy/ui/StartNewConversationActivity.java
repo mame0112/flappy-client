@@ -28,11 +28,13 @@ import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.StringUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class StartNewConversationActivity extends Activity implements
-		LcomWebAPIListener, InvitationConfirmationListener {
+		LcomServerAccessor.LcomServerAccessorListener,
+		InvitationConfirmationListener {
 
 	private final String TAG = LcomConst.TAG + "/StartNewConversationActivity";
 
@@ -54,7 +56,7 @@ public class StartNewConversationActivity extends Activity implements
 
 	private TextView mDescriptionFromContacts = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private int mUserId = LcomConst.NO_USER;
 
@@ -205,7 +207,7 @@ public class StartNewConversationActivity extends Activity implements
 
 		});
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 	}

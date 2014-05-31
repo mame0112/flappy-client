@@ -16,10 +16,12 @@ import com.mame.flappy.ui.ConversationActivityUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.ImageUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class UserServerDataHandler implements LcomWebAPIListener {
+public class UserServerDataHandler implements
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/UserServerDataHandler";
 
@@ -29,7 +31,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	private UserServerDataListener mDataListener = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	private Handler mHandler = new Handler();
 
@@ -47,7 +49,7 @@ public class UserServerDataHandler implements LcomWebAPIListener {
 
 	public UserServerDataHandler(Context context) {
 		// public UserServerDataHandler() {
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 		mContext = context;
 	}

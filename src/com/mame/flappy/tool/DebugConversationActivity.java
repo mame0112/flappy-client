@@ -13,11 +13,12 @@ import android.widget.EditText;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.db.UserLocalDataHandler;
-import com.mame.flappy.web.LcomWebAPI;
-import com.mame.flappy.web.LcomWebAPI.LcomWebAPIListener;
+import com.mame.flappy.web.LcomHttpWebAPI;
+import com.mame.flappy.web.LcomServerAccessor;
+import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class DebugConversationActivity extends Activity implements
-		LcomWebAPIListener {
+		LcomServerAccessor.LcomServerAccessorListener {
 
 	private UserLocalDataHandler mLocalDataHandler = null;
 
@@ -39,14 +40,14 @@ public class DebugConversationActivity extends Activity implements
 
 	private Button mAddServerButton = null;
 
-	private LcomWebAPI mWebAPI = null;
+	private LcomServerAccessor mWebAPI = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.debug_conversation);
 
-		mWebAPI = new LcomWebAPI();
+		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 		mLocalDataHandler = new UserLocalDataHandler(getApplicationContext());

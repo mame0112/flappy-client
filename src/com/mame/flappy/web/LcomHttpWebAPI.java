@@ -22,7 +22,7 @@ import android.util.Log;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.DbgUtil;
 
-public class LcomWebAPI {
+public class LcomHttpWebAPI implements LcomAbstractServerAccessor {
 	/**
 	 * DEBUG
 	 */
@@ -42,7 +42,8 @@ public class LcomWebAPI {
 	 */
 	private static final int ACT_UPLOAD = 1;
 
-	private LcomWebAPIListener mListener = null;
+	// private LcomWebAPIListener mListener = null;
+	private LcomWebAccessorListener mListener = null;
 
 	// private static Activity mActivity = null;
 
@@ -155,14 +156,20 @@ public class LcomWebAPI {
 		}
 	}
 
-	public void setListener(LcomWebAPIListener listener) {
-		mListener = listener;
-	}
+	// public void setListener(LcomWebAPIListener listener) {
+	// mListener = listener;
+	// }
 
 	public interface LcomWebAPIListener {
 		public void onResponseReceived(List<String> respList);
 
 		public void onAPITimeout();
+	}
+
+	@Override
+	public void setListener(LcomWebAccessorListener listener) {
+		mListener = listener;
+
 	}
 
 }

@@ -2,7 +2,6 @@ package com.mame.flappy.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -49,7 +48,7 @@ import android.util.Log;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.DbgUtil;
 
-public class LcomHttpsWebAPI {
+public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 	private static final String TAG = LcomConst.TAG + "/LcomHttpsWebAPI";
 
@@ -57,12 +56,12 @@ public class LcomHttpsWebAPI {
 
 	private List<NameValuePair> postParams;
 
-	private LcomWebAPIListener mListener = null;
+	private LcomWebAccessorListener mListener = null;
 
 	public LcomHttpsWebAPI() {
-		// this.url = url;
 	}
 
+	@Override
 	public void sendData(String servletName, String[] key, String[] value) {
 		DbgUtil.showDebug(TAG, "sendData");
 		this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
@@ -91,6 +90,8 @@ public class LcomHttpsWebAPI {
 					}
 					if (mListener != null) {
 						mListener.onResponseReceived(respList);
+					} else {
+						DbgUtil.showDebug(TAG, "mListener null");
 					}
 				} else {
 					mListener.onResponseReceived(null);
@@ -103,13 +104,17 @@ public class LcomHttpsWebAPI {
 		}
 	}
 
-	public void setListener(LcomWebAPIListener listener) {
+	@Override
+	public void setListener(LcomWebAccessorListener listener) {
 		mListener = listener;
 	}
 
-	public interface LcomWebAPIListener {
+	public interface LcomHttpsWebAPIListener extends LcomWebAccessorListener {
+
+		@Override
 		public void onResponseReceived(List<String> respList);
 
+		@Override
 		public void onAPITimeout();
 	}
 
@@ -287,4 +292,5 @@ public class LcomHttpsWebAPI {
 		 */
 		public String getString();
 	}
+
 }
