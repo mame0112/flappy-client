@@ -17,6 +17,7 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 	public LcomServerAccessor() {
 		DbgUtil.showDebug(TAG, "LcomServerAccessor");
 		// By default, HTTPS request is used.
+		// mAccessor = new LcomHttpWebAPI();
 		mAccessor = new LcomHttpsWebAPI();
 		mAccessor.setListener(this);
 	}

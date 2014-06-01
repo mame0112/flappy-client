@@ -2,6 +2,7 @@ package com.mame.flappy.web;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -22,9 +23,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
@@ -40,9 +43,11 @@ import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.mame.flappy.constant.LcomConst;
@@ -58,6 +63,14 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 	private LcomWebAccessorListener mListener = null;
 
+	private final Handler mHandler = new Handler();
+
+	private final static int API_WAIT_TIMER = 30000;
+
+	private boolean mIsResponed = false;
+
+	private static final int ACT_HTTPS_UPLOAD = 2;
+
 	public LcomHttpsWebAPI() {
 	}
 
@@ -65,42 +78,130 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 	public void sendData(String servletName, String[] key, String[] value) {
 		DbgUtil.showDebug(TAG, "sendData");
 		this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
-		postParams = new ArrayList<NameValuePair>();
-		for (int i = 0; i < key.length; i++) {
-			postParams.add(new BasicNameValuePair(key[i], value[i]));
-		}
-		Future<LcomHttpsWebAPI.HttpResult> future = Executors
-				.newSingleThreadExecutor().submit(new HttpSslPost());
-		HttpResult result = null;
-		try {
-			result = future.get();
-			DbgUtil.showDebug(TAG, "statuscode: " + result.getStatusCode());
-			if (result.getStatusCode() == HttpStatus.SC_OK) {
-				List<String> respList = new ArrayList<String>();
-				String resValue = result.getString();
-				if (resValue != null) {
-					try {
-						JSONArray jsonArray = new JSONArray(resValue);
-						for (int i = 0; i < jsonArray.length(); i++) {
-							respList.add(jsonArray.getString(i));
-							// Log.d(TAG, mRespList.get(i));
-						}
-					} catch (JSONException e) {
-						Log.e(TAG, "JSONException: " + e.getMessage());
-					}
+		PostThread mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key,
+				value);
+		mHandler.postDelayed(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				if (!mIsResponed) {
 					if (mListener != null) {
-						mListener.onResponseReceived(respList);
-					} else {
-						DbgUtil.showDebug(TAG, "mListener null");
+						mListener.onAPITimeout();
 					}
-				} else {
-					mListener.onResponseReceived(null);
+					// TODO
+					// Toast.makeText(mActivity,
+					// R.string.str_generic_api_call_timeout,
+					// Toast.LENGTH_SHORT).show();
 				}
 			}
-		} catch (InterruptedException e) {
-			DbgUtil.showDebug(TAG, "InterruptedException: " + e.getMessage());
-		} catch (ExecutionException e) {
-			DbgUtil.showDebug(TAG, "ExecutionException: " + e.getMessage());
+
+		}, API_WAIT_TIMER);
+		mPostThread.start();
+		// this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
+		// postParams = new ArrayList<NameValuePair>();
+		// for (int i = 0; i < key.length; i++) {
+		// postParams.add(new BasicNameValuePair(key[i], value[i]));
+		// }
+		// Future<LcomHttpsWebAPI.HttpResult> future = Executors
+		// .newSingleThreadExecutor().submit(new HttpSslPost());
+		// HttpResult result = null;
+		// try {
+		// result = future.get();
+		// DbgUtil.showDebug(TAG, "statuscode: " + result.getStatusCode());
+		// if (result.getStatusCode() == HttpStatus.SC_OK) {
+		// List<String> respList = new ArrayList<String>();
+		// String resValue = result.getString();
+		// if (resValue != null) {
+		// try {
+		// JSONArray jsonArray = new JSONArray(resValue);
+		// for (int i = 0; i < jsonArray.length(); i++) {
+		// respList.add(jsonArray.getString(i));
+		// // Log.d(TAG, mRespList.get(i));
+		// }
+		// } catch (JSONException e) {
+		// Log.e(TAG, "JSONException: " + e.getMessage());
+		// }
+		// if (mListener != null) {
+		// mListener.onResponseReceived(respList);
+		// } else {
+		// DbgUtil.showDebug(TAG, "mListener null");
+		// }
+		// } else {
+		// mListener.onResponseReceived(null);
+		// }
+		// }
+		// } catch (InterruptedException e) {
+		// DbgUtil.showDebug(TAG, "InterruptedException: " + e.getMessage());
+		// } catch (ExecutionException e) {
+		// DbgUtil.showDebug(TAG, "ExecutionException: " + e.getMessage());
+		// }
+	}
+
+	private class PostThread extends Thread {
+		private String url;
+		private int type;
+		private List<NameValuePair> postParams;
+		private List<String> mRespList = new ArrayList<String>();
+
+		public PostThread(int type, String url, String[] key, String[] value) {
+			this.url = url;
+			this.type = type;
+			postParams = new ArrayList<NameValuePair>();
+			for (int i = 0; i < key.length; i++) {
+				postParams.add(new BasicNameValuePair(key[i], value[i]));
+			}
+		}
+
+		@Override
+		public void run() {
+			HttpClient client = new MyHttpClient();
+
+			HttpPost postMethod = new HttpPost(url);
+			UrlEncodedFormEntity sendData;
+			try {
+				sendData = new UrlEncodedFormEntity(postParams, "UTF-8");
+				postMethod.setEntity(sendData);
+				// HttpResponse response = client.execute(new HttpGet(url));
+				HttpResponse response;
+				response = client.execute(postMethod);
+
+				Result result = new Result(response.getStatusLine()
+						.getStatusCode(), response.getAllHeaders());
+				if (result.getStatusCode() == HttpStatus.SC_OK) {
+					ByteArrayOutputStream stream = new ByteArrayOutputStream();
+					response.getEntity().writeTo(stream);
+					result.setBytes(stream);
+					stream.close();
+					String str = result.getString();
+					if (str != null) {
+						try {
+							JSONArray jsonArray = new JSONArray(
+									result.getString());
+							for (int i = 0; i < jsonArray.length(); i++) {
+								mRespList.add(jsonArray.getString(i));
+								// Log.d(TAG, mRespList.get(i));
+							}
+						} catch (JSONException e) {
+							Log.e(TAG, "JSONException: " + e.getMessage());
+						}
+						if (mListener != null) {
+							mListener.onResponseReceived(mRespList);
+						}
+					} else {
+						mListener.onResponseReceived(null);
+					}
+				}
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -118,155 +219,124 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		public void onAPITimeout();
 	}
 
-	public class HttpSslPost implements Callable<LcomHttpsWebAPI.HttpResult> {
+	class MyHttpClient extends DefaultHttpClient {
 		@Override
-		public HttpResult call() throws Exception {
-			HttpClient client = new MyHttpClient();
+		protected ClientConnectionManager createClientConnectionManager() {
+			SchemeRegistry registry = new SchemeRegistry();
+			registry.register(new Scheme("http", PlainSocketFactory
+					.getSocketFactory(), 80));
+			try {
+				SSLContext sslcontext = SSLContext
+						.getInstance(SSLSocketFactory.TLS);
+				sslcontext.init(null,
+						new TrustManager[] { new X509TrustManager() {
+							@Override
+							public void checkClientTrusted(
+									X509Certificate[] chain, String authType)
+									throws CertificateException {
+							}
 
-			// ---
+							@Override
+							public void checkServerTrusted(
+									X509Certificate[] chain, String authType)
+									throws CertificateException {
+							}
 
-			HttpPost postMethod = new HttpPost(url);
-			UrlEncodedFormEntity sendData = new UrlEncodedFormEntity(
-					postParams, "UTF-8");
-			postMethod.setEntity(sendData);
-			// ---
+							@Override
+							public X509Certificate[] getAcceptedIssuers() {
+								return new X509Certificate[0];
+							}
+						} }, new SecureRandom());
 
-			// HttpResponse response = client.execute(new HttpGet(url));
-			HttpResponse response = client.execute(postMethod);
+				final javax.net.ssl.SSLSocketFactory socketfactory = sslcontext
+						.getSocketFactory();
 
-			Result result = new Result(
-					response.getStatusLine().getStatusCode(),
-					response.getAllHeaders());
-			if (result.getStatusCode() == HttpStatus.SC_OK) {
-				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				response.getEntity().writeTo(stream);
-				result.setBytes(stream);
-				stream.close();
+				registry.register(new Scheme("https",
+						new LayeredSocketFactory() {
+							@Override
+							public Socket createSocket(Socket socket,
+									String host, int port, boolean autoClose)
+									throws IOException, UnknownHostException {
+								return socketfactory.createSocket(socket, host,
+										port, autoClose);
+							}
+
+							@Override
+							public Socket connectSocket(Socket sock,
+									String host, int port,
+									InetAddress localAddress, int localPort,
+									HttpParams params) throws IOException,
+									UnknownHostException,
+									ConnectTimeoutException {
+								SSLSocket sslsock = (SSLSocket) ((sock != null) ? sock
+										: createSocket());
+								if (localAddress != null || localPort > 0) {
+									InetSocketAddress isa = new InetSocketAddress(
+											localAddress, localPort);
+									sslsock.bind(isa);
+								}
+								int connTimeout = HttpConnectionParams
+										.getConnectionTimeout(params);
+								int soTimeout = HttpConnectionParams
+										.getSoTimeout(params);
+								InetSocketAddress remoteAddress;
+								remoteAddress = new InetSocketAddress(host,
+										port);
+								sslsock.connect(remoteAddress, connTimeout);
+								sslsock.setSoTimeout(soTimeout);
+								return sslsock;
+							}
+
+							@Override
+							public Socket createSocket() throws IOException {
+								return socketfactory.createSocket();
+							}
+
+							@Override
+							public boolean isSecure(Socket sock)
+									throws IllegalArgumentException {
+								return true;
+							}
+						}, 443));
+			} catch (Exception e) {
+				throw new RuntimeException(e);
 			}
-			return result;
+			return new SingleClientConnManager(getParams(), registry);
+		}
+	}
+
+	class Result implements HttpResult {
+		private int code;
+		private byte[] bytes;
+		private Header[] headers;
+
+		protected Result(int code, Header[] headers) {
+			this.code = code;
+			this.headers = headers;
 		}
 
-		class MyHttpClient extends DefaultHttpClient {
-			@Override
-			protected ClientConnectionManager createClientConnectionManager() {
-				SchemeRegistry registry = new SchemeRegistry();
-				registry.register(new Scheme("http", PlainSocketFactory
-						.getSocketFactory(), 80));
-				try {
-					SSLContext sslcontext = SSLContext
-							.getInstance(SSLSocketFactory.TLS);
-					sslcontext.init(null,
-							new TrustManager[] { new X509TrustManager() {
-								@Override
-								public void checkClientTrusted(
-										X509Certificate[] chain, String authType)
-										throws CertificateException {
-								}
-
-								@Override
-								public void checkServerTrusted(
-										X509Certificate[] chain, String authType)
-										throws CertificateException {
-								}
-
-								@Override
-								public X509Certificate[] getAcceptedIssuers() {
-									return new X509Certificate[0];
-								}
-							} }, new SecureRandom());
-
-					final javax.net.ssl.SSLSocketFactory socketfactory = sslcontext
-							.getSocketFactory();
-
-					registry.register(new Scheme("https",
-							new LayeredSocketFactory() {
-								@Override
-								public Socket createSocket(Socket socket,
-										String host, int port, boolean autoClose)
-										throws IOException,
-										UnknownHostException {
-									return socketfactory.createSocket(socket,
-											host, port, autoClose);
-								}
-
-								@Override
-								public Socket connectSocket(Socket sock,
-										String host, int port,
-										InetAddress localAddress,
-										int localPort, HttpParams params)
-										throws IOException,
-										UnknownHostException,
-										ConnectTimeoutException {
-									SSLSocket sslsock = (SSLSocket) ((sock != null) ? sock
-											: createSocket());
-									if (localAddress != null || localPort > 0) {
-										InetSocketAddress isa = new InetSocketAddress(
-												localAddress, localPort);
-										sslsock.bind(isa);
-									}
-									int connTimeout = HttpConnectionParams
-											.getConnectionTimeout(params);
-									int soTimeout = HttpConnectionParams
-											.getSoTimeout(params);
-									InetSocketAddress remoteAddress;
-									remoteAddress = new InetSocketAddress(host,
-											port);
-									sslsock.connect(remoteAddress, connTimeout);
-									sslsock.setSoTimeout(soTimeout);
-									return sslsock;
-								}
-
-								@Override
-								public Socket createSocket() throws IOException {
-									return socketfactory.createSocket();
-								}
-
-								@Override
-								public boolean isSecure(Socket sock)
-										throws IllegalArgumentException {
-									return true;
-								}
-							}, 443));
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-				return new SingleClientConnManager(getParams(), registry);
-			}
+		@Override
+		public int getStatusCode() {
+			return this.code;
 		}
 
-		class Result implements HttpResult {
-			private int code;
-			private byte[] bytes;
-			private Header[] headers;
+		@Override
+		public byte[] getBytes() {
+			return this.bytes;
+		}
 
-			protected Result(int code, Header[] headers) {
-				this.code = code;
-				this.headers = headers;
-			}
+		@Override
+		public String getString() {
+			return new String(this.bytes);
+		}
 
-			@Override
-			public int getStatusCode() {
-				return this.code;
-			}
+		@Override
+		public Header[] getHeaders() {
+			return this.headers;
+		}
 
-			@Override
-			public byte[] getBytes() {
-				return this.bytes;
-			}
-
-			@Override
-			public String getString() {
-				return new String(this.bytes);
-			}
-
-			@Override
-			public Header[] getHeaders() {
-				return this.headers;
-			}
-
-			protected void setBytes(ByteArrayOutputStream stream) {
-				bytes = stream.toByteArray();
-			}
+		protected void setBytes(ByteArrayOutputStream stream) {
+			bytes = stream.toByteArray();
 		}
 	}
 
@@ -292,5 +362,181 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		 */
 		public String getString();
 	}
+
+	// public class HttpSslPost implements Callable<LcomHttpsWebAPI.HttpResult>
+	// {
+	// @Override
+	// public HttpResult call() throws Exception {
+	// HttpClient client = new MyHttpClient();
+	//
+	// // ---
+	//
+	// HttpPost postMethod = new HttpPost(url);
+	// UrlEncodedFormEntity sendData = new UrlEncodedFormEntity(
+	// postParams, "UTF-8");
+	// postMethod.setEntity(sendData);
+	// // ---
+	//
+	// // HttpResponse response = client.execute(new HttpGet(url));
+	// HttpResponse response = client.execute(postMethod);
+	//
+	// Result result = new Result(
+	// response.getStatusLine().getStatusCode(),
+	// response.getAllHeaders());
+	// if (result.getStatusCode() == HttpStatus.SC_OK) {
+	// ByteArrayOutputStream stream = new ByteArrayOutputStream();
+	// response.getEntity().writeTo(stream);
+	// result.setBytes(stream);
+	// stream.close();
+	// }
+	// return result;
+	// }
+	//
+	// class MyHttpClient extends DefaultHttpClient {
+	// @Override
+	// protected ClientConnectionManager createClientConnectionManager() {
+	// SchemeRegistry registry = new SchemeRegistry();
+	// registry.register(new Scheme("http", PlainSocketFactory
+	// .getSocketFactory(), 80));
+	// try {
+	// SSLContext sslcontext = SSLContext
+	// .getInstance(SSLSocketFactory.TLS);
+	// sslcontext.init(null,
+	// new TrustManager[] { new X509TrustManager() {
+	// @Override
+	// public void checkClientTrusted(
+	// X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// @Override
+	// public void checkServerTrusted(
+	// X509Certificate[] chain, String authType)
+	// throws CertificateException {
+	// }
+	//
+	// @Override
+	// public X509Certificate[] getAcceptedIssuers() {
+	// return new X509Certificate[0];
+	// }
+	// } }, new SecureRandom());
+	//
+	// final javax.net.ssl.SSLSocketFactory socketfactory = sslcontext
+	// .getSocketFactory();
+	//
+	// registry.register(new Scheme("https",
+	// new LayeredSocketFactory() {
+	// @Override
+	// public Socket createSocket(Socket socket,
+	// String host, int port, boolean autoClose)
+	// throws IOException,
+	// UnknownHostException {
+	// return socketfactory.createSocket(socket,
+	// host, port, autoClose);
+	// }
+	//
+	// @Override
+	// public Socket connectSocket(Socket sock,
+	// String host, int port,
+	// InetAddress localAddress,
+	// int localPort, HttpParams params)
+	// throws IOException,
+	// UnknownHostException,
+	// ConnectTimeoutException {
+	// SSLSocket sslsock = (SSLSocket) ((sock != null) ? sock
+	// : createSocket());
+	// if (localAddress != null || localPort > 0) {
+	// InetSocketAddress isa = new InetSocketAddress(
+	// localAddress, localPort);
+	// sslsock.bind(isa);
+	// }
+	// int connTimeout = HttpConnectionParams
+	// .getConnectionTimeout(params);
+	// int soTimeout = HttpConnectionParams
+	// .getSoTimeout(params);
+	// InetSocketAddress remoteAddress;
+	// remoteAddress = new InetSocketAddress(host,
+	// port);
+	// sslsock.connect(remoteAddress, connTimeout);
+	// sslsock.setSoTimeout(soTimeout);
+	// return sslsock;
+	// }
+	//
+	// @Override
+	// public Socket createSocket() throws IOException {
+	// return socketfactory.createSocket();
+	// }
+	//
+	// @Override
+	// public boolean isSecure(Socket sock)
+	// throws IllegalArgumentException {
+	// return true;
+	// }
+	// }, 443));
+	// } catch (Exception e) {
+	// throw new RuntimeException(e);
+	// }
+	// return new SingleClientConnManager(getParams(), registry);
+	// }
+	// }
+	//
+	// class Result implements HttpResult {
+	// private int code;
+	// private byte[] bytes;
+	// private Header[] headers;
+	//
+	// protected Result(int code, Header[] headers) {
+	// this.code = code;
+	// this.headers = headers;
+	// }
+	//
+	// @Override
+	// public int getStatusCode() {
+	// return this.code;
+	// }
+	//
+	// @Override
+	// public byte[] getBytes() {
+	// return this.bytes;
+	// }
+	//
+	// @Override
+	// public String getString() {
+	// return new String(this.bytes);
+	// }
+	//
+	// @Override
+	// public Header[] getHeaders() {
+	// return this.headers;
+	// }
+	//
+	// protected void setBytes(ByteArrayOutputStream stream) {
+	// bytes = stream.toByteArray();
+	// }
+	// }
+	// }
+	//
+	// public interface HttpResult {
+	// /**
+	// * @return HTTP status code
+	// */
+	// public int getStatusCode();
+	//
+	// /**
+	// * @return org.apache.http.Header Header#getName() と Header#getValue()
+	// * で参照できる。
+	// */
+	// public Header[] getHeaders();
+	//
+	// /**
+	// * @return 取得コンテンツ
+	// */
+	// public byte[] getBytes();
+	//
+	// /**
+	// * @return 取得コンテンツ
+	// */
+	// public String getString();
+	// }
 
 }

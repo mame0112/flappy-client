@@ -250,9 +250,6 @@ public class ConversationActivity extends Activity implements
 			mIsNewDataReady = false;
 			mIsPresentDataReady = false;
 
-			mManager.requestMessageListDatasetWithTargetUser(mUserId,
-					mTargetUserId, true, true);
-
 			// Dismiss dialog if it is being shown
 			if (!mActivity.isFinishing() && mProgressDialog != null
 					&& mProgressDialog.isShowing()) {
@@ -261,6 +258,9 @@ public class ConversationActivity extends Activity implements
 
 			// Show prgoress dialog
 			mProgressDialog.show(getFragmentManager(), "progress");
+
+			mManager.requestMessageListDatasetWithTargetUser(mUserId,
+					mTargetUserId, true, true);
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
