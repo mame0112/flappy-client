@@ -189,7 +189,10 @@ public class FriendListActivity extends Activity implements
 		case REQUEST_CODE:
 			if (resultCode == RESULT_OK) {
 				DbgUtil.showDebug(TAG, "RESULT_OK");
-				requestUserData();
+				// Because we call requestUseData() when FriendList's onStart()
+				// is
+				// called, then need not to call here.
+				// requestUserData();
 			}
 			break;
 		}
