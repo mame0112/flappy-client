@@ -264,7 +264,7 @@ public class UserServerDataHandler implements
 					} else if (origin.equals(TAG + REQUEST_FRIEND_THUMBNAILS)) {
 						DbgUtil.showDebug(TAG, "REQUEST_FRIEND_THUMBNAILS");
 						String response = respList.get(1);
-						if (response != null) {
+						if (response != null && !response.equals("null")) {
 							DbgUtil.showDebug(TAG, "thumbnail response: "
 									+ response);
 							List<HashMap<Integer, Bitmap>> result = parseNewFriendThumbnailData(response);

@@ -143,13 +143,6 @@ public class LcomHttpWebAPI implements LcomAbstractServerAccessor {
 				if (mListener != null) {
 					mListener.onResponseReceived(mRespList);
 				}
-
-				// if (DEBUG) {
-				// Log.i(TAG, "resCode:" + resCode);
-				// Log.i(TAG, "resType:" + resType);
-				// Log.i(TAG, "resValue:" + resValue);
-				// }
-
 			} catch (IOException e) {
 				Log.e(TAG, "error:" + e);
 			}

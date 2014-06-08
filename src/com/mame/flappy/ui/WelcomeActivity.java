@@ -87,19 +87,6 @@ public class WelcomeActivity extends Activity implements
 	public void onStart() {
 		super.onStart();
 		TrackingUtil.trackActivityStart(this);
-
-//		String value[] = { TAG, "aaaa", "bbbb",
-//				String.valueOf(LcomConst.API_LEVEL) };
-//		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_NAME,
-//				LcomConst.SERVLET_PASSWORD, LcomConst.SERVLET_API_LEVEL };
-//
-//		LcomServerAccessor accessor = new LcomServerAccessor();
-//		accessor.setListener(this);
-//		accessor.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
-
-		// LcomHttpsWebAPI mWebAPI = new LcomHttpsWebAPI();
-		// mWebAPI.setListener(this);
-		// mWebAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
 	}
 
 	public void onStop() {

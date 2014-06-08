@@ -8,6 +8,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -350,6 +352,15 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				});
 			}
 		}).start();
+
+		// Before dismiss dialog, need to chcck if the target dialog is still
+		// (to avoid null pointer exception especially server timeout case)
+		// shown.
+		// FragmentManager fragmentManager = getFragmentManager();
+		// Fragment fragment = fragmentManager.findFragmentByTag("progress");
+		// if (fragment != null && fragment instanceof DialogFragment) {
+		// ((DialogFragment) fragment).dismiss();
+		// }
 
 		dismiss();
 	}

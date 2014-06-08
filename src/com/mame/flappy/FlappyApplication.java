@@ -26,7 +26,7 @@ public class FlappyApplication extends Application {
 	@Override
 	public void onTerminate() {
 		DbgUtil.showDebug(TAG, "onTerminate");
-		GCMRegistrar.onDestroy(this);
+//		GCMRegistrar.onDestroy(this);
 	}
 
 	@Override
