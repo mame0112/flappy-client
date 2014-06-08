@@ -121,19 +121,25 @@ public class GCMIntentService extends IntentService {
 	}
 
 	private String[] parseJSON(String json) {
-		String tmp = json.substring(7, json.length());
-		try {
-			JSONObject rootObject = new JSONObject(tmp);
-			if (rootObject != null) {
-				String msg = rootObject.getString("msg");
-				if (msg != null) {
-					String[] parsed = msg.split(LcomConst.SEPARATOR);
-					return parsed;
+		DbgUtil.showDebug(TAG, "parseJSON");
+		if (json != null) {
+			String tmp = json.substring(7, json.length());
+			DbgUtil.showDebug(TAG, "tmp: " + tmp);
+			try {
+				JSONObject rootObject = new JSONObject(tmp);
+				if (rootObject != null) {
+					String msg = rootObject.getString("msg");
+					if (msg != null) {
+						DbgUtil.showDebug(TAG, "msg: " + msg);
+						String[] parsed = msg.split(LcomConst.SEPARATOR);
+						return parsed;
+					}
 				}
+
+			} catch (JSONException e) {
+				Log.e(TAG, "JSONException: " + e.getMessage());
 			}
 
-		} catch (JSONException e) {
-			Log.e(TAG, "JSONException: " + e.getMessage());
 		}
 		return null;
 	}
