@@ -166,6 +166,8 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				HttpResponse response;
 				response = client.execute(postMethod);
 
+				mIsResponed = true;
+
 				Result result = new Result(response.getStatusLine()
 						.getStatusCode(), response.getAllHeaders());
 				if (result.getStatusCode() == HttpStatus.SC_OK) {
