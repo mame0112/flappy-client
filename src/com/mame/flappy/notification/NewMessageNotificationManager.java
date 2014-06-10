@@ -38,6 +38,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 	private static Context mContext = null;
 
+	private static boolean mIsFirst = true;
+
 	// private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
 
 	/**
@@ -293,7 +295,12 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 			// Finally show notification
 			// TODO we need to show message in case of ConversationActivity
-			showNotification(mContext, fromUserId);
+			if (mIsFirst == true) {
+				showNotification(mContext, fromUserId);
+				mIsFirst = false;
+			}
+		} else {
+			mIsFirst = true;
 		}
 	}
 }
