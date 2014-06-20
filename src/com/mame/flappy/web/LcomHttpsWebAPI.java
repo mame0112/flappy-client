@@ -228,9 +228,12 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			registry.register(new Scheme("http", PlainSocketFactory
 					.getSocketFactory(), 80));
 			try {
+				// Set SSL protocol (In this case, we use TLS)
 				SSLContext sslcontext = SSLContext
 						.getInstance(SSLSocketFactory.TLS);
 				sslcontext.init(null,
+				// Set how certificate work (In this case, we use X509
+				// certificates)
 						new TrustManager[] { new X509TrustManager() {
 							@Override
 							public void checkClientTrusted(
