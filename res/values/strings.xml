@@ -122,6 +122,7 @@
     <string name="str_conversation_title">Conversation</string>
     <string name="str_conversation_progress_title">Sending data</string>
     <string name="str_conversation_progress_desc">Wait for a moment</string>
+    <string name="str_conversation_get_info_progress_title">Receiving data</string>
     <string name="str_conversation_user_name_not_set">(Not set)</string>
 
     <!-- Contacts list -->

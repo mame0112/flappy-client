@@ -13,25 +13,29 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	private final String TAG = LcomConst.TAG + "/ProgressDialogFragment";
 
-	private static ProgressDialog progressDialog = null;
+	private static ProgressDialog mProgressDialog = null;
+
+	private static ProgressDialogFragment sInstance = null;
 
 	public static ProgressDialogFragment newInstance(String title,
 			String message) {
-		ProgressDialogFragment instance = new ProgressDialogFragment();
+		// ProgressDialogFragment instance = new ProgressDialogFragment();
+
+		sInstance = new ProgressDialogFragment();
 
 		Bundle arguments = new Bundle();
 		arguments.putString("title", title);
 		arguments.putString("message", message);
 
-		instance.setArguments(arguments);
+		sInstance.setArguments(arguments);
 
-		return instance;
+		return sInstance;
 	}
 
 	@Override
 	public void show(FragmentManager manager, String tag) {
-		if (progressDialog != null) {
-			progressDialog.dismiss();
+		if (mProgressDialog != null) {
+			mProgressDialog.dismiss();
 		}
 
 		super.show(manager, tag);
@@ -39,35 +43,43 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
-		if (progressDialog != null)
-			return progressDialog;
+		if (mProgressDialog != null)
+			return mProgressDialog;
 
 		String title = getArguments().getString("title");
 		String message = getArguments().getString("message");
 
-		progressDialog = new ProgressDialog(getActivity());
-		progressDialog.setTitle(title);
-		progressDialog.setMessage(message);
-		progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+		mProgressDialog = new ProgressDialog(getActivity());
+		mProgressDialog.setTitle(title);
+		mProgressDialog.setMessage(message);
+		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		setCancelable(false);
 
-		return progressDialog;
+		return mProgressDialog;
 	}
 
 	@Override
 	public Dialog getDialog() {
-		return progressDialog;
+		return mProgressDialog;
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		progressDialog = null;
+		mProgressDialog = null;
+	}
+
+	public void setDialogTexts(String title, String message) {
+		Bundle arguments = new Bundle();
+		arguments.putString("title", title);
+		arguments.putString("message", message);
+
+		sInstance.setArguments(arguments);
 	}
 
 	public boolean isShowing() {
-		if (progressDialog != null) {
-			if (progressDialog.isShowing()) {
+		if (mProgressDialog != null) {
+			if (mProgressDialog.isShowing()) {
 				return true;
 			}
 		}
@@ -77,10 +89,10 @@ public class ProgressDialogFragment extends DialogFragment {
 	@Override
 	public void dismiss() {
 		super.dismiss();
-		if (progressDialog != null) {
+		if (mProgressDialog != null) {
 			try {
-				progressDialog.dismiss();
-				progressDialog = null;
+				mProgressDialog.dismiss();
+				mProgressDialog = null;
 			} catch (IllegalStateException e) {
 				DbgUtil.showDebug(TAG,
 						"IllegalStateException: " + e.getMessage());

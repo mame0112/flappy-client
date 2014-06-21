@@ -219,6 +219,10 @@ public class ConversationActivity extends Activity implements
 						}
 
 						if (mProgressDialog != null) {
+							mProgressDialog
+									.setDialogTexts(
+											getString(R.string.str_conversation_progress_title),
+											getString(R.string.str_conversation_progress_desc));
 							mProgressDialog.show(getFragmentManager(),
 									"progress");
 						}
@@ -257,7 +261,13 @@ public class ConversationActivity extends Activity implements
 			}
 
 			// Show prgoress dialog
-			mProgressDialog.show(getFragmentManager(), "progress");
+			if (mProgressDialog != null) {
+				mProgressDialog
+						.setDialogTexts(
+								getString(R.string.str_conversation_get_info_progress_title),
+								getString(R.string.str_conversation_progress_desc));
+				mProgressDialog.show(getFragmentManager(), "progress");
+			}
 
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
