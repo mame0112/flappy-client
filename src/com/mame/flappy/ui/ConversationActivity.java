@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.ConversationDataComparator;
@@ -50,7 +52,7 @@ import com.mame.flappy.util.TrackingUtil;
 import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class ConversationActivity extends Activity implements
+public class ConversationActivity extends LcomBaseActivity implements
 		FriendDataManagerListener {
 
 	private final String TAG = LcomConst.TAG + "/ConversationActivity";
@@ -96,6 +98,7 @@ public class ConversationActivity extends Activity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		DbgUtil.showDebug(TAG, "onCreate");
 
 		getWindow().setSoftInputMode(
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -573,7 +576,6 @@ public class ConversationActivity extends Activity implements
 	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG,
 				"notifiyNearlestExpireNotification - not to be used");
-
 	}
 
 }

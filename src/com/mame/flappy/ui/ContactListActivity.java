@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.ContactsListData;
@@ -34,7 +35,7 @@ import com.mame.flappy.db.ContactListThumbnailLoader;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
-public class ContactListActivity extends Activity implements
+public class ContactListActivity extends LcomBaseActivity implements
 		LoaderCallbacks<ArrayList<Bitmap>> {
 
 	private final String TAG = LcomConst.TAG + "/ContactListActivity";

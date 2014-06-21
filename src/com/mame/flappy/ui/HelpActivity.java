@@ -14,12 +14,13 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
-public class HelpActivity extends Activity {
+public class HelpActivity extends LcomBaseActivity {
 
 	private final String TAG = LcomConst.TAG + "/HelpActivity";
 

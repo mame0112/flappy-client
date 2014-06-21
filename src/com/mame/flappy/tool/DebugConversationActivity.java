@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.db.UserLocalDataHandler;
@@ -17,7 +18,7 @@ import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomServerAccessor;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class DebugConversationActivity extends Activity implements
+public class DebugConversationActivity extends LcomBaseActivity implements
 		LcomServerAccessor.LcomServerAccessorListener {
 
 	private UserLocalDataHandler mLocalDataHandler = null;

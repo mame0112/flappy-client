@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.R.id;
 import com.mame.flappy.R.layout;
@@ -33,7 +34,7 @@ import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 import com.mame.flappy.web.LcomServerAccessor;
 
-public class LoginActivity extends Activity implements
+public class LoginActivity extends LcomBaseActivity implements
 		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/LoginActivity";

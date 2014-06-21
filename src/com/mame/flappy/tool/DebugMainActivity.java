@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.ui.WelcomeActivity;
 
-public class DebugMainActivity extends Activity {
+public class DebugMainActivity extends LcomBaseActivity {
 
 	private Button mBackToMailButton;
 

@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
@@ -34,7 +35,7 @@ import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomServerAccessor;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class CreateAccountActivity extends Activity implements
+public class CreateAccountActivity extends LcomBaseActivity implements
 		LcomServerAccessor.LcomServerAccessorListener {
 
 	private final String TAG = LcomConst.TAG + "/CreateAccountActivity";

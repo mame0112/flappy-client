@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.FriendListData;
@@ -41,7 +42,7 @@ import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TimeUtil;
 import com.mame.flappy.util.TrackingUtil;
 
-public class FriendListActivity extends Activity implements
+public class FriendListActivity extends LcomBaseActivity implements
 		FriendDataManagerListener, LcomPushRegistrationHelperListener {
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
@@ -94,6 +95,8 @@ public class FriendListActivity extends Activity implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+		DbgUtil.showDebug(TAG, "onCreate");
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.friendlist);

@@ -8,13 +8,14 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.db.UserLocalDataHandler;
 import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.util.DbgUtil;
 
-public class DebugFriendshipActivity extends Activity {
+public class DebugFriendshipActivity extends LcomBaseActivity {
 
 	private final String TAG = LcomConst.TAG + "/DebugFriendshipActivity";
 

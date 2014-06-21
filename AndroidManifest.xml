@@ -32,7 +32,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
+            android:name="com.mame.flappy.LcomBaseActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.mame.flappy.ui.WelcomeActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,46 +48,57 @@
         </activity>
         <activity
             android:name="com.mame.flappy.ui.LoginActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_login_name" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.FriendListActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_friendlist_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.CreateAccountActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_create_account_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.CreateAccountCompleteActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_create_account_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.ConversationActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_conversation_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.StartNewConversationActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_invitation_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.ContactListActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_contactslist_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.HelpActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_help_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.ContactToUsActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_contact_us_title" >
         </activity>
         <activity
             android:name="com.mame.flappy.ui.FlappyAboutActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/str_flappy_about_main_itle" >
         </activity>
         <activity
             android:name="com.mame.flappy.tool.DebugMainActivity"
+            android:configChanges="orientation|screenSize"
             android:label="flippy debug" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,30 +108,21 @@
         </activity>
         <activity
             android:name="com.mame.flappy.tool.DebugConversationActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.mame.flappy.tool.DebugFriendshipActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.mame.flappy.tool.DebugAllUserDataActivity"
+            android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
         </activity>
 
         <service android:name="com.mame.flappy.gcm.GCMIntentService" />
-        <!--
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.mame.flappy" />
-            </intent-filter>
-        </receiver>
-        -->
 
         <receiver
             android:name="com.mame.flappy.server.GcmBroadcastReceiver"
@@ -127,19 +135,6 @@
         </receiver>
 
         <service android:name="com.mame.flappy.server.GCMIntentService" />
-
-        <!--
-        <receiver
-            android:name="com.google.android.gcm.GCMBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.mame.flappy.server.GCMIntentService" />
-            </intent-filter>
-        </receiver>
-        -->
 
         <provider
             android:name="com.mame.flappy.db.DatabaseContentProvider"

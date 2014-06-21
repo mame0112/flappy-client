@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
@@ -32,7 +33,7 @@ import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomServerAccessor;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
-public class StartNewConversationActivity extends Activity implements
+public class StartNewConversationActivity extends LcomBaseActivity implements
 		LcomServerAccessor.LcomServerAccessorListener,
 		InvitationConfirmationListener {
 

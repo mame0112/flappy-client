@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.TrackingUtil;
 
-public class FlappyAboutActivity extends Activity {
+public class FlappyAboutActivity extends LcomBaseActivity {
 
 	private final String TAG = LcomConst.TAG + "/FlappyAboutActivity";
 
