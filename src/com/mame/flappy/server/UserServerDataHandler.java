@@ -459,16 +459,20 @@ public class UserServerDataHandler implements
 							+ friendUserId + " " + friendUserName + " "
 							+ message + " " + date);
 
-					MessageItemData data = new MessageItemData(
-							Integer.valueOf(userId),
-							Integer.valueOf(friendUserId), null,
-							friendUserName, message, Long.valueOf(date), null);
-
-					// data.setNewMessage(message);
-					// data.setNewMessageDate(date);
-					// data.setNewMessageSender(userName);
-					// data.setNewMessageSenderId(Integer.valueOf(senderId));
-					messageData.add(data);
+					if (message != null && date != null) {
+						String[] msgArray = message
+								.split(LcomConst.MESSAGE_SEPARATOR);
+						String[] dateArray = date
+								.split(LcomConst.MESSAGE_SEPARATOR);
+						for (int j = 0; j < msgArray.length; j++) {
+							MessageItemData data = new MessageItemData(
+									Integer.valueOf(userId),
+									Integer.valueOf(friendUserId), null,
+									friendUserName, msgArray[j],
+									Long.valueOf(dateArray[j]), null);
+							messageData.add(data);
+						}
+					}
 				}
 			}
 		}
