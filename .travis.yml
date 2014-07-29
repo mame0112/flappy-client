@@ -18,5 +18,6 @@ before_install:
   # Make build.xml
 
 script:
-  - ant debug
+  - ant init
+  - ant compile
 
