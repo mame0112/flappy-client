@@ -504,6 +504,13 @@ public class FriendListActivity extends LcomBaseActivity implements
 					// If data for the target user is not in HashMap
 					if (mFriendTmpData.get(friendUserId) == null) {
 						mFriendTmpData.put(friendUserId, data);
+					} else {
+						// Update the number of new message
+						FriendListData d = mFriendTmpData.get(friendUserId);
+						int numOfNewMessage = d.getNumOfNewMessage();
+						int newNumOfMsg = numOfNewMessage + 1;
+						d.setNumOfNewMessage(newNumOfMsg);
+						mFriendTmpData.put(friendUserId, d);
 					}
 				}
 			}

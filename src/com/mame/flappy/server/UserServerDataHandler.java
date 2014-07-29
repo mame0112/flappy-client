@@ -318,25 +318,60 @@ public class UserServerDataHandler implements
 						String[] parsed = newMessage[i]
 								.split(LcomConst.SEPARATOR);
 
-						String userId = parsed[0];
-						String userName = parsed[1];
-						String friendId = parsed[2];
-						String friendName = parsed[3];
-						String message = parsed[4];
-						String date = parsed[5];
-						String numOfMessage = parsed[6];
+						// String userId = parsed[0];
+						// String userName = parsed[1];
+						String friendId = parsed[0];
+						String friendName = parsed[1];
+						String message = parsed[2];
+						String date = parsed[3];
+						// String numOfMessage = parsed[6];
 
-						DbgUtil.showDebug(TAG, "parsed:" + userId + " "
-								+ userName + " " + friendId + " " + friendName
-								+ " " + message + " " + date + " "
-								+ numOfMessage);
+						DbgUtil.showDebug(TAG, "parsed:" + friendId + " "
+								+ friendName + " " + message + " " + date);
 
-						FriendListData data = new FriendListData(
-								Integer.valueOf(friendId), friendName,
-								Integer.valueOf(userId), message,
-								Long.valueOf(date),
-								Integer.valueOf(numOfMessage), null, null);
-						newUserData.add(data);
+						String[] msgArray = null;
+						String[] dateArray = null;
+
+						if (message != null
+								&& message
+										.contains(LcomConst.MESSAGE_SEPARATOR)) {
+							msgArray = message
+									.split(LcomConst.MESSAGE_SEPARATOR);
+
+						}
+
+						if (date != null
+								&& date.contains(LcomConst.MESSAGE_SEPARATOR)) {
+							dateArray = date.split(LcomConst.MESSAGE_SEPARATOR);
+						}
+
+						// int friendId, String friendName, int lastSenderId,
+						// String lastMessage, long lastMsgDate, int
+						// numOfNewMessage,
+						// String mailAddress, Bitmap thumbnail
+
+						// If message is more than 2
+						if (msgArray != null && msgArray.length != 0) {
+							for (int j = 0; j < msgArray.length; j++) {
+								DbgUtil.showDebug(TAG, "dateArray: "
+										+ dateArray[j]);
+								// If message is only 1
+								FriendListData data = new FriendListData(
+										Integer.valueOf(friendId), friendName,
+										Integer.valueOf(friendId), msgArray[j],
+										Long.valueOf(dateArray[j]), 1, null,
+										null);
+								newUserData.add(data);
+							}
+						} else {
+							DbgUtil.showDebug(TAG, "B");
+							// If message is only 1
+							FriendListData data = new FriendListData(
+									Integer.valueOf(friendId), friendName,
+									Integer.valueOf(friendId), message,
+									Long.valueOf(date), 1, null, null);
+							newUserData.add(data);
+						}
 
 						// data.setNewMessage(message);
 						// data.setNewMessageDate(date);
@@ -413,24 +448,21 @@ public class UserServerDataHandler implements
 			for (int i = 0; i < newMessage.length; i++) {
 				if (newMessage[i] != null) {
 					String[] parsed = newMessage[i].split(LcomConst.SEPARATOR);
-					// DbgUtil.showDebug(TAG, "parsed[0]: " + parsed[0]
-					// + "parsed[2]: " + parsed[2]);
-					// String senderId = parsed[0];
-					String firstId = parsed[0];
-					String firstName = parsed[1];
-					String secondUserId = parsed[2];
-					String secondUserName = parsed[3];
-					String message = parsed[4];
-					String date = parsed[5];
+					String userId = parsed[0];
+					// String firstName = parsed[1];
+					String friendUserId = parsed[1];
+					String friendUserName = parsed[2];
+					String message = parsed[3];
+					String date = parsed[4];
 
-					DbgUtil.showDebug(TAG, "parsed:" + firstId + " "
-							+ firstName + " " + secondUserId + " "
-							+ secondUserName + " " + message + " " + date);
+					DbgUtil.showDebug(TAG, "parsed:" + userId + " "
+							+ friendUserId + " " + friendUserName + " "
+							+ message + " " + date);
 
 					MessageItemData data = new MessageItemData(
-							Integer.valueOf(firstId),
-							Integer.valueOf(secondUserId), firstName,
-							secondUserName, message, Long.valueOf(date), null);
+							Integer.valueOf(userId),
+							Integer.valueOf(friendUserId), null,
+							friendUserName, message, Long.valueOf(date), null);
 
 					// data.setNewMessage(message);
 					// data.setNewMessageDate(date);

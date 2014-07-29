@@ -181,6 +181,8 @@ public class LcomConst {
 	 */
 	public final static String SEPARATOR = "@@";
 
+	public final static String MESSAGE_SEPARATOR = "__";
+
 	public final static String ITEM_SEPARATOR = "##";
 
 	/**
