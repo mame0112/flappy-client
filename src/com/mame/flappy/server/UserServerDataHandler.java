@@ -465,12 +465,22 @@ public class UserServerDataHandler implements
 						String[] dateArray = date
 								.split(LcomConst.MESSAGE_SEPARATOR);
 						for (int j = 0; j < msgArray.length; j++) {
-							MessageItemData data = new MessageItemData(
-									Integer.valueOf(userId),
-									Integer.valueOf(friendUserId), null,
-									friendUserName, msgArray[j],
-									Long.valueOf(dateArray[j]), null);
-							messageData.add(data);
+							try {
+								if (msgArray[j] != null && dateArray[j] != null) {
+									MessageItemData data = new MessageItemData(
+											Integer.valueOf(userId),
+											Integer.valueOf(friendUserId),
+											null, friendUserName, msgArray[j],
+											Long.valueOf(dateArray[j]), null);
+									messageData.add(data);
+								}
+							} catch (NumberFormatException e) {
+								DbgUtil.showDebug(
+										TAG,
+										"NumberFormatException: "
+												+ e.getMessage());
+							}
+
 						}
 					}
 				}
