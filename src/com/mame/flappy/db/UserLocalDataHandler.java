@@ -318,7 +318,8 @@ public class UserLocalDataHandler {
 
 				setDatabase();
 
-				MessageItemData data = newMessages.get(0);
+				// Handle latest message for friendship table
+				MessageItemData data = newMessages.get(newMessages.size() - 1);
 				int senderId = data.getFromUserId();
 				int toUserId = data.getTargetUserId();
 				String senderName = data.getFromUserName();
