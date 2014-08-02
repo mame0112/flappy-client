@@ -84,7 +84,7 @@ public class UserLocalDataHandler {
 						.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
 				String date = cursor.getString(cursor
 						.getColumnIndex(DatabaseDef.MessageColumns.DATE));
-				DbgUtil.showDebug(TAG, "date: " + date);
+				DbgUtil.showDebug(TAG, "message: " + message);
 
 				// Translate string into int
 				int fromUserIdInt = LcomConst.NO_USER;
@@ -309,7 +309,7 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	public void addMultipleNewMessagesAndFriendIfNecessary(int userId,
+	public void addMultipleNewMessagesAndFriendIfNecessary(long userId,
 			ArrayList<MessageItemData> newMessages)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addMultipleNewMessagesAndFriendIfNecessary");
@@ -344,19 +344,48 @@ public class UserLocalDataHandler {
 							null);
 				}
 
-				long friendshipId = sDatabase.insert(
-						DatabaseDef.FriendshipTable.TABLE_NAME, null,
-						valuesForFriendship);
-				DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
-				if (friendshipId < 0) {
-					// Failed.
+				// Check if target friend is already registered as friend
+
+				Cursor checkCursor = null;
+
+				// If sender is mine
+				if (senderId == userId) {
+					String selection = DatabaseDef.FriendshipColumns.FRIEND_ID
+							+ "=?";
+					String selectionArgs[] = { String.valueOf(toUserId) };
+					checkCursor = mContentResolver.query(
+							DatabaseDef.FriendshipTable.URI, null, selection,
+							selectionArgs, null);
+				} else {
+					// If sender is friend
+					String selection = DatabaseDef.FriendshipColumns.FRIEND_ID
+							+ "=?";
+
+					String selectionArgs[] = { String.valueOf(senderId) };
+					checkCursor = mContentResolver.query(
+							DatabaseDef.FriendshipTable.URI, null, selection,
+							selectionArgs, null);
+				}
+
+				// If friend info has not been registered yet.
+				if (checkCursor == null || checkCursor.getCount() == 0) {
+					long friendshipId = sDatabase.insert(
+							DatabaseDef.FriendshipTable.TABLE_NAME, null,
+							valuesForFriendship);
+					DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+					if (friendshipId < 0) {
+						// Failed.
+						DbgUtil.showDebug(TAG,
+								"Failed to insert data into Friendship DB");
+						TrackingUtil
+								.trackExceptionMessage(mContext, TAG,
+										"illegal id for addNewMessageAndFriendIfNecessary - 2");
+						throw new UserLocalDataHandlerException(
+								"id is less than 0. Failed to insert data");
+					}
+				} else {
 					DbgUtil.showDebug(TAG,
-							"Failed to insert data into Friendship DB");
-					TrackingUtil
-							.trackExceptionMessage(mContext, TAG,
-									"illegal id for addNewMessageAndFriendIfNecessary - 2");
-					throw new UserLocalDataHandlerException(
-							"id is less than 0. Failed to insert data");
+							"Cursor is not null or size is not 0. Friend is already registered");
 				}
 
 				// Set data to Message DB
