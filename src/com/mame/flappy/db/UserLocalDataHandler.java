@@ -326,24 +326,6 @@ public class UserLocalDataHandler {
 				String messageData = data.getMessage();
 				String date = String.valueOf(data.getPostedDate());
 
-				// Set friendship infoto Message DB
-				// Need to check if the target friend has already been in DB
-
-				// If myself is receiver (meaning sender id friend)
-				ContentValues valuesForFriendship = null;
-				if (userId != senderId) {
-					valuesForFriendship = getInsertContentValuesForFriendship(
-							senderId, senderName, null, senderId, messageData,
-							null);
-				} else {
-					// If myself is sender (but this case should be eliminated
-					// in server side)
-					DbgUtil.showDebug(TAG, "something worng");
-					valuesForFriendship = getInsertContentValuesForFriendship(
-							toUserId, toUserName, null, senderId, messageData,
-							null);
-				}
-
 				// Check if target friend is already registered as friend
 
 				Cursor checkCursor = null;
@@ -369,6 +351,23 @@ public class UserLocalDataHandler {
 
 				// If friend info has not been registered yet.
 				if (checkCursor == null || checkCursor.getCount() == 0) {
+
+					// If myself is receiver (meaning sender id friend)
+					ContentValues valuesForFriendship = null;
+					if (userId != senderId) {
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								senderId, senderName, null, senderId,
+								messageData, null);
+					} else {
+						// If myself is sender (but this case should be
+						// eliminated
+						// in server side)
+						DbgUtil.showDebug(TAG, "something wrong");
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								toUserId, toUserName, null, senderId,
+								messageData, null);
+					}
+
 					long friendshipId = sDatabase.insert(
 							DatabaseDef.FriendshipTable.TABLE_NAME, null,
 							valuesForFriendship);
@@ -386,6 +385,60 @@ public class UserLocalDataHandler {
 				} else {
 					DbgUtil.showDebug(TAG,
 							"Cursor is not null or size is not 0. Friend is already registered");
+
+					checkCursor.moveToFirst();
+
+					String friendId = checkCursor
+							.getString(checkCursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendName = checkCursor
+							.getString(checkCursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					// String lastMessage = checkCursor
+					// .getString(checkCursor
+					// .getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					// String lastSenderId = checkCursor
+					// .getString(checkCursor
+					// .getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddress = checkCursor
+							.getString(checkCursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+					byte[] thumbnail = checkCursor
+							.getBlob(checkCursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					// Then, need to update latest message info in Friendship
+					// table
+
+					ContentValues valuesForFriendship = null;
+					String where = null;
+					if (senderId == userId) {
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								Integer.valueOf(friendId), friendName,
+								thumbnail, senderId, messageData, mailAddress);
+						where = DatabaseDef.FriendshipColumns.FRIEND_ID + "="
+								+ toUserId;
+					} else {
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								Integer.valueOf(friendId), friendName,
+								thumbnail, senderId, messageData, mailAddress);
+						where = DatabaseDef.FriendshipColumns.FRIEND_ID + "="
+								+ senderId;
+					}
+
+					long id = sDatabase.update(
+							DatabaseDef.FriendshipTable.TABLE_NAME,
+							valuesForFriendship, where, null);
+					if (id < 0) {
+						// Failed.
+						DbgUtil.showDebug(TAG,
+								"Failed to update latest message data on Friendship DB");
+						TrackingUtil
+								.trackExceptionMessage(mContext, TAG,
+										"illegal id for addMultipleNewMessagesAndFriendIfNecessary - 1");
+						throw new UserLocalDataHandlerException(
+								"id is less than 0. Failed to insert data");
+					}
 				}
 
 				// Set data to Message DB
