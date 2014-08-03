@@ -237,9 +237,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		if (mNotification != null) {
 			mNotification.removeNotification();
 		}
-
-		// Remove currentAlamrManager
-		removeCurrentAlarmManager();
 	}
 
 	@Override
@@ -301,6 +298,9 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			}
 		} else {
 			mIsFirst = true;
+
+			// Remove notification
+			removeNotification();
 		}
 	}
 }

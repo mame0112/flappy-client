@@ -23,7 +23,7 @@ public class NewMessageNotificationService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		DbgUtil.showDebug(TAG, "onHandleIntent");
-		NewMessageNotificationManager.removeNotification();
+//		NewMessageNotificationManager.removeNotification();
 
 		int targetUserId = intent.getIntExtra(LcomConst.EXTRA_TARGET_USER_ID,
 				LcomConst.NO_USER);
