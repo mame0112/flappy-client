@@ -468,9 +468,9 @@ public class UserServerDataHandler implements
 							try {
 								if (msgArray[j] != null && dateArray[j] != null) {
 									MessageItemData data = new MessageItemData(
-											Integer.valueOf(userId),
 											Integer.valueOf(friendUserId),
-											null, friendUserName, msgArray[j],
+											Integer.valueOf(userId),
+											friendUserName, null, msgArray[j],
 											Long.valueOf(dateArray[j]), null);
 									messageData.add(data);
 								}
