@@ -39,6 +39,7 @@
 
         <EditText
             android:id="@+id/inviMsgDlgMessageEditText"
+            style="@style/EditTextStyle"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_frame"
