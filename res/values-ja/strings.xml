@@ -114,7 +114,7 @@
     <string name="str_invitation_select_from_contacts_desc">友達が電話帳に登録されている場合</string>
     <string name="str_invitation_direct_input_desc">メールアドレスを直接入力する</string>
     <string name="str_invitation_confirm_desc">下記の友達を招待します</string>
-    <string name="str_invitation_send_message_button">メッセージ送信</string>
+    <string name="str_invitation_send_message_button">送信</string>
     <string name="str_invitation_send_cancel_button">キャンセル</string>
     <string name="str_invitation_send_message_prog_dialog_title">メッセージ送信中</string>
 
