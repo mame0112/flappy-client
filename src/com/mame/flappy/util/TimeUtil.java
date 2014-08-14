@@ -101,7 +101,7 @@ public class TimeUtil {
 			long postDate) {
 		DbgUtil.showDebug(TAG, "changeDisplayDateForNotWithinOneDay");
 
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM/d");
+		SimpleDateFormat sdf = new SimpleDateFormat("M/dd");
 		return sdf.format(postDate);
 	}
 }
