@@ -686,8 +686,9 @@ public class UserLocalDataHandler {
 						+ "=?";
 				String selectionArgs[] = { String.valueOf(friendUserId),
 						String.valueOf(friendUserId) };
+				String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 1";
 				cursor = mContentResolver.query(DatabaseDef.MessageTable.URI,
-						projection, selection, selectionArgs, null);
+						projection, selection, selectionArgs, sortOrder);
 				if (cursor == null) {
 					DbgUtil.showDebug(TAG, "cursor is null");
 					throw new UserLocalDataHandlerException("Cursor is null");
@@ -777,60 +778,6 @@ public class UserLocalDataHandler {
 		}
 		return null;
 	}
-
-	/**
-	 * We need to check if target new notification is registered or not before
-	 * store it onto Database
-	 * 
-	 * @param expireDate
-	 */
-	// public synchronized boolean isTargetNewNotificationAlreadyStored(
-	// long expireDate) throws UserLocalDataHandlerException {
-	// DbgUtil.showDebug(TAG, "isTargetNewNotificationAlreadyStored: "
-	// + expireDate);
-
-	// return UserLocalDataHandlerHelper.isFriendListForeground(mContext);
-
-	// if (expireDate < 0L) {
-	// throw new UserLocalDataHandlerException("Illegal expireDate");
-	// }
-	//
-	// Cursor cursor = null;
-	// try {
-	// String projection[] = { DatabaseDef.NotificationColumns.EXPIRE_DATE
-	// };
-	// String selection = DatabaseDef.NotificationColumns.EXPIRE_DATE
-	// + "=?";
-	// String selectionArgs[] = { String.valueOf(expireDate) };
-	//
-	// cursor = mContentResolver.query(DatabaseDef.NotificationTable.URI,
-	// projection, selection, selectionArgs, null);
-	//
-	// if (cursor == null) {
-	// DbgUtil.showDebug(TAG, "cursor is null");
-	// throw new UserLocalDataHandlerException("Cursor is null");
-	// }
-	//
-	// if (cursor != null) {
-	// int count = cursor.getCount();
-	// if (count == 0) {
-	// DbgUtil.showDebug(TAG, "false");
-	// return false;
-	// } else {
-	// DbgUtil.showDebug(TAG, "true");
-	// return true;
-	// }
-	// }
-	// } catch (SQLException e) {
-	// DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
-	// TrackingUtil.trackExceptionMessage(mContext, TAG,
-	// "SQLExeption for getNotificationNearestExpireData query: "
-	// + e.getMessage());
-	// throw new UserLocalDataHandlerException("SQLException:"
-	// + e.getMessage());
-	// }
-	// return false;
-	// }
 
 	public synchronized void addNewNotification(int fromUserId, int toUserId,
 			int number, long expireDate) {

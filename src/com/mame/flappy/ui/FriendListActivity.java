@@ -947,61 +947,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 							}
 						}).start();
 
-						// // Update message
-						// // At first, sort by time
-						// ArrayList<FriendListData> result =
-						// FriendListActivityUtil
-						// .sortMessageByTime(mNewUserData);
-						//
-						// for (FriendListData tmp : result) {
-						// DbgUtil.showDebug(TAG,
-						// "time: " + tmp.getMessagDate());
-						// DbgUtil.showDebug(TAG,
-						// "number: " + tmp.getNumOfNewMessage());
-						// DbgUtil.showDebug(TAG,
-						// "message: " + tmp.getLastMessage());
-						// }
-						//
-						// // Update latest message
-						// // First we try to get it from mNewUserData.
-						// if (result != null && result.size() != 0) {
-						// boolean isFound = false;
-						// for (FriendListData newData : result) {
-						// int newTargetId = newData.getFriendId();
-						// if (newTargetId == targetUserId) {
-						// // Update num of message
-						// int numOfMessage = newData
-						// .getNumOfNewMessage();
-						// numOfMessage = numOfMessage - 1;
-						// if (numOfMessage <= 0) {
-						// DbgUtil.showDebug(TAG, "numOfMessage: "
-						// + numOfMessage);
-						// data.setNumOfNewMessage(numOfMessage);
-						// } else {
-						// DbgUtil.showDebug(TAG,
-						// "numOfMessage is 0");
-						// data.setNumOfNewMessage(numOfMessage);
-						// }
-						//
-						// long sortedTime = newData.getMessagDate();
-						// DbgUtil.showDebug(TAG, "sortedTime:"
-						// + sortedTime);
-						// if (current < sortedTime) {
-						// isFound = true;
-						// data.setLastMessage(newData
-						// .getLastMessage());
-						// break;
-						// }
-						// }
-						// }
-						// if (isFound == false) {
-						// // If all message has expired
-						// getLatestLocalStoredMessage(targetUserId);
-						// } else {
-						// DbgUtil.showDebug(TAG,
-						// "mNewUserData is null or size 0");
-						// }
-						// }
 					}
 
 				}

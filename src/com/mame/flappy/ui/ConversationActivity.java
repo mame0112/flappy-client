@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
@@ -256,6 +257,8 @@ public class ConversationActivity extends LcomBaseActivity implements
 			// Initialize flag
 			mIsNewDataReady = false;
 			mIsPresentDataReady = false;
+
+			// setProgressBarIndeterminateVisibility(true);
 
 			// Dismiss dialog if it is being shown
 			if (!mActivity.isFinishing() && mProgressDialog != null
