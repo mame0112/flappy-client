@@ -41,6 +41,7 @@
 
     <EditText
         android:id="@+id/newMailAddressEditText"
+        style="@style/EditTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_vertical"
@@ -52,9 +53,9 @@
 
     <TextView
         android:id="@+id/confirmForFromContactsDesc"
+        style="@style/GeneralInageDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		style="@style/GeneralInageDescription"
         android:layout_marginTop="@dimen/add_friend_padding"
         android:text="@string/str_invitation_confirm_desc" />
 

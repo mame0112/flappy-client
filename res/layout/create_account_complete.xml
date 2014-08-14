@@ -24,6 +24,7 @@
 
     <EditText
         android:id="@+id/createCompletePassword"
+        style="@style/EditTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_vertical"
@@ -41,6 +42,7 @@
 
     <EditText
         android:id="@+id/createCompletePasswordAgain"
+        style="@style/EditTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_vertical"
@@ -52,6 +54,7 @@
 
     <EditText
         android:id="@+id/createCompleteMailAddress"
+        style="@style/EditTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_vertical"
