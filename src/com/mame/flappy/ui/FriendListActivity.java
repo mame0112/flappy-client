@@ -136,8 +136,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 					int position, long id) {
 				DbgUtil.showDebug(TAG, "onItemClick positon: " + position);
 				FriendListData data = mAdapter.getItem(position);
-				DbgUtil.showDebug(TAG, "id: " + data.getFriendId() + " name: "
-						+ data.getFriendName());
+				DbgUtil.showDebug(
+						TAG,
+						"id: " + data.getFriendId() + " name: "
+								+ data.getFriendName() + "last message: "
+								+ data.getLastMessage() + " mail address: "
+								+ data.getMailAddress());
 				FriendListActivityUtil.startActivityConversationViewByPos(
 						mActivity, mUserId, mUserName, position,
 						data.getFriendId(), data.getFriendName(),

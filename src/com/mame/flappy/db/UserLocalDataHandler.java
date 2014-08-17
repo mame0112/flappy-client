@@ -66,8 +66,9 @@ public class UserLocalDataHandler {
 					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
 			String selectionArgs[] = { String.valueOf(targetUserId),
 					String.valueOf(targetUserId) };
+			String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 100";
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
-					selection, selectionArgs, null);
+					selection, selectionArgs, sortOrder);
 			while (cursor != null && cursor.moveToNext()) {
 				String fromUserId = cursor
 						.getString(cursor
@@ -189,11 +190,7 @@ public class UserLocalDataHandler {
 						} while (cursor.moveToNext());
 					}
 				}
-				// int userId, String userName, String userThumb,
-				// String lastSender, String lastMessage
-				// while (cursor.moveToNext()) {
 
-				// }
 			} catch (SQLException e) {
 				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
@@ -730,11 +727,6 @@ public class UserLocalDataHandler {
 								}
 
 							} while (cursor.moveToNext());
-							// int friendId, String friendName, int
-							// lastSenderId,
-							// String lastMessage, long lastMsgDate,
-							// int numOfNewMessage,
-							// String mailAddress, Bitmap thumbnail
 
 							DbgUtil.showDebug(TAG, "latestMessage: "
 									+ latestMessage);
@@ -754,7 +746,6 @@ public class UserLocalDataHandler {
 							return data;
 						}
 					}
-					// }
 				} catch (SQLException e) {
 					DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 					TrackingUtil.trackExceptionMessage(mContext, TAG,

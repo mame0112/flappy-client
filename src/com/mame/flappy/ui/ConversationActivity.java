@@ -82,7 +82,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 	private ListView mListView = null;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	// private ProgressDialogFragment mProgressDialog = null;
 
 	private boolean mIsPresentDataReady = false;
 
@@ -103,6 +103,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 		getWindow().setSoftInputMode(
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
 		setContentView(R.layout.conversation);
 		Intent intent = getIntent();
@@ -151,9 +152,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 		mActivity = this;
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_conversation_progress_title),
-				getString(R.string.str_conversation_progress_desc));
+		// mProgressDialog = ProgressDialogFragment.newInstance(
+		// getString(R.string.str_conversation_progress_title),
+		// getString(R.string.str_conversation_progress_desc));
 
 		mAdapter = new ConversationListCustonAdapter(getApplicationContext(),
 				0, mConversationData);
@@ -216,20 +217,23 @@ public class ConversationActivity extends LcomBaseActivity implements
 						TrackingUtil.trackNumberOfCharInOneMessage(
 								getApplicationContext(), message.length());
 
-						// Dismiss dialog if it is being shown
-						if (!mActivity.isFinishing() && mProgressDialog != null
-								&& mProgressDialog.isShowing()) {
-							mProgressDialog.dismiss();
-						}
+						setProgressBarIndeterminateVisibility(true);
 
-						if (mProgressDialog != null) {
-							mProgressDialog
-									.setDialogTexts(
-											getString(R.string.str_conversation_progress_title),
-											getString(R.string.str_conversation_progress_desc));
-							mProgressDialog.show(getFragmentManager(),
-									"progress");
-						}
+						// Dismiss dialog if it is being shown
+						// if (!mActivity.isFinishing() && mProgressDialog !=
+						// null
+						// && mProgressDialog.isShowing()) {
+						// mProgressDialog.dismiss();
+						// }
+
+						// if (mProgressDialog != null) {
+						// mProgressDialog
+						// .setDialogTexts(
+						// getString(R.string.str_conversation_progress_title),
+						// getString(R.string.str_conversation_progress_desc));
+						// mProgressDialog.show(getFragmentManager(),
+						// "progress");
+						// }
 
 						long date = TimeUtil.getCurrentDate();
 						sendAndRegisterMessage(mUserId, mTargetUserId,
@@ -253,6 +257,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 	private void requestThreadData() {
 		try {
+			setProgressBarIndeterminateVisibility(true);
 
 			// Initialize flag
 			mIsNewDataReady = false;
@@ -261,23 +266,24 @@ public class ConversationActivity extends LcomBaseActivity implements
 			// setProgressBarIndeterminateVisibility(true);
 
 			// Dismiss dialog if it is being shown
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
-			}
+			// if (!mActivity.isFinishing() && mProgressDialog != null
+			// && mProgressDialog.isShowing()) {
+			// mProgressDialog.dismiss();
+			// }
 
 			// Show prgoress dialog
-			if (mProgressDialog != null) {
-				mProgressDialog
-						.setDialogTexts(
-								getString(R.string.str_conversation_get_info_progress_title),
-								getString(R.string.str_conversation_progress_desc));
-				mProgressDialog.show(getFragmentManager(), "progress");
-			}
+			// if (mProgressDialog != null) {
+			// mProgressDialog
+			// .setDialogTexts(
+			// getString(R.string.str_conversation_get_info_progress_title),
+			// getString(R.string.str_conversation_progress_desc));
+			// mProgressDialog.show(getFragmentManager(), "progress");
+			// }
 
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
 		} catch (FriendDataManagerException e) {
+			setProgressBarIndeterminateVisibility(false);
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
@@ -392,10 +398,10 @@ public class ConversationActivity extends LcomBaseActivity implements
 			DbgUtil.showDebug(TAG, "postDate: " + messageData.getPostedDate());
 		}
 
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& mProgressDialog.isShowing()) {
-			mProgressDialog.dismiss();
-		}
+		// if (!mActivity.isFinishing() && mProgressDialog != null
+		// && mProgressDialog.isShowing()) {
+		// mProgressDialog.dismiss();
+		// }
 
 		if (result) {
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHandler,
@@ -409,6 +415,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
+
+							setProgressBarIndeterminateVisibility(false);
+
 							if (messageData != null) {
 								mConversationData.add(messageData);
 							}
@@ -462,10 +471,23 @@ public class ConversationActivity extends LcomBaseActivity implements
 			// Initialize flag
 			mIsNewDataReady = false;
 
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
-			}
+			// if (!mActivity.isFinishing() && mProgressDialog != null
+			// && mProgressDialog.isShowing()) {
+			// mProgressDialog.dismiss();
+			// }
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							setProgressBarIndeterminateVisibility(false);
+						}
+					});
+				}
+
+			}).start();
 
 			// if (mProgressDialog != null && mProgressDialog.isShowing()) {
 			// mProgressDialog.getDialog().dismiss();
@@ -531,9 +553,22 @@ public class ConversationActivity extends LcomBaseActivity implements
 			mListView.setAdapter(mAdapter);
 			mListView.setSelection(mListView.getCount() - 1);
 
-			if (mProgressDialog != null && mProgressDialog.isShowing()) {
-				mProgressDialog.getDialog().dismiss();
-			}
+			// if (mProgressDialog != null && mProgressDialog.isShowing()) {
+			// mProgressDialog.getDialog().dismiss();
+			// }
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							setProgressBarIndeterminateVisibility(false);
+						}
+					});
+				}
+
+			}).start();
 
 			// Initialize flag
 			mIsPresentDataReady = false;
