@@ -579,92 +579,73 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	public ArrayList<Integer> getFriendUseridThumbnailNotRegistered(
-			ArrayList<Integer> targetIds) throws UserLocalDataHandlerException {
+	public ArrayList<Long> getFriendUseridThumbnailNotRegistered()
+			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "getTargetUseridThumbnailNotRegistered");
 
-		ArrayList<Integer> result = new ArrayList<Integer>();
+		ArrayList<Long> result = new ArrayList<Long>();
 
-		if (targetIds != null && targetIds.size() != 0) {
-			for (int id : targetIds) {
-				DbgUtil.showDebug(TAG, "id: " + id);
+		Cursor cursor = null;
+		try {
+			String projection[] = { DatabaseDef.FriendshipColumns.FRIEND_ID,
+					DatabaseDef.FriendshipColumns.THUMBNAIL };
+			// String selection = DatabaseDef.FriendshipColumns.FRIEND_ID +
+			// "=?";
+			// String selectionArgs[] = { String.valueOf(id) };
 
-				boolean isRegistered = false;
-
-				Cursor cursor = null;
-				try {
-					String projection[] = {
-							DatabaseDef.FriendshipColumns.FRIEND_ID,
-							DatabaseDef.FriendshipColumns.THUMBNAIL };
-					String selection = DatabaseDef.FriendshipColumns.FRIEND_ID
-							+ "=?";
-					String selectionArgs[] = { String.valueOf(id) };
-
-					cursor = mContentResolver.query(
-							DatabaseDef.FriendshipTable.URI, projection,
-							selection, selectionArgs, null);
-					if (cursor == null) {
-						DbgUtil.showDebug(TAG, "cursor is null");
-						throw new UserLocalDataHandlerException(
-								"Cursor is null");
-					}
-					try {
-						if (cursor != null) {
-							if (cursor.moveToFirst()) {
-								do {
-									DbgUtil.showDebug(TAG,
-											"A: " + cursor.getCount());
-
-									byte[] thumbnail = cursor
-											.getBlob(cursor
-													.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
-									Bitmap bmp = null;
-									if (thumbnail != null) {
-										bmp = ImageUtil
-												.decodeByteArrayToBitmap(thumbnail);
-
-										if (bmp != null && bmp.getWidth() != 0
-												&& bmp.getHeight() != 0) {
-											result.add(id);
-											DbgUtil.showDebug(TAG, "Add");
-											isRegistered = true;
-										}
-									}
-								} while (cursor.moveToNext());
-							}
-						}
-						// }
-					} catch (SQLException e) {
-						DbgUtil.showDebug(TAG,
-								"SQLException: " + e.getMessage());
-						TrackingUtil.trackExceptionMessage(mContext, TAG,
-								"SQLExeption: " + e.getMessage());
-						TrackingUtil.trackExceptionMessage(mContext, TAG,
-								"SQLExeption for getLocalUserDataset cursor move: "
-										+ e.getMessage());
-						throw new UserLocalDataHandlerException("SQLException:"
-								+ e.getMessage());
-					}
-				} catch (SQLException e) {
-					DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
-					TrackingUtil.trackExceptionMessage(
-							mContext,
-							TAG,
-							"SQLExeption for getLocalUserDataset query: "
-									+ e.getMessage());
-					throw new UserLocalDataHandlerException("SQLException:"
-							+ e.getMessage());
-				}
-
-				if (!isRegistered) {
-					result.add(id);
-					isRegistered = false;
-				}
-
+			// cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+			// projection, selection, selectionArgs, null);
+			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+					projection, null, null, null);
+			if (cursor == null) {
+				DbgUtil.showDebug(TAG, "cursor is null");
+				throw new UserLocalDataHandlerException("Cursor is null");
 			}
-			return result;
+			try {
+				if (cursor != null) {
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+
+							String friendUserId = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+
+							byte[] thumbnail = cursor
+									.getBlob(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+							// Bitmap bmp = null;
+							if (thumbnail == null) {
+								result.add(Long.valueOf(friendUserId));
+							}
+						} while (cursor.moveToNext());
+					}
+				}
+				// }
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for getLocalUserDataset cursor move: "
+								+ e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			TrackingUtil.trackExceptionMessage(
+					mContext,
+					TAG,
+					"SQLExeption for getLocalUserDataset query: "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException:"
+					+ e.getMessage());
 		}
-		return null;
+
+		return result;
 	}
 
 	public synchronized FriendListData getLatestStoredMessage(int friendUserId)

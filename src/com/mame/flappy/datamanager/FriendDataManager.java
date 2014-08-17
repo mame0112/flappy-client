@@ -143,15 +143,12 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 	}
 
-	public void requestFriendsNewThumbnail(ArrayList<Integer> targetUserIds)
-			throws FriendDataManagerException {
+	// public void requestFriendsNewThumbnail(ArrayList<Integer> targetUserIds)
+	// throws FriendDataManagerException {
+	public void requestFriendsNewThumbnail() throws FriendDataManagerException {
 		DbgUtil.showDebug(TAG, "requestFriendsNewThumbnail");
 		if (mListeners == null || mListeners.size() == 0) {
 			throw new FriendDataManagerException("mListenr is null");
-		}
-
-		if (targetUserIds == null) {
-			throw new FriendDataManagerException("targetUserIds is null");
 		}
 
 		// Once we check thumbnails those are already stored in local DB so that
@@ -161,20 +158,14 @@ public class FriendDataManager implements UserServerDataListener,
 		DbgUtil.showDebug(TAG, "currentTime: " + currentTime);
 		DbgUtil.showDebug(TAG, "lastTIme: " + lastTime);
 
-		// if (currentTime > lastTime + LcomConst.THUMBNAIL_CHECK_INTERVAL) {
-		try {
-			ArrayList<Integer> notRegisteredUserIds = mLocalDataHandler
-					.getFriendUseridThumbnailNotRegistered(targetUserIds);
+		if (currentTime > lastTime + LcomConst.THUMBNAIL_CHECK_INTERVAL) {
+			// if (currentTime > lastTime + LcomConst.TIME_MIN) {
+			DbgUtil.showDebug(TAG, "expired");
 
-			// Update preference
+			// Update thumbnail load time
 			PreferenceUtil.setLastThumbnailCheckTime(mContext, currentTime);
-
-			// Check thumbnail
-			mServerDataHandler.requestNewFriendThumbnails(notRegisteredUserIds);
-		} catch (UserLocalDataHandlerException e) {
-			DbgUtil.showDebug(TAG,
-					"UserLocalDataHandlerException: " + e.getMessage());
-			mServerDataHandler.requestNewFriendThumbnails(targetUserIds);
+			// new LoadLatestStoredMessagesAsyncTask().execute();
+			new LoadLocalUserIdWithoutThumbnailAsyncTask().execute();
 		}
 	}
 
@@ -325,6 +316,54 @@ public class FriendDataManager implements UserServerDataListener,
 		 */
 		public void notifiyNearlestExpireNotification(
 				NotificationContentData data);
+	}
+
+	private class LoadLocalUserIdWithoutThumbnailAsyncTask extends
+			AsyncTask<Void, Void, ArrayList<Long>> {
+
+		public LoadLocalUserIdWithoutThumbnailAsyncTask() {
+			DbgUtil.showDebug(TAG, "LoadLocalUserIdWithoutThumbnailAsyncTask");
+		}
+
+		@Override
+		protected ArrayList<Long> doInBackground(Void... params) {
+			DbgUtil.showDebug(TAG, "doInBackground");
+			try {
+				return mLocalDataHandler
+						.getFriendUseridThumbnailNotRegistered();
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				return null;
+			}
+
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<Long> result) {
+			DbgUtil.showDebug(TAG,
+					"LoadLocalUserIdWithoutThumbnailAsyncTask onPostExecute");
+			if (result != null && result.size() != 0) {
+				DbgUtil.showDebug(TAG, "size: " + result.size());
+				try {
+					mServerDataHandler.requestNewFriendThumbnails(result);
+				} catch (FriendDataManagerException e) {
+					DbgUtil.showDebug(TAG,
+							"FriendDataManagerException: " + e.getMessage());
+				}
+			} else {
+				// If no id returned, we just notify to client it was null
+				for (FriendDataManagerListener listener : mListeners) {
+					listener.notifyFriendThubmailsLoaded(null);
+				}
+			}
+
+			// for (FriendDataManagerListener listener : mListeners) {
+			// listener.notify
+			// }
+		}
 	}
 
 	private class LoadLocalFriendListAsyncTask extends

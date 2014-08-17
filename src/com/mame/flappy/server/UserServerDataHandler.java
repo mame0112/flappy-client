@@ -150,7 +150,7 @@ public class UserServerDataHandler implements
 
 	}
 
-	public void requestNewFriendThumbnails(ArrayList<Integer> targetUserIds)
+	public void requestNewFriendThumbnails(ArrayList<Long> targetUserIds)
 			throws FriendDataManagerException {
 		if (mDataListener == null) {
 			throw new FriendDataManagerException(
@@ -164,7 +164,7 @@ public class UserServerDataHandler implements
 		if (targetUserIds != null) {
 			String parsedId = "a";
 			boolean isFirst = true;
-			for (int id : targetUserIds) {
+			for (long id : targetUserIds) {
 				if (isFirst) {
 					parsedId = parsedId + id + LcomConst.SEPARATOR;
 					isFirst = false;

@@ -441,7 +441,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 
 			try {
-				mManager.requestFriendsNewThumbnail(targetUserIds);
+				mManager.requestFriendsNewThumbnail();
 			} catch (FriendDataManagerException e) {
 				DbgUtil.showDebug(TAG,
 						"FriendDataManagerException: " + e.getMessage());
@@ -597,7 +597,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			try {
-				mManager.requestFriendsNewThumbnail(targetUserIds);
+				mManager.requestFriendsNewThumbnail();
 			} catch (FriendDataManagerException e) {
 				DbgUtil.showDebug(TAG,
 						"FriendDataManagerException: " + e.getMessage());
@@ -798,7 +798,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	@Override
 	public void notifyFriendThubmailsLoaded(
 			List<HashMap<Integer, Bitmap>> thumbnails) {
-		DbgUtil.showDebug(TAG, "notifyFriendThubmailsLoaded");
+		DbgUtil.showDebug(TAG, "notifyFriendThumbnailsLoaded");
 		if (thumbnails != null) {
 			handleAndUpdateThumbnailData(thumbnails);
 		} else {
