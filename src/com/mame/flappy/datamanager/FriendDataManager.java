@@ -106,10 +106,11 @@ public class FriendDataManager implements UserServerDataListener,
 					+ userId);
 		}
 
-		// Load server new data
-		if (isForNew) {
-			mServerDataHandler.requestNewUserData(userId);
-		}
+		// TODO
+		// // Load server new data
+		// if (isForNew) {
+		// mServerDataHandler.requestNewUserData(userId);
+		// }
 
 		// Load local data
 		if (isForExisting) {
@@ -391,12 +392,41 @@ public class FriendDataManager implements UserServerDataListener,
 		@Override
 		protected void onPostExecute(ArrayList<FriendListData> result) {
 			DbgUtil.showDebug(TAG, "LoadLocalFriendListAsyncTask onPostExecute");
-			if (result != null) {
-				DbgUtil.showDebug(TAG, "size: " + result.size());
-			}
+
+			// Notifyy to client
 			for (FriendDataManagerListener listener : mListeners) {
 				listener.notifyPresentDataset(result);
 			}
+
+			// Try to get new data
+			try {
+				// If result is null or size is 0, try to get all data
+				if (result == null || result.size() == 0) {
+					mServerDataHandler.requestNewUserData(mUserId, true);
+				} else {
+					// Otherwize, try to get only new data
+					mServerDataHandler.requestNewUserData(mUserId, false);
+				}
+
+			} catch (FriendDataManagerException e) {
+				DbgUtil.showDebug(TAG,
+						"FriendDataManagerException: " + e.getMessage());
+			}
+
+			// if (result != null && result.size() != 0) {
+			// DbgUtil.showDebug(TAG, "size: " + result.size());
+			// for (FriendDataManagerListener listener : mListeners) {
+			// listener.notifyPresentDataset(result);
+			// }
+			// } else {
+			// try {
+			// mServerDataHandler.requestNewUserData(mUserId);
+			// } catch (FriendDataManagerException e) {
+			// DbgUtil.showDebug(TAG,
+			// "FriendDataManagerException: " + e.getMessage());
+			// }
+			// }
+
 		}
 	}
 

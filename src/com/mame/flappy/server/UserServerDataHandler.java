@@ -109,7 +109,7 @@ public class UserServerDataHandler implements
 		}
 	}
 
-	public void requestNewUserData(int userId)
+	public void requestNewUserData(int userId, boolean isAllRequire)
 			throws FriendDataManagerException {
 		DbgUtil.showDebug(TAG, "requestNewUserData");
 		if (mDataListener == null) {
@@ -122,8 +122,9 @@ public class UserServerDataHandler implements
 
 		String origin = TAG + REQUEST_NEW_USER_DATA;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
-				LcomConst.SERVLET_API_LEVEL };
+				LcomConst.SERVLET_ALL_DATA_REQUIRE, LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId),
+				String.valueOf(isAllRequire),
 				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_MESSAGE, key, value);
 
