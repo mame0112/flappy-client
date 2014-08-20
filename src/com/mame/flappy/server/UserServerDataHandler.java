@@ -334,6 +334,7 @@ public class UserServerDataHandler implements
 						String[] dateArray = null;
 
 						if (message != null
+								&& !message.equals(LcomConst.NULL)
 								&& message
 										.contains(LcomConst.MESSAGE_SEPARATOR)) {
 							msgArray = message
@@ -341,15 +342,10 @@ public class UserServerDataHandler implements
 
 						}
 
-						if (date != null
+						if (date != null && !message.equals(LcomConst.NULL)
 								&& date.contains(LcomConst.MESSAGE_SEPARATOR)) {
 							dateArray = date.split(LcomConst.MESSAGE_SEPARATOR);
 						}
-
-						// int friendId, String friendName, int lastSenderId,
-						// String lastMessage, long lastMsgDate, int
-						// numOfNewMessage,
-						// String mailAddress, Bitmap thumbnail
 
 						// If message is more than 2
 						if (msgArray != null && msgArray.length != 0) {
@@ -363,15 +359,31 @@ public class UserServerDataHandler implements
 										Long.valueOf(dateArray[j]), 1, null,
 										null);
 								newUserData.add(data);
+
 							}
 						} else {
 							DbgUtil.showDebug(TAG, "B");
-							// If message is only 1
-							FriendListData data = new FriendListData(
-									Integer.valueOf(friendId), friendName,
-									Integer.valueOf(friendId), message,
-									Long.valueOf(date), 1, null, null);
-							newUserData.add(data);
+							// If message is only 1 and date and message is not
+							// null
+							if (message != null
+									&& !message.equals(LcomConst.NULL)
+									&& date != null
+									&& !date.equals(LcomConst.NULL)) {
+								FriendListData data = new FriendListData(
+										Integer.valueOf(friendId), friendName,
+										Integer.valueOf(friendId), message,
+										Long.valueOf(date), 1, null, null);
+								newUserData.add(data);
+							} else {
+								// If message and date is null (meaning no data
+								// in server side)
+								FriendListData data = new FriendListData(
+										Integer.valueOf(friendId), friendName,
+										Integer.valueOf(friendId), null, 0, 0,
+										null, null);
+								newUserData.add(data);
+							}
+
 						}
 
 						// data.setNewMessage(message);
