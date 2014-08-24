@@ -23,6 +23,7 @@ import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.ImageUtil;
+import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.SecurityUtil;
 import com.mame.flappy.util.TimeUtil;
 import com.mame.flappy.util.TrackingUtil;
@@ -306,6 +307,85 @@ public class UserLocalDataHandler {
 		}
 	}
 
+	public void addMultipleNewMessages(long userId, String userName,
+			ArrayList<FriendListData> newMessages)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "addMultipleNewMessages");
+
+		UserLocalDataHandlerHelper helper = new UserLocalDataHandlerHelper();
+
+		ArrayList<MessageItemData> convertedMessages = helper
+				.convertFormatFriendListToMessageItem(userId, userName,
+						newMessages);
+
+		addAllFriendshipAndFriendInfo(convertedMessages, userId, userName);
+
+	}
+
+	private void addAllFriendshipAndFriendInfo(
+			ArrayList<MessageItemData> messageInfo, long userId, String userName)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "addAllFriendshipAndFriendInfo");
+
+		try {
+			if (messageInfo != null && messageInfo.size() != 0) {
+
+				setDatabase();
+
+				for (MessageItemData data : messageInfo) {
+					int senderId = data.getFromUserId();
+					int toUserId = data.getTargetUserId();
+					String senderName = data.getFromUserName();
+					String toUserName = data.getToUserName();
+					String messageData = data.getMessage();
+					String date = String.valueOf(data.getPostedDate());
+
+					// If myself is receiver (meaning sender id friend)
+					ContentValues valuesForFriendship = null;
+					if (userId != senderId) {
+						DbgUtil.showDebug(TAG, "user is not sender");
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								senderId, senderName, null, senderId,
+								messageData, null);
+					} else {
+						DbgUtil.showDebug(TAG, "user is sender");
+						valuesForFriendship = getInsertContentValuesForFriendship(
+								toUserId, toUserName, null, senderId,
+								messageData, null);
+					}
+
+					long friendshipId = sDatabase.insert(
+							DatabaseDef.FriendshipTable.TABLE_NAME, null,
+							valuesForFriendship);
+					DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+					if (friendshipId < 0) {
+						// Failed.
+						DbgUtil.showDebug(TAG,
+								"Failed to insert data into Friendship DB");
+						TrackingUtil
+								.trackExceptionMessage(mContext, TAG,
+										"illegal id for addAllFriendshipAndFriendInfo - 1 ");
+						throw new UserLocalDataHandlerException(
+								"id is less than 0. Failed to insert data");
+					}
+
+				}
+
+			}
+		} catch (IndexOutOfBoundsException e) {
+			DbgUtil.showDebug(TAG,
+					"IndexOutOfBoundsException: " + e.getMessage());
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for  for addAllFriendshipAndFriendInfo - 2 : "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException: "
+					+ e.getMessage());
+		}
+
+	}
+
 	public void addMultipleNewMessagesAndFriendIfNecessary(long userId,
 			ArrayList<MessageItemData> newMessages)
 			throws UserLocalDataHandlerException {
@@ -353,14 +433,12 @@ public class UserLocalDataHandler {
 					// If myself is receiver (meaning sender id friend)
 					ContentValues valuesForFriendship = null;
 					if (userId != senderId) {
+						DbgUtil.showDebug(TAG, "user is not sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								senderId, senderName, null, senderId,
 								messageData, null);
 					} else {
-						// If myself is sender (but this case should be
-						// eliminated
-						// in server side)
-						DbgUtil.showDebug(TAG, "something wrong");
+						DbgUtil.showDebug(TAG, "user is sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								toUserId, toUserName, null, senderId,
 								messageData, null);

@@ -37,6 +37,8 @@ public class UserServerDataHandler implements
 
 	private final static String REQUEST_NEW_USER_DATA = "request_new_user_data";
 
+	private final static String REQUEST_ALL_NEW_USER_DATA = "request_all_new_user_data";
+
 	private final static String REQUEST_CONVERSATION_DATA = "request_conversation_data";
 
 	private final static String SEND_AND_ADD_DATA = "send_add_data";
@@ -109,7 +111,7 @@ public class UserServerDataHandler implements
 		}
 	}
 
-	public void requestNewUserData(int userId, boolean isAllRequire)
+	public void requestNewUserData(int userId)
 			throws FriendDataManagerException {
 		DbgUtil.showDebug(TAG, "requestNewUserData");
 		if (mDataListener == null) {
@@ -122,11 +124,30 @@ public class UserServerDataHandler implements
 
 		String origin = TAG + REQUEST_NEW_USER_DATA;
 		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
-				LcomConst.SERVLET_ALL_DATA_REQUIRE, LcomConst.SERVLET_API_LEVEL };
+				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId),
-				String.valueOf(isAllRequire),
 				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_MESSAGE, key, value);
+
+	}
+
+	public void requestAllNewUserData(int userId)
+			throws FriendDataManagerException {
+		DbgUtil.showDebug(TAG, "requestAllNewUserData");
+		if (mDataListener == null) {
+			throw new FriendDataManagerException(
+					"UserServerDataListener is null");
+		}
+
+		// Set context
+		mRequestContext = LcomConst.ServerRequestContext.requestAllNewUserData;
+
+		String origin = TAG + REQUEST_ALL_NEW_USER_DATA;
+		String key[] = { LcomConst.SERVLET_ORIGIN, LcomConst.SERVLET_USER_ID,
+				LcomConst.SERVLET_API_LEVEL };
+		String value[] = { origin, String.valueOf(userId),
+				String.valueOf(LcomConst.API_LEVEL) };
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_ALL_USER_DATA, key, value);
 
 	}
 
@@ -220,6 +241,16 @@ public class UserServerDataHandler implements
 							notifyNewDataset(newUserDatas);
 						} else {
 							notifyNewDataset(null);
+						}
+					} else if (origin.equals(TAG + REQUEST_ALL_NEW_USER_DATA)) {
+						DbgUtil.showDebug(TAG, "REQUEST_ALL_NEW_USER_DATA");
+						String response = respList.get(1);
+						if (response != null) {
+							DbgUtil.showDebug(TAG, "response: " + response);
+							final ArrayList<FriendListData> allDatas = parseResponse(response);
+							notifyUserAllDataset(allDatas);
+						} else {
+							notifyUserAllDataset(null);
 						}
 					} else if (origin.equals(TAG + SEND_AND_ADD_DATA)) {
 						DbgUtil.showDebug(TAG, "SEND_AND_ADD_DATA");
@@ -519,6 +550,22 @@ public class UserServerDataHandler implements
 		}).start();
 	}
 
+	private void notifyUserAllDataset(final ArrayList<FriendListData> allDatas) {
+		DbgUtil.showDebug(TAG, "notifyUserAllDataset");
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						mDataListener.notifyUserAllDataSet(allDatas);
+					}
+				});
+			}
+
+		}).start();
+	}
+
 	private void notifyConversationDataset(
 			final ArrayList<MessageItemData> messageDatas) {
 		DbgUtil.showDebug(TAG, "notifyConversationDataset");
@@ -574,6 +621,11 @@ public class UserServerDataHandler implements
 				DbgUtil.showDebug(TAG, "requestContext is requestNewUserdata");
 				notifyNewDataset(null);
 				break;
+			case requestAllNewUserData:
+				DbgUtil.showDebug(TAG,
+						"requestContext is requestAllNewUserData");
+				notifyUserAllDataset(null);
+				break;
 			case sendAndRegiserMessage:
 				DbgUtil.showDebug(TAG,
 						"requestContext is sendAndRegisterMessage");
@@ -607,6 +659,8 @@ public class UserServerDataHandler implements
 	public interface UserServerDataListener {
 		public void notifyNewServerUserDataSet(
 				ArrayList<FriendListData> newUserData);
+
+		public void notifyUserAllDataSet(ArrayList<FriendListData> newUserData);
 
 		public void notifyMessageSend(int result, MessageItemData mesageData);
 

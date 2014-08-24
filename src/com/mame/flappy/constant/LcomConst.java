@@ -60,8 +60,6 @@ public class LcomConst {
 
 	public final static String SERVLET_API_LEVEL = "servlet_api_level";
 
-	public final static String SERVLET_ALL_DATA_REQUIRE = "servlet_all_data_require";
-
 	// public final static String SERVLET_CONTEXT_IDENTIFIER =
 	// "servlet_identifier";
 
@@ -76,6 +74,8 @@ public class LcomConst {
 	public final static String SERVLET_NAME_NEW_INVITATION_CONFIRMED = "servlet/new_invitation_confirmed";
 
 	public final static String SERVLET_NAME_NEW_MESSAGE = "servlet/new_message";
+
+	public final static String SERVLET_NAME_ALL_USER_DATA = "servlet/all_user_data";
 
 	public final static String SERVLET_NAME_NEW_MESSAGE_DATE = "servlet/new_message_date";
 
@@ -192,7 +192,7 @@ public class LcomConst {
 	 * (case).
 	 */
 	public static enum ServerRequestContext {
-		none, requestNewUserData, sendAndRegiserMessage, requestConversationData, requestFriendThumbnails
+		none, requestNewUserData, requestAllNewUserData, sendAndRegiserMessage, requestConversationData, requestFriendThumbnails
 	}
 
 	/**

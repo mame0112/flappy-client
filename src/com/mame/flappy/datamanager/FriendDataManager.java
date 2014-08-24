@@ -402,10 +402,12 @@ public class FriendDataManager implements UserServerDataListener,
 			try {
 				// If result is null or size is 0, try to get all data
 				if (result == null || result.size() == 0) {
-					mServerDataHandler.requestNewUserData(mUserId, true);
+					DbgUtil.showDebug(TAG, "result is null or size 0");
+					mServerDataHandler.requestAllNewUserData(mUserId);
 				} else {
 					// Otherwize, try to get only new data
-					mServerDataHandler.requestNewUserData(mUserId, false);
+					DbgUtil.showDebug(TAG, "result size: " + result.size());
+					mServerDataHandler.requestNewUserData(mUserId);
 				}
 
 			} catch (FriendDataManagerException e) {
@@ -646,6 +648,25 @@ public class FriendDataManager implements UserServerDataListener,
 		DbgUtil.showDebug(TAG, "storeFriendThumbnails");
 		if (mLocalDataHandler != null) {
 			mLocalDataHandler.storeFriendThumbnails(thumbnails);
+		}
+	}
+
+	@Override
+	public void notifyUserAllDataSet(ArrayList<FriendListData> allData) {
+		DbgUtil.showDebug(TAG, "notifyUserAllDataSet");
+		for (FriendDataManagerListener listener : mListeners) {
+			listener.notifyNewDataset(allData);
+		}
+
+		if (mLocalDataHandler != null) {
+			try {
+				String userName = PreferenceUtil.getUserName(mContext);
+				mLocalDataHandler.addMultipleNewMessages(mUserId, userName,
+						allData);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+			}
 		}
 	}
 }

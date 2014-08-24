@@ -8,8 +8,11 @@ import java.util.List;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.data.FriendListData;
+import com.mame.flappy.data.MessageItemData;
 import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.ui.FriendListActivity;
 import com.mame.flappy.util.DbgUtil;
@@ -25,6 +28,50 @@ public class UserLocalDataHandlerHelper {
 		Collections.sort(input, new NotificationTimeComparator());
 
 		return input;
+	}
+
+	public ArrayList<MessageItemData> convertFormatFriendListToMessageItem(
+			long userId, String userName, ArrayList<FriendListData> itemData) {
+		DbgUtil.showDebug(TAG, "convertFormatFriendListToMessageItem");
+
+		if (itemData != null && itemData.size() != 0) {
+
+			ArrayList<MessageItemData> result = new ArrayList<MessageItemData>();
+
+			for (FriendListData data : itemData) {
+
+				// Extract from FriendListData
+				int friendId = data.getFriendId();
+				String friendName = data.getFriendName();
+				int lastSenderId = data.getLastSender();
+				String lastMessage = data.getLastMessage();
+				long lastMsgDate = data.getMessagDate();
+				Bitmap thumbnail = data.getThumbnail();
+
+				// Conver to NewMessageData
+
+				// If friend is last sender
+				if (friendId == lastSenderId) {
+					// TODO need to care about userId (int / long)
+					MessageItemData item = new MessageItemData(friendId,
+							(int) userId, friendName, userName, lastMessage,
+							lastMsgDate, thumbnail);
+					result.add(item);
+				} else {
+					// If user itself is last sender
+					// TODO need to care about userId (int / long)
+					MessageItemData item = new MessageItemData((int) userId,
+							friendId, userName, friendName, lastMessage,
+							lastMsgDate, thumbnail);
+					result.add(item);
+				}
+			}
+
+			return result;
+
+		}
+
+		return null;
 	}
 
 	public static class NotificationTimeComparator implements
