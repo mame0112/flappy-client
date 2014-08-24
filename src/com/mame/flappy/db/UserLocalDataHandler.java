@@ -632,6 +632,25 @@ public class UserLocalDataHandler {
 						"illegal id for addNewMessage");
 			}
 
+			// Update latest message info on Friendship table
+
+			String where = null;
+			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+					Integer.valueOf(friendId), friendName, null, senderId,
+					message, null);
+			where = DatabaseDef.FriendshipColumns.FRIEND_ID + "=" + friendId;
+
+			long updateId = sDatabase.update(
+					DatabaseDef.FriendshipTable.TABLE_NAME,
+					valuesForFriendship, where, null);
+			if (updateId < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG,
+						"Failed to update latest message in Friendship DB");
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"Failed to update latest message in Friendship DB");
+			}
+
 			// Commit change
 			// sDatabase.setTransactionSuccessful();
 
