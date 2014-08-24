@@ -40,7 +40,7 @@
 
     <property
         name="test.class.name"
-        value="sample.MainTest" />
+        value="com.mame.flappy.test.ConversationActivityTest" />
 
     <path id="test.classpath" >
 
@@ -69,12 +69,22 @@
     <target name="init" >
 
         <!-- Create the time stamp -->
-
         <tstamp />
-
         <mkdir dir="${build}" />
-
         <mkdir dir="${test.build}" />
+
+        <mkdir dir="bin/classes"/>
+        <copy includeemptydirs="false" todir="bin/classes">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin/classes">
+            <fileset dir="gen">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        
     </target>
 
     <target
@@ -82,21 +92,28 @@
         depends="init"
         description="compile the source " >
 
-	<path id="jar.classpath">
-		<pathelement location="${libs}/sqlcipher.jar"/>
-	</path>
-
+        <path id="jar.classpath" >
+	        <pathelement location="bin/classes"/>
+            <pathelement location="${libs}/sqlcipher.jar" />
+	        <pathelement location="${libs}/libGoogleAnalyticsServices.jar"/>
+	        <pathelement location="${libs}/gcm.jar"/>
+	        <pathelement location="${libs}/android-support-v4.jar"/>
+	        <pathelement location="${env.ANDROID_HOME}/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar"/>
+            <pathelement location="${env.ANDROID_HOME}/platforms/android-19/android.jar" />
+        </path>
 
         <!-- Mainをビルドし、buildフォルダに出力 -->
 
         <javac
+            classpathref="jar.classpath"
             destdir="${build}"
             includeAntRuntime="no"
-            srcdir="${src}"
-	    classpathref="jar.classpath" />
-        <!-- MainTestをビルドし、testbuildフォルダに出力 -->
+            srcdir="${src}" />
 
+
+        <!-- MainTestをビルドし、testbuildフォルダに出力 -->
         <javac
+            classpathref="jar.classpath"
             destdir="${test.build}"
             includeAntRuntime="no"
             srcdir="${test.src}" >
@@ -111,7 +128,7 @@
         description="test the source " >
 
         <!-- JUnitによるテストを実行 -->
-
+        
         <junit
             fork="yes"
             haltonfailure="yes" >
@@ -123,6 +140,7 @@
                 usefile="false" />
 
             <classpath refid="test.classpath" />
+            <classpath refid="jar.classpath" />
         </junit>
     </target>
 
