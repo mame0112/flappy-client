@@ -36,6 +36,7 @@ import com.mame.flappy.exception.NewMessageNotificationManagerException;
 import com.mame.flappy.notification.NewMessageNotificationManager;
 import com.mame.flappy.server.LcomDeviceIdRegisterHelper;
 import com.mame.flappy.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
+import com.mame.flappy.ui.dialog.SignoutConfirmationDialog;
 import com.mame.flappy.ui.view.FriendListCustomAdapter;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PreferenceUtil;
@@ -43,7 +44,8 @@ import com.mame.flappy.util.TimeUtil;
 import com.mame.flappy.util.TrackingUtil;
 
 public class FriendListActivity extends LcomBaseActivity implements
-		FriendDataManagerListener, LcomPushRegistrationHelperListener {
+		FriendDataManagerListener, LcomPushRegistrationHelperListener,
+		SignoutConfirmationDialog.SignoutConfirmationListener {
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
 
@@ -725,21 +727,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_friendlist_signout:
-			// Clear all preference data
-			PreferenceUtil.removeAllPreferenceData(getApplicationContext());
 
-			TrackingUtil.trackEvent(getApplicationContext(),
-					TrackingUtil.EVENT_CATEGORY_FRIEND_LIST,
-					TrackingUtil.EVENT_ACTION_FRIEND_LIST_OPTION,
-					TrackingUtil.EVENT_LABEL_FRIEND_LIST_SIGN_OUT, 1);
+			SignoutConfirmationDialog dialog = new SignoutConfirmationDialog();
+			dialog.show(getFragmentManager(), "SignoutConfirmation");
+			dialog.setSignoutConfirmationListener(this);
 
-			NewMessageNotificationManager.removeNotification();
-
-			FriendDataManager.removeUserPreferenceData(getApplicationContext(),
-					mUserId);
-
-			FriendListActivityUtil.startActivityForWelcomeActivity(this);
-			finish();
 			return true;
 		case R.id.menu_friendlist_add:
 			DbgUtil.showDebug(TAG, "menu_friendlist_add");
@@ -774,6 +766,25 @@ public class FriendListActivity extends LcomBaseActivity implements
 			return true;
 		}
 		return false;
+	}
+
+	private void removeAllUserData() {
+		DbgUtil.showDebug(TAG, "removeAllUserData");
+		// Clear all preference data
+		PreferenceUtil.removeAllPreferenceData(getApplicationContext());
+
+		TrackingUtil.trackEvent(getApplicationContext(),
+				TrackingUtil.EVENT_CATEGORY_FRIEND_LIST,
+				TrackingUtil.EVENT_ACTION_FRIEND_LIST_OPTION,
+				TrackingUtil.EVENT_LABEL_FRIEND_LIST_SIGN_OUT, 1);
+
+		NewMessageNotificationManager.removeNotification();
+
+		FriendDataManager.removeUserPreferenceData(getApplicationContext(),
+				mUserId);
+
+		FriendListActivityUtil.startActivityForWelcomeActivity(this);
+		finish();
 	}
 
 	private void updateFriendList() {
@@ -1025,6 +1036,16 @@ public class FriendListActivity extends LcomBaseActivity implements
 	@Override
 	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+
+	}
+
+	@Override
+	public void onSignoutConfirmationSelected(boolean isAccepted) {
+		DbgUtil.showDebug(TAG, "onSignoutConfirmationSelected");
+
+		if (isAccepted) {
+			removeAllUserData();
+		}
 
 	}
 }

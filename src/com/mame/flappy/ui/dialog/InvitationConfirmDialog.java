@@ -1,4 +1,4 @@
-package com.mame.flappy.ui;
+package com.mame.flappy.ui.dialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +31,7 @@ import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.WebAPIException;
+import com.mame.flappy.ui.StartNewConversationActivityUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.LocaleUtil;
