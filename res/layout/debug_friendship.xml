@@ -62,4 +62,10 @@
         android:layout_height="wrap_content"
         android:text="Add data" />
 
+    <Button
+        android:id="@+id/debugAddDummyDataButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add dummy 1000 data" />
+
 </LinearLayout>

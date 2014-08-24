@@ -988,7 +988,7 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	private ContentValues getInsertContentValuesForMessage(int fromUserId,
+	protected ContentValues getInsertContentValuesForMessage(int fromUserId,
 			int toUserId, String fromUserName, String toUserName,
 			String message, String date) {
 		ContentValues values = new ContentValues();
@@ -1003,7 +1003,7 @@ public class UserLocalDataHandler {
 		return values;
 	}
 
-	private ContentValues getInsertContentValuesForFriendship(int friendId,
+	protected ContentValues getInsertContentValuesForFriendship(int friendId,
 			String friendName, byte[] friendThumbnail, int lastSenderId,
 			String lastMessage, String mailAddress) {
 		ContentValues values = new ContentValues();

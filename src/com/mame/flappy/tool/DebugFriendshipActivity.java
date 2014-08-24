@@ -1,6 +1,9 @@
 package com.mame.flappy.tool;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.view.View;
@@ -11,15 +14,18 @@ import android.widget.EditText;
 import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.db.UserLocalDataHandler;
+import com.mame.flappy.exception.FriendDataManagerException;
 import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.util.DbgUtil;
+import com.mame.flappy.util.TrackingUtil;
 
 public class DebugFriendshipActivity extends LcomBaseActivity {
 
 	private final String TAG = LcomConst.TAG + "/DebugFriendshipActivity";
 
-	private UserLocalDataHandler mLocalDataHandler = null;
+	private DebugLocalDataHandler mLocalDataHandler = null;
 
 	private EditText mUserIdEditText = null;
 
@@ -39,12 +45,14 @@ public class DebugFriendshipActivity extends LcomBaseActivity {
 
 	private Button mAddButton = null;
 
+	private Button mDummyLocalButton = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.debug_friendship);
 
-		mLocalDataHandler = new UserLocalDataHandler(getApplicationContext());
+		mLocalDataHandler = new DebugLocalDataHandler(getApplicationContext());
 
 		mUserIdEditText = (EditText) findViewById(R.id.debugFriendshipUserId);
 
@@ -116,6 +124,39 @@ public class DebugFriendshipActivity extends LcomBaseActivity {
 
 		});
 
+		mDummyLocalButton = (Button) findViewById(R.id.debugAddDummyDataButton);
+		mDummyLocalButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new save1000DummyUserDataAsyncTask().execute();
+
+			}
+
+		});
+
+	}
+
+	private class save1000DummyUserDataAsyncTask extends
+			AsyncTask<Void, Void, Boolean> {
+
+		public save1000DummyUserDataAsyncTask() {
+			DbgUtil.showDebug(TAG, "save1000DummyUserDataAsyncTask");
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			DbgUtil.showDebug(TAG, "doInBackground");
+			mLocalDataHandler.saveDummy1000DummyData();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean isSuccess) {
+			DbgUtil.showDebug(TAG,
+					"save1000DummyUserDataAsyncTask onPostExecute");
+
+		}
 	}
 
 }
