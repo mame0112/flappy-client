@@ -182,4 +182,10 @@
     <string name="str_flappy_about_start_title">はじめてみましょう</string>
     <string name="str_flappy_about_start_desc">そんなストレスフリーのメッセージサービス、flappy。あなたも初めてストレスフリーな友達づきあいをしてみませんか？</string>
 
+    <!-- Flappy Signout confirm dialog -->
+    <string name="str_signout_confirm_title">ログアウトしますか？</string>
+    <string name="str_signout_confirm_desc">ログアウトすると、端末に保存されているメッセージ情報はすべて削除されます</string>
+    <string name="str_signout_dialog_positive">ログアウト</string>
+    <string name="str_signout_dialog_negative">キャンセル</string>
+
 </resources>

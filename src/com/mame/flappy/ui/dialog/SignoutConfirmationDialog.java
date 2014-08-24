@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
+import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.FriendListData;
 import com.mame.flappy.data.MessageItemData;
@@ -29,22 +30,20 @@ public class SignoutConfirmationDialog extends DialogFragment implements
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Title")
-				.setMessage("Dialog")
-				.setPositiveButton("Yes",
+		builder.setTitle(R.string.str_signout_confirm_title)
+				.setMessage(R.string.str_signout_confirm_desc)
+				.setPositiveButton(R.string.str_signout_dialog_positive,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								DbgUtil.showDebug(TAG, "Positive");
 								if (mListener != null) {
 									mListener
 											.onSignoutConfirmationSelected(true);
 								}
 							}
 						})
-				.setNegativeButton("Cancel",
+				.setNegativeButton(R.string.str_signout_dialog_negative,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								DbgUtil.showDebug(TAG, "Negative");
 								if (mListener != null) {
 									mListener
 											.onSignoutConfirmationSelected(false);

@@ -183,4 +183,9 @@
     <string name="str_flappy_about_start_title">Let\'s get started</string>
     <string name="str_flappy_about_start_desc">Stress-less messaging service, \'flappy\'. Would you want to get started stress-less communication with your friend?</string>
 
+    <!-- Flappy Signout confirm dialog -->
+    <string name="str_signout_confirm_title">Sign out?</string>
+    <string name="str_signout_confirm_desc">If you sign out, all local user data is deleted.</string>
+    <string name="str_signout_dialog_positive">Sign out</string>
+    <string name="str_signout_dialog_negative">Cancel</string>
 </resources>
