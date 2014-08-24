@@ -14,6 +14,7 @@ import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.db.UserLocalDataHandler;
+import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomServerAccessor;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
@@ -101,9 +102,17 @@ public class DebugConversationActivity extends LcomBaseActivity implements
 						.getText();
 				String date = sbDate.toString();
 
-				mLocalDataHandler.addNewMessage(Integer.valueOf(userId),
-						Integer.valueOf(friendId), userName, friendName,
-						Integer.valueOf(senderId), message, date);
+				try {
+					mLocalDataHandler.addNewMessage(Integer.valueOf(userId),
+							Integer.valueOf(friendId), userName, friendName,
+							Integer.valueOf(senderId), message, date);
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (UserLocalDataHandlerException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		});

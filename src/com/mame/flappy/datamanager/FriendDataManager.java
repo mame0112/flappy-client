@@ -580,7 +580,12 @@ public class FriendDataManager implements UserServerDataListener,
 		case LcomConst.SEND_MESSAGE_RESULT_OK:
 			// We have successfully sent message and it has been stored on
 			// Server side. Then, we are going to store it to local DB.
-			mLocalDataHandler.addNewMessage(postedMessageData);
+			try {
+				mLocalDataHandler.addNewMessage(postedMessageData);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+			}
 			for (FriendDataManagerListener listener : mListeners) {
 				listener.notifyAddPresentDataFinished(true, postedMessageData);
 			}

@@ -563,7 +563,8 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	public void addNewMessage(MessageItemData messageData) {
+	public void addNewMessage(MessageItemData messageData)
+			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addNewMessage (with MessageData class)");
 		if (messageData != null) {
 			int userId = messageData.getFromUserId();
@@ -576,10 +577,6 @@ public class UserLocalDataHandler {
 			String date2 = null;
 			// try {
 			date2 = String.valueOf(date);
-			// date2 = TimeUtil.parseDateInDateToString(date);
-			// } catch (ParseException e) {
-			// DbgUtil.showDebug(TAG, "ParseException: " + e.getMessage());
-			// }
 			addNewMessage(userId, friendId, userName, friendName, senderId,
 					message, date2);
 		} else {
@@ -598,9 +595,11 @@ public class UserLocalDataHandler {
 	 * @param senderId
 	 * @param message
 	 * @param date
+	 * @throws UserLocalDataHandlerException
 	 */
 	public void addNewMessage(int userId, int friendId, String userName,
-			String friendName, int senderId, String message, String date) {
+			String friendName, int senderId, String message, String date)
+			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addNewMessage");
 		DbgUtil.showDebug(TAG, "userId: " + userId);
 		DbgUtil.showDebug(TAG, "friendId: " + friendId);
@@ -608,7 +607,7 @@ public class UserLocalDataHandler {
 		DbgUtil.showDebug(TAG, "senderIde: " + senderId);
 		try {
 			setDatabase();
-			// sDatabase.beginTransaction();
+			sDatabase.beginTransaction();
 
 			// Set data to Message DB
 			ContentValues valuesForMessage = null;
@@ -630,6 +629,8 @@ public class UserLocalDataHandler {
 				DbgUtil.showDebug(TAG, "Failed to insert data into Message DB");
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
 						"illegal id for addNewMessage");
+				throw new UserLocalDataHandlerException(
+						"id is less than 0. Failed to insert data to message table in addNewMessage");
 			}
 
 			// Update latest message info on Friendship table
@@ -649,30 +650,31 @@ public class UserLocalDataHandler {
 						"Failed to update latest message in Friendship DB");
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
 						"Failed to update latest message in Friendship DB");
+				throw new UserLocalDataHandlerException(
+						"id is less than 0. Failed to udate data to friendship table in addNewMessage");
 			}
 
 			// Commit change
-			// sDatabase.setTransactionSuccessful();
+			sDatabase.setTransactionSuccessful();
 
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"SQLExeption for addNewMessage insert: " + e.getMessage());
 		} finally {
-			// try {
-			// if (sDatabase != null) {
-			// DbgUtil.showDebug(TAG, "endTransaction");
-			// sDatabase.endTransaction();
-			// }
-			// } catch (SQLException e) {
-			// DbgUtil.showDebug(TAG,
-			// "SQLException: Database is null" + e.getMessage());
-			// TrackingUtil.trackExceptionMessage(
-			// mContext,
-			// TAG,
-			// "SQLExeption for addNewMessage endTransition: "
-			// + e.getMessage());
-			// }
+			try {
+				if (sDatabase != null) {
+					DbgUtil.showDebug(TAG, "endTransaction");
+					sDatabase.endTransaction();
+				}
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for addNewMessage endTransition: "
+								+ e.getMessage());
+			}
 		}
 	}
 
