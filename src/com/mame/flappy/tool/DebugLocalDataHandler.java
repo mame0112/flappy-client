@@ -102,4 +102,32 @@ public class DebugLocalDataHandler extends UserLocalDataHandler {
 		}
 	}
 
+	public void saveDummy1000DummyFriendshipData() {
+
+		int friendId = 2;
+		int userId = 1;
+		String friendName = "bbbb";
+		String userName = "aaaa";
+		String message = "test message";
+		long date = TimeUtil.getCurrentDate();
+
+		setDatabase();
+
+		for (int i = 0; i < 100; i++) {
+			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+					friendId + i, friendName + i, null, friendId, message + i,
+					null);
+			long friendshipId = sDatabase.insert(
+					DatabaseDef.FriendshipTable.TABLE_NAME, null,
+					valuesForFriendship);
+			DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+			if (friendshipId < 0) {
+				// Failed.
+				DbgUtil.showDebug(TAG,
+						"Failed to insert data into Friendship DB");
+			}
+		}
+
+	}
+
 }

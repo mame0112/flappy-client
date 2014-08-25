@@ -68,4 +68,10 @@
         android:layout_height="wrap_content"
         android:text="Add dummy 1000 data" />
 
+    <Button
+        android:id="@+id/debugAddDummyFriendshipButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add dummy 1000 friendship data" />
+
 </LinearLayout>

@@ -47,6 +47,8 @@ public class DebugFriendshipActivity extends LcomBaseActivity {
 
 	private Button mDummyLocalButton = null;
 
+	private Button mDummyFriendshipButton = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -135,6 +137,16 @@ public class DebugFriendshipActivity extends LcomBaseActivity {
 
 		});
 
+		mDummyFriendshipButton = (Button) findViewById(R.id.debugAddDummyFriendshipButton);
+		mDummyFriendshipButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				new save1000DummyFriendshipDataAsyncTask().execute();
+
+			}
+
+		});
 	}
 
 	private class save1000DummyUserDataAsyncTask extends
@@ -155,6 +167,28 @@ public class DebugFriendshipActivity extends LcomBaseActivity {
 		protected void onPostExecute(Boolean isSuccess) {
 			DbgUtil.showDebug(TAG,
 					"save1000DummyUserDataAsyncTask onPostExecute");
+
+		}
+	}
+
+	private class save1000DummyFriendshipDataAsyncTask extends
+			AsyncTask<Void, Void, Boolean> {
+
+		public save1000DummyFriendshipDataAsyncTask() {
+			DbgUtil.showDebug(TAG, "save1000DummyFriendshipDataAsyncTask");
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			DbgUtil.showDebug(TAG, "doInBackground");
+			mLocalDataHandler.saveDummy1000DummyFriendshipData();
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Boolean isSuccess) {
+			DbgUtil.showDebug(TAG,
+					"save1000DummyFriendshipDataAsyncTask onPostExecute");
 
 		}
 	}
