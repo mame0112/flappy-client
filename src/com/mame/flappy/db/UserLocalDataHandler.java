@@ -67,7 +67,7 @@ public class UserLocalDataHandler {
 					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
 			String selectionArgs[] = { String.valueOf(targetUserId),
 					String.valueOf(targetUserId) };
-			String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 100";
+			String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 0, 100";
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					selection, selectionArgs, sortOrder);
 			while (cursor != null && cursor.moveToNext()) {

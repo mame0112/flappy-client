@@ -57,29 +57,38 @@ public class ConversationListCustonAdapter extends
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		MessageItemData item = (MessageItemData) getItem(position);
+		ViewHolder holder;
 
 		if (convertView == null) {
 			convertView = mLayoutInflater.inflate(
 					R.layout.conversationlist_item, null);
+
+			holder = new ViewHolder();
+
+			holder.friendLayout = (FrameLayout) convertView
+					.findViewById(R.id.conversationFriendLayout);
+			holder.myLayout = (FrameLayout) convertView
+					.findViewById(R.id.conversationMyLayout);
+			holder.thumbnailView = (ImageView) convertView
+					.findViewById(R.id.conversationThumbnail);
+			holder.userNameView = (TextView) convertView
+					.findViewById(R.id.conversationUserName);
+			holder.messageView = (TextView) convertView
+					.findViewById(R.id.conversationMessage);
+			holder.dateView = (TextView) convertView
+					.findViewById(R.id.conversationDate);
+			holder.myMessageView = (TextView) convertView
+					.findViewById(R.id.conversationMessageReverse);
+			holder.myDateView = (TextView) convertView
+					.findViewById(R.id.conversationDateReverse);
+
+			convertView.setTag(holder);
+
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 
 		if (item != null) {
-			FrameLayout friendLayout = (FrameLayout) convertView
-					.findViewById(R.id.conversationFriendLayout);
-			FrameLayout myLayout = (FrameLayout) convertView
-					.findViewById(R.id.conversationMyLayout);
-			ImageView thumbnailView = (ImageView) convertView
-					.findViewById(R.id.conversationThumbnail);
-			TextView userNameView = (TextView) convertView
-					.findViewById(R.id.conversationUserName);
-			TextView messageView = (TextView) convertView
-					.findViewById(R.id.conversationMessage);
-			TextView dateView = (TextView) convertView
-					.findViewById(R.id.conversationDate);
-			TextView myMessageView = (TextView) convertView
-					.findViewById(R.id.conversationMessageReverse);
-			TextView myDateView = (TextView) convertView
-					.findViewById(R.id.conversationDateReverse);
 
 			String message = item.getMessage();
 
@@ -88,25 +97,26 @@ public class ConversationListCustonAdapter extends
 
 			// If sender is myself
 			if (mUserId == item.getFromUserId()) {
-				friendLayout.setVisibility(View.VISIBLE);
-				thumbnailView.setVisibility(View.GONE);
-				userNameView.setVisibility(View.GONE);
-				messageView.setVisibility(View.GONE);
-				dateView.setVisibility(View.GONE);
-				myLayout.setVisibility(View.GONE);
-				myMessageView.setVisibility(View.VISIBLE);
-				myDateView.setVisibility(View.VISIBLE);
+				holder.friendLayout.setVisibility(View.VISIBLE);
+				holder.thumbnailView.setVisibility(View.GONE);
+				holder.userNameView.setVisibility(View.GONE);
+				holder.messageView.setVisibility(View.GONE);
+				holder.dateView.setVisibility(View.GONE);
+				holder.myLayout.setVisibility(View.GONE);
+				holder.myMessageView.setVisibility(View.VISIBLE);
+				holder.myDateView.setVisibility(View.VISIBLE);
 
 				if (message != null && !message.equals("")) {
-					myMessageView.setText(message);
+					holder.myMessageView.setText(message);
 				} else {
-					myMessageView.setText(R.string.str_conversation_no_message);
+					holder.myMessageView
+							.setText(R.string.str_conversation_no_message);
 				}
 
 				String postDate = TimeUtil.getDateForDisplay(originalDate,
 						mContext);
 				// myDateView.setText(date);
-				myDateView.setText(postDate);
+				holder.myDateView.setText(postDate);
 
 			} else {
 				// If sender if friend
@@ -116,30 +126,31 @@ public class ConversationListCustonAdapter extends
 					friendName = mContext
 							.getString(R.string.str_conversation_user_name_not_set);
 				}
-				userNameView.setText(friendName);
+				holder.userNameView.setText(friendName);
 
-				myLayout.setVisibility(View.VISIBLE);
-				friendLayout.setVisibility(View.GONE);
-				thumbnailView.setVisibility(View.VISIBLE);
-				userNameView.setVisibility(View.VISIBLE);
-				messageView.setVisibility(View.VISIBLE);
-				dateView.setVisibility(View.VISIBLE);
-				myMessageView.setVisibility(View.GONE);
-				myDateView.setVisibility(View.GONE);
+				holder.myLayout.setVisibility(View.VISIBLE);
+				holder.friendLayout.setVisibility(View.GONE);
+				holder.thumbnailView.setVisibility(View.VISIBLE);
+				holder.userNameView.setVisibility(View.VISIBLE);
+				holder.messageView.setVisibility(View.VISIBLE);
+				holder.dateView.setVisibility(View.VISIBLE);
+				holder.myMessageView.setVisibility(View.GONE);
+				holder.myDateView.setVisibility(View.GONE);
 
 				if (message != null && !message.equals("")) {
-					messageView.setText(message);
+					holder.messageView.setText(message);
 				} else {
-					messageView.setText(R.string.str_conversation_no_message);
+					holder.messageView
+							.setText(R.string.str_conversation_no_message);
 				}
 
 				String postDate = TimeUtil.getDateForDisplay(originalDate,
 						mContext);
 				// dateView.setText(date);
-				dateView.setText(postDate);
+				holder.dateView.setText(postDate);
 
 				if (mThumbnail != null) {
-					thumbnailView.setImageBitmap(mThumbnail);
+					holder.thumbnailView.setImageBitmap(mThumbnail);
 				}
 
 			}
@@ -147,5 +158,16 @@ public class ConversationListCustonAdapter extends
 		}
 		return convertView;
 
+	}
+
+	static class ViewHolder {
+		FrameLayout friendLayout;
+		FrameLayout myLayout;
+		ImageView thumbnailView;
+		TextView userNameView;
+		TextView messageView;
+		TextView dateView;
+		TextView myMessageView;
+		TextView myDateView;
 	}
 }
