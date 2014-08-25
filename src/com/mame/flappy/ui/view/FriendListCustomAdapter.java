@@ -35,25 +35,30 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		FriendListData item = (FriendListData) getItem(position);
+		ViewHolder holder;
 
 		if (convertView == null) {
 			convertView = mLayoutInflater.inflate(R.layout.friendlist_item,
 					null);
+			holder = new ViewHolder();
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 
-		ImageView userThumbnail = (ImageView) convertView
+		holder.userThumbnail = (ImageView) convertView
 				.findViewById(R.id.userThumbnail);
-		TextView userNameView = (TextView) convertView
+		holder.userNameView = (TextView) convertView
 				.findViewById(R.id.friendUserName);
-		TextView numOfNewMessageView = (TextView) convertView
+		holder.numOfNewMessageView = (TextView) convertView
 				.findViewById(R.id.numOfNewMessage);
-		TextView lastMessageView = (TextView) convertView
+		holder.lastMessageView = (TextView) convertView
 				.findViewById(R.id.lastMessage);
 
 		Bitmap bitmap = item.getThumbnail();
 		if (bitmap != null) {
 			// userThumbnail.setim
-			userThumbnail.setImageBitmap(bitmap);
+			holder.userThumbnail.setImageBitmap(bitmap);
 		} else {
 			// Nothing to do.
 		}
@@ -62,41 +67,43 @@ public class FriendListCustomAdapter extends ArrayAdapter<FriendListData> {
 		if (name == null || name.equals(LcomConst.NULL)) {
 			name = item.getMailAddress();
 		}
-		userNameView.setText(name);
+		holder.userNameView.setText(name);
 		int numOfMessage = item.getNumOfNewMessage();
 		if (numOfMessage <= 0) {
 			// Nothing to do
 			if (Build.VERSION.SDK_INT >= 16) {
-				numOfNewMessageView.setBackground(null);
+				holder.numOfNewMessageView.setBackground(null);
 			} else {
-				numOfNewMessageView.setBackgroundDrawable(null);
+				holder.numOfNewMessageView.setBackgroundDrawable(null);
 			}
 		} else if (numOfMessage >= 1 && numOfMessage <= 10) {
 			// If the number of message is between 1 and 10
-			numOfNewMessageView.setText(String.valueOf(numOfMessage));
-			numOfNewMessageView
+			holder.numOfNewMessageView.setText(String.valueOf(numOfMessage));
+			holder.numOfNewMessageView
 					.setBackgroundResource(R.drawable.flappy_new_message_number_bg);
 		} else if (numOfMessage > 10) {
 			// If the number of message is more than 10
-			numOfNewMessageView
+			holder.numOfNewMessageView
 					.setBackgroundResource(R.drawable.flappy_new_message_number_10plus);
 
 		} else {
 			if (Build.VERSION.SDK_INT >= 16) {
-				numOfNewMessageView.setBackground(null);
+				holder.numOfNewMessageView.setBackground(null);
 			} else {
-				numOfNewMessageView.setBackgroundDrawable(null);
+				holder.numOfNewMessageView.setBackgroundDrawable(null);
 			}
 		}
 
-		lastMessageView.setText(item.getLastMessage());
-
-		DbgUtil.showDebug(TAG, "userName;" + item.getFriendName());
-		DbgUtil.showDebug(TAG, "numOfNewMessage;" + item.getNumOfNewMessage());
-		DbgUtil.showDebug(TAG, "lastMessage;" + item.getLastMessage());
-		DbgUtil.showDebug(TAG, "mailAddress;" + item.getMailAddress());
+		holder.lastMessageView.setText(item.getLastMessage());
 
 		return convertView;
 
+	}
+
+	static class ViewHolder {
+		ImageView userThumbnail;
+		TextView userNameView;
+		TextView numOfNewMessageView;
+		TextView lastMessageView;
 	}
 }
