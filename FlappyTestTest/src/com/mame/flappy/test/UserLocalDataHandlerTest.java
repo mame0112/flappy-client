@@ -425,6 +425,17 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 	}
 
+	public void testAddAllFriendshipAndFriendInfo() {
+
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		// TODO
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
 			int toUserId, String fromUserName, String toUserName,
 			String message, String date) {

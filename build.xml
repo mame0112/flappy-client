@@ -74,6 +74,7 @@
         <mkdir dir="${test.build}" />
 
         <mkdir dir="bin/classes"/>
+        <mkdir dir="gen"/>
         <copy includeemptydirs="false" todir="bin/classes">
             <fileset dir="src">
                 <exclude name="**/*.java"/>
