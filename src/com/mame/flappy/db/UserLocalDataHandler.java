@@ -215,6 +215,7 @@ public class UserLocalDataHandler {
 		mListener = listener;
 	}
 
+	// TODO need to care already friendship is registered case
 	public void addNewMessageAndFriendIfNecessary(int userId, int friendId,
 			String userName, String friendName, int senderId, String message,
 			String date, byte[] friendThumb, String mailAddress)
