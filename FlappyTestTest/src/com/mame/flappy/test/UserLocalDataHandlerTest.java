@@ -425,15 +425,321 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 	}
 
-	public void testAddAllFriendshipAndFriendInfo() {
+	public void testAddMultipleNewMessages1() {
 
 		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
 		setDatabase();
 		handler.removeLocalUserPreferenceData(getContext());
 
-		// TODO
+		int userId = 1;
+		String userName = "aaaa";
+		ArrayList<FriendListData> newMessages = new ArrayList<FriendListData>();
+
+		int friendId = 2;
+		String friendName = "bbbb";
+		int lastSenderId = 2;
+		String lastMessage = "test message";
+		long lastMsgDate = TimeUtil.getCurrentDate();
+		int numOfNewMessage = 3;
+		String mailAddress = "a@a";
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
+		byte[] thumbByte = ImageUtil.encodeBitmapToByteArray(thumbnail);
+
+		FriendListData data = new FriendListData(friendId, friendName,
+				lastSenderId, lastMessage, lastMsgDate, numOfNewMessage,
+				mailAddress, thumbnail);
+		newMessages.add(data);
+
+		try {
+			handler.addMultipleNewMessages(userId, userName, newMessages);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, null);
+		assertNotNull(cursor);
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					assertEquals(lastMessage, lastMessageResult);
+					assertEquals(String.valueOf(lastSenderId),
+							lastSenderIdResult);
+					assertEquals(String.valueOf(friendId), friendIdResult);
+					assertEquals(friendName, friendNameResult);
+					assertNull(mailAddressResult);
+					assertNotNull(thumbnail);
+					assertNull(thumb);
+
+				} while (cursor.moveToNext());
+			}
+		}
 
 		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	public void testAddMultipleNewMessages2() {
+
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int userId = 1;
+		String userName = "aaaa";
+		ArrayList<FriendListData> newMessages = new ArrayList<FriendListData>();
+
+		int friendId = 2;
+		String friendName = "bbbb";
+		int lastSenderId = 2;
+		String lastMessage = "test message";
+		long lastMsgDate = TimeUtil.getCurrentDate();
+		int numOfNewMessage = 3;
+		String mailAddress = "a@a";
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
+		byte[] thumbByte = ImageUtil.encodeBitmapToByteArray(thumbnail);
+
+		FriendListData data = new FriendListData(friendId, friendName,
+				lastSenderId, lastMessage, lastMsgDate, numOfNewMessage,
+				mailAddress, thumbnail);
+		newMessages.add(data);
+
+		int friendId2 = 3;
+		String friendName2 = "cccc";
+		int lastSenderId2 = 1;
+		String lastMessage2 = "test message2";
+		long lastMsgDate2 = TimeUtil.getCurrentDate();
+		int numOfNewMessage2 = 1;
+		String mailAddress2 = "b@b";
+		Drawable d2 = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap thumbnail2 = ((BitmapDrawable) d2).getBitmap();
+
+		FriendListData data2 = new FriendListData(friendId2, friendName2,
+				lastSenderId2, lastMessage2, lastMsgDate2, numOfNewMessage2,
+				mailAddress2, thumbnail2);
+		newMessages.add(data2);
+
+		try {
+			handler.addMultipleNewMessages(userId, userName, newMessages);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, null);
+		assertNotNull(cursor);
+
+		int count = 0;
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					switch (count) {
+					case 0:
+						assertEquals(lastMessage, lastMessageResult);
+						assertEquals(String.valueOf(lastSenderId),
+								lastSenderIdResult);
+						assertEquals(String.valueOf(friendId), friendIdResult);
+						assertEquals(friendName, friendNameResult);
+						assertNull(mailAddressResult);
+						assertNotNull(thumbnail);
+						assertNull(thumb);
+						break;
+					case 1:
+						assertEquals(lastMessage2, lastMessageResult);
+						assertEquals(String.valueOf(lastSenderId2),
+								lastSenderIdResult);
+						assertEquals(String.valueOf(friendId2), friendIdResult);
+						assertEquals(friendName2, friendNameResult);
+						assertNull(mailAddressResult);
+						assertNotNull(thumbnail2);
+						assertNull(thumb);
+						break;
+					default:
+						assertTrue(false);
+						break;
+					}
+
+					count++;
+
+				} while (cursor.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * No preset data case
+	 */
+	public void testAddMultipleNewMessagesAndFriendIfNecessary() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int userId = 1;
+		String userName = "aaaa";
+		ArrayList<MessageItemData> newMessages = new ArrayList<MessageItemData>();
+
+		int fromUserId = 2;
+		int toUserId = 1;
+		String fromUserName = "bbbb";
+		String toUserName = "aaaa";
+
+		String lastMessage = "test message";
+		long postedDate = TimeUtil.getCurrentDate();
+
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
+
+		MessageItemData data = new MessageItemData(fromUserId, toUserId,
+				fromUserName, toUserName, lastMessage, postedDate, thumbnail);
+		newMessages.add(data);
+
+		int fromUserId2 = 3;
+		int toUserId2 = 1;
+		String fromUserName2 = "cccc";
+		String toUserName2 = "aaaa";
+
+		String lastMessage2 = "test message2";
+		long postedDate2 = TimeUtil.getCurrentDate() - 10000;
+		Drawable d2 = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap thumbnail2 = ((BitmapDrawable) d2).getBitmap();
+
+		MessageItemData data2 = new MessageItemData(fromUserId2, toUserId2,
+				fromUserName2, toUserName2, lastMessage2, postedDate2,
+				thumbnail2);
+		newMessages.add(data2);
+
+		try {
+			handler.addMultipleNewMessagesAndFriendIfNecessary(userId,
+					newMessages);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, null);
+
+		int count = 0;
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+//					switch (count) {
+//					case 0:
+//						assertEquals(lastMessage, lastMessageResult);
+//						assertEquals(String.valueOf(lastSenderId),
+//								lastSenderIdResult);
+//						assertEquals(String.valueOf(friendId), friendIdResult);
+//						assertEquals(friendName, friendNameResult);
+//						assertNull(mailAddressResult);
+//						assertNotNull(thumbnail);
+//						assertNull(thumb);
+//						break;
+//					case 1:
+//						assertEquals(lastMessage2, lastMessageResult);
+//						assertEquals(String.valueOf(lastSenderId2),
+//								lastSenderIdResult);
+//						assertEquals(String.valueOf(friendId2), friendIdResult);
+//						assertEquals(friendName2, friendNameResult);
+//						assertNull(mailAddressResult);
+//						assertNotNull(thumbnail2);
+//						assertNull(thumb);
+//						break;
+//					default:
+//						assertTrue(false);
+//						break;
+//					}
+
+					count++;
+
+				} while (cursor.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+
 	}
 
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
