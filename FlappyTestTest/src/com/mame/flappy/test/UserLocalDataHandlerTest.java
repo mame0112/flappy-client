@@ -12,6 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.test.AndroidTestCase;
 
+import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.FriendListData;
 import com.mame.flappy.data.MessageItemData;
 import com.mame.flappy.db.DatabaseDef;
@@ -19,11 +20,14 @@ import com.mame.flappy.db.UserDatabaseHelper;
 import com.mame.flappy.db.UserLocalDataHandler;
 import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.test.util.ReflectionUtil;
+import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.ImageUtil;
 import com.mame.flappy.util.SecurityUtil;
 import com.mame.flappy.util.TimeUtil;
 
 public class UserLocalDataHandlerTest extends AndroidTestCase {
+
+	private final String TAG = LcomConst.TAG + "/UserLocalDataHandlerTest";
 
 	private static SQLiteDatabase sDatabase;
 
@@ -677,15 +681,14 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 				.getValue(UserLocalDataHandler.class, "mContentResolver",
 						handler);
 
-		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
-				null, null, null, null);
+		String order = DatabaseDef.FriendshipColumns._ID + " ASC";
 
-		int count = 0;
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, order);
 
 		if (cursor != null) {
 			if (cursor.moveToFirst()) {
 				do {
-
 					String friendIdResult = cursor
 							.getString(cursor
 									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
@@ -706,39 +709,74 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 							.getBlob(cursor
 									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
 
-//					switch (count) {
-//					case 0:
-//						assertEquals(lastMessage, lastMessageResult);
-//						assertEquals(String.valueOf(lastSenderId),
-//								lastSenderIdResult);
-//						assertEquals(String.valueOf(friendId), friendIdResult);
-//						assertEquals(friendName, friendNameResult);
-//						assertNull(mailAddressResult);
-//						assertNotNull(thumbnail);
-//						assertNull(thumb);
-//						break;
-//					case 1:
-//						assertEquals(lastMessage2, lastMessageResult);
-//						assertEquals(String.valueOf(lastSenderId2),
-//								lastSenderIdResult);
-//						assertEquals(String.valueOf(friendId2), friendIdResult);
-//						assertEquals(friendName2, friendNameResult);
-//						assertNull(mailAddressResult);
-//						assertNotNull(thumbnail2);
-//						assertNull(thumb);
-//						break;
-//					default:
-//						assertTrue(false);
-//						break;
-//					}
+					DbgUtil.showDebug(TAG, "friendIdResult: " + friendIdResult);
 
-					count++;
+					assertEquals(lastMessage2, lastMessageResult);
+					assertEquals(String.valueOf(fromUserId2),
+							lastSenderIdResult);
+					assertEquals(String.valueOf(fromUserId2), friendIdResult);
+					assertEquals(fromUserName2, friendNameResult);
+					assertNull(mailAddressResult);
+					assertNotNull(thumbnail2);
+					assertNull(thumb);
+					break;
 
 				} while (cursor.moveToNext());
 			}
 		}
 
+		Cursor cursor2 = mContentResolver.query(DatabaseDef.MessageTable.URI,
+				null, null, null, null);
+
+		int count = 0;
+
+		if (cursor2 != null) {
+			if (cursor2.moveToFirst()) {
+				do {
+					String fromUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+					String toUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+					String messageResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+					String timeResult = cursor2.getString(cursor2
+							.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+
+					switch (count) {
+					case 0:
+						assertEquals(String.valueOf(fromUserId),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId), toUserIdResult);
+						assertEquals(lastMessage, messageResult);
+						assertEquals(String.valueOf(postedDate), timeResult);
+						break;
+					case 1:
+						assertEquals(String.valueOf(fromUserId2),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId2), toUserIdResult);
+						assertEquals(lastMessage2, messageResult);
+						assertEquals(String.valueOf(postedDate2), timeResult);
+						break;
+					default:
+						assertTrue(false);
+						break;
+					}
+
+					count = count + 1;
+
+				} while (cursor2.moveToNext());
+			}
+		}
+
 		handler.removeLocalUserPreferenceData(getContext());
+
+	}
+
+	// TODO
+	public void testAddNewMessage() {
 
 	}
 
