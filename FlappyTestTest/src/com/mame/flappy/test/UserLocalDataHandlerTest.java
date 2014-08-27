@@ -775,6 +775,200 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 
 	}
 
+	/**
+	 * With preset data case (friendship info and message info)
+	 */
+	public void testAddMultipleNewMessagesAndFriendIfNecessary2() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int userId = 1;
+		String userName = "aaaa";
+
+		int fromUserId = 2;
+		int toUserId = 1;
+		String fromUserName = "bbbb";
+		String toUserName = "aaaa";
+
+		String lastMessage = "test message";
+		long postedDate = TimeUtil.getCurrentDate();
+
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
+
+		// int friendId,
+		// String friendName, byte[] friendThumbnail, int lastSenderId,
+		// String lastMessage, String mailAddress
+
+		ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+				fromUserId, fromUserName, friendThumb, fromUserId, lastMessage,
+				null);
+
+		long friendshipId = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship);
+
+		assertNotSame(friendshipId, -1);
+
+		// int fromUserId,
+		// int toUserId, String fromUserName, String toUserName,
+		// String message, String date
+
+		ContentValues valuesForMessage = getInsertContentValuesForMessage(
+				fromUserId, userId, fromUserName, userName, lastMessage,
+				String.valueOf(postedDate));
+
+		long id = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME, null,
+				valuesForMessage);
+
+		assertNotSame(id, -1);
+
+		String lastMessage2 = "test message2";
+		long postedDate2 = TimeUtil.getCurrentDate() - 10000;
+		ContentValues valuesForMessage2 = getInsertContentValuesForMessage(
+				fromUserId, userId, fromUserName, userName, lastMessage2,
+				String.valueOf(postedDate2));
+		long id2 = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME, null,
+				valuesForMessage2);
+		assertNotSame(id2, -1);
+
+		// ---
+
+		ArrayList<MessageItemData> newMessages = new ArrayList<MessageItemData>();
+
+		String lastMessage3 = "test message3";
+		long postedDate3 = TimeUtil.getCurrentDate() - 200;
+
+		MessageItemData data = new MessageItemData(fromUserId, toUserId,
+				fromUserName, toUserName, lastMessage3, postedDate3, bitmap);
+		newMessages.add(data);
+
+		String lastMessage4 = "test message4";
+		long postedDate4 = TimeUtil.getCurrentDate() - 300;
+
+		MessageItemData data2 = new MessageItemData(fromUserId, toUserId,
+				fromUserName, toUserName, lastMessage4, postedDate4, bitmap);
+		newMessages.add(data2);
+
+		try {
+			handler.addMultipleNewMessagesAndFriendIfNecessary(userId,
+					newMessages);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		String order = DatabaseDef.FriendshipColumns._ID + " ASC";
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, order);
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					DbgUtil.showDebug(TAG, "friendIdResult: " + friendIdResult);
+
+					assertEquals(lastMessage4, lastMessageResult);
+					assertEquals(String.valueOf(fromUserId), lastSenderIdResult);
+					assertEquals(String.valueOf(fromUserId), friendIdResult);
+					assertEquals(fromUserName, friendNameResult);
+					assertNull(mailAddressResult);
+					assertNotNull(thumb);
+					break;
+
+				} while (cursor.moveToNext());
+			}
+		}
+
+		Cursor cursor2 = mContentResolver.query(DatabaseDef.MessageTable.URI,
+				null, null, null, null);
+
+		int count = 0;
+
+		if (cursor2 != null) {
+			if (cursor2.moveToFirst()) {
+				do {
+					String fromUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+					String toUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+					String messageResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+					String timeResult = cursor2.getString(cursor2
+							.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+
+					switch (count) {
+					case 0:
+						assertEquals(String.valueOf(fromUserId),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId), toUserIdResult);
+						assertEquals(lastMessage, messageResult);
+						assertEquals(String.valueOf(postedDate), timeResult);
+						break;
+					case 1:
+						assertEquals(String.valueOf(fromUserId),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId), toUserIdResult);
+						assertEquals(lastMessage2, messageResult);
+						assertEquals(String.valueOf(postedDate2), timeResult);
+						break;
+					case 2:
+						assertEquals(String.valueOf(fromUserId),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId), toUserIdResult);
+						assertEquals(lastMessage3, messageResult);
+						assertEquals(String.valueOf(postedDate3), timeResult);
+						break;
+					case 3:
+						assertEquals(String.valueOf(fromUserId),
+								fromUserIdResult);
+						assertEquals(String.valueOf(toUserId), toUserIdResult);
+						assertEquals(lastMessage4, messageResult);
+						assertEquals(String.valueOf(postedDate4), timeResult);
+						break;
+					default:
+						assertTrue(false);
+						break;
+					}
+
+					count = count + 1;
+
+				} while (cursor2.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
 	// TODO
 	public void testAddNewMessage() {
 
