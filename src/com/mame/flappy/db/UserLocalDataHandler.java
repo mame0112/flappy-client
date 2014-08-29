@@ -682,12 +682,6 @@ public class UserLocalDataHandler {
 		try {
 			String projection[] = { DatabaseDef.FriendshipColumns.FRIEND_ID,
 					DatabaseDef.FriendshipColumns.THUMBNAIL };
-			// String selection = DatabaseDef.FriendshipColumns.FRIEND_ID +
-			// "=?";
-			// String selectionArgs[] = { String.valueOf(id) };
-
-			// cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
-			// projection, selection, selectionArgs, null);
 			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
 					projection, null, null, null);
 			if (cursor == null) {

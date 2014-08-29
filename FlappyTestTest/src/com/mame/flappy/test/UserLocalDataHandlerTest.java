@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.CursorJoiner.Result;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -1209,6 +1210,101 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 				} while (cursor2.moveToNext());
 			}
 		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * with no not-registered id
+	 */
+	public void testGetFriendUseridThumbnailNotRegistered1() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
+		int friendId = 2;
+		String friendName = "bbbb";
+		int lastSenderId = 2;
+		String lastMessage = "test message here";
+		String mailAddress = "a@a";
+
+		ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+				friendId, friendName, friendThumb, lastSenderId, lastMessage,
+				mailAddress);
+		long friendshipId = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship);
+
+		ArrayList<Long> result = null;
+
+		try {
+			result = handler.getFriendUseridThumbnailNotRegistered();
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		assertNotNull(result);
+		assertEquals(result.size(), 0);
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * With not registered id
+	 */
+	public void testGetFriendUseridThumbnailNotRegistered2() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.ic_launcher);
+		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
+		int friendId = 2;
+		String friendName = "bbbb";
+		int lastSenderId = 2;
+		String lastMessage = "test message here";
+		String mailAddress = "a@a";
+
+		int friendId2 = 3;
+		String friendName2 = "cccc";
+		byte[] friendThumb2 = null;
+		int lastSenderId2 = 3;
+		String lastMessage2 = "test message here2";
+		String mailAddress2 = "b@b";
+
+		ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+				friendId, friendName, friendThumb, lastSenderId, lastMessage,
+				mailAddress);
+		long friendshipId = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship);
+
+		ContentValues valuesForFriendship2 = getInsertContentValuesForFriendship(
+				friendId2, friendName2, friendThumb2, lastSenderId2,
+				lastMessage2, mailAddress2);
+		long friendshipId2 = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship2);
+
+		ArrayList<Long> result = null;
+
+		try {
+			result = handler.getFriendUseridThumbnailNotRegistered();
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		assertNotNull(result);
+		assertEquals(result.size(), 1);
+
+		Long notRegisteredId = result.get(0);
+		assertEquals(String.valueOf(notRegisteredId), String.valueOf(friendId2));
 
 		handler.removeLocalUserPreferenceData(getContext());
 	}
