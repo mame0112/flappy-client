@@ -900,7 +900,6 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 					assertEquals(fromUserName, friendNameResult);
 					assertNull(mailAddressResult);
 					assertNotNull(thumb);
-					break;
 
 				} while (cursor.moveToNext());
 			}
@@ -969,9 +968,249 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 	}
 
-	// TODO
+	/**
+	 * Without preset data
+	 */
 	public void testAddNewMessage() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
 
+		int userId = 1;
+		int friendId = 2;
+		String userName = "aaaa";
+		String friendName = "bbbb";
+		int senderId = 1;
+		String message = "test message";
+		String date = String.valueOf(TimeUtil.getCurrentDate());
+
+		try {
+			handler.addNewMessage(userId, friendId, userName, friendName,
+					senderId, message, date);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		String order = DatabaseDef.FriendshipColumns._ID + " ASC";
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, order);
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					DbgUtil.showDebug(TAG, "friendIdResult: " + friendIdResult);
+
+					assertEquals(message, lastMessageResult);
+					assertEquals(String.valueOf(senderId), lastSenderIdResult);
+					assertEquals(String.valueOf(friendId), friendIdResult);
+					assertEquals(friendName, friendNameResult);
+					assertNull(mailAddressResult);
+					assertNull(thumb);
+
+				} while (cursor.moveToNext());
+			}
+		}
+
+		Cursor cursor2 = mContentResolver.query(DatabaseDef.MessageTable.URI,
+				null, null, null, null);
+
+		if (cursor2 != null) {
+			if (cursor2.moveToFirst()) {
+				do {
+					String fromUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+					String toUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+					String messageResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+					String timeResult = cursor2.getString(cursor2
+							.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+
+					assertEquals(String.valueOf(senderId), fromUserIdResult);
+					assertEquals(String.valueOf(friendId), toUserIdResult);
+					assertEquals(message, messageResult);
+					assertEquals(date, timeResult);
+
+				} while (cursor2.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * With preset data
+	 */
+	public void testAddNewMessage2() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		// Input preset data
+		int friendId = 2;
+		String friendName = "bbbb";
+		byte[] friendThumb = null;
+		int lastSenderId = 2;
+		String lastMessage = "test message here";
+		String mailAddress = "a@a";
+
+		ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+				friendId, friendName, friendThumb, lastSenderId, lastMessage,
+				mailAddress);
+		long friendshipId = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship);
+
+		int myUserId3 = 1;
+		int friendUserId3 = 2;
+		String myUserName3 = "aaaa";
+		String friendUserName3 = "bbbb";
+		String message3 = "test message";
+		long date3 = TimeUtil.getCurrentDate();
+
+		ContentValues valuesForMessage = getInsertContentValuesForMessage(
+				myUserId3, friendUserId3, myUserName3, friendUserName3,
+				message3, String.valueOf(date3));
+
+		long idMsg = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+				null, valuesForMessage);
+
+		// ---
+
+		int userId2 = 1;
+		int friendId2 = 2;
+		String userName2 = "aaaa";
+		String friendName2 = "bbbb";
+		int senderId2 = 1;
+		String message2 = "test message";
+		String date2 = String.valueOf(TimeUtil.getCurrentDate());
+
+		try {
+			handler.addNewMessage(userId2, friendId2, userName2, friendName2,
+					senderId2, message2, date2);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		String order = DatabaseDef.FriendshipColumns._ID + " ASC";
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, order);
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					String friendIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+					String friendNameResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+					String lastMessageResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+					String lastSenderIdResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+					String mailAddressResult = cursor
+							.getString(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+					byte[] thumb = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+
+					DbgUtil.showDebug(TAG, "friendIdResult: " + friendIdResult);
+
+					assertEquals(message2, lastMessageResult);
+					assertEquals(String.valueOf(senderId2), lastSenderIdResult);
+					assertEquals(String.valueOf(friendId2), friendIdResult);
+					assertEquals(friendName2, friendNameResult);
+					assertNull(mailAddressResult);
+					assertNull(thumb);
+
+				} while (cursor.moveToNext());
+			}
+		}
+
+		Cursor cursor2 = mContentResolver.query(DatabaseDef.MessageTable.URI,
+				null, null, null, null);
+
+		int count = 0;
+
+		if (cursor2 != null) {
+			if (cursor2.moveToFirst()) {
+				do {
+					String fromUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+					String toUserIdResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+					String messageResult = cursor2
+							.getString(cursor2
+									.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+					String timeResult = cursor2.getString(cursor2
+							.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+
+					switch (count) {
+					case 0:
+						assertEquals(String.valueOf(myUserId3),
+								fromUserIdResult);
+						assertEquals(String.valueOf(friendUserId3),
+								toUserIdResult);
+						assertEquals(message3, messageResult);
+						assertEquals(String.valueOf(date3), timeResult);
+						break;
+					case 1:
+						assertEquals(String.valueOf(senderId2),
+								fromUserIdResult);
+						assertEquals(String.valueOf(friendId2), toUserIdResult);
+						assertEquals(message2, messageResult);
+						assertEquals(date2, timeResult);
+						break;
+					default:
+						assertTrue(false);
+						break;
+					}
+					count = count + 1;
+				} while (cursor2.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
 	}
 
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
