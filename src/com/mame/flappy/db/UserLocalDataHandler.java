@@ -750,10 +750,9 @@ public class UserLocalDataHandler {
 						+ "=?" + " OR " + DatabaseDef.MessageColumns.TO_USER_ID
 						+ "=?";
 				String selectionArgs[] = { String.valueOf(friendUserId),
-						String.valueOf(friendUserId) };
-				String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 1";
+						String.valueOf(friendUserId), };
 				cursor = mContentResolver.query(DatabaseDef.MessageTable.URI,
-						projection, selection, selectionArgs, sortOrder);
+						projection, selection, selectionArgs, null);
 				if (cursor == null) {
 					DbgUtil.showDebug(TAG, "cursor is null");
 					throw new UserLocalDataHandlerException("Cursor is null");
@@ -870,8 +869,6 @@ public class UserLocalDataHandler {
 					TAG,
 					"SQLExeption for addNewNotification insert: "
 							+ e.getMessage());
-		} finally {
-
 		}
 	}
 

@@ -16,6 +16,7 @@ import android.test.AndroidTestCase;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.FriendListData;
 import com.mame.flappy.data.MessageItemData;
+import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.db.DatabaseDef;
 import com.mame.flappy.db.UserDatabaseHelper;
 import com.mame.flappy.db.UserLocalDataHandler;
@@ -1305,6 +1306,157 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 
 		Long notRegisteredId = result.get(0);
 		assertEquals(String.valueOf(notRegisteredId), String.valueOf(friendId2));
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * Without preset data
+	 */
+	public void testGetLatestStoredMessage1() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int friendUserId = 2;
+
+		try {
+			FriendListData data = handler.getLatestStoredMessage(friendUserId);
+			assertNull(data);
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * With preset data
+	 */
+	public void testGetLatestStoredMessage2() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int myUserId = 1;
+		int friendUserId = 2;
+		String myUserName = "aaaa";
+		String friendUserName = "bbbb";
+		String message = "test message";
+		long date = TimeUtil.getCurrentDate();
+
+		ContentValues valuesForMessage = getInsertContentValuesForMessage(
+				myUserId, friendUserId, myUserName, friendUserName, message,
+				String.valueOf(date));
+
+		long idMsg = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+				null, valuesForMessage);
+
+		String message2 = "test message2";
+		long date2 = TimeUtil.getCurrentDate() + 10000;
+
+		ContentValues valuesForMessage2 = getInsertContentValuesForMessage(
+				myUserId, friendUserId, myUserName, friendUserName, message2,
+				String.valueOf(date2));
+
+		long idMsg2 = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+				null, valuesForMessage2);
+
+		String message3 = "test message3";
+		long date3 = TimeUtil.getCurrentDate() - 20000;
+
+		ContentValues valuesForMessage3 = getInsertContentValuesForMessage(
+				myUserId, friendUserId, myUserName, friendUserName, message3,
+				String.valueOf(date3));
+
+		long idMsg3 = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
+				null, valuesForMessage3);
+
+		int targetFriendUserId = 2;
+
+		try {
+			FriendListData data = handler
+					.getLatestStoredMessage(targetFriendUserId);
+			assertNotNull(data);
+
+			String messageResult = data.getLastMessage();
+			assertEquals(message2, messageResult);
+			assertEquals(date2, data.getMessagDate());
+
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	public void testAddNewNotification() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int fromUserId = 2;
+		int toUserId = 1;
+		int number = 3;
+		long expireDate = TimeUtil.getCurrentDate() + 10000;
+
+		handler.addNewNotification(fromUserId, toUserId, number, expireDate);
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		Cursor cursor = null;
+		try {
+			cursor = mContentResolver.query(DatabaseDef.NotificationTable.URI,
+					null, null, null, null);
+			if (cursor == null) {
+				assertTrue(false);
+			}
+			try {
+				if (cursor != null) {
+
+					ArrayList<NotificationContentData> tmpDatas = new ArrayList<NotificationContentData>();
+
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+
+							int fromUserIdResult = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.FROM_USER_ID));
+							int toUserIdResult = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.TO_USER_ID));
+							int numberResult = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.NUMBER));
+							long expireDateResult = cursor
+									.getLong(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.EXPIRE_DATE));
+
+							NotificationContentData data = new NotificationContentData(
+									toUserId, fromUserId, number, expireDate);
+							tmpDatas.add(data);
+						} while (cursor.moveToNext());
+					}
+
+					assertNotNull(tmpDatas);
+					assertEquals(tmpDatas.size(), 1);
+					assertEquals(fromUserId, tmpDatas.get(0).getFromUserId());
+					assertEquals(toUserId, tmpDatas.get(0).getToUserId());
+					assertEquals(number, tmpDatas.get(0).getNumberOfMesage());
+
+				} else {
+					assertTrue(false);
+				}
+			} catch (Exception e) {
+				assertTrue(false);
+			}
+
+		} catch (Exception e1) {
+			assertTrue(false);
+		}
 
 		handler.removeLocalUserPreferenceData(getContext());
 	}
