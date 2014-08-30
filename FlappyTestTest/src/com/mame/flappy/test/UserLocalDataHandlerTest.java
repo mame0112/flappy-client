@@ -1,12 +1,15 @@
 package com.mame.flappy.test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.CursorJoiner.Result;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -20,12 +23,14 @@ import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.db.DatabaseDef;
 import com.mame.flappy.db.UserDatabaseHelper;
 import com.mame.flappy.db.UserLocalDataHandler;
+import com.mame.flappy.db.UserLocalDataHandlerHelper;
 import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.test.util.ReflectionUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.ImageUtil;
 import com.mame.flappy.util.SecurityUtil;
 import com.mame.flappy.util.TimeUtil;
+import com.mame.flappy.util.TrackingUtil;
 
 public class UserLocalDataHandlerTest extends AndroidTestCase {
 
@@ -252,7 +257,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
 		int friendId = 2;
@@ -337,7 +342,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		String friendName = "bbbb";
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
 
@@ -449,7 +454,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		int numOfNewMessage = 3;
 		String mailAddress = "a@a";
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
 		byte[] thumbByte = ImageUtil.encodeBitmapToByteArray(thumbnail);
 
@@ -528,7 +533,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		int numOfNewMessage = 3;
 		String mailAddress = "a@a";
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
 		byte[] thumbByte = ImageUtil.encodeBitmapToByteArray(thumbnail);
 
@@ -545,7 +550,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		int numOfNewMessage2 = 1;
 		String mailAddress2 = "b@b";
 		Drawable d2 = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap thumbnail2 = ((BitmapDrawable) d2).getBitmap();
 
 		FriendListData data2 = new FriendListData(friendId2, friendName2,
@@ -649,7 +654,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		long postedDate = TimeUtil.getCurrentDate();
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap thumbnail = ((BitmapDrawable) d).getBitmap();
 
 		MessageItemData data = new MessageItemData(fromUserId, toUserId,
@@ -664,7 +669,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		String lastMessage2 = "test message2";
 		long postedDate2 = TimeUtil.getCurrentDate() - 10000;
 		Drawable d2 = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap thumbnail2 = ((BitmapDrawable) d2).getBitmap();
 
 		MessageItemData data2 = new MessageItemData(fromUserId2, toUserId2,
@@ -797,7 +802,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		long postedDate = TimeUtil.getCurrentDate();
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
 
@@ -1224,7 +1229,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
 		int friendId = 2;
@@ -1263,7 +1268,7 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 
 		Drawable d = getContext().getResources().getDrawable(
-				R.drawable.ic_launcher);
+				R.drawable.flappy_default_thumbnail_large);
 		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
 		byte[] friendThumb = ImageUtil.encodeBitmapToByteArray(bitmap);
 		int friendId = 2;
@@ -1461,6 +1466,336 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		handler.removeLocalUserPreferenceData(getContext());
 	}
 
+	public void testGetNotificationNearestExpireData1() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int toUserId = 1;
+		int fromUserId = 2;
+		String userName = "aaaa";
+		String friendName = "bbbb";
+		String message = "test message";
+		int number = 4;
+		long expireDate = TimeUtil.getCurrentDate() + 10000;
+
+		ContentValues valuesForMessage = null;
+
+		valuesForMessage = getInsertContentValuesForNotification(fromUserId,
+				toUserId, number, expireDate);
+
+		long id = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage);
+
+		try {
+			NotificationContentData result = handler
+					.getNotificationNearestExpireData();
+			assertNotNull(result);
+
+			assertEquals(fromUserId, result.getFromUserId());
+			assertEquals(toUserId, result.getToUserId());
+			assertEquals(number, result.getNumberOfMesage());
+			assertEquals(expireDate, result.getExpireData());
+
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * With multiple message case
+	 */
+	public void testGetNotificationNearestExpireData2() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int toUserId = 1;
+		int fromUserId = 2;
+		String message = "test message";
+		int number = 1;
+		long expireDate = TimeUtil.getCurrentDate() + 100000;
+
+		ContentValues valuesForMessage = getInsertContentValuesForNotification(
+				fromUserId, toUserId, number, expireDate);
+
+		long id = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage);
+
+		int toUserId2 = 1;
+		int fromUserId2 = 3;
+		String message2 = "test message";
+		int number2 = 1;
+		long expireDate2 = TimeUtil.getCurrentDate() + 50000;
+
+		ContentValues valuesForMessage2 = getInsertContentValuesForNotification(
+				fromUserId2, toUserId2, number2, expireDate2);
+
+		long id2 = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage2);
+
+		int toUserId3 = 1;
+		int fromUserId3 = 4;
+		String message3 = "test message";
+		int number3 = 1;
+		long expireDate3 = TimeUtil.getCurrentDate() + 150000;
+
+		ContentValues valuesForMessage3 = getInsertContentValuesForNotification(
+				fromUserId3, toUserId3, number3, expireDate3);
+
+		long id3 = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage3);
+
+		try {
+			NotificationContentData result = handler
+					.getNotificationNearestExpireData();
+			assertNotNull(result);
+
+			assertEquals(fromUserId2, result.getFromUserId());
+			assertEquals(toUserId2, result.getToUserId());
+			assertEquals(number2, result.getNumberOfMesage());
+			assertEquals(expireDate2, result.getExpireData());
+
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	/**
+	 * With obsolete message case
+	 */
+	public void testGetNotificationNearestExpireData3() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int toUserId = 1;
+		int fromUserId = 2;
+		String message = "test message";
+		int number = 1;
+		long expireDate = TimeUtil.getCurrentDate() - 100000;
+		DbgUtil.showDebug(TAG, "expireDate: " + expireDate);
+
+		ContentValues valuesForMessage = getInsertContentValuesForNotification(
+				fromUserId, toUserId, number, expireDate);
+
+		long id = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage);
+		assertNotSame(id, -1);
+
+		int toUserId2 = 1;
+		int fromUserId2 = 3;
+		String message2 = "test message";
+		int number2 = 1;
+		long expireDate2 = TimeUtil.getCurrentDate() + 200000;
+		DbgUtil.showDebug(TAG, "expireDate2: " + expireDate2);
+
+		ContentValues valuesForMessage2 = getInsertContentValuesForNotification(
+				fromUserId2, toUserId2, number2, expireDate2);
+
+		long id2 = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage2);
+		assertNotSame(id2, -1);
+
+		int toUserId3 = 1;
+		int fromUserId3 = 4;
+		String message3 = "test message";
+		int number3 = 1;
+		long expireDate3 = TimeUtil.getCurrentDate() + 150000;
+		DbgUtil.showDebug(TAG, "expireDate3: " + expireDate3);
+
+		ContentValues valuesForMessage3 = getInsertContentValuesForNotification(
+				fromUserId3, toUserId3, number3, expireDate3);
+
+		long id3 = sDatabase.insert(DatabaseDef.NotificationTable.TABLE_NAME,
+				null, valuesForMessage3);
+		assertNotSame(id3, -1);
+
+		try {
+			NotificationContentData result = handler
+					.getNotificationNearestExpireData();
+			assertNotNull(result);
+
+			assertEquals(fromUserId3, result.getFromUserId());
+			assertEquals(toUserId3, result.getToUserId());
+			assertEquals(number3, result.getNumberOfMesage());
+			assertEquals(expireDate3, result.getExpireData());
+
+			try {
+				ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+						.getValue(UserLocalDataHandler.class,
+								"mContentResolver", handler);
+
+				Cursor cursor = mContentResolver.query(
+						DatabaseDef.NotificationTable.URI, null, null, null,
+						null);
+				if (cursor == null) {
+					DbgUtil.showDebug(TAG, "cursor is null");
+					assertTrue(false);
+				}
+				try {
+					if (cursor != null) {
+						if (cursor.moveToFirst()) {
+							assertEquals(cursor.getCount(), 2);
+
+							int count = 0;
+
+							do {
+								long expireDateResult = cursor
+										.getLong(cursor
+												.getColumnIndex(DatabaseDef.NotificationColumns.EXPIRE_DATE));
+								switch (count) {
+								case 0:
+									DbgUtil.showDebug(TAG, "count: " + count);
+									assertEquals(expireDate2, expireDateResult);
+									break;
+								case 1:
+									assertEquals(expireDate3, expireDateResult);
+									break;
+								case 2:
+								default:
+									assertTrue(false);
+									break;
+								}
+								count = count + 1;
+							} while (cursor.moveToNext());
+						}
+					}
+				} catch (SQLException e) {
+					assertTrue(false);
+				}
+			} catch (SQLException e) {
+				assertTrue(false);
+			}
+
+		} catch (UserLocalDataHandlerException e) {
+			assertTrue(false);
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
+	public void testStoreFriendThumbnails() {
+		UserLocalDataHandler handler = new UserLocalDataHandler(getContext());
+		setDatabase();
+		handler.removeLocalUserPreferenceData(getContext());
+
+		int friendId = 2;
+		String friendName = "bbbb";
+		byte[] friendThumb = null;
+		int lastSenderId = 2;
+		String lastMessage = "test message here";
+		String mailAddress = "a@a";
+
+		ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
+				friendId, friendName, friendThumb, lastSenderId, lastMessage,
+				mailAddress);
+		long friendshipId = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship);
+
+		int friendId2 = 3;
+		String friendName2 = "bbbb2";
+		byte[] friendThumb2 = null;
+		int lastSenderId2 = 3;
+		String lastMessage2 = "test message here2";
+		String mailAddress2 = "a@a2";
+
+		ContentValues valuesForFriendship2 = getInsertContentValuesForFriendship(
+				friendId2, friendName2, friendThumb2, lastSenderId2,
+				lastMessage2, mailAddress2);
+		long friendshipId2 = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship2);
+
+		int friendId3 = 4;
+		String friendName3 = "bbbb3";
+		byte[] friendThumb3 = null;
+		int lastSenderId3 = 4;
+		String lastMessage3 = "test message here3";
+		String mailAddress3 = "a@a3";
+
+		ContentValues valuesForFriendship3 = getInsertContentValuesForFriendship(
+				friendId3, friendName3, friendThumb3, lastSenderId3,
+				lastMessage3, mailAddress3);
+		long friendshipId3 = sDatabase.insert(
+				DatabaseDef.FriendshipTable.TABLE_NAME, null,
+				valuesForFriendship3);
+
+		List<HashMap<Integer, Bitmap>> thumbnails = new ArrayList<HashMap<Integer, Bitmap>>();
+
+		Drawable d = getContext().getResources().getDrawable(
+				R.drawable.flappy_default_thumbnail_large);
+		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
+		HashMap<Integer, Bitmap> input = new HashMap<Integer, Bitmap>();
+		input.put(2, bitmap);
+
+		// Drawable d2 = getContext().getResources().getDrawable(
+		// R.drawable.flappy_default_thumbnail_large);
+		// Bitmap bitmap2 = ((BitmapDrawable) d2).getBitmap();
+		Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, 100, 100, false);
+		HashMap<Integer, Bitmap> input2 = new HashMap<Integer, Bitmap>();
+		input2.put(3, bitmap2);
+
+		// Drawable d3 = getContext().getResources().getDrawable(
+		// R.drawable.flappy_new_message_number_1);
+		Bitmap bitmap3 = Bitmap.createScaledBitmap(bitmap, 120, 120, false);
+		HashMap<Integer, Bitmap> input3 = new HashMap<Integer, Bitmap>();
+		input3.put(4, bitmap3);
+
+		thumbnails.add(input);
+		thumbnails.add(input2);
+		thumbnails.add(input3);
+
+		handler.storeFriendThumbnails(thumbnails);
+
+		ContentResolver mContentResolver = (ContentResolver) ReflectionUtil
+				.getValue(UserLocalDataHandler.class, "mContentResolver",
+						handler);
+
+		Cursor cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+				null, null, null, null);
+
+		int count = 0;
+
+		if (cursor != null) {
+			if (cursor.moveToFirst()) {
+				do {
+					byte[] thumbnail = cursor
+							.getBlob(cursor
+									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+					Bitmap output = ImageUtil
+							.decodeByteArrayToBitmap(thumbnail);
+
+					switch (count) {
+					case 0:
+						assertEquals(bitmap.getWidth(), output.getWidth());
+						assertEquals(bitmap.getHeight(), output.getHeight());
+						break;
+					case 1:
+						assertEquals(bitmap2.getWidth(), output.getWidth());
+						assertEquals(bitmap2.getHeight(), output.getHeight());
+						break;
+					case 2:
+						assertEquals(bitmap3.getWidth(), output.getWidth());
+						assertEquals(bitmap3.getHeight(), output.getHeight());
+						break;
+					default:
+						assertTrue(false);
+						break;
+					}
+					count = count + 1;
+				} while (cursor.moveToNext());
+			}
+		}
+
+		handler.removeLocalUserPreferenceData(getContext());
+	}
+
 	private ContentValues getInsertContentValuesForMessage(int fromUserId,
 			int toUserId, String fromUserName, String toUserName,
 			String message, String date) {
@@ -1487,6 +1822,18 @@ public class UserLocalDataHandlerTest extends AndroidTestCase {
 		values.put(DatabaseDef.FriendshipColumns.LAST_MESSAGE, lastMessage);
 		values.put(DatabaseDef.FriendshipColumns.MAIL_ADDRESS, mailAddress);
 		values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, friendThumbnail);
+
+		return values;
+	}
+
+	private ContentValues getInsertContentValuesForNotification(int fromUserId,
+			int toUserId, int number, long expireDate) {
+		ContentValues values = new ContentValues();
+
+		values.put(DatabaseDef.NotificationColumns.FROM_USER_ID, fromUserId);
+		values.put(DatabaseDef.NotificationColumns.TO_USER_ID, toUserId);
+		values.put(DatabaseDef.NotificationColumns.NUMBER, number);
+		values.put(DatabaseDef.NotificationColumns.EXPIRE_DATE, expireDate);
 
 		return values;
 	}
