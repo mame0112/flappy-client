@@ -23,7 +23,7 @@ public class NewMessageNotificationReceiver extends BroadcastReceiver {
 			PowerManager pm = (PowerManager) context
 					.getSystemService(Context.POWER_SERVICE);
 			PowerManager.WakeLock wl = pm.newWakeLock(
-					PowerManager.ACQUIRE_CAUSES_WAKEUP, "My Tag");
+					PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
 			wl.acquire(1000);
 
 			int targetUserId = intent.getIntExtra(
