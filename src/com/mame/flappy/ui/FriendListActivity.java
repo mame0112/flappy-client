@@ -605,11 +605,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-//			if (mNewUserData != null && mNewUserData.size() != 0) {
-//				DbgUtil.showDebug(TAG,
-//						"newUserData size: " + mNewUserData.size());
-//				handleNotification(mNewUserData);
-//			}
+			// if (mNewUserData != null && mNewUserData.size() != 0) {
+			// DbgUtil.showDebug(TAG,
+			// "newUserData size: " + mNewUserData.size());
+			// handleNotification(mNewUserData);
+			// }
 
 			isNowLoading = false;
 			invalidateOptionsMenu();
@@ -1030,7 +1030,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data, int newMessageNum) {
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
 
 	}

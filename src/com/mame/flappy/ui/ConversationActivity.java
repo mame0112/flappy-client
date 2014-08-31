@@ -600,7 +600,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data, int newMessageNum) {
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG,
 				"notifiyNearlestExpireNotification - not to be used");
 	}

@@ -316,7 +316,7 @@ public class FriendDataManager implements UserServerDataListener,
 		 * notification data
 		 */
 		public void notifiyNearlestExpireNotification(
-				NotificationContentData data, int newMessageNum);
+				NotificationContentData data);
 
 	}
 
@@ -484,21 +484,9 @@ public class FriendDataManager implements UserServerDataListener,
 			if (result != null) {
 				DbgUtil.showDebug(TAG, "result: " + result);
 			}
-			for (FriendDataManagerListener listener : mListeners) {
-				int restOfNewMessage = 0;
 
-				if (result != null) {
-					// Because argument contains just to be expired
-					// notification.
-					// then, we need to minus 1.
-					if (result.getNumberOfMesage() <= 1) {
-						restOfNewMessage = 0;
-					} else {
-						restOfNewMessage = result.getNumberOfMesage() - 1;
-					}
-				}
-				listener.notifiyNearlestExpireNotification(result,
-						restOfNewMessage);
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifiyNearlestExpireNotification(result);
 			}
 		}
 	}

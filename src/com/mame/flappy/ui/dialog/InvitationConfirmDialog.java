@@ -447,8 +447,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data,
-			int newMessageNum) {
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
 		DbgUtil.showDebug(TAG,
 				"notifiyNearlestExpireNotification - not to be used");
 

@@ -29,6 +29,13 @@
             android:layout_height="wrap_content"
             android:text="@string/str_flappy_about_desc" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:scaleType="fitStart"
+            android:src="@drawable/flappy_help_about" />
+
         <TextView
             style="@style/AboutSubTitle"
             android:layout_width="wrap_content"
@@ -40,6 +47,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_flappy_about_stress_less_desc" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:scaleType="fitStart"
+            android:src="@drawable/flappy_help_no_stress" />
 
         <TextView
             style="@style/AboutSubTitle"
@@ -53,6 +67,13 @@
             android:layout_height="wrap_content"
             android:text="@string/str_flappy_about_disappear_message_desc" />
 
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:scaleType="fitStart"
+            android:src="@drawable/flappy_help_disappear" />
+
         <TextView
             style="@style/AboutSubTitle"
             android:layout_width="wrap_content"
@@ -64,6 +85,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_flappy_about_merit_desc" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:scaleType="fitStart"
+            android:src="@drawable/flappy_help_no_reply" />
 
         <TextView
             style="@style/AboutSubTitle"

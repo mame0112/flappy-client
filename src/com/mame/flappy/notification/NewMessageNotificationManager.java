@@ -38,8 +38,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 	private static Context mContext = null;
 
-	private static boolean mIsFirst = true;
-
 	// private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
 
 	/**
@@ -280,10 +278,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data,
-			int restNewMessageNum) {
-		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification: "
-				+ restNewMessageNum);
+	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
 
 		if (data != null) {
 			// Set new AlarmManager.
@@ -293,13 +289,11 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			setAlarmManagerForRemoveNotification(mContext, fromUserId,
 					toUserId, expireDate);
 
-			if (restNewMessageNum == 0) {
+			if (data.getNumberOfMesage() == 0) {
 				showNotification(mContext, fromUserId);
 			}
 
 		} else {
-			mIsFirst = true;
-
 			// Remove notification
 			removeNotification();
 		}
