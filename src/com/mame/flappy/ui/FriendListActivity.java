@@ -351,10 +351,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 				mFriendListData.clear();
 			}
 
-			// if (mAdapter != null) {
-			// mAdapter.notifyDataSetChanged();
-			// }
-
 			if (mNewUserData != null && mNewUserData.size() != 0) {
 				for (FriendListData data : mNewUserData) {
 
@@ -453,10 +449,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-			if (mNewUserData != null && mNewUserData.size() != 0) {
-				DbgUtil.showDebug(TAG, "mNewUserdata is null or 0");
-				handleNotification(mNewUserData);
-			}
+			// if (mNewUserData != null && mNewUserData.size() != 0) {
+			// DbgUtil.showDebug(TAG, "mNewUserdata is null or 0");
+			// handleNotification(mNewUserData);
+			// }
 
 			isNowLoading = false;
 			new Thread(new Runnable() {
@@ -609,11 +605,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 			checkAndShowFirstAddButton();
 
 			// Handle notification
-			if (mNewUserData != null && mNewUserData.size() != 0) {
-				DbgUtil.showDebug(TAG,
-						"newUserData size: " + mNewUserData.size());
-				handleNotification(mNewUserData);
-			}
+//			if (mNewUserData != null && mNewUserData.size() != 0) {
+//				DbgUtil.showDebug(TAG,
+//						"newUserData size: " + mNewUserData.size());
+//				handleNotification(mNewUserData);
+//			}
 
 			isNowLoading = false;
 			invalidateOptionsMenu();
