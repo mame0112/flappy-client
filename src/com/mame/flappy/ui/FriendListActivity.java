@@ -1034,7 +1034,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+	public void notifiyNearlestExpireNotification(NotificationContentData data, int newMessageNum) {
 		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
 
 	}

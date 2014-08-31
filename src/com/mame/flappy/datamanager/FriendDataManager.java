@@ -316,7 +316,8 @@ public class FriendDataManager implements UserServerDataListener,
 		 * notification data
 		 */
 		public void notifiyNearlestExpireNotification(
-				NotificationContentData data);
+				NotificationContentData data, int newMessageNum);
+
 	}
 
 	private class LoadLocalUserIdWithoutThumbnailAsyncTask extends
@@ -484,7 +485,20 @@ public class FriendDataManager implements UserServerDataListener,
 				DbgUtil.showDebug(TAG, "result: " + result);
 			}
 			for (FriendDataManagerListener listener : mListeners) {
-				listener.notifiyNearlestExpireNotification(result);
+				int restOfNewMessage = 0;
+
+				if (result != null) {
+					// Because argument contains just to be expired
+					// notification.
+					// then, we need to minus 1.
+					if (result.getNumberOfMesage() <= 1) {
+						restOfNewMessage = 0;
+					} else {
+						restOfNewMessage = result.getNumberOfMesage() - 1;
+					}
+				}
+				listener.notifiyNearlestExpireNotification(result,
+						restOfNewMessage);
 			}
 		}
 	}
@@ -550,27 +564,11 @@ public class FriendDataManager implements UserServerDataListener,
 	public synchronized void addNewNotification(int fromUserId, int toUserId,
 			int number, long expireDate) {
 		DbgUtil.showDebug(TAG, "addNewNotification");
+
 		if (mLocalDataHandler != null) {
 			mLocalDataHandler.addNewNotification(fromUserId, toUserId, number,
 					expireDate);
 		}
-		// boolean isRegistered = false;
-		// try {
-		// isRegistered = mLocalDataHandler
-		// .isTargetNewNotificationAlreadyStored(expireDate);
-		// DbgUtil.showDebug(TAG, "isRegistered: " + isRegistered);
-		//
-		// } catch (UserLocalDataHandlerException e) {
-		// DbgUtil.showDebug(TAG,
-		// "UserLocalDataHandlerExceptio: " + e.getMessage());
-		// }
-		//
-		// // In case target expireDate is null, we try to register it to DB.
-		// if (isRegistered == false) {
-		// mLocalDataHandler.addNewNotification(fromUserId, toUserId,
-		// number, expireDate);
-		// }
-		// }
 	}
 
 	@Override
@@ -674,4 +672,5 @@ public class FriendDataManager implements UserServerDataListener,
 			}
 		}
 	}
+
 }

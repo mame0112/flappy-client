@@ -87,6 +87,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		if (current < expireDate) {
 
 			mDataManager = FriendDataManager.getInstance();
+			mDataManager.initializeFriendDataManager(toUserId, context);
 
 			if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
 				DbgUtil.showDebug(
@@ -279,8 +280,10 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
-		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+	public void notifiyNearlestExpireNotification(NotificationContentData data,
+			int restNewMessageNum) {
+		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification: "
+				+ restNewMessageNum);
 
 		if (data != null) {
 			// Set new AlarmManager.
@@ -290,12 +293,10 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			setAlarmManagerForRemoveNotification(mContext, fromUserId,
 					toUserId, expireDate);
 
-			// Finally show notification
-			// TODO we need to show message in case of ConversationActivity
-			if (mIsFirst == true) {
+			if (restNewMessageNum == 0) {
 				showNotification(mContext, fromUserId);
-				mIsFirst = false;
 			}
+
 		} else {
 			mIsFirst = true;
 

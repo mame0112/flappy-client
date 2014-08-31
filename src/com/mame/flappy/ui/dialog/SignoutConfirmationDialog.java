@@ -101,7 +101,8 @@ public class SignoutConfirmationDialog extends DialogFragment implements
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+	public void notifiyNearlestExpireNotification(NotificationContentData data,
+			int newMessageNum) {
 		// TODO Auto-generated method stub
 
 	}
