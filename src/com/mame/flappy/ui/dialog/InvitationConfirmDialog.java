@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
@@ -36,6 +37,7 @@ import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.LocaleUtil;
 import com.mame.flappy.util.NetworkUtil;
+import com.mame.flappy.util.StringUtil;
 import com.mame.flappy.util.TrackingUtil;
 import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomServerAccessor;
@@ -139,11 +141,6 @@ public class InvitationConfirmDialog extends DialogFragment implements
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "onClick");
 				try {
-					// SpannableStringBuilder sbMessage =
-					// (SpannableStringBuilder) mMessageEditText
-					// .getText();
-					// final String targetMessage =
-					// sbMessage.toString();
 					TrackingUtil
 							.trackEvent(
 									activity,
@@ -157,14 +154,20 @@ public class InvitationConfirmDialog extends DialogFragment implements
 								.toString();
 						DbgUtil.showDebug(TAG, "targetMessage: "
 								+ targetMessage);
+						if (!StringUtil
+								.isContainPreservedCharacters(targetMessage)) {
+							mSendProgressText.setVisibility(View.VISIBLE);
+							mPositiveButton.setEnabled(false);
+							mNegativeButton.setEnabled(false);
 
-						mSendProgressText.setVisibility(View.VISIBLE);
-						mPositiveButton.setEnabled(false);
-						mNegativeButton.setEnabled(false);
-
-						sendConfirmedMessage(userId, userName, targetUserId,
-								targetUserName, targetMailAddress,
-								targetMessage);
+							sendConfirmedMessage(userId, userName,
+									targetUserId, targetUserName,
+									targetMailAddress, targetMessage);
+						} else {
+							Toast.makeText(getActivity(),
+									R.string.str_generic_preserved_char_error,
+									Toast.LENGTH_SHORT).show();
+						}
 					}
 				} catch (WebAPIException e) {
 					DbgUtil.showDebug(TAG, "WebAPIException: " + e.getMessage());

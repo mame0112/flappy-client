@@ -1,5 +1,6 @@
 package com.mame.flappy.util;
 
+import com.mame.flappy.constant.LcomConst;
 
 public class StringUtil {
 
@@ -32,6 +33,22 @@ public class StringUtil {
 		}
 
 		return true;
+	}
+
+	public static boolean isContainPreservedCharacters(String input) {
+
+		boolean isContain = false;
+
+		if (input != null) {
+			if (input.contains(LcomConst.SEPARATOR)) {
+				isContain = true;
+			} else if (input.contains(LcomConst.MESSAGE_SEPARATOR)) {
+				isContain = true;
+			} else if (input.contains(LcomConst.ITEM_SEPARATOR)) {
+				isContain = true;
+			}
+		}
+		return isContain;
 	}
 
 }

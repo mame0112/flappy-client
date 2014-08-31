@@ -48,6 +48,7 @@ import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.HttpClientUtil;
 import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.PreferenceUtil;
+import com.mame.flappy.util.StringUtil;
 import com.mame.flappy.util.TimeUtil;
 import com.mame.flappy.util.TrackingUtil;
 import com.mame.flappy.web.LcomHttpWebAPI;
@@ -212,34 +213,22 @@ public class ConversationActivity extends LcomBaseActivity implements
 							.getText();
 					String message = sbMessage.toString();
 					if (message != null) {
+						if (!StringUtil.isContainPreservedCharacters(message)) {
+							// Track the number of texts in one message
+							TrackingUtil.trackNumberOfCharInOneMessage(
+									getApplicationContext(), message.length());
 
-						// Track the number of texts in one message
-						TrackingUtil.trackNumberOfCharInOneMessage(
-								getApplicationContext(), message.length());
+							setProgressBarIndeterminateVisibility(true);
 
-						setProgressBarIndeterminateVisibility(true);
-
-						// Dismiss dialog if it is being shown
-						// if (!mActivity.isFinishing() && mProgressDialog !=
-						// null
-						// && mProgressDialog.isShowing()) {
-						// mProgressDialog.dismiss();
-						// }
-
-						// if (mProgressDialog != null) {
-						// mProgressDialog
-						// .setDialogTexts(
-						// getString(R.string.str_conversation_progress_title),
-						// getString(R.string.str_conversation_progress_desc));
-						// mProgressDialog.show(getFragmentManager(),
-						// "progress");
-						// }
-
-						long date = TimeUtil.getCurrentDate();
-						sendAndRegisterMessage(mUserId, mTargetUserId,
-								mUserName, mTargetUserName, message,
-								String.valueOf(date));
-
+							long date = TimeUtil.getCurrentDate();
+							sendAndRegisterMessage(mUserId, mTargetUserId,
+									mUserName, mTargetUserName, message,
+									String.valueOf(date));
+						} else {
+							Toast.makeText(getApplicationContext(),
+									R.string.str_generic_preserved_char_error,
+									Toast.LENGTH_SHORT).show();
+						}
 					} else {
 						Toast.makeText(getApplicationContext(),
 								R.string.str_conversation_no_text_input,

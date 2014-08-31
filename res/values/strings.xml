@@ -9,6 +9,7 @@
     <string name="str_generic_server_timeout">Server timeout. Please try again later</string>
     <string name="str_generic_no_network_error">No network connection. Please confirm network connection.</string>
     <string name="str_generic_unknown_error">Unknown error occurred. Please try again later.</string>
+    <string name="str_generic_preserved_char_error">You cannot use @@, ##, __ on your message</string>
 
     <!-- Option menu -->
     <string name="str_menu_help">Help</string>
@@ -188,4 +189,5 @@
     <string name="str_signout_confirm_desc">If you sign out, all local user data is deleted.</string>
     <string name="str_signout_dialog_positive">Sign out</string>
     <string name="str_signout_dialog_negative">Cancel</string>
+
 </resources>

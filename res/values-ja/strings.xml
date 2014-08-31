@@ -9,6 +9,7 @@
     <string name="str_generic_server_timeout">サーバがタイムアウトしました。後ほど再度お試しください。</string>
     <string name="str_generic_no_network_error">ネットワーク接続がありません。ネットワークにつながっているか確認してください。</string>
     <string name="str_generic_unknown_error">不明なエラーが発生しました。後ほど再度お試しください。</string>
+    <string name="str_generic_preserved_char_error">メッセージの中に、@@, ##, __ は利用できません</string>
 
     <!-- Option menu -->
     <string name="str_menu_help">ヘルプ</string>
