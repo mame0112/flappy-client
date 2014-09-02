@@ -38,6 +38,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 	private static Context mContext = null;
 
+	private int mCurrentNotificationNum = 0;
+
 	// private static ArrayList<Long> mAlarmCandidates = new ArrayList<Long>();
 
 	/**
@@ -85,7 +87,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		if (current < expireDate) {
 
 			mDataManager = FriendDataManager.getInstance();
-			//			mDataManager.initializeFriendDataManager(toUserId, context);
+			// mDataManager.initializeFriendDataManager(toUserId, context);
 
 			if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
 				DbgUtil.showDebug(
@@ -289,9 +291,9 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			setAlarmManagerForRemoveNotification(mContext, fromUserId,
 					toUserId, expireDate);
 
-			if (data.getNumberOfMesage() == 0) {
-				showNotification(mContext, fromUserId);
-			}
+			// if (data.getNumberOfMesage() == 0) {
+			showNotification(mContext, fromUserId);
+			// }
 
 		} else {
 			// Remove notification
