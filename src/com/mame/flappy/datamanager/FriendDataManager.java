@@ -75,6 +75,7 @@ public class FriendDataManager implements UserServerDataListener,
 	public boolean isListenerAlreadyRegistered(
 			FriendDataManagerListener listener) {
 		DbgUtil.showDebug(TAG, "listener num: " + mListeners.size());
+		DbgUtil.showDebug(TAG, "listener: " + listener.getClass());
 		if (mListeners.contains(listener)) {
 			return true;
 		} else {

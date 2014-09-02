@@ -85,7 +85,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		if (current < expireDate) {
 
 			mDataManager = FriendDataManager.getInstance();
-			mDataManager.initializeFriendDataManager(toUserId, context);
+			//			mDataManager.initializeFriendDataManager(toUserId, context);
 
 			if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
 				DbgUtil.showDebug(
@@ -137,7 +137,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 					"NotificationContentData is null or size 0");
 		}
 
-		mDataManager = FriendDataManager.getInstance();
+		// mDataManager = FriendDataManager.getInstance();
 
 		if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
 			DbgUtil.showDebug(

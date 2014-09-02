@@ -116,7 +116,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 				getString(R.string.str_friendlist_progress_title),
 				getString(R.string.str_friendlist_progress_desc));
 
-		mHelper = new LcomDeviceIdRegisterHelper(this);
+		mHelper = new LcomDeviceIdRegisterHelper(this, mProgressDialog);
 		mHelper.setPushRegistrationListener(this);
 
 		FriendDataManager.initializeFriendDataManager(mUserId,
@@ -253,7 +253,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	protected void onPause() {
 		super.onPause();
 
-		mManager.removeFriendDataManagerListener(this);
+		// mManager.removeFriendDataManagerListener(this);
 
 		// To avoid showing more than 2 dialog, we try to dismiss dialog
 		if (!mActivity.isFinishing() && mProgressDialog != null

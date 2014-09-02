@@ -15,14 +15,13 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	private static ProgressDialog mProgressDialog = null;
 
-	private static ProgressDialogFragment sInstance = null;
+	// private static ProgressDialogFragment sInstance = new
+	// ProgressDialogFragment();
 
 	public static ProgressDialogFragment newInstance(String title,
 			String message) {
+		ProgressDialogFragment sInstance = new ProgressDialogFragment();
 		// ProgressDialogFragment instance = new ProgressDialogFragment();
-
-		sInstance = new ProgressDialogFragment();
-
 		Bundle arguments = new Bundle();
 		arguments.putString("title", title);
 		arguments.putString("message", message);
@@ -69,13 +68,13 @@ public class ProgressDialogFragment extends DialogFragment {
 		mProgressDialog = null;
 	}
 
-	public void setDialogTexts(String title, String message) {
-		Bundle arguments = new Bundle();
-		arguments.putString("title", title);
-		arguments.putString("message", message);
-
-		sInstance.setArguments(arguments);
-	}
+	// public void setDialogTexts(String title, String message) {
+	// Bundle arguments = new Bundle();
+	// arguments.putString("title", title);
+	// arguments.putString("message", message);
+	//
+	// sInstance.setArguments(arguments);
+	// }
 
 	public boolean isShowing() {
 		if (mProgressDialog != null) {
