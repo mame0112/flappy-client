@@ -287,12 +287,13 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 				+ mCurrentNotificationNum);
 
 		if (notifications != null) {
-			int size = notifications.size();
+			// Minus is for just expiring message
+			int size = notifications.size() - 1;
 			DbgUtil.showDebug(TAG, "size: " + size);
 
 			// If size decreased (meaning some notification expired)
 			if (mCurrentNotificationNum > size) {
-				if (size == 0) {
+				if (size <= 0) {
 					// If size comes to 0, need to remove notification
 					removeNotification();
 				} else {
@@ -315,28 +316,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			removeNotification();
 			mCurrentNotificationNum = 0;
 		}
-
 	}
-	// @Override
-	// public void notifiyNearlestExpireNotification(NotificationContentData
-	// data) {
-	// DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
-	//
-	// if (data != null) {
-	// // Set new AlarmManager.
-	// int fromUserId = data.getFromUserId();
-	// int toUserId = data.getToUserId();
-	// long expireDate = data.getExpireData();
-	// setAlarmManagerForRemoveNotification(mContext, fromUserId,
-	// toUserId, expireDate);
-	//
-	// // if (data.getNumberOfMesage() == 0) {
-	// showNotification(mContext, fromUserId);
-	// // }
-	//
-	// } else {
-	// // Remove notification
-	// removeNotification();
-	// }
-	// }
+
 }
