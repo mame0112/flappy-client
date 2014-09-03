@@ -316,8 +316,11 @@ public class FriendDataManager implements UserServerDataListener,
 		 * To be called when FriendDataManager finished to load nearlest expire
 		 * notification data
 		 */
-		public void notifiyNearlestExpireNotification(
-				NotificationContentData data);
+		// public void notifiyNearlestExpireNotification(
+		// NotificationContentData data);
+
+		public void notifiyValidNotificationList(
+				ArrayList<NotificationContentData> notifications);
 
 	}
 
@@ -455,22 +458,57 @@ public class FriendDataManager implements UserServerDataListener,
 	public void requestNotificationNearestExpireData() {
 		DbgUtil.showDebug(TAG, "getNotificationNearestExpireData");
 
-		new LoadNearlestExpireNotificationAsyncTask().execute();
+		new LoadCurrentNotificationListAsyncTask().execute();
 	}
 
-	private class LoadNearlestExpireNotificationAsyncTask extends
-			AsyncTask<Void, Void, NotificationContentData> {
+	// private class LoadNearlestExpireNotificationAsyncTask extends
+	// AsyncTask<Void, Void, NotificationContentData> {
+	//
+	// public LoadNearlestExpireNotificationAsyncTask() {
+	// DbgUtil.showDebug(TAG, "LoadNearlestExpireNotificationAsyncTask");
+	// }
+	//
+	// @Override
+	// protected NotificationContentData doInBackground(Void... params) {
+	// DbgUtil.showDebug(TAG, "doInBackground");
+	// try {
+	// if (mLocalDataHandler != null) {
+	// return mLocalDataHandler.getNotificationNearestExpireData();
+	// }
+	// } catch (UserLocalDataHandlerException e) {
+	// DbgUtil.showDebug(TAG,
+	// "UserLocalDataHandlerException: " + e.getMessage());
+	// }
+	// return null;
+	// }
+	//
+	// @Override
+	// protected void onPostExecute(NotificationContentData result) {
+	// DbgUtil.showDebug(TAG, "onPostExecute");
+	// if (result != null) {
+	// DbgUtil.showDebug(TAG, "result: " + result);
+	// }
+	//
+	// for (FriendDataManagerListener listener : mListeners) {
+	// listener.notifiyNearlestExpireNotification(result);
+	// }
+	// }
+	// }
 
-		public LoadNearlestExpireNotificationAsyncTask() {
-			DbgUtil.showDebug(TAG, "LoadNearlestExpireNotificationAsyncTask");
+	private class LoadCurrentNotificationListAsyncTask extends
+			AsyncTask<Void, Void, ArrayList<NotificationContentData>> {
+
+		public LoadCurrentNotificationListAsyncTask() {
+			DbgUtil.showDebug(TAG, "LoadCurrentNotificationListAsyncTask");
 		}
 
 		@Override
-		protected NotificationContentData doInBackground(Void... params) {
+		protected ArrayList<NotificationContentData> doInBackground(
+				Void... params) {
 			DbgUtil.showDebug(TAG, "doInBackground");
 			try {
 				if (mLocalDataHandler != null) {
-					return mLocalDataHandler.getNotificationNearestExpireData();
+					return mLocalDataHandler.getCurrentNotificationList();
 				}
 			} catch (UserLocalDataHandlerException e) {
 				DbgUtil.showDebug(TAG,
@@ -480,14 +518,14 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 
 		@Override
-		protected void onPostExecute(NotificationContentData result) {
+		protected void onPostExecute(ArrayList<NotificationContentData> result) {
 			DbgUtil.showDebug(TAG, "onPostExecute");
 			if (result != null) {
-				DbgUtil.showDebug(TAG, "result: " + result);
+				DbgUtil.showDebug(TAG, "result: " + result.size());
 			}
 
 			for (FriendDataManagerListener listener : mListeners) {
-				listener.notifiyNearlestExpireNotification(result);
+				listener.notifiyValidNotificationList(result);
 			}
 		}
 	}

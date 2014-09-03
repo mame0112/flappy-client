@@ -1029,11 +1029,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 		}
 	}
 
-	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
-		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
-
-	}
+//	@Override
+//	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+//		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+//
+//	}
 
 	@Override
 	public void onSignoutConfirmationSelected(boolean isAccepted) {
@@ -1043,5 +1043,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 			removeAllUserData();
 		}
 
+	}
+
+	@Override
+	public void notifiyValidNotificationList(
+			ArrayList<NotificationContentData> notifications) {
+		// TODO Auto-generated method stub
+		
 	}
 }

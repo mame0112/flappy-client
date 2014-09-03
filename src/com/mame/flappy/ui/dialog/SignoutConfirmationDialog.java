@@ -100,11 +100,11 @@ public class SignoutConfirmationDialog extends DialogFragment implements
 
 	}
 
-	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
-		// TODO Auto-generated method stub
-
-	}
+//	@Override
+//	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	@Override
 	public void onResponseReceived(List<String> respList) {
@@ -125,5 +125,12 @@ public class SignoutConfirmationDialog extends DialogFragment implements
 
 	public interface SignoutConfirmationListener {
 		public void onSignoutConfirmationSelected(boolean isAccepted);
+	}
+
+	@Override
+	public void notifiyValidNotificationList(
+			ArrayList<NotificationContentData> notifications) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -872,6 +872,12 @@ public class UserLocalDataHandler {
 		}
 	}
 
+	/**
+	 * Not used.
+	 * 
+	 * @return
+	 * @throws UserLocalDataHandlerException
+	 */
 	public NotificationContentData getNotificationNearestExpireData()
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "getNotificationNearestExpireData");
@@ -934,6 +940,91 @@ public class UserLocalDataHandler {
 							}
 						}
 					}
+				}
+
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption for getNotificationNearestExpireData cursor move: "
+								+ e.getMessage());
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"SQLExeption for getNotificationNearestExpireData query: "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException("SQLException:"
+					+ e.getMessage());
+		}
+		return null;
+	}
+
+	public ArrayList<NotificationContentData> getCurrentNotificationList()
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getCurrentNotificationList");
+		Cursor cursor = null;
+		try {
+			cursor = mContentResolver.query(DatabaseDef.NotificationTable.URI,
+					null, null, null, null);
+			if (cursor == null) {
+				DbgUtil.showDebug(TAG, "cursor is null");
+				throw new UserLocalDataHandlerException("Cursor is null");
+			}
+			try {
+				if (cursor != null) {
+
+					ArrayList<NotificationContentData> tmpDatas = new ArrayList<NotificationContentData>();
+
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+
+							int fromUserId = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.FROM_USER_ID));
+							int toUserId = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.TO_USER_ID));
+							int number = cursor
+									.getInt(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.NUMBER));
+							long expireDate = cursor
+									.getLong(cursor
+											.getColumnIndex(DatabaseDef.NotificationColumns.EXPIRE_DATE));
+							DbgUtil.showDebug(TAG, "expireDate:: " + expireDate);
+
+							NotificationContentData data = new NotificationContentData(
+									toUserId, fromUserId, number, expireDate);
+							tmpDatas.add(data);
+						} while (cursor.moveToNext());
+					}
+
+					// First, sort notificatons based on time
+					UserLocalDataHandlerHelper helper = new UserLocalDataHandlerHelper();
+					helper.sortNotificationBasedOnExpireTime(tmpDatas);
+
+					// Try to return most nearlest but i has not expired
+					// notification data
+					long current = TimeUtil.getCurrentDate();
+					ArrayList<NotificationContentData> result = new ArrayList<NotificationContentData>();
+
+					for (NotificationContentData data : tmpDatas) {
+						if (data != null) {
+							long expire = data.getExpireData();
+							if (current < expire) {
+								result.add(data);
+							} else {
+								// If expire time is less than current time, we
+								// remove it from Database
+								removeObsoleteNotification(expire);
+							}
+						}
+					}
+					return result;
 				}
 
 			} catch (SQLException e) {

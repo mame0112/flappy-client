@@ -87,7 +87,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		if (current < expireDate) {
 
 			mDataManager = FriendDataManager.getInstance();
-			// mDataManager.initializeFriendDataManager(toUserId, context);
 
 			if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
 				DbgUtil.showDebug(
@@ -280,24 +279,63 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	}
 
 	@Override
-	public void notifiyNearlestExpireNotification(NotificationContentData data) {
+	public void notifiyValidNotificationList(
+			ArrayList<NotificationContentData> notifications) {
 		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+		DbgUtil.showDebug(TAG, "mCurrentNotificationNum: "
+				+ mCurrentNotificationNum);
 
-		if (data != null) {
-			// Set new AlarmManager.
-			int fromUserId = data.getFromUserId();
-			int toUserId = data.getToUserId();
-			long expireDate = data.getExpireData();
-			setAlarmManagerForRemoveNotification(mContext, fromUserId,
-					toUserId, expireDate);
+		if (notifications != null) {
+			int size = notifications.size();
+			DbgUtil.showDebug(TAG, "size: " + size);
 
-			// if (data.getNumberOfMesage() == 0) {
-			showNotification(mContext, fromUserId);
-			// }
+			// If size decreased (meaning some notification expired)
+			if (mCurrentNotificationNum > size) {
+				if (size == 0) {
+					// If size comes to 0, need to remove notification
+					removeNotification();
+				} else {
+					// Nothing to do
+				}
+			} else {
+				// If size increased (meaning some notification added)
+				// Get most earlist expire message
+				NotificationContentData data = notifications.get(0);
+				int fromUserId = data.getFromUserId();
+				int toUserId = data.getToUserId();
+				long expireDate = data.getExpireData();
+				setAlarmManagerForRemoveNotification(mContext, fromUserId,
+						toUserId, expireDate);
+				showNotification(mContext, fromUserId);
+			}
+			mCurrentNotificationNum = size;
 
 		} else {
-			// Remove notification
 			removeNotification();
+			mCurrentNotificationNum = 0;
 		}
+
 	}
+	// @Override
+	// public void notifiyNearlestExpireNotification(NotificationContentData
+	// data) {
+	// DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+	//
+	// if (data != null) {
+	// // Set new AlarmManager.
+	// int fromUserId = data.getFromUserId();
+	// int toUserId = data.getToUserId();
+	// long expireDate = data.getExpireData();
+	// setAlarmManagerForRemoveNotification(mContext, fromUserId,
+	// toUserId, expireDate);
+	//
+	// // if (data.getNumberOfMesage() == 0) {
+	// showNotification(mContext, fromUserId);
+	// // }
+	//
+	// } else {
+	// // Remove notification
+	// removeNotification();
+	// }
+	// }
 }
