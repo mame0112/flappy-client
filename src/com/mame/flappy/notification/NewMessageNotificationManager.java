@@ -94,6 +94,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 						"registered: "
 								+ mDataManager
 										.isListenerAlreadyRegistered(sManager));
+				mDataManager.initializeFriendDataManager(toUserId, context);
 				mDataManager.setFriendDataManagerListener(sManager);
 			}
 
