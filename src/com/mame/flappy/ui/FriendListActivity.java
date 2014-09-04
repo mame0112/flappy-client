@@ -924,6 +924,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 			for (FriendListData data : mFriendListData) {
 				if (data != null) {
 					int targetId = data.getFriendId();
+					DbgUtil.showDebug(TAG, "targetId: " + targetId);
+					DbgUtil.showDebug(TAG, "targetUserId: " + targetUserId);
 					// Update target user Id list item data.
 					if (targetId == targetUserId) {
 						DbgUtil.showDebug(TAG, "Disappear");
@@ -1010,10 +1012,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 					} else if (action.equals(LcomConst.ACTION_MESSAGE_EXPIRE)) {
 						DbgUtil.showDebug(TAG, "ACTION_MESSAGE_EXPIRE");
 
-						int targetUserId = intent.getIntExtra(
+						int fromUserId = intent.getIntExtra(
 								LcomConst.EXTRA_TARGET_USER_ID,
 								LcomConst.NO_USER);
-						int fromUserId = intent.getIntExtra(
+						int targetUserId = intent.getIntExtra(
 								LcomConst.EXTRA_USER_ID, LcomConst.NO_USER);
 						if (fromUserId != LcomConst.NO_USER) {
 
@@ -1029,11 +1031,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 		}
 	}
 
-//	@Override
-//	public void notifiyNearlestExpireNotification(NotificationContentData data) {
-//		DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
-//
-//	}
+	// @Override
+	// public void notifiyNearlestExpireNotification(NotificationContentData
+	// data) {
+	// DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
+	//
+	// }
 
 	@Override
 	public void onSignoutConfirmationSelected(boolean isAccepted) {
@@ -1049,6 +1052,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 	public void notifiyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

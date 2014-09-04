@@ -98,16 +98,16 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 				mDataManager.setFriendDataManagerListener(sManager);
 			}
 
-			if (PackageUtil.isFriendListForeground(context) == false) {
-				DbgUtil.showDebug(TAG, "false");
-				if (mDataManager != null) {
-					mDataManager.addNewNotification(fromUserId, toUserId,
-							number, expireDate);
-					operateNotification(context);
-				}
-			} else {
-				DbgUtil.showDebug(TAG, "true");
+			// if (PackageUtil.isFriendListForeground(context) == false) {
+			// DbgUtil.showDebug(TAG, "false");
+			if (mDataManager != null) {
+				mDataManager.addNewNotification(fromUserId, toUserId, number,
+						expireDate);
+				operateNotification(context);
 			}
+			// } else {
+			// DbgUtil.showDebug(TAG, "true");
+			// }
 
 		}
 	}
@@ -147,6 +147,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 					"registered: "
 							+ mDataManager
 									.isListenerAlreadyRegistered(sManager));
+			// TOOD
+			// Need to consider mDataManager.initialize
 			mDataManager.setFriendDataManagerListener(sManager);
 		}
 
@@ -308,6 +310,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 				long expireDate = data.getExpireData();
 				setAlarmManagerForRemoveNotification(mContext, fromUserId,
 						toUserId, expireDate);
+
 				showNotification(mContext, fromUserId);
 			}
 			mCurrentNotificationNum = size;
@@ -317,5 +320,4 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 			mCurrentNotificationNum = 0;
 		}
 	}
-
 }

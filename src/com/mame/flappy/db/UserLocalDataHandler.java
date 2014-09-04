@@ -1010,6 +1010,7 @@ public class UserLocalDataHandler {
 					// Try to return most nearlest but i has not expired
 					// notification data
 					long current = TimeUtil.getCurrentDate();
+					DbgUtil.showDebug(TAG, "current: " + current);
 					ArrayList<NotificationContentData> result = new ArrayList<NotificationContentData>();
 
 					for (NotificationContentData data : tmpDatas) {
