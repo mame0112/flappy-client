@@ -7,6 +7,8 @@ public interface LcomAbstractServerAccessor {
 	 * send data
 	 */
 	public void sendData(String servletName, String[] key, String[] value);
+	
+	public void interrupt();
 
 	/**
 	 * Set listener

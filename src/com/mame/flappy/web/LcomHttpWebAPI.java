@@ -165,4 +165,10 @@ public class LcomHttpWebAPI implements LcomAbstractServerAccessor {
 
 	}
 
+	@Override
+	public void interrupt() {
+		// TODO Need to add interrupt operation here.
+
+	}
+
 }

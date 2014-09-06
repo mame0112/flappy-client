@@ -6,7 +6,7 @@
     <string name="str_generic_ok">OK</string>
     <string name="str_generic_server_time_out">タイムアウトが発生しました。後ほど再度お試しください。</string>
     <string name="str_generic_wait_desc">少々お待ちください</string>
-    <string name="str_generic_server_timeout">サーバがタイムアウトしました。後ほど再度お試しください。</string>
+    <string name="str_generic_server_timeout">サーバとの接続がタイムアウトしました。後ほど再度お試しください。</string>
     <string name="str_generic_no_network_error">ネットワーク接続がありません。ネットワークにつながっているか確認してください。</string>
     <string name="str_generic_unknown_error">不明なエラーが発生しました。後ほど再度お試しください。</string>
     <string name="str_generic_preserved_char_error">メッセージの中に、@@, ##, __ は利用できません</string>

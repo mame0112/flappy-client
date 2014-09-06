@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -20,18 +19,12 @@ import android.widget.TextView;
 
 import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
-import com.mame.flappy.R.id;
-import com.mame.flappy.R.layout;
-import com.mame.flappy.R.menu;
-import com.mame.flappy.R.string;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.NetworkUtil;
 import com.mame.flappy.util.TrackingUtil;
-import com.mame.flappy.web.LcomHttpWebAPI;
-import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 import com.mame.flappy.web.LcomServerAccessor;
 
 public class LoginActivity extends LcomBaseActivity implements
@@ -181,6 +174,21 @@ public class LoginActivity extends LcomBaseActivity implements
 				}
 			}
 		});
+	}
+
+	public void onPause() {
+		DbgUtil.showDebug(TAG, "onPause");
+		super.onPause();
+		if (mWebAPI != null) {
+			DbgUtil.showDebug(TAG, "Interrupt");
+			mWebAPI.interrupt();
+		}
+
+		if (!mActivity.isFinishing() && mProgressDialog != null
+				&& mProgressDialog.isShowing()) {
+			mProgressDialog.dismiss();
+		}
+
 	}
 
 	private void checkInputAndChangeButtonState() {

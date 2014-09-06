@@ -65,11 +65,14 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 	private final Handler mHandler = new Handler();
 
+	// 30 sec time out period
 	private final static int API_WAIT_TIMER = 30000;
 
 	private boolean mIsResponed = false;
 
 	private static final int ACT_HTTPS_UPLOAD = 2;
+
+	private PostThread mPostThread = null;
 
 	public LcomHttpsWebAPI() {
 	}
@@ -78,8 +81,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 	public void sendData(String servletName, String[] key, String[] value) {
 		DbgUtil.showDebug(TAG, "sendData");
 		this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
-		PostThread mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key,
-				value);
+		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key, value);
 		mHandler.postDelayed(new Runnable() {
 
 			@Override
@@ -87,55 +89,21 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				// TODO Auto-generated method stub
 				if (!mIsResponed) {
 					if (mListener != null) {
+						DbgUtil.showDebug(TAG, "Timeout");
 						mListener.onAPITimeout();
 					}
-					// TODO
-					// Toast.makeText(mActivity,
-					// R.string.str_generic_api_call_timeout,
-					// Toast.LENGTH_SHORT).show();
 				}
 			}
 
 		}, API_WAIT_TIMER);
 		mPostThread.start();
-		// this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
-		// postParams = new ArrayList<NameValuePair>();
-		// for (int i = 0; i < key.length; i++) {
-		// postParams.add(new BasicNameValuePair(key[i], value[i]));
-		// }
-		// Future<LcomHttpsWebAPI.HttpResult> future = Executors
-		// .newSingleThreadExecutor().submit(new HttpSslPost());
-		// HttpResult result = null;
-		// try {
-		// result = future.get();
-		// DbgUtil.showDebug(TAG, "statuscode: " + result.getStatusCode());
-		// if (result.getStatusCode() == HttpStatus.SC_OK) {
-		// List<String> respList = new ArrayList<String>();
-		// String resValue = result.getString();
-		// if (resValue != null) {
-		// try {
-		// JSONArray jsonArray = new JSONArray(resValue);
-		// for (int i = 0; i < jsonArray.length(); i++) {
-		// respList.add(jsonArray.getString(i));
-		// // Log.d(TAG, mRespList.get(i));
-		// }
-		// } catch (JSONException e) {
-		// Log.e(TAG, "JSONException: " + e.getMessage());
-		// }
-		// if (mListener != null) {
-		// mListener.onResponseReceived(respList);
-		// } else {
-		// DbgUtil.showDebug(TAG, "mListener null");
-		// }
-		// } else {
-		// mListener.onResponseReceived(null);
-		// }
-		// }
-		// } catch (InterruptedException e) {
-		// DbgUtil.showDebug(TAG, "InterruptedException: " + e.getMessage());
-		// } catch (ExecutionException e) {
-		// DbgUtil.showDebug(TAG, "ExecutionException: " + e.getMessage());
-		// }
+	}
+
+	@Override
+	public void interrupt() {
+		if (mPostThread != null && mPostThread.isAlive() == true) {
+			mPostThread.interrupt();
+		}
 	}
 
 	private class PostThread extends Thread {
@@ -143,6 +111,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		private int type;
 		private List<NameValuePair> postParams;
 		private List<String> mRespList = new ArrayList<String>();
+		HttpClient mClient = new MyHttpClient();
 
 		public PostThread(int type, String url, String[] key, String[] value) {
 			this.url = url;
@@ -155,8 +124,6 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 		@Override
 		public void run() {
-			HttpClient client = new MyHttpClient();
-
 			HttpPost postMethod = new HttpPost(url);
 			UrlEncodedFormEntity sendData;
 			try {
@@ -164,7 +131,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				postMethod.setEntity(sendData);
 				// HttpResponse response = client.execute(new HttpGet(url));
 				HttpResponse response;
-				response = client.execute(postMethod);
+				response = mClient.execute(postMethod);
 
 				mIsResponed = true;
 
@@ -177,6 +144,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 					stream.close();
 					String str = result.getString();
 					if (str != null) {
+						DbgUtil.showDebug(TAG, "str:" + str);
 						try {
 							JSONArray jsonArray = new JSONArray(
 									result.getString());
@@ -204,6 +172,19 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+
+		@Override
+		public void interrupt() {
+			DbgUtil.showDebug(TAG, "interrupt");
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					if (mClient != null) {
+						mClient.getConnectionManager().shutdown();
+					}
+				}
+			}).start();
 		}
 	}
 

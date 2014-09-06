@@ -31,6 +31,13 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 		mAccessor.sendData(servletName, key, value);
 	}
 
+	public void interrupt() {
+		DbgUtil.showDebug(TAG, "interrupt");
+		if (mAccessor != null) {
+			mAccessor.interrupt();
+		}
+	}
+
 	public void setListener(LcomServerAccessorListener listener) {
 		DbgUtil.showDebug(TAG, "setListener");
 		mListener = listener;
@@ -45,6 +52,7 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 
 	@Override
 	public void onAPITimeout() {
+		DbgUtil.showDebug(TAG, "onAPITimeout");
 		mListener.onAPITimeout();
 
 	}
