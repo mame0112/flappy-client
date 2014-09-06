@@ -122,6 +122,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		FriendDataManager.initializeFriendDataManager(mUserId,
 				getApplicationContext());
 		mManager = FriendDataManager.getInstance();
+
 		mManager.setFriendDataManagerListener(FriendListActivity.this);
 
 		mAdapter = new FriendListCustomAdapter(getApplicationContext(), 0,
@@ -259,6 +260,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 		if (!mActivity.isFinishing() && mProgressDialog != null
 				&& mProgressDialog.isShowing()) {
 			mProgressDialog.dismiss();
+		}
+
+		if (mManager != null) {
+			mManager.interruptOperation();
 		}
 
 		// Initialize flag

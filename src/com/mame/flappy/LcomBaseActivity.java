@@ -1,6 +1,7 @@
 package com.mame.flappy;
 
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.util.DbgUtil;
 
 import android.app.Activity;

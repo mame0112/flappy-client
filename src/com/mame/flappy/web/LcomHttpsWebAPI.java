@@ -40,6 +40,7 @@ import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -144,7 +145,6 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 					stream.close();
 					String str = result.getString();
 					if (str != null) {
-						DbgUtil.showDebug(TAG, "str:" + str);
 						try {
 							JSONArray jsonArray = new JSONArray(
 									result.getString());
@@ -182,6 +182,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				public void run() {
 					if (mClient != null) {
 						mClient.getConnectionManager().shutdown();
+						mClient = null;
 					}
 				}
 			}).start();
@@ -287,7 +288,10 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-			return new SingleClientConnManager(getParams(), registry);
+			ClientConnectionManager cm = new ThreadSafeClientConnManager(
+					getParams(), registry);
+			return cm;
+			// return new SingleClientConnManager(getParams(), registry);
 		}
 	}
 

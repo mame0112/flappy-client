@@ -599,6 +599,13 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 	}
 
+	public void interruptOperation() {
+		DbgUtil.showDebug(TAG, "interruptOperation");
+		if (mServerDataHandler != null) {
+			mServerDataHandler.interruptNetworkConnection();
+		}
+	}
+
 	@Override
 	public void notifyMessageSend(int result, MessageItemData postedMessageData) {
 		DbgUtil.showDebug(TAG, "notifyMessageSend result: " + result);

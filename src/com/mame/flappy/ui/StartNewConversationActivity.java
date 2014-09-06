@@ -202,7 +202,7 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
 						TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
 
-				//TODO
+				// TODO
 				// StartNewConversationActivityUtil.startActivityForContactsList(
 				// mActivity, REQUEST_CODE);
 
@@ -228,6 +228,11 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 	public void onPause() {
 		super.onPause();
 		DbgUtil.showDebug(TAG, "onPause");
+
+		if (mWebAPI != null) {
+			mWebAPI.interrupt();
+		}
+
 		if (mResultView != null) {
 			mResultView.setVisibility(View.GONE);
 		}

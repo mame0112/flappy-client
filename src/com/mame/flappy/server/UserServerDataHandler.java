@@ -655,6 +655,13 @@ public class UserServerDataHandler implements
 		}
 	}
 
+	public void interruptNetworkConnection() {
+		DbgUtil.showDebug(TAG, "interruptNetworkConnection");
+		if (mWebAPI != null) {
+			mWebAPI.interrupt();
+		}
+	}
+
 	// Interface to notify new user data to client of this class
 	public interface UserServerDataListener {
 		public void notifyNewServerUserDataSet(
