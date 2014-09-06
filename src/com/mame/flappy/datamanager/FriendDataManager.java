@@ -49,6 +49,7 @@ public class FriendDataManager implements UserServerDataListener,
 	}
 
 	public static void initializeFriendDataManager(int userId, Context context) {
+		DbgUtil.showDebug(TAG, "initializeFriendDataManager userId:" + userId);
 		mContext = context;
 		mUserId = userId;
 		mServerDataHandler = new UserServerDataHandler(context);

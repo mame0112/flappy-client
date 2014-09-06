@@ -281,6 +281,9 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage");
 	}
 
+	/**
+	 * This method's argument shall be null all notification has expires.
+	 */
 	@Override
 	public void notifiyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
@@ -288,7 +291,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		DbgUtil.showDebug(TAG, "mCurrentNotificationNum: "
 				+ mCurrentNotificationNum);
 
-		if (notifications != null) {
+		if (notifications != null && notifications.size() != 0) {
 			// Minus is for just expiring message
 			int size = notifications.size() - 1;
 			DbgUtil.showDebug(TAG, "size: " + size);

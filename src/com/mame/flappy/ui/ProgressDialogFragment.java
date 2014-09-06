@@ -17,10 +17,13 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	// private static ProgressDialogFragment sInstance = new
 	// ProgressDialogFragment();
+	// private static ProgressDialogFragment sInstance = null;
 
 	public static ProgressDialogFragment newInstance(String title,
 			String message) {
+
 		ProgressDialogFragment sInstance = new ProgressDialogFragment();
+		
 		// ProgressDialogFragment instance = new ProgressDialogFragment();
 		Bundle arguments = new Bundle();
 		arguments.putString("title", title);

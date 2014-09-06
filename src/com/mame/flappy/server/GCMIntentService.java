@@ -69,8 +69,8 @@ public class GCMIntentService extends Service {
 							NewMessageNotificationManager
 									.handleLastetMessageAndShowNotification(
 											getApplicationContext(),
-											Integer.valueOf(userId),
-											Integer.valueOf(friendUserId), 1,
+											Integer.valueOf(friendUserId),
+											Integer.valueOf(userId), 1,
 											Long.valueOf(expireDate));
 
 							sendBroadcast(Integer.valueOf(userId),
@@ -111,14 +111,14 @@ public class GCMIntentService extends Service {
 	//
 	// }
 
-	private void sendBroadcast(int userId, int targetUserId, String userName,
+	private void sendBroadcast(int userId, int friendUserId, String userName,
 			String targetUserName, String message) {
 		DbgUtil.showDebug(TAG, "sendBroadcast");
 		Intent intent = new Intent(LcomConst.ACTION_PUSH_NOTIFICATION);
-		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
-		intent.putExtra(LcomConst.EXTRA_USER_NAME, userName);
-		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
-		intent.putExtra(LcomConst.EXTRA_TARGET_USER_NAME, targetUserName);
+		intent.putExtra(LcomConst.EXTRA_USER_ID, friendUserId);
+		intent.putExtra(LcomConst.EXTRA_USER_NAME, targetUserName);
+		intent.putExtra(LcomConst.EXTRA_TARGET_USER_ID, userId);
+		intent.putExtra(LcomConst.EXTRA_TARGET_USER_NAME, userName);
 		sendBroadcast(intent);
 
 	}
