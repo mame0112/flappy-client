@@ -48,6 +48,8 @@ public class TrackingUtil {
 
 	public static final String EVENT_CATEGORY_START_CONVERSATION = "Start conversation";
 
+	public static final String EVENT_ACTION_WELCOME_OPTION = "option menu";
+
 	public static final String EVENT_ACTION_START_OPERATION_EXECUTION = "Start operation";
 
 	public static final String EVENT_ACTION_LOGIN_OPTION = "option menu";
@@ -69,6 +71,8 @@ public class TrackingUtil {
 	public static final String EVENT_ACTION_HELP = "Help view";
 
 	public static final String EVENT_ACTION_START_CONVERSATION = "Start Conversation view";
+	
+	public static final String EVENT_LABEL_WELCOME_HELP = "help";
 
 	public static final String EVENT_LABEL_LOGIN_BUTTON = "Login";
 

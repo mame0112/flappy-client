@@ -125,59 +125,60 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	 * @param targetUserId
 	 * @param latestPostedDate
 	 */
-	public static void handleLastetMessagesAndShowNotification(Context context,
-			ArrayList<NotificationContentData> datas)
-			throws NewMessageNotificationManagerException {
-		DbgUtil.showDebug(TAG, "handleLastetMessagesAndShowNotification");
-
-		if (context == null) {
-			throw new NewMessageNotificationManagerException("Context is null");
-		}
-
-		if (datas == null || datas.size() == 0) {
-			throw new NewMessageNotificationManagerException(
-					"NotificationContentData is null or size 0");
-		}
-
-		// mDataManager = FriendDataManager.getInstance();
-
-		if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
-			DbgUtil.showDebug(
-					TAG,
-					"registered: "
-							+ mDataManager
-									.isListenerAlreadyRegistered(sManager));
-			// TOOD
-			// Need to consider mDataManager.initialize
-			mDataManager.setFriendDataManagerListener(sManager);
-		}
-
-		if (mDataManager != null) {
-			long current = TimeUtil.getCurrentDate();
-			boolean isMoreThanOneNew = false;
-			for (NotificationContentData data : datas) {
-				long expireDate = data.getExpireData();
-				// Set AlarmManager if expireDate is later than current
-				// time
-				if (current < expireDate) {
-					int number = data.getNumberOfMesage();
-					if (number != 0) {
-						isMoreThanOneNew = true;
-						int fromUserId = data.getFromUserId();
-						int toUserId = data.getToUserId();
-						mDataManager.addNewNotification(fromUserId, toUserId,
-								number, expireDate);
-					}
-				}
-			}
-
-			if (isMoreThanOneNew == true) {
-				isMoreThanOneNew = false;
-				operateNotification(context);
-			}
-		}
-
-	}
+	// public static void handleLastetMessagesAndShowNotification(Context
+	// context,
+	// ArrayList<NotificationContentData> datas)
+	// throws NewMessageNotificationManagerException {
+	// DbgUtil.showDebug(TAG, "handleLastetMessagesAndShowNotification");
+	//
+	// if (context == null) {
+	// throw new NewMessageNotificationManagerException("Context is null");
+	// }
+	//
+	// if (datas == null || datas.size() == 0) {
+	// throw new NewMessageNotificationManagerException(
+	// "NotificationContentData is null or size 0");
+	// }
+	//
+	// // mDataManager = FriendDataManager.getInstance();
+	//
+	// if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
+	// DbgUtil.showDebug(
+	// TAG,
+	// "registered: "
+	// + mDataManager
+	// .isListenerAlreadyRegistered(sManager));
+	// // TOOD
+	// // Need to consider mDataManager.initialize
+	// mDataManager.setFriendDataManagerListener(sManager);
+	// }
+	//
+	// if (mDataManager != null) {
+	// long current = TimeUtil.getCurrentDate();
+	// boolean isMoreThanOneNew = false;
+	// for (NotificationContentData data : datas) {
+	// long expireDate = data.getExpireData();
+	// // Set AlarmManager if expireDate is later than current
+	// // time
+	// if (current < expireDate) {
+	// int number = data.getNumberOfMesage();
+	// if (number != 0) {
+	// isMoreThanOneNew = true;
+	// int fromUserId = data.getFromUserId();
+	// int toUserId = data.getToUserId();
+	// mDataManager.addNewNotification(fromUserId, toUserId,
+	// number, expireDate);
+	// }
+	// }
+	// }
+	//
+	// if (isMoreThanOneNew == true) {
+	// isMoreThanOneNew = false;
+	// operateNotification(context);
+	// }
+	// }
+	//
+	// }
 
 	private static void operateNotification(Context context) {
 		DbgUtil.showDebug(TAG, "operateNotification");
@@ -209,7 +210,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 
 	private static void setAlarmManagerForRemoveNotification(Context context,
 			int fromUserId, int toUserId, long triggerTime) {
-		DbgUtil.showDebug(TAG, "setAlarmManagerForRemoveNotification");
+		DbgUtil.showDebug(TAG, "setAlarmManagerForRemoveNotification: "
+				+ triggerTime);
 		Intent intent = new Intent(context,
 				NewMessageNotificationReceiver.class);
 		intent.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);

@@ -151,10 +151,10 @@
     <string name="str_help_what_is_this">flappyとは？</string>
     <string name="str_help_privacy_policy">プライバシーポリシー</string>
     <string name="str_help_tos">利用規約</string>
-    <string name="str_help_contact">連絡</string>
+    <string name="str_help_contact">お問い合わせ</string>
 
     <!-- Contact to us activity -->
-    <string name="str_contact_us_title">連絡</string>
+    <string name="str_contact_us_title">お問い合わせ</string>
     <string name="str_contact_us_desc">ご質問やご要望などございましたら、下記からお問い合わせください</string>
     <string name="str_contact_us_message_hint">コメント</string>
     <string name="str_contact_us_message_title_prompt">コメント</string>
@@ -173,19 +173,19 @@
     <!-- Flappy about activity -->
     <string name="str_flappy_about_main_itle">このサービスについて　</string>
     <string name="str_flappy_about_title">flappyとは</string>
-    <string name="str_flappy_about_desc">flappyを使うとストレスなく友達とコミュニケーションすることができます</string>
+    <string name="str_flappy_about_desc">flappyは、ストレスなく「既読スルー」できる、ゆるふわコミュニケーションツールです。</string>
     <string name="str_flappy_about_stress_less_title">ストレスのないコミュニケーション</string>
-    <string name="str_flappy_about_stress_less_desc">今のメッセージアプリはストレスが多いと思いませんか？たくさんのメッセージを読んで、きちんと返信しないといけませんよね？もしその状況に疲れてしまっているのであれば、このFlappyを使ってください。このflappyで送ったメッセージは、読まないと30分で自動的に消えてしまうので、返信しないと！というストレスが減ります。</string>
+    <string name="str_flappy_about_stress_less_desc">あなたがお使いのメッセージ系アプリにストレスを感じていませんか？たくさんのメッセージを読んで、素早く返信・・・。もしその状況に疲れてしまっているのであれば、このFlappyを使ってみましょう。flappyは、あなたをそんなストレスから解放してくれます。</string>
     <string name="str_flappy_about_disappear_message_title">消えるメッセージ</string>
-    <string name="str_flappy_about_disappear_message_desc">flappyの最も特徴的な機能の1つは、読まないと消えるメッセージです。新着メッセージを30分以上読まなかったら、そのメッセージは自動的に消えて読めなくなります。\n\n 一見不便ですが、「メッセージに気づかなかったから返信できなかった」という言い訳がしやすくなります。</string>
+    <string name="str_flappy_about_disappear_message_desc">flappyの最も特徴的な機能の1つは、読まないと消えるメッセージです。新着メッセージを30分〜1時間程度読まなかったら、そのメッセージは自動的に消えて読めなくなります。\n\n 一見不便ですが、「メッセージに気づかなかったから返信できなかった」という言い訳がしやすくなります。</string>
     <string name="str_flappy_about_merit_title">・・・ということは？</string>
-    <string name="str_flappy_about_merit_desc">メッセージを受けとった側はは「既読スルー」がしやすくなり、逆にメッセージを送る側も、相手に気を遣うことなく、これまで以上に気楽にメッセージを送ることが可能となります！</string>
+    <string name="str_flappy_about_merit_desc">メッセージを受けとった側は「既読スルー」がしやすくなり、逆にメッセージを送る側も、相手に気を遣うことなく、これまで以上に気楽にメッセージを送ることが可能となります！</string>
     <string name="str_flappy_about_start_title">はじめてみましょう</string>
-    <string name="str_flappy_about_start_desc">そんなストレスフリーのメッセージサービス、flappy。あなたも初めてストレスフリーな友達づきあいをしてみませんか？</string>
+    <string name="str_flappy_about_start_desc">そんなストレスフリーのメッセージサービス、flappy。あなたもストレスフリーな友達づきあいをしてみませんか？</string>
 
     <!-- Flappy Signout confirm dialog -->
     <string name="str_signout_confirm_title">ログアウトしますか？</string>
-    <string name="str_signout_confirm_desc">ログアウトすると、端末に保存されているメッセージ情報はすべて削除されます</string>
+    <string name="str_signout_confirm_desc">ログアウトすると、端末に保存されているメッセージ情報はすべて削除されます (一度以上会話を行った友達情報は保持されます)</string>
     <string name="str_signout_dialog_positive">ログアウト</string>
     <string name="str_signout_dialog_negative">キャンセル</string>
 

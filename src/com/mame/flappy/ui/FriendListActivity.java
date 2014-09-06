@@ -404,12 +404,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
 			}
 
-			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
-			}
-
 			// Initialize flag
 			isNewDataAvailable = false;
 
@@ -430,6 +424,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 					});
 				}
 			}).start();
+
+			// dismiss progress
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
 
 			// Debug
 			if (targetUserIds != null) {
@@ -563,14 +563,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 				}
 
 				mFriendListData.add(data);
-				DbgUtil.showDebug(TAG, "id: " + friendId);
-				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
-			}
-
-			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
-				mProgressDialog.dismiss();
 			}
 
 			// Initialize flag
@@ -593,6 +585,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 					});
 				}
 			}).start();
+
+			// dismiss progress
+			if (!mActivity.isFinishing() && mProgressDialog != null
+					&& mProgressDialog.isShowing()) {
+				mProgressDialog.dismiss();
+			}
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -634,27 +632,27 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 	}
 
-	private void handleNotification(ArrayList<FriendListData> newUserData) {
-		DbgUtil.showDebug(TAG, "handleNotification");
-
-		// Before get notification, we check latest message date
-		ArrayList<NotificationContentData> notifications = FriendListActivityUtil
-				.getNotificationDate(newUserData, mUserId);
-
-		// Show Notification if necessary
-		if (notifications != null && notifications.size() != 0) {
-			try {
-				NewMessageNotificationManager
-						.handleLastetMessagesAndShowNotification(
-								getApplicationContext(), notifications);
-			} catch (NewMessageNotificationManagerException e) {
-				DbgUtil.showDebug(
-						TAG,
-						"NewMessageNotificationManagerException: "
-								+ e.getMessage());
-			}
-		}
-	}
+	// private void handleNotification(ArrayList<FriendListData> newUserData) {
+	// DbgUtil.showDebug(TAG, "handleNotification");
+	//
+	// // Before get notification, we check latest message date
+	// ArrayList<NotificationContentData> notifications = FriendListActivityUtil
+	// .getNotificationDate(newUserData, mUserId);
+	//
+	// // Show Notification if necessary
+	// if (notifications != null && notifications.size() != 0) {
+	// try {
+	// NewMessageNotificationManager
+	// .handleLastetMessagesAndShowNotification(
+	// getApplicationContext(), notifications);
+	// } catch (NewMessageNotificationManagerException e) {
+	// DbgUtil.showDebug(
+	// TAG,
+	// "NewMessageNotificationManagerException: "
+	// + e.getMessage());
+	// }
+	// }
+	// }
 
 	private void checkAndShowFirstAddButton() {
 		DbgUtil.showDebug(TAG, "checkAndShowFirstAddButton");
