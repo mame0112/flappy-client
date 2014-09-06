@@ -320,7 +320,7 @@ public class FriendDataManager implements UserServerDataListener,
 		// public void notifiyNearlestExpireNotification(
 		// NotificationContentData data);
 
-		public void notifiyValidNotificationList(
+		public void notifyValidNotificationList(
 				ArrayList<NotificationContentData> notifications);
 
 	}
@@ -526,7 +526,7 @@ public class FriendDataManager implements UserServerDataListener,
 			}
 
 			for (FriendDataManagerListener listener : mListeners) {
-				listener.notifiyValidNotificationList(result);
+				listener.notifyValidNotificationList(result);
 			}
 		}
 	}

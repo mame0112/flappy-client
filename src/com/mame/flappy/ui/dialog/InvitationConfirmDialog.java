@@ -454,7 +454,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 //	}
 
 	@Override
-	public void notifiyValidNotificationList(
+	public void notifyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
 		// TODO Auto-generated method stub
 		

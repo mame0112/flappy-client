@@ -1013,10 +1013,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 						DbgUtil.showDebug(TAG, "ACTION_MESSAGE_EXPIRE");
 
 						int fromUserId = intent.getIntExtra(
+								LcomConst.EXTRA_USER_ID, LcomConst.NO_USER);
+						int targetUserId = intent.getIntExtra(
 								LcomConst.EXTRA_TARGET_USER_ID,
 								LcomConst.NO_USER);
-						int targetUserId = intent.getIntExtra(
-								LcomConst.EXTRA_USER_ID, LcomConst.NO_USER);
 						if (fromUserId != LcomConst.NO_USER) {
 
 							// Get back to previous recieved message or latest
@@ -1049,7 +1049,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	}
 
 	@Override
-	public void notifiyValidNotificationList(
+	public void notifyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
 		// TODO Auto-generated method stub
 
