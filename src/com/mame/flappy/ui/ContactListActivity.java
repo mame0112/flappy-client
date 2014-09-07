@@ -191,49 +191,6 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 	}
 
-	private class ContactsListAdapter extends ArrayAdapter<ContactsListData> {
-
-		private LayoutInflater mLayoutInflater = null;
-
-		public ContactsListAdapter(Context context, int textViewResourceId,
-				List<ContactsListData> objects) {
-			super(context, textViewResourceId, objects);
-			mLayoutInflater = (LayoutInflater) context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			ContactsListData item = (ContactsListData) getItem(position);
-
-			if (convertView == null) {
-				convertView = mLayoutInflater.inflate(
-						R.layout.contactslist_item, null);
-			}
-
-			ImageView thumbnailView = (ImageView) convertView
-					.findViewById(R.id.contactListThumbnail);
-			TextView userNameView = (TextView) convertView
-					.findViewById(R.id.contactsListName);
-			TextView lastMessageView = (TextView) convertView
-					.findViewById(R.id.contactsListAddress);
-
-			Bitmap bitmap = item.getThumbnailData();
-			if (bitmap != null) {
-				thumbnailView.setImageBitmap(bitmap);
-			} else {
-				// use default image (Nothing to do)
-			}
-
-			userNameView.setText(item.getContactName());
-			lastMessageView.setText(item.getMailAddress());
-
-			return convertView;
-		}
-
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return true;

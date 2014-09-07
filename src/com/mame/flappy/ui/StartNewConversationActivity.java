@@ -202,9 +202,8 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
 						TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
 
-				// TODO
-				// StartNewConversationActivityUtil.startActivityForContactsList(
-				// mActivity, REQUEST_CODE);
+				StartNewConversationActivityUtil.startActivityForContactsList(
+						mActivity, REQUEST_CODE);
 
 			}
 

@@ -38,6 +38,7 @@ import com.mame.flappy.server.LcomDeviceIdRegisterHelper;
 import com.mame.flappy.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
 import com.mame.flappy.ui.dialog.SignoutConfirmationDialog;
 import com.mame.flappy.ui.view.FriendListCustomAdapter;
+import com.mame.flappy.ui.view.FriendListCustomListView;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TimeUtil;
@@ -70,6 +71,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 	private ArrayList<FriendListData> mFriendListData = new ArrayList<FriendListData>();
 
+//	private FriendListCustomListView mListView = null;
 	private ListView mListView = null;
 
 	private Button mFirstAddButton = null;
@@ -130,6 +132,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		mNewUserData = new ArrayList<FriendListData>();
 
+//		mListView = (FriendListCustomListView) findViewById(R.id.friendListView);
 		mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -3,10 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-<ListView
+<!-- 
+    <com.mame.flappy.ui.view.FriendListCustomListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/friendListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+         -->
+<ListView
+        android:id="@+id/friendListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" /> 
 
     <FrameLayout
         android:layout_width="match_parent"
