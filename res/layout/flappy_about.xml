@@ -104,6 +104,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/str_flappy_about_merit_desc" />
+
+        <Button
+            android:id="@+id/aboutGetStartedButton"
+            style="@style/LcomNormalButtonTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/signup_button"
+            android:text="@string/str_flappy_about_get_started_button" />
     </LinearLayout>
 
 </ScrollView>

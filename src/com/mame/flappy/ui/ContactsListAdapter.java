@@ -62,7 +62,7 @@ public class ContactsListAdapter extends ArrayAdapter<ContactsListData> {
 		holder.thumbnailView
 				.setBackgroundResource(R.drawable.flappy_default_thumbnail_large);
 
-		// Set as default image
+		//Set as default image
 		Bitmap bitmap = item.getThumbnailData();
 		if (bitmap != null) {
 			holder.thumbnailView.setImageBitmap(bitmap);

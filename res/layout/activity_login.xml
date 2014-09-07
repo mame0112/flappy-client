@@ -36,8 +36,8 @@
         android:maxLength="16" />
 
     <EditText
-                        style="@style/EditTextStyle"
         android:id="@+id/signinPassword"
+        style="@style/EditTextStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/default_margin_vertical"

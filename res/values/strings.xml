@@ -183,6 +183,7 @@
     <string name="str_flappy_about_merit_desc">This messagin service wiill not make message receiver reply message because you and your friend might missed the message before disappearing. It means message sender can send message without considering situation of receiver. As a result, you can send message more freely than now!</string>
     <string name="str_flappy_about_start_title">Let\'s get started</string>
     <string name="str_flappy_about_start_desc">Stress-less messaging service, \'flappy\'. Would you want to get started stress-less communication with your friend?</string>
+    <string name="str_flappy_about_get_started_button">Get started</string>
 
     <!-- Flappy Signout confirm dialog -->
     <string name="str_signout_confirm_title">Sign out?</string>

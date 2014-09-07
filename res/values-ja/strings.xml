@@ -182,6 +182,7 @@
     <string name="str_flappy_about_merit_desc">メッセージを受けとった側は「既読スルー」がしやすくなり、逆にメッセージを送る側も、相手に気を遣うことなく、これまで以上に気楽にメッセージを送ることが可能となります！</string>
     <string name="str_flappy_about_start_title">はじめてみましょう</string>
     <string name="str_flappy_about_start_desc">そんなストレスフリーのメッセージサービス、flappy。あなたもストレスフリーな友達づきあいをしてみませんか？</string>
+    <string name="str_flappy_about_get_started_button">はじめてみる</string>
 
     <!-- Flappy Signout confirm dialog -->
     <string name="str_signout_confirm_title">ログアウトしますか？</string>
