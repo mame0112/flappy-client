@@ -1,13 +1,10 @@
 package com.mame.flappy.ui;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -15,16 +12,12 @@ import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mame.flappy.LcomBaseActivity;
@@ -55,6 +48,8 @@ public class ContactListActivity extends LcomBaseActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.contactslist);
 
 		ActionBar actionbar = getActionBar();
@@ -109,6 +104,7 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 		DbgUtil.showDebug(TAG, "onResume");
 
+		setProgressBarIndeterminateVisibility(true);
 		loadContactInformation();
 
 	}
@@ -238,12 +234,13 @@ public class ContactListActivity extends LcomBaseActivity implements
 				DbgUtil.showDebug(TAG, "Different the number of item");
 			}
 		}
+		setProgressBarIndeterminateVisibility(false);
 
 	}
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<Bitmap>> loader) {
 		DbgUtil.showDebug(TAG, "onLoaderReset");
-
+		setProgressBarIndeterminateVisibility(false);
 	}
 }
