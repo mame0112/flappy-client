@@ -58,6 +58,7 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 		mLoaderManager = new ContactListDataLoaderManager(
 				getApplicationContext());
+		mLoaderManager.setListener(this);
 
 		mAdapter = new ContactsListAdapter(getApplicationContext(), 0,
 				mContactsListData);
@@ -108,6 +109,11 @@ public class ContactListActivity extends LcomBaseActivity implements
 			mLoaderManager.executeContactLoad();
 		}
 
+		if (mAdapter != null) {
+			mAdapter.clear();
+			mAdapter.notifyDataSetChanged();
+		}
+
 		mRevoler = getContentResolver();
 
 		DbgUtil.showDebug(TAG, "onResume");
@@ -146,13 +152,22 @@ public class ContactListActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "onContactInformationLoaded");
 		mContactsListData = contactData;
 
-		mAdapter.notifyDataSetChanged();
-
+		if (mAdapter != null) {
+			if (contactData != null) {
+				mAdapter.addAll(contactData);
+				mAdapter.notifyDataSetChanged();
+			} else {
+				// Finish activity
+				doNoContactsOperation();
+			}
+		}
 	}
 
 	@Override
-	public void onContactThumbnailLoaded() {
+	public void onContactThumbnailLoaded(ArrayList<Bitmap> thumbnailData) {
 		DbgUtil.showDebug(TAG, "onContactThumbnailLoaded");
+		// TODO
+		setProgressBarIndeterminateVisibility(false);
 
 	}
 }

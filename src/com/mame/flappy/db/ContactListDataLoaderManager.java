@@ -1,6 +1,7 @@
 package com.mame.flappy.db;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
@@ -20,9 +21,11 @@ import com.mame.flappy.exception.UserLocalDataHandlerException;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
-public class ContactListDataLoaderManager {
+public class ContactListDataLoaderManager implements
+		ContactInformationLoader.ContactInformationLoaderListener,
+		ContactListThumbnailLoader.ContactListThumbnailLoaderListener {
 
-	private final String TAG = LcomConst.TAG + "/ContactListDataLoader";
+	private final String TAG = LcomConst.TAG + "/ContactListDataLoaderManager";
 
 	private ContactListDataLoaderListener mListener = null;
 
@@ -30,21 +33,16 @@ public class ContactListDataLoaderManager {
 
 	private ArrayList<ContactsListData> mContactsListData = new ArrayList<ContactsListData>();
 
-	private final String THUMBNAIL_LOADER = "thumbnail_loader";
+	private ContactInformationLoader mContactInfoLoader = null;
 
-	private final int LOADER_CONTACT_DATA = 0;
-
-	private final int LOADER_CONTACT_THUMBNAIL = 1;
-
-	private LoaderCallbacks<ArrayList<ContactsListData>> mDataCallback = null;
-
-	private LoaderCallbacks<ArrayList<Bitmap>> mThumbnailCallback = null;
+	private ContactListThumbnailLoader mContactThumbnailLoader = null;
 
 	public ContactListDataLoaderManager(Context context) {
 		mContext = context;
-
-		// mContactsListData = new
-		// LoadContactListInformationAsyncTask().execute();
+		mContactInfoLoader = new ContactInformationLoader();
+		mContactInfoLoader.setContactInformationLoaderListener(this);
+		mContactThumbnailLoader = new ContactListThumbnailLoader();
+		mContactThumbnailLoader.setContactListThumbnailLoaderListener(this);
 	}
 
 	public void executeContactLoad() {
@@ -52,14 +50,7 @@ public class ContactListDataLoaderManager {
 		// bundle.putStringArrayList(THUMBNAIL_LOADER, ids);
 		// getLoaderManager().initLoader(0, bundle, this).forceLoad();
 
-		loadContactInformation();
-	}
-
-	public void loadContactThumbnailInformation() {
-		if (mListener == null) {
-			return;
-		}
-
+		mContactInfoLoader.executeLoadContactInfo(mContext);
 	}
 
 	public void setListener(ContactListDataLoaderListener listener) {
@@ -70,7 +61,7 @@ public class ContactListDataLoaderManager {
 		public void onContactInformationLoaded(
 				ArrayList<ContactsListData> contactData);
 
-		public void onContactThumbnailLoaded();
+		public void onContactThumbnailLoaded(ArrayList<Bitmap> thumbnailData);
 	}
 
 	// private class LoadContactListInformationAsyncTask extends
@@ -150,109 +141,62 @@ public class ContactListDataLoaderManager {
 	// setProgressBarIndeterminateVisibility(false);
 	// }
 
-	private ArrayList<ContactsListData> loadContactInformation() {
-		mDataCallback = new LoaderCallbacks<ArrayList<ContactsListData>>() {
+	// private ArrayList<ContactsListData> loadContactInformation() {
+	// mDataCallback = new LoaderCallbacks<ArrayList<ContactsListData>>() {
+	//
+	// @Override
+	// public Loader<ArrayList<ContactsListData>> onCreateLoader(int id,
+	// Bundle args) {
+	// ContactInformationLoader loader = new ContactInformationLoader(
+	// mContext);
+	// loader.forceLoad();
+	// // return loader;
+	// }
+	//
+	// @Override
+	// public void onLoadFinished(
+	// Loader<ArrayList<ContactsListData>> loader,
+	// ArrayList<ContactsListData> data) {
+	// mContactsListData = data;
+	// }
+	//
+	// @Override
+	// public void onLoaderReset(Loader<ArrayList<ContactsListData>> loader) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// };
+	// return mContactsListData;
+	//
+	// }
 
-			@Override
-			public Loader<ArrayList<ContactsListData>> onCreateLoader(int id,
-					Bundle args) {
-				// TODO Auto-generated method stub
-				return null;
-//				return new ContactInformationLoader().loadContactInformation();
-			}
-
-			@Override
-			public void onLoadFinished(
-					Loader<ArrayList<ContactsListData>> loader,
-					ArrayList<ContactsListData> data) {
-				mContactsListData = data;
-			}
-
-			@Override
-			public void onLoaderReset(Loader<ArrayList<ContactsListData>> loader) {
-				// TODO Auto-generated method stub
-
-			}
-
-		};
-
-		ArrayList<ContactsListData> result = new ArrayList<ContactsListData>();
-		try {
-
-			if (mListener == null) {
-				return null;
-			}
-
-			String[] PROJECTION = { ContactsContract.Contacts._ID,
-					ContactsContract.Contacts.DISPLAY_NAME };
-
-			Cursor cursor = mContext.getContentResolver().query(
-					ContactsContract.Contacts.CONTENT_URI, PROJECTION, null,
-					null, null);
-
-			ArrayList<String> ids = new ArrayList<String>();
-
-			while (cursor.moveToNext()) {
-
-				int columnIndex = cursor
-						.getColumnIndex(ContactsContract.Contacts._ID);
-				String id = cursor.getString(columnIndex);
-
-				ids.add(id);
-
-				int nameIndex = cursor
-						.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-
-				ContactsListData data = new ContactsListData(id,
-						cursor.getString(nameIndex), null, null);
-
-				// Get mail address
-				Cursor cMail = mContext.getContentResolver().query(
-						ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-						null,
-						ContactsContract.CommonDataKinds.Email.CONTACT_ID
-								+ " =? ",
-						new String[] { cursor.getString(columnIndex) }, null);
-				while (cMail.moveToNext()) {
-					data.setMailAddress(cMail.getString(cMail
-							.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
-					DbgUtil.showDebug(TAG,
-							"mail address: " + data.getMailAddress());
-				}
-				cMail.close();
-
-				// If mail address is null, we avoid to show it on ListView.
-				if (data != null && data.getMailAddress() != null) {
-					result.add(data);
-				}
-
-			}
-
-			// Start to load thmbnail
-			Bundle bundle = new Bundle();
-			bundle.putStringArrayList(THUMBNAIL_LOADER, ids);
-			// getLoaderManager().initLoader(LOADER_CONTACT_THUMBNAIL, bundle,
-			// this).forceLoad();
-
-			cursor.close();
-
-		} catch (CursorIndexOutOfBoundsException e) {
-			DbgUtil.showDebug(TAG, "No contacts: " + e.getMessage());
-			TrackingUtil.trackExceptionMessage(mContext, TAG,
-					"CursorIndexOutOfBoundsException: " + e.getMessage());
-			// doNoContactsOperation();
-		} catch (StringIndexOutOfBoundsException e2) {
-			DbgUtil.showDebug(TAG, "No contacts: " + e2.getMessage());
-			TrackingUtil.trackExceptionMessage(mContext, TAG,
-					"StringIndexOutOfBoundsException: " + e2.getMessage());
-			// doNoContactsOperation();
+	@Override
+	public void onContactInfoLoaded(ArrayList<ContactsListData> result) {
+		DbgUtil.showDebug(TAG, "onContactInfoLoaded");
+		if (mListener != null) {
+			mListener.onContactInformationLoaded(result);
 		}
 
-		return result;
+		ArrayList<String> ids = new ArrayList<String>();
+
+		// TODO This should be done in async task
+		if (result != null && result.size() != 0) {
+			for (ContactsListData data : result) {
+				ids.add(data.getContactId());
+			}
+		}
+
+		// Execute thumbnail load
+		mContactThumbnailLoader.executeThumbnailLoad(mContext, ids);
 	}
 
-	private ArrayList<ContactsListData> executeContactDataLoad() {
-		return null;
+	@Override
+	public void onThumbnailDataLoaded(ArrayList<Bitmap> result) {
+		DbgUtil.showDebug(TAG, "onThumbnailDataLoaded");
+		if (mListener != null) {
+			mListener.onContactThumbnailLoaded(result);
+		}
 	}
 
 }
