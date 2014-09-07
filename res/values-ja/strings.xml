@@ -126,7 +126,7 @@
     <string name="str_conversation_user_name_not_set">(未設定)</string>
 
     <!-- Contacts list -->
-    <string name="str_contactslist_title">メッセージを送信する友達を選んでください</string>
+    <string name="str_contactslist_title">招待する友達を選択</string>
     <string name="str_contactslist_error_no_contact">電話帳に友達が登録されていません</string>
 
     <!-- Contacts list confirm dialog -->
