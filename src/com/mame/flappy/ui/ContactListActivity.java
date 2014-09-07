@@ -24,12 +24,13 @@ import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.ContactsListData;
+import com.mame.flappy.db.ContactListDataLoaderManager;
 import com.mame.flappy.db.ContactListThumbnailLoader;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
 public class ContactListActivity extends LcomBaseActivity implements
-		LoaderCallbacks<ArrayList<Bitmap>> {
+		ContactListDataLoaderManager.ContactListDataLoaderListener {
 
 	private final String TAG = LcomConst.TAG + "/ContactListActivity";
 
@@ -41,9 +42,9 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 	private ArrayList<ContactsListData> mContactsListData = new ArrayList<ContactsListData>();
 
-	private final String THUMBNAIL_LOADER = "thumbnail_loader";
-
 	private ContentResolver mRevoler = null;
+
+	private ContactListDataLoaderManager mLoaderManager = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,9 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
+
+		mLoaderManager = new ContactListDataLoaderManager(
+				getApplicationContext());
 
 		mAdapter = new ContactsListAdapter(getApplicationContext(), 0,
 				mContactsListData);
@@ -100,83 +104,16 @@ public class ContactListActivity extends LcomBaseActivity implements
 			mContactsListData.clear();
 		}
 
+		if (mLoaderManager != null) {
+			mLoaderManager.executeContactLoad();
+		}
+
 		mRevoler = getContentResolver();
 
 		DbgUtil.showDebug(TAG, "onResume");
 
 		setProgressBarIndeterminateVisibility(true);
-		loadContactInformation();
 
-	}
-
-	private void loadContactInformation() {
-		try {
-
-			String[] PROJECTION = { ContactsContract.Contacts._ID,
-					ContactsContract.Contacts.DISPLAY_NAME };
-
-			mResolver = getContentResolver();
-			Cursor cursor = mResolver.query(
-					ContactsContract.Contacts.CONTENT_URI, PROJECTION, null,
-					null, null);
-
-			ArrayList<String> ids = new ArrayList<String>();
-
-			while (cursor.moveToNext()) {
-
-				int columnIndex = cursor
-						.getColumnIndex(ContactsContract.Contacts._ID);
-				String id = cursor.getString(columnIndex);
-
-				ids.add(id);
-
-				int nameIndex = cursor
-						.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
-
-				ContactsListData data = new ContactsListData(id,
-						cursor.getString(nameIndex), null, null);
-
-				// Get mail address
-				Cursor cMail = mResolver.query(
-						ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-						null, ContactsContract.CommonDataKinds.Email.CONTACT_ID
-								+ " =? ",
-						new String[] { cursor.getString(columnIndex) }, null);
-				while (cMail.moveToNext()) {
-					data.setMailAddress(cMail.getString(cMail
-							.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA1)));
-					DbgUtil.showDebug(TAG,
-							"mail address: " + data.getMailAddress());
-				}
-				cMail.close();
-
-				// If mail address is null, we avoid to show it on ListView.
-				if (data != null && data.getMailAddress() != null) {
-					mContactsListData.add(data);
-				}
-
-			}
-
-			// Start to load thmbnail
-			Bundle bundle = new Bundle();
-			bundle.putStringArrayList(THUMBNAIL_LOADER, ids);
-			getLoaderManager().initLoader(0, bundle, this).forceLoad();
-
-			cursor.close();
-
-			mAdapter.notifyDataSetChanged();
-
-		} catch (CursorIndexOutOfBoundsException e) {
-			DbgUtil.showDebug(TAG, "No contacts: " + e.getMessage());
-			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
-					"CursorIndexOutOfBoundsException: " + e.getMessage());
-			doNoContactsOperation();
-		} catch (StringIndexOutOfBoundsException e2) {
-			DbgUtil.showDebug(TAG, "No contacts: " + e2.getMessage());
-			TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
-					"StringIndexOutOfBoundsException: " + e2.getMessage());
-			doNoContactsOperation();
-		}
 	}
 
 	private void doNoContactsOperation() {
@@ -204,43 +141,18 @@ public class ContactListActivity extends LcomBaseActivity implements
 	}
 
 	@Override
-	public Loader<ArrayList<Bitmap>> onCreateLoader(int id, Bundle bundle) {
-		DbgUtil.showDebug(TAG, "onCreateLoader");
-		if (bundle != null) {
-			ArrayList<String> ids = bundle.getStringArrayList(THUMBNAIL_LOADER);
-			return new ContactListThumbnailLoader(this, mRevoler, ids);
-		}
-		return null;
-	}
+	public void onContactInformationLoaded(
+			ArrayList<ContactsListData> contactData) {
+		DbgUtil.showDebug(TAG, "onContactInformationLoaded");
+		mContactsListData = contactData;
 
-	@Override
-	public void onLoadFinished(Loader<ArrayList<Bitmap>> loader,
-			ArrayList<Bitmap> thumbnails) {
-		DbgUtil.showDebug(TAG, "onLoadFinished");
-
-		if (mContactsListData != null && thumbnails != null) {
-			if (mContactsListData.size() == thumbnails.size()) {
-				for (int i = 0; i < thumbnails.size(); i++) {
-					ContactsListData data = mContactsListData.get(i);
-					Bitmap thumbnail = thumbnails.get(i);
-					if (thumbnail != null) {
-						data.setThumbnailData(thumbnail);
-					}
-				}
-
-				mAdapter.notifyDataSetChanged();
-
-			} else {
-				DbgUtil.showDebug(TAG, "Different the number of item");
-			}
-		}
-		setProgressBarIndeterminateVisibility(false);
+		mAdapter.notifyDataSetChanged();
 
 	}
 
 	@Override
-	public void onLoaderReset(Loader<ArrayList<Bitmap>> loader) {
-		DbgUtil.showDebug(TAG, "onLoaderReset");
-		setProgressBarIndeterminateVisibility(false);
+	public void onContactThumbnailLoaded() {
+		DbgUtil.showDebug(TAG, "onContactThumbnailLoaded");
+
 	}
 }
