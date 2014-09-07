@@ -3,6 +3,7 @@ encoding//src/com/mame/flappy/FlappyApplication.java=UTF-8
 encoding//src/com/mame/flappy/datamanager/FriendDataManager.java=UTF-8
 encoding//src/com/mame/flappy/db/ContactInformationLoader.java=UTF-8
 encoding//src/com/mame/flappy/db/ContactListDataLoaderManager.java=UTF-8
+encoding//src/com/mame/flappy/db/ContactListThumbnailLoader.java=UTF-8
 encoding//src/com/mame/flappy/server/GCMIntentService.java=UTF-8
 encoding//src/com/mame/flappy/ui/dialog/InvitationConfirmDialog.java=UTF-8
 encoding//src/com/mame/flappy/ui/dialog/SignoutConfirmationDialog.java=UTF-8

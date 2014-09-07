@@ -16,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
+import android.widget.ImageView;
 
 public class ContactListThumbnailLoader {
 
@@ -23,83 +24,68 @@ public class ContactListThumbnailLoader {
 
 	private Context mContext = null;
 
-	private ArrayList<String> mIds = null;
+	private String mContactId = null;
 
-	private ContactListThumbnailLoaderListener mListener = null;
+	private ImageView mThumbnailView = null;
+
+	private String mTag = null;
 
 	public ContactListThumbnailLoader() {
 		DbgUtil.showDebug(TAG, "ContactListThumbnailLoader");
 	}
 
-	public void executeThumbnailLoad(Context context, ArrayList<String> ids) {
-		mIds = ids;
+	public void executeThumbnailLoad(Context context, String id, ImageView view) {
 		mContext = context;
+		mContactId = id;
+		mThumbnailView = view;
+		mTag = view.getTag().toString();
+
 		new LoadContactThumbnailAsyncTask(mContext).execute();
 	}
 
 	private class LoadContactThumbnailAsyncTask extends
-			AsyncTask<Context, Void, ArrayList<Bitmap>> {
+			AsyncTask<Context, Void, Bitmap> {
 
 		public LoadContactThumbnailAsyncTask(Context context) {
 			DbgUtil.showDebug(TAG, "LoadContactThumbnailAsyncTask");
 		}
 
 		@Override
-		protected ArrayList<Bitmap> doInBackground(Context... params) {
+		protected Bitmap doInBackground(Context... params) {
 			DbgUtil.showDebug(TAG, "doInBackground");
 			return loadContactThumbnailData();
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<Bitmap> result) {
+		protected void onPostExecute(Bitmap result) {
 			DbgUtil.showDebug(TAG,
 					"LoadContactThumbnailAsyncTask onPostExecute");
-			mListener.onThumbnailDataLoaded(result);
+			if (mTag.equals(mThumbnailView.getTag())) {
+				mThumbnailView.setImageBitmap(result);
+			}
 		}
 	}
 
-	public ArrayList<Bitmap> loadContactThumbnailData() {
+	public synchronized Bitmap loadContactThumbnailData() {
 		DbgUtil.showDebug(TAG, "loadContactThumbnailData");
-
-		ArrayList<Bitmap> thumbnails = new ArrayList<Bitmap>();
 
 		ContentResolver resolver = mContext.getContentResolver();
 
-		for (String id : mIds) {
-			// Get bitmap
-			Uri photoUri = ContentUris.withAppendedId(
-					ContactsContract.Contacts.CONTENT_URI, Long.valueOf(id));
+		// Get bitmap
+		Uri photoUri = ContentUris
+				.withAppendedId(ContactsContract.Contacts.CONTENT_URI,
+						Long.valueOf(mContactId));
 
-			InputStream stream = ContactsContract.Contacts
-					.openContactPhotoInputStream(resolver, photoUri);
+		InputStream stream = ContactsContract.Contacts
+				.openContactPhotoInputStream(resolver, photoUri);
 
-			// If bitmap is not available, we should return null so that
-			// activity can show default image
-			if (stream != null) {
-				Bitmap thumbnail = BitmapFactory.decodeStream(stream);
-				if (thumbnail != null) {
-					thumbnails.add(thumbnail);
-					DbgUtil.showDebug(TAG,
-							"thumbnail size: " + thumbnail.getWidth() + " / "
-									+ thumbnail.getHeight());
-				} else {
-					thumbnails.add(null);
-				}
-			} else {
-				thumbnails.add(null);
-			}
+		// If bitmap is not available, we should return null so that
+		// activity can show default image
+		if (stream != null) {
+			Bitmap thumbnail = BitmapFactory.decodeStream(stream);
+			return thumbnail;
 		}
 
-		return thumbnails;
+		return null;
 	}
-
-	public void setContactListThumbnailLoaderListener(
-			ContactListThumbnailLoaderListener listener) {
-		mListener = listener;
-	}
-
-	public interface ContactListThumbnailLoaderListener {
-		public void onThumbnailDataLoaded(ArrayList<Bitmap> result);
-	}
-
 }

@@ -42,8 +42,6 @@ public class ContactListActivity extends LcomBaseActivity implements
 
 	private ArrayList<ContactsListData> mContactsListData = new ArrayList<ContactsListData>();
 
-	private ContentResolver mRevoler = null;
-
 	private ContactListDataLoaderManager mLoaderManager = null;
 
 	@Override
@@ -100,6 +98,7 @@ public class ContactListActivity extends LcomBaseActivity implements
 	@Override
 	public void onResume() {
 		super.onResume();
+		DbgUtil.showDebug(TAG, "onResume");
 
 		if (mContactsListData != null) {
 			mContactsListData.clear();
@@ -113,10 +112,6 @@ public class ContactListActivity extends LcomBaseActivity implements
 			mAdapter.clear();
 			mAdapter.notifyDataSetChanged();
 		}
-
-		mRevoler = getContentResolver();
-
-		DbgUtil.showDebug(TAG, "onResume");
 
 		setProgressBarIndeterminateVisibility(true);
 
@@ -161,13 +156,6 @@ public class ContactListActivity extends LcomBaseActivity implements
 				doNoContactsOperation();
 			}
 		}
-	}
-
-	@Override
-	public void onContactThumbnailLoaded(ArrayList<Bitmap> thumbnailData) {
-		DbgUtil.showDebug(TAG, "onContactThumbnailLoaded");
-		// TODO
 		setProgressBarIndeterminateVisibility(false);
-
 	}
 }
