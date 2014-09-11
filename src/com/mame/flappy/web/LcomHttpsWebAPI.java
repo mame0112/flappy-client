@@ -53,6 +53,7 @@ import android.util.Log;
 
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.util.DbgUtil;
+import com.mame.flappy.util.PrngUtils;
 
 public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
@@ -76,6 +77,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 	private PostThread mPostThread = null;
 
 	public LcomHttpsWebAPI() {
+		PrngUtils.apply();
 	}
 
 	@Override
