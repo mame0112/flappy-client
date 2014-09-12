@@ -71,7 +71,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 	private ArrayList<FriendListData> mFriendListData = new ArrayList<FriendListData>();
 
-//	private FriendListCustomListView mListView = null;
+	// private FriendListCustomListView mListView = null;
 	private ListView mListView = null;
 
 	private Button mFirstAddButton = null;
@@ -132,7 +132,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		mNewUserData = new ArrayList<FriendListData>();
 
-//		mListView = (FriendListCustomListView) findViewById(R.id.friendListView);
+		// mListView = (FriendListCustomListView)
+		// findViewById(R.id.friendListView);
 		mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -392,7 +393,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 
 			// Id list for getting thumbnail
-			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+			// ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+			final ArrayList<FriendListData> friendListData = new ArrayList<FriendListData>();
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
@@ -401,15 +403,16 @@ public class FriendListActivity extends LcomBaseActivity implements
 				Integer friendId = (Integer) entry.getKey();
 				FriendListData data = (FriendListData) entry.getValue();
 
-				mFriendListData.add(data);
+				friendListData.add(data);
+
+				// mFriendListData.add(data);
 
 				// TODO We need to check if thumbnail is available in local
 				// before accessing server
-				DbgUtil.showDebug(TAG, "friendId: " + friendId);
-				targetUserIds.add(friendId);
-
-				DbgUtil.showDebug(TAG, "id: " + friendId);
-				DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
+				// DbgUtil.showDebug(TAG, "friendId: " + friendId);
+				// targetUserIds.add(friendId);
+				// DbgUtil.showDebug(TAG, "id: " + friendId);
+				// DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
 			}
 
 			// Initialize flag
@@ -425,6 +428,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 							// mFriendListData.addAll(userData);
 							// mFriendListData.addAll(userData);
 							if (mAdapter != null) {
+								mFriendListData.addAll(friendListData);
 								mListView.setAdapter(mAdapter);
 								mAdapter.notifyDataSetChanged();
 							}
@@ -440,11 +444,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 
 			// Debug
-			if (targetUserIds != null) {
-				for (int id : targetUserIds) {
-					DbgUtil.showDebug(TAG, "id::: " + id);
-				}
-			}
+			// if (targetUserIds != null) {
+			// for (int id : targetUserIds) {
+			// DbgUtil.showDebug(TAG, "id::: " + id);
+			// }
+			// }
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -549,7 +553,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 
 			// Id list for getting thumbnail
-			ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+			// ArrayList<Integer> targetUserIds = new ArrayList<Integer>();
+			final ArrayList<FriendListData> friendListData = new ArrayList<FriendListData>();
 
 			// Put data to list view data
 			for (Iterator<?> it = mFriendTmpData.entrySet().iterator(); it
@@ -560,17 +565,18 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 				// TODO We need to check if thumbnail is available in local
 				// before accessing server
-				DbgUtil.showDebug(TAG, "friendId: " + friendId);
-				if (data != null) {
-					Bitmap bm = data.getThumbnail();
-					// In case bitmap is null (it means bitmap is null in
-					// local), we need to request thumbnail data
-					if (bm == null) {
-						targetUserIds.add(friendId);
-					}
-				}
+				// DbgUtil.showDebug(TAG, "friendId: " + friendId);
+				// if (data != null) {
+				// Bitmap bm = data.getThumbnail();
+				// // In case bitmap is null (it means bitmap is null in
+				// // local), we need to request thumbnail data
+				// if (bm == null) {
+				// targetUserIds.add(friendId);
+				// }
+				// }
+				friendListData.add(data);
 
-				mFriendListData.add(data);
+				// mFriendListData.add(data);
 			}
 
 			// Initialize flag
@@ -586,6 +592,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 							// mFriendListData.addAll(userData);
 							// mFriendListData.addAll(userData);
 							if (mAdapter != null) {
+								mFriendListData.addAll(friendListData);
 								mListView.setAdapter(mAdapter);
 								mAdapter.notifyDataSetChanged();
 							}
@@ -730,9 +737,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_friendlist_signout:
 
-			SignoutConfirmationDialog dialog = new SignoutConfirmationDialog();
-			dialog.show(getFragmentManager(), "SignoutConfirmation");
-			dialog.setSignoutConfirmationListener(this);
+			// SignoutConfirmationDialog dialog = new
+			// SignoutConfirmationDialog();
+			// dialog.show(getFragmentManager(), "SignoutConfirmation");
+			// dialog.setSignoutConfirmationListener(this);
 
 			return true;
 		case R.id.menu_friendlist_add:
