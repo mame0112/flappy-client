@@ -143,12 +143,6 @@ public class LoginActivity extends LcomBaseActivity implements
 							try {
 								DbgUtil.showDebug(TAG, "sendLoginData");
 
-								// Dismiss dialog if it is being shown
-								if (!mActivity.isFinishing()
-										&& mProgressDialog != null) {
-									mProgressDialog.dismiss();
-								}
-
 								if (mProgressDialog != null) {
 									mProgressDialog.show(getFragmentManager(),
 											"progress");
