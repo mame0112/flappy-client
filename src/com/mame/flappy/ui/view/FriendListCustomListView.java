@@ -1,6 +1,7 @@
 package com.mame.flappy.ui.view;
 
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.DbgUtil;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -34,6 +35,15 @@ public class FriendListCustomListView extends ListView {
 	public void setAdapter(ListAdapter adapter) {
 		super.setAdapter(adapter);
 		mAdapter = (FriendListCustomAdapter) adapter;
+	}
+
+	@Override
+	protected void layoutChildren() {
+		try {
+			super.layoutChildren();
+		} catch (IllegalStateException e) {
+			DbgUtil.showDebug(TAG, "IllegalStateException: " + e.getMessage());
+		}
 	}
 
 }

@@ -71,8 +71,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 	private ArrayList<FriendListData> mFriendListData = new ArrayList<FriendListData>();
 
-	// private FriendListCustomListView mListView = null;
-	private ListView mListView = null;
+	private FriendListCustomListView mListView = null;
+	// private ListView mListView = null;
 
 	private Button mFirstAddButton = null;
 
@@ -134,9 +134,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		mNewUserData = new ArrayList<FriendListData>();
 
-		// mListView = (FriendListCustomListView)
-		// findViewById(R.id.friendListView);
-		mListView = (ListView) findViewById(R.id.friendListView);
+		mListView = (FriendListCustomListView) findViewById(R.id.friendListView);
+//		mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
