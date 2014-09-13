@@ -127,7 +127,9 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		mManager.setFriendDataManagerListener(FriendListActivity.this);
 
-		mAdapter = new FriendListCustomAdapter(getApplicationContext(), 0,
+		// mAdapter = new FriendListCustomAdapter(getApplicationContext(), 0,
+		// mFriendListData);
+		mAdapter = new FriendListCustomAdapter(getApplicationContext(),
 				mFriendListData);
 
 		mNewUserData = new ArrayList<FriendListData>();
@@ -142,7 +144,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				DbgUtil.showDebug(TAG, "onItemClick positon: " + position);
-				FriendListData data = mAdapter.getItem(position);
+				FriendListData data = (FriendListData) mAdapter
+						.getItem(position);
 				DbgUtil.showDebug(
 						TAG,
 						"id: " + data.getFriendId() + " name: "
