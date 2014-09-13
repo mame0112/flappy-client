@@ -13,32 +13,24 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	private final String TAG = LcomConst.TAG + "/ProgressDialogFragment";
 
-	private static ProgressDialogFragment sInstance = null;
+	private static String mTitle = null;
+
+	private static String mMessage = null;
 
 	public static ProgressDialogFragment newInstance(String title,
 			String message) {
 
-		ProgressDialogFragment sInstance = new ProgressDialogFragment();
+		ProgressDialogFragment instance = new ProgressDialogFragment();
 
-		// ProgressDialogFragment instance = new ProgressDialogFragment();
+		mTitle = title;
+		mMessage = message;
 
-		Bundle arguments = new Bundle();
-		arguments.putString("title", title);
-		arguments.putString("message", message);
+		// Bundle arguments = new Bundle();
+		// arguments.putString("title", title);
+		// arguments.putString("message", message);
+		// sInstance.setArguments(arguments);
 
-		sInstance.setArguments(arguments);
-
-		return sInstance;
-	}
-
-	@Override
-	public void show(FragmentManager manager, String tag) {
-
-		if (sInstance != null) {
-			sInstance.show(manager, tag);
-		}
-
-		super.show(manager, tag);
+		return instance;
 	}
 
 	@Override
@@ -46,17 +38,16 @@ public class ProgressDialogFragment extends DialogFragment {
 
 		ProgressDialog mProgressDialog = null;
 
-		String title = getArguments().getString("title");
-		String message = getArguments().getString("message");
+		// String title = getArguments().getString("title");
+		// String message = getArguments().getString("message");
 
 		mProgressDialog = new ProgressDialog(getActivity());
-		mProgressDialog.setTitle(title);
-		mProgressDialog.setMessage(message);
+		mProgressDialog.setTitle(mTitle);
+		mProgressDialog.setMessage(mMessage);
 		mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 		setCancelable(false);
 
 		return mProgressDialog;
 	}
-
 
 }
