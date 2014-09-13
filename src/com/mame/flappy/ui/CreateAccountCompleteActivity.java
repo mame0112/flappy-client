@@ -64,7 +64,7 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 
 	private int mMailAddressLength = 0;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	private String mUserName = null;
 
@@ -106,9 +106,7 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 
 		mActivity = this;
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_login_progress_title),
-				getString(R.string.str_generic_wait_desc));
+		mProgressHelper = new ProgressDialogFragmentHelper();
 
 		mCreateResultView = (TextView) findViewById(R.id.createCompleteResultView);
 		mCreateResultView.setVisibility(View.GONE);
@@ -186,7 +184,10 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 					// If password and mail address is correct, show progress
 					// dalog.
 					if (checkResult) {
-						mProgressDialog.show(getFragmentManager(), "progress");
+						mProgressHelper.showProgressDialog(mActivity,
+								getString(R.string.str_login_progress_title),
+								getString(R.string.str_generic_wait_desc), TAG);
+
 					}
 				}
 			}
@@ -241,9 +242,7 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		mProgressHelper.dismissDialog(mActivity, TAG);
 
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -352,9 +351,8 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeoput");
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		mProgressHelper.dismissDialog(mActivity, TAG);
+
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 		TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
 				"onAPITimeout");

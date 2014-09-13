@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -93,9 +96,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 	 */
 	private boolean isNowLoading = false;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	// private ProgressDialogFragment mProgressDialog = null;
 
 	private LcomDeviceIdRegisterHelper mHelper = null;
+
+	private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -114,11 +119,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		mActivity = this;
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_friendlist_progress_title),
-				getString(R.string.str_friendlist_progress_desc));
+		// mProgressDialog = ProgressDialogFragment.newInstance(
+		// getString(R.string.str_friendlist_progress_title),
+		// getString(R.string.str_friendlist_progress_desc));
 
-		mHelper = new LcomDeviceIdRegisterHelper(this, mProgressDialog);
+		mHelper = new LcomDeviceIdRegisterHelper(this);
 		mHelper.setPushRegistrationListener(this);
 
 		FriendDataManager.initializeFriendDataManager(mUserId,
@@ -135,7 +140,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		mNewUserData = new ArrayList<FriendListData>();
 
 		mListView = (FriendListCustomListView) findViewById(R.id.friendListView);
-//		mListView = (ListView) findViewById(R.id.friendListView);
+		// mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -178,6 +183,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 		});
 
+		mProgressHelper = new ProgressDialogFragmentHelper();
+
 	}
 
 	private void checkGPSAndRequestUserData() {
@@ -189,10 +196,13 @@ public class FriendListActivity extends LcomBaseActivity implements
 			// actual data.
 			requestUserData();
 
-			if (mProgressDialog != null) {
-				mProgressDialog.show(getFragmentManager(), "progress");
-			}
-
+			// TODO
+			// if (mProgressDialog != null) {
+			// mProgressDialog.show(getFragmentManager(), "progress");
+			// }
+			mProgressHelper.showProgressDialog(this,
+					getString(R.string.str_friendlist_progress_title),
+					getString(R.string.str_friendlist_progress_desc), TAG);
 		}
 
 	}
@@ -263,9 +273,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 		// mManager.removeFriendDataManagerListener(this);
 
 		// To avoid showing more than 2 dialog, we try to dismiss dialog
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+		mProgressHelper.dismissDialog(this, TAG);
 
 		if (mManager != null) {
 			mManager.interruptOperation();
@@ -439,9 +450,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null) {
-				mProgressDialog.dismiss();
-			}
+			mProgressHelper.dismissDialog(this, TAG);
+			// if (!mActivity.isFinishing() && mProgressDialog != null) {
+			// mProgressDialog.dismiss();
+			// }
 
 			// Debug
 			// if (targetUserIds != null) {
@@ -602,9 +614,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null) {
-				mProgressDialog.dismiss();
-			}
+
+			mProgressHelper.dismissDialog(this, TAG);
+			// if (!mActivity.isFinishing() && mProgressDialog != null) {
+			// mProgressDialog.dismiss();
+			// }
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -736,10 +750,9 @@ public class FriendListActivity extends LcomBaseActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_friendlist_signout:
 
-			// SignoutConfirmationDialog dialog = new
-			// SignoutConfirmationDialog();
-			// dialog.show(getFragmentManager(), "SignoutConfirmation");
-			// dialog.setSignoutConfirmationListener(this);
+			SignoutConfirmationDialog dialog = new SignoutConfirmationDialog();
+			dialog.show(getFragmentManager(), "SignoutConfirmation");
+			dialog.setSignoutConfirmationListener(this);
 
 			return true;
 		case R.id.menu_friendlist_add:
@@ -801,9 +814,13 @@ public class FriendListActivity extends LcomBaseActivity implements
 			mFriendListData.clear();
 		}
 		requestUserData();
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.show(getFragmentManager(), "progress");
-		}
+		mProgressHelper.showProgressDialog(this,
+				getString(R.string.str_friendlist_progress_title),
+				getString(R.string.str_friendlist_progress_desc), TAG);
+		// TODO
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.show(getFragmentManager(), "progress");
+		// }
 	}
 
 	@Override
@@ -871,9 +888,13 @@ public class FriendListActivity extends LcomBaseActivity implements
 	@Override
 	public void onDeviceIdRegistrationFinished(boolean result) {
 		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.show(getFragmentManager(), "progress");
-		}
+		// TODO
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.show(getFragmentManager(), "progress");
+		// }
+		mProgressHelper.showProgressDialog(this,
+				getString(R.string.str_friendlist_progress_title),
+				getString(R.string.str_friendlist_progress_desc), TAG);
 		requestUserData();
 	}
 
@@ -1065,4 +1086,28 @@ public class FriendListActivity extends LcomBaseActivity implements
 		// TODO Auto-generated method stub
 
 	}
+
+	// private void showProgressDialog() {
+	// FragmentTransaction ft = getFragmentManager().beginTransaction();
+	// Fragment prev = getFragmentManager().findFragmentByTag("progress");
+	// if (prev != null) {
+	// ft.remove(prev);
+	// }
+	// ft.addToBackStack(null);
+	//
+	// // Create and show the dialog.
+	// Fragment newFragment = ProgressDialogFragment.newInstance(
+	// getString(R.string.str_friendlist_progress_title),
+	// getString(R.string.str_friendlist_progress_desc));
+	// ((DialogFragment) newFragment).show(ft, "progress");
+	// }
+	//
+	// private void dismissDialog() {
+	// Fragment prev = getFragmentManager().findFragmentByTag("progress");
+	// if (prev != null) {
+	// // if (prev instanceof ProgressDialogFragment) {
+	// ((ProgressDialogFragment) prev).dismiss();
+	// // }
+	// }
+	// }
 }

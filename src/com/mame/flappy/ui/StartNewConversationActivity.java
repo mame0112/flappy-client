@@ -76,7 +76,7 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 
 	private InvitationConfirmDialog mConfirmDialog = null;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	// private StartNewConversationListener mListener = null;
 
@@ -92,9 +92,7 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 			mUserName = intent.getStringExtra(LcomConst.EXTRA_USER_NAME);
 		}
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_invitation_mail_address_check_title),
-				getString(R.string.str_generic_wait_desc));
+		mProgressHelper = new ProgressDialogFragmentHelper();
 
 		mActivity = this;
 
@@ -202,9 +200,8 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
 						TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
 
-				// TODO
-				// StartNewConversationActivityUtil.startActivityForContactsList(
-				// mActivity, REQUEST_CODE);
+				StartNewConversationActivityUtil.startActivityForContactsList(
+						mActivity, REQUEST_CODE);
 
 			}
 
@@ -353,7 +350,17 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 		if (StringUtil.isValidCharsForAddress(address)) {
 			if (StringUtil.checkMailAddress(address)) {
 				try {
-					mProgressDialog.show(getFragmentManager(), "progress");
+					// mProgressDialog.show(getFragmentManager(), "progress");
+
+					if (mProgressHelper != null) {
+						mProgressHelper
+								.showProgressDialog(
+										mActivity,
+										getString(R.string.str_invitation_mail_address_check_title),
+										getString(R.string.str_generic_wait_desc),
+										TAG);
+					}
+
 					sendDataForTargetUser(mUserId, mUserName, address);
 				} catch (WebAPIException e) {
 					DbgUtil.showDebug(TAG, "WebAPIException: " + e.getMessage());
@@ -490,10 +497,9 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 		}
 
 		// Dismiss dialog
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
 		}
-
 	}
 
 	@Override

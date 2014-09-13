@@ -54,7 +54,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 
 	private final int REQUEST_CROP_PICK = 2;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	// private ProgressDialogFragment mProgressDialog = null;
 
 	private Handler mHandler = new Handler();
 
@@ -63,6 +63,8 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 	private Bitmap mThumbBitmap = null;
 
 	private Activity mActivity = null;
+
+	private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +83,11 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_create_account_check_name_title),
-				getString(R.string.str_create_account_check_name_desc));
+		// mProgressDialog = ProgressDialogFragment.newInstance(
+		// getString(R.string.str_create_account_check_name_title),
+		// getString(R.string.str_create_account_check_name_desc));
+
+		mProgressHelper = new ProgressDialogFragmentHelper();
 
 		mGoNextResultView = (TextView) findViewById(R.id.createResultView);
 		mGoNextResultView.setText("");
@@ -151,7 +155,14 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 				} else {
 					mGoNextResultView.setVisibility(View.GONE);
 					try {
-						mProgressDialog.show(getFragmentManager(), "progress");
+						// mProgressDialog.show(getFragmentManager(),
+						// "progress");
+						mProgressHelper
+								.showProgressDialog(
+										mActivity,
+										getString(R.string.str_create_account_check_name_title),
+										getString(R.string.str_create_account_check_name_desc),
+										TAG);
 						sendcheckUserNameData(userName);
 					} catch (WebAPIException e) {
 						DbgUtil.showDebug(TAG,
@@ -276,9 +287,11 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+
+		mProgressHelper.dismissDialog(mActivity, TAG);
 
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -292,9 +305,10 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeoput");
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+		mProgressHelper.dismissDialog(mActivity, TAG);
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 

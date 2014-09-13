@@ -48,7 +48,7 @@ public class LoginActivity extends LcomBaseActivity implements
 
 	private int mPasswordLength = 0;
 
-	private ProgressDialogFragment mProgressDialog = null;
+	private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	private Activity mActivity = null;
 
@@ -67,9 +67,10 @@ public class LoginActivity extends LcomBaseActivity implements
 
 		mActivity = this;
 
-		mProgressDialog = ProgressDialogFragment.newInstance(
-				getString(R.string.str_login_progress_title),
-				getString(R.string.str_generic_wait_desc));
+		mProgressHelper = new ProgressDialogFragmentHelper();
+		// mProgressDialog = ProgressDialogFragment.newInstance(
+		// getString(R.string.str_login_progress_title),
+		// getString(R.string.str_generic_wait_desc));
 
 		mSignInResultView = (TextView) findViewById(R.id.signinResult);
 		mSignInResultView.setVisibility(View.GONE);
@@ -143,10 +144,17 @@ public class LoginActivity extends LcomBaseActivity implements
 							try {
 								DbgUtil.showDebug(TAG, "sendLoginData");
 
-								if (mProgressDialog != null) {
-									mProgressDialog.show(getFragmentManager(),
-											"progress");
-								}
+								// if (mProgressDialog != null) {
+								// mProgressDialog.show(getFragmentManager(),
+								// "progress");
+								// }
+
+								mProgressHelper
+										.showProgressDialog(
+												mActivity,
+												getString(R.string.str_login_progress_title),
+												getString(R.string.str_generic_wait_desc),
+												TAG);
 
 								sendLoginData(mWebAPI, activity, userName,
 										password);
@@ -177,9 +185,11 @@ public class LoginActivity extends LcomBaseActivity implements
 			mWebAPI.interrupt();
 		}
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+
+		mProgressHelper.dismissDialog(mActivity, TAG);
 
 	}
 
@@ -283,9 +293,11 @@ public class LoginActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+		mProgressHelper.dismissDialog(mActivity, TAG);
+
 		if (respList != null) {
 			parseAndHandleResponse(respList);
 		}
@@ -294,9 +306,10 @@ public class LoginActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
-		if (mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// if (mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
+		mProgressHelper.dismissDialog(mActivity, TAG);
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 

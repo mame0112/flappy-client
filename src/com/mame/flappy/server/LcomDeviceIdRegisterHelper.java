@@ -35,8 +35,6 @@ public class LcomDeviceIdRegisterHelper implements
 
 	private LcomServerAccessor mWebAPI = null;
 
-	private ProgressDialogFragment mProgressDialog = null;
-
 	private Activity mActivity = null;
 
 	private LcomGPServiceUtil mGPServiceUtil = new LcomGPServiceUtil();
@@ -45,14 +43,11 @@ public class LcomDeviceIdRegisterHelper implements
 
 	private Handler mHandler = new Handler();
 
-	public LcomDeviceIdRegisterHelper(Activity activity,
-			ProgressDialogFragment fragment) {
+	public LcomDeviceIdRegisterHelper(Activity activity) {
 		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
 		mActivity = activity;
-
-		mProgressDialog = fragment;
 
 		// mProgressDialog = ProgressDialogFragment.newInstance(
 		// activity.getString(R.string.str_login_progress_title),
@@ -80,7 +75,8 @@ public class LcomDeviceIdRegisterHelper implements
 		// If Google play service has already been installed, we try to get GCP
 		// device id
 		if (checkGPService()) {
-			mProgressDialog.show(mActivity.getFragmentManager(), "progress");
+			// TODO
+			// mProgressDialog.show(mActivity.getFragmentManager(), "progress");
 
 			// Check for device manifest
 			mGcm = GoogleCloudMessaging.getInstance(activity);
@@ -89,9 +85,11 @@ public class LcomDeviceIdRegisterHelper implements
 				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
 					registerInBackground(activity, userId);
 				} else {
-					if (!mActivity.isFinishing() && mProgressDialog != null) {
-						mProgressDialog.dismiss();
-					}
+					// TODO
+					// if (!mActivity.isFinishing() && mProgressDialog != null)
+					// {
+					// mProgressDialog.dismiss();
+					// }
 				}
 			}
 
@@ -193,9 +191,10 @@ public class LcomDeviceIdRegisterHelper implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// TODO
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
 
 		if (respList != null && respList.size() != 0) {
 			String origin = respList.get(0);
@@ -249,9 +248,10 @@ public class LcomDeviceIdRegisterHelper implements
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null) {
-			mProgressDialog.dismiss();
-		}
+		// TODO
+		// if (!mActivity.isFinishing() && mProgressDialog != null) {
+		// mProgressDialog.dismiss();
+		// }
 
 		for (LcomPushRegistrationHelperListener listener : mListeners) {
 			listener.onDeviceIdRegistrationFinished(false);
