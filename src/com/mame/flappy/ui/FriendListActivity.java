@@ -261,8 +261,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		// mManager.removeFriendDataManagerListener(this);
 
 		// To avoid showing more than 2 dialog, we try to dismiss dialog
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null) {
 			mProgressDialog.dismiss();
 		}
 
@@ -438,8 +437,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
+			if (!mActivity.isFinishing() && mProgressDialog != null) {
 				mProgressDialog.dismiss();
 			}
 
@@ -602,8 +600,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (!mActivity.isFinishing() && mProgressDialog != null
-					&& mProgressDialog.isShowing()) {
+			if (!mActivity.isFinishing() && mProgressDialog != null) {
 				mProgressDialog.dismiss();
 			}
 
@@ -802,8 +799,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			mFriendListData.clear();
 		}
 		requestUserData();
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& !mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null) {
 			mProgressDialog.show(getFragmentManager(), "progress");
 		}
 	}
@@ -873,8 +869,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 	@Override
 	public void onDeviceIdRegistrationFinished(boolean result) {
 		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& !mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null) {
 			mProgressDialog.show(getFragmentManager(), "progress");
 		}
 		requestUserData();

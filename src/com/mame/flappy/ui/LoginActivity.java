@@ -145,8 +145,7 @@ public class LoginActivity extends LcomBaseActivity implements
 
 								// Dismiss dialog if it is being shown
 								if (!mActivity.isFinishing()
-										&& mProgressDialog != null
-										&& mProgressDialog.isShowing()) {
+										&& mProgressDialog != null) {
 									mProgressDialog.dismiss();
 								}
 
@@ -184,8 +183,7 @@ public class LoginActivity extends LcomBaseActivity implements
 			mWebAPI.interrupt();
 		}
 
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& mProgressDialog.isShowing()) {
+		if (!mActivity.isFinishing() && mProgressDialog != null) {
 			mProgressDialog.dismiss();
 		}
 
@@ -291,9 +289,8 @@ public class LoginActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		if (!mActivity.isFinishing() && mProgressDialog != null
-				&& mProgressDialog.isShowing()) {
-			mProgressDialog.getDialog().dismiss();
+		if (!mActivity.isFinishing() && mProgressDialog != null) {
+			mProgressDialog.dismiss();
 		}
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -303,8 +300,8 @@ public class LoginActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
-		if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			mProgressDialog.getDialog().dismiss();
+		if (mProgressDialog != null) {
+			mProgressDialog.dismiss();
 		}
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
