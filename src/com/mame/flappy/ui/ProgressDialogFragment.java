@@ -13,10 +13,6 @@ public class ProgressDialogFragment extends DialogFragment {
 
 	private final String TAG = LcomConst.TAG + "/ProgressDialogFragment";
 
-	// private static String mTitle = null;
-	//
-	// private static String mMessage = null;
-
 	public ProgressDialogFragment() {
 
 	}
@@ -25,9 +21,6 @@ public class ProgressDialogFragment extends DialogFragment {
 			String message) {
 
 		ProgressDialogFragment instance = new ProgressDialogFragment();
-
-		// mTitle = title;
-		// mMessage = message;
 
 		Bundle arguments = new Bundle();
 		arguments.putString("title", title);

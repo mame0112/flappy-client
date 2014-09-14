@@ -155,14 +155,14 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 				} else {
 					mGoNextResultView.setVisibility(View.GONE);
 					try {
-						// mProgressDialog.show(getFragmentManager(),
-						// "progress");
-						mProgressHelper
-								.showProgressDialog(
-										mActivity,
-										getString(R.string.str_create_account_check_name_title),
-										getString(R.string.str_create_account_check_name_desc),
-										TAG);
+						if (mProgressHelper != null) {
+							mProgressHelper
+									.showProgressDialog(
+											mActivity,
+											getString(R.string.str_create_account_check_name_title),
+											getString(R.string.str_create_account_check_name_desc),
+											TAG);
+						}
 						sendcheckUserNameData(userName);
 					} catch (WebAPIException e) {
 						DbgUtil.showDebug(TAG,
@@ -287,11 +287,9 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		// if (!mActivity.isFinishing() && mProgressDialog != null) {
-		// mProgressDialog.dismiss();
-		// }
-
-		mProgressHelper.dismissDialog(mActivity, TAG);
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -305,10 +303,10 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeoput");
-		// if (mProgressDialog != null) {
-		// mProgressDialog.dismiss();
-		// }
-		mProgressHelper.dismissDialog(mActivity, TAG);
+
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 

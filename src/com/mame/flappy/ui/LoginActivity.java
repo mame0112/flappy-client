@@ -144,17 +144,14 @@ public class LoginActivity extends LcomBaseActivity implements
 							try {
 								DbgUtil.showDebug(TAG, "sendLoginData");
 
-								// if (mProgressDialog != null) {
-								// mProgressDialog.show(getFragmentManager(),
-								// "progress");
-								// }
-
-								mProgressHelper
-										.showProgressDialog(
-												mActivity,
-												getString(R.string.str_login_progress_title),
-												getString(R.string.str_generic_wait_desc),
-												TAG);
+								if (mProgressHelper != null) {
+									mProgressHelper
+											.showProgressDialog(
+													mActivity,
+													getString(R.string.str_login_progress_title),
+													getString(R.string.str_generic_wait_desc),
+													TAG);
+								}
 
 								sendLoginData(mWebAPI, activity, userName,
 										password);
@@ -185,11 +182,9 @@ public class LoginActivity extends LcomBaseActivity implements
 			mWebAPI.interrupt();
 		}
 
-		// if (!mActivity.isFinishing() && mProgressDialog != null) {
-		// mProgressDialog.dismiss();
-		// }
-
-		mProgressHelper.dismissDialog(mActivity, TAG);
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 
 	}
 
@@ -293,10 +288,9 @@ public class LoginActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		// if (!mActivity.isFinishing() && mProgressDialog != null) {
-		// mProgressDialog.dismiss();
-		// }
-		mProgressHelper.dismissDialog(mActivity, TAG);
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -306,10 +300,10 @@ public class LoginActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
-		// if (mProgressDialog != null) {
-		// mProgressDialog.dismiss();
-		// }
-		mProgressHelper.dismissDialog(mActivity, TAG);
+
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
 

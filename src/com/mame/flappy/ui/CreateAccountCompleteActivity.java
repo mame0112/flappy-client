@@ -184,10 +184,14 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 					// If password and mail address is correct, show progress
 					// dalog.
 					if (checkResult) {
-						mProgressHelper.showProgressDialog(mActivity,
-								getString(R.string.str_login_progress_title),
-								getString(R.string.str_generic_wait_desc), TAG);
-
+						if (mProgressHelper != null) {
+							mProgressHelper
+									.showProgressDialog(
+											mActivity,
+											getString(R.string.str_login_progress_title),
+											getString(R.string.str_generic_wait_desc),
+											TAG);
+						}
 					}
 				}
 			}
@@ -242,7 +246,9 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
-		mProgressHelper.dismissDialog(mActivity, TAG);
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 
 		if (respList != null) {
 			parseAndHandleResponse(respList);
@@ -351,7 +357,9 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeoput");
-		mProgressHelper.dismissDialog(mActivity, TAG);
+		if (mProgressHelper != null) {
+			mProgressHelper.dismissDialog(mActivity, TAG);
+		}
 
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 		TrackingUtil.trackExceptionMessage(getApplicationContext(), TAG,
