@@ -120,6 +120,10 @@ public class UserLocalDataHandler {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(mContext, TAG, "SQLExeption: "
 					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 		return datas;
 	}
@@ -194,6 +198,9 @@ public class UserLocalDataHandler {
 						TAG,
 						"SQLExeption for getLocalUserDataset cursor move: "
 								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
 			}
@@ -204,8 +211,15 @@ public class UserLocalDataHandler {
 					TAG,
 					"SQLExeption for getLocalUserDataset query: "
 							+ e.getMessage());
+			if (cursor != null) {
+				cursor.close();
+			}
 			throw new UserLocalDataHandlerException("SQLException:"
 					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 
 		return datas;
@@ -369,6 +383,11 @@ public class UserLocalDataHandler {
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"IndexOutOfBoundsException for  for addAllFriendshipAndFriendInfo - 2 : "
+							+ e.getMessage());
+			throw new UserLocalDataHandlerException(
+					"IndexOutOfBoundsException: " + e.getMessage());
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
@@ -384,6 +403,8 @@ public class UserLocalDataHandler {
 			ArrayList<MessageItemData> newMessages)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addMultipleNewMessagesAndFriendIfNecessary");
+
+		Cursor checkCursor = null;
 		try {
 			if (newMessages != null && newMessages.size() != 0) {
 
@@ -399,8 +420,6 @@ public class UserLocalDataHandler {
 				String date = String.valueOf(data.getPostedDate());
 
 				// Check if target friend is already registered as friend
-
-				Cursor checkCursor = null;
 
 				// If sender is mine
 				if (senderId == userId) {
@@ -547,13 +566,28 @@ public class UserLocalDataHandler {
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG,
+					"IndexOutOfBoundsException for  for addNewMessageAndFriendIfNecessary insert: "
+							+ e.getMessage());
+			if (checkCursor != null) {
+				checkCursor.close();
+			}
+			throw new UserLocalDataHandlerException(
+					"IndexOutOfBoundsException: " + e.getMessage());
 		} catch (SQLException e) {
 			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"SQLExeption for  for addNewMessageAndFriendIfNecessary insert: "
 							+ e.getMessage());
+			if (checkCursor != null) {
+				checkCursor.close();
+			}
 			throw new UserLocalDataHandlerException("SQLException: "
 					+ e.getMessage());
+		} finally {
+			if (checkCursor != null) {
+				checkCursor.close();
+			}
 		}
 	}
 
@@ -718,6 +752,9 @@ public class UserLocalDataHandler {
 						TAG,
 						"SQLExeption for getLocalUserDataset cursor move: "
 								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
 			}
@@ -728,8 +765,15 @@ public class UserLocalDataHandler {
 					TAG,
 					"SQLExeption for getLocalUserDataset query: "
 							+ e.getMessage());
+			if (cursor != null) {
+				cursor.close();
+			}
 			throw new UserLocalDataHandlerException("SQLException:"
 					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 
 		return result;
@@ -820,6 +864,9 @@ public class UserLocalDataHandler {
 					TrackingUtil.trackExceptionMessage(mContext, TAG,
 							"SQLExeption for getLatestStoredMessage cursor move: "
 									+ e.getMessage());
+					if (cursor != null) {
+						cursor.close();
+					}
 					throw new UserLocalDataHandlerException("SQLException:"
 							+ e.getMessage());
 				}
@@ -830,8 +877,15 @@ public class UserLocalDataHandler {
 						TAG,
 						"SQLExeption for getLatestStoredMessage query: "
 								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
+			} finally {
+				if (cursor != null) {
+					cursor.close();
+				}
 			}
 		}
 		return null;
@@ -949,6 +1003,9 @@ public class UserLocalDataHandler {
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
 						"SQLExeption for getNotificationNearestExpireData cursor move: "
 								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
 			}
@@ -957,8 +1014,15 @@ public class UserLocalDataHandler {
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"SQLExeption for getNotificationNearestExpireData query: "
 							+ e.getMessage());
+			if (cursor != null) {
+				cursor.close();
+			}
 			throw new UserLocalDataHandlerException("SQLException:"
 					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 		return null;
 	}
@@ -1035,6 +1099,9 @@ public class UserLocalDataHandler {
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
 						"SQLExeption for getNotificationNearestExpireData cursor move: "
 								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
 				throw new UserLocalDataHandlerException("SQLException:"
 						+ e.getMessage());
 			}
@@ -1043,8 +1110,15 @@ public class UserLocalDataHandler {
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
 					"SQLExeption for getNotificationNearestExpireData query: "
 							+ e.getMessage());
+			if (cursor != null) {
+				cursor.close();
+			}
 			throw new UserLocalDataHandlerException("SQLException:"
 					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
 		}
 		return null;
 	}
