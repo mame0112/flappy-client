@@ -285,6 +285,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 		isNowLoading = false;
 		invalidateOptionsMenu();
 
+		if (mListView != null) {
+			mListView.listViewUIReady();
+		}
+
 		unregisterReceiver(mPushReceiver);
 	}
 
@@ -1088,7 +1092,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 							// If we reaches to bottom of screen (meaning all
 							// data is already loaded), we don't notify list
 							// view
-							if (userData != null && userData.size() >= LcomConst.ITEM_ON_SCREEN) {
+							if (userData != null
+									&& userData.size() >= LcomConst.ITEM_ON_SCREEN) {
 								mListView.listViewUIReady();
 							}
 
