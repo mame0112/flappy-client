@@ -147,7 +147,8 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 							JSONArray jsonArray = new JSONArray(
 									result.getString());
 							for (int i = 0; i < jsonArray.length(); i++) {
-								mRespList.add(jsonArray.getString(i));
+								mRespList.add(CipherUtil.decrypt(jsonArray
+										.getString(i)));
 								// Log.d(TAG, mRespList.get(i));
 							}
 						} catch (JSONException e) {

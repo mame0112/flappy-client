@@ -12,7 +12,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.commons.codec.binary.Base64;
+import android.util.Base64;
 
 import com.mame.flappy.constant.LcomConst;
 
@@ -49,7 +49,9 @@ public class CipherUtil {
 
 			// Encode to base64
 			// strResult = Base64.encodeBase64String(byteResult);
-			strResult = new String(Base64.encodeBase64(byteResult));
+			// strResult = new String(Base64.encodeBase64(byteResult));
+			strResult = new String(Base64.encodeToString(byteResult,
+					Base64.DEFAULT));
 
 		} catch (UnsupportedEncodingException e) {
 			DbgUtil.showDebug(TAG,
@@ -79,7 +81,8 @@ public class CipherUtil {
 
 		try {
 			// Decode base64 to byte array
-			byte[] byteText = Base64.decodeBase64(text);
+			// byte[] byteText = Base64.decodeBase64(text);
+			byte[] byteText = Base64.decode(text, Base64.DEFAULT);
 
 			// Trancode decode key and initialize vector to byte array
 			byte[] byteKey = ENCRYPT_KEY.getBytes("UTF-8");
