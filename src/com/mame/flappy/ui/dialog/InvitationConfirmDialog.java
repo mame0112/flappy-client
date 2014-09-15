@@ -460,4 +460,11 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		
 	}
 
+	@Override
+	public void notifyAdditionalLocalUserDataLoaded(
+			ArrayList<FriendListData> userData) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

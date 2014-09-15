@@ -67,8 +67,8 @@ public class UserLocalDataHandler {
 					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
 			String selectionArgs[] = { String.valueOf(targetUserId),
 					String.valueOf(targetUserId) };
-			String sortOrder = DatabaseDef.MessageColumns.DATE
-					+ " LIMIT 0, 100";
+			String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 0, "
+					+ LcomConst.ITEM_ON_SCREEN;
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					selection, selectionArgs, sortOrder);
 			while (cursor != null && cursor.moveToNext()) {
@@ -128,14 +128,118 @@ public class UserLocalDataHandler {
 		return datas;
 	}
 
-	public ArrayList<FriendListData> getLocalUserDataset()
+	public ArrayList<FriendListData> getLocalUserDataset(int pageNum)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "getLocalUserDataset");
 		Cursor cursor = null;
 		ArrayList<FriendListData> datas = new ArrayList<FriendListData>();
 		try {
+			String sortOrder = DatabaseDef.FriendshipColumns.FRIEND_ID
+					+ " DESC LIMIT " + LcomConst.ITEM_ON_SCREEN;
+			DbgUtil.showDebug(TAG, "sortOrder: " + sortOrder);
 			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
-					null, null, null, null);
+					null, null, null, sortOrder);
+			if (cursor == null) {
+				DbgUtil.showDebug(TAG, "cursor is null");
+				throw new UserLocalDataHandlerException("Cursor is null");
+			}
+			try {
+				if (cursor != null) {
+					if (cursor.moveToFirst()) {
+						do {
+							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+							String friendId = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_ID));
+							String userName = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.FRIEND_NAME));
+							String lastMessage = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_MESSAGE));
+							String lastSenderId = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_SENDER_ID));
+							String mailAddress = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+
+							byte[] thumbnail = cursor
+									.getBlob(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
+							Bitmap bmp = null;
+							if (thumbnail != null) {
+								bmp = ImageUtil
+										.decodeByteArrayToBitmap(thumbnail);
+								if (bmp != null) {
+									DbgUtil.showDebug(TAG,
+											"bmp size: " + bmp.getWidth()
+													+ " / " + bmp.getHeight());
+								}
+							}
+
+							FriendListData data = new FriendListData(
+									Integer.valueOf(friendId), userName,
+									Integer.valueOf(lastSenderId), lastMessage,
+									0L, 0, mailAddress, bmp);
+							datas.add(data);
+							DbgUtil.showDebug(TAG, "friendId: " + friendId
+									+ " userName: " + userName
+									+ " lastSenderId: " + lastSenderId
+									+ " lastMessage: " + lastMessage
+									+ " mailAddress: " + mailAddress);
+						} while (cursor.moveToNext());
+					}
+				}
+
+			} catch (SQLException e) {
+				DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"SQLExeption: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(
+						mContext,
+						TAG,
+						"SQLExeption for getLocalUserDataset cursor move: "
+								+ e.getMessage());
+				if (cursor != null) {
+					cursor.close();
+				}
+				throw new UserLocalDataHandlerException("SQLException:"
+						+ e.getMessage());
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException:" + e.getMessage());
+			TrackingUtil.trackExceptionMessage(
+					mContext,
+					TAG,
+					"SQLExeption for getLocalUserDataset query: "
+							+ e.getMessage());
+			if (cursor != null) {
+				cursor.close();
+			}
+			throw new UserLocalDataHandlerException("SQLException:"
+					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+
+		return datas;
+	}
+
+	public ArrayList<FriendListData> getAdditionalLocalUserDataset(int pageNum)
+			throws UserLocalDataHandlerException {
+		DbgUtil.showDebug(TAG, "getAdditionalLocalUserDataset");
+		Cursor cursor = null;
+		ArrayList<FriendListData> datas = new ArrayList<FriendListData>();
+		try {
+			String sortOrder = DatabaseDef.FriendshipColumns.FRIEND_ID
+					+ " DESC LIMIT " + LcomConst.ITEM_ON_SCREEN + " OFFSET "
+					+ (LcomConst.ITEM_ON_SCREEN * pageNum);
+			DbgUtil.showDebug(TAG, "sortOrder: " + sortOrder);
+			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
+					null, null, null, sortOrder);
 			if (cursor == null) {
 				DbgUtil.showDebug(TAG, "cursor is null");
 				throw new UserLocalDataHandlerException("Cursor is null");

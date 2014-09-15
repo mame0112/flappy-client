@@ -113,7 +113,7 @@ public class DebugLocalDataHandler extends UserLocalDataHandler {
 
 		setDatabase();
 
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 500; i++) {
 			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
 					friendId + i, friendName + i, null, friendId, message + i,
 					null);

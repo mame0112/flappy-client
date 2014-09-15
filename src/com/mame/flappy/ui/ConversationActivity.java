@@ -620,4 +620,11 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 	}
 
+	@Override
+	public void notifyAdditionalLocalUserDataLoaded(
+			ArrayList<FriendListData> userData) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

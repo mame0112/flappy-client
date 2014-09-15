@@ -49,7 +49,8 @@ import com.mame.flappy.util.TrackingUtil;
 
 public class FriendListActivity extends LcomBaseActivity implements
 		FriendDataManagerListener, LcomPushRegistrationHelperListener,
-		SignoutConfirmationDialog.SignoutConfirmationListener {
+		SignoutConfirmationDialog.SignoutConfirmationListener,
+		FriendListCustomListView.FriendListScrollListener {
 
 	private final String TAG = LcomConst.TAG + "/FriendListActivity";
 
@@ -96,8 +97,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 	 */
 	private boolean isNowLoading = false;
 
-	// private ProgressDialogFragment mProgressDialog = null;
-
 	private LcomDeviceIdRegisterHelper mHelper = null;
 
 	private ProgressDialogFragmentHelper mProgressHelper = null;
@@ -142,6 +141,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		mListView = (FriendListCustomListView) findViewById(R.id.friendListView);
 		// mListView = (ListView) findViewById(R.id.friendListView);
 		mListView.setAdapter(mAdapter);
+		mListView.setListener(this);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 			@Override
@@ -194,7 +194,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		} else {
 			// If Google play service and Device id is ready, we try to get
 			// actual data.
-			requestUserData();
+			requestUserData(true, true);
 
 			if (mProgressHelper != null) {
 				mProgressHelper.showProgressDialog(this,
@@ -296,7 +296,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		}
 	}
 
-	private void requestUserData() {
+	private void requestUserData(boolean isForExisting, boolean isForNew) {
 		DbgUtil.showDebug(TAG, "requestUserData");
 		try {
 
@@ -322,14 +322,14 @@ public class FriendListActivity extends LcomBaseActivity implements
 					mAdapter.notifyDataSetChanged();
 				}
 
+				isNowLoading = true;
+
 				mManager.setFriendDataManagerListener(this);
 			}
 
 			// Initialize flag before requesting data
 			isNewDataAvailable = false;
 			isExistingDataAvailable = false;
-
-			isNowLoading = true;
 
 			new Thread(new Runnable() {
 				@Override
@@ -343,7 +343,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 				}
 			}).start();
 
-			mManager.requestFriendListDataset(mUserId, true, true);
+			mManager.requestFriendListDataset(mUserId, isForExisting, isForNew);
 		} catch (FriendDataManagerException e) {
 			DbgUtil.showDebug(TAG,
 					"FriendDataManagerException: " + e.getMessage());
@@ -390,14 +390,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 						mFriendTmpData.put(friendUserId, data);
 					}
 				}
-			}
-
-			// Debug
-			if (mFriendTmpData != null) {
-				DbgUtil.showDebug(TAG,
-						"mFriendTmpData: " + mFriendTmpData.size());
-			} else {
-				DbgUtil.showDebug(TAG, "mFriendTmpData is null");
 			}
 
 			// Id list for getting thumbnail
@@ -801,7 +793,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		if (mFriendListData != null) {
 			mFriendListData.clear();
 		}
-		requestUserData();
+		requestUserData(true, true);
 		if (mProgressHelper != null) {
 			mProgressHelper.showProgressDialog(this,
 					getString(R.string.str_friendlist_progress_title),
@@ -879,7 +871,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 					getString(R.string.str_friendlist_progress_title),
 					getString(R.string.str_friendlist_progress_desc), TAG);
 		}
-		requestUserData();
+		requestUserData(true, true);
 	}
 
 	@Override
@@ -1047,13 +1039,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 		}
 	}
 
-	// @Override
-	// public void notifiyNearlestExpireNotification(NotificationContentData
-	// data) {
-	// DbgUtil.showDebug(TAG, "notifiyNearlestExpireNotification");
-	//
-	// }
-
 	@Override
 	public void onSignoutConfirmationSelected(boolean isAccepted) {
 		DbgUtil.showDebug(TAG, "onSignoutConfirmationSelected");
@@ -1068,6 +1053,55 @@ public class FriendListActivity extends LcomBaseActivity implements
 	public void notifyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onNotifyScrollPositionChnaged(int pageNum) {
+		DbgUtil.showDebug(TAG, "onNotifyScrollPositionChnaged");
+
+		// Because we don't need new data, then flag for new data set as true.
+		// isNewDataAvailable = true;
+		mManager.reloadFriendListData(pageNum);
+	}
+
+	@Override
+	public void notifyAdditionalLocalUserDataLoaded(
+			final ArrayList<FriendListData> userData) {
+		DbgUtil.showDebug(TAG, "notifyAdditionalLocalUserDataLoaded");
+
+		// Notify to list view and adapter
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						if (mAdapter != null) {
+
+							// First, current scroll position
+							int scrollNum = mFriendListData.size();
+
+							// Add data
+							mFriendListData.addAll(userData);
+
+							// If we reaches to bottom of screen (meaning all
+							// data is already loaded), we don't notify list
+							// view
+							if (userData != null && userData.size() >= LcomConst.ITEM_ON_SCREEN) {
+								mListView.listViewUIReady();
+							}
+
+							// Set scroll ppsition
+							mListView.setSelection(scrollNum);
+
+							// Notify to Adapter
+							mAdapter.notifyDataSetChanged();
+						}
+					}
+				});
+			}
+		}).start();
 
 	}
 }

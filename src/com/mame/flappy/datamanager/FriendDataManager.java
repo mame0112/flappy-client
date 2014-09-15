@@ -116,7 +116,7 @@ public class FriendDataManager implements UserServerDataListener,
 
 		// Load local data
 		if (isForExisting) {
-			new LoadLocalFriendListAsyncTask().execute();
+			new LoadLocalFriendListAsyncTask().execute(isForNew);
 		}
 	}
 
@@ -317,11 +317,15 @@ public class FriendDataManager implements UserServerDataListener,
 		 * To be called when FriendDataManager finished to load nearlest expire
 		 * notification data
 		 */
-		// public void notifiyNearlestExpireNotification(
-		// NotificationContentData data);
-
 		public void notifyValidNotificationList(
 				ArrayList<NotificationContentData> notifications);
+
+		/**
+		 * To be called when FriendDataManager finished to load nearlest expire
+		 * notification data
+		 */
+		public void notifyAdditionalLocalUserDataLoaded(
+				ArrayList<FriendListData> userData);
 
 	}
 
@@ -373,18 +377,60 @@ public class FriendDataManager implements UserServerDataListener,
 		}
 	}
 
+	public void reloadFriendListData(int pageNum) {
+		new ReloadLocalFriendListAsyncTask().execute(pageNum);
+	}
+
+	private class ReloadLocalFriendListAsyncTask extends
+			AsyncTask<Integer, Void, ArrayList<FriendListData>> {
+
+		public ReloadLocalFriendListAsyncTask() {
+			DbgUtil.showDebug(TAG, "ReloadLocalFriendListAsyncTask");
+		}
+
+		@Override
+		protected ArrayList<FriendListData> doInBackground(Integer... params) {
+
+			int pageNum = params[0];
+			try {
+				return mLocalDataHandler.getAdditionalLocalUserDataset(pageNum);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<FriendListData> result) {
+			DbgUtil.showDebug(TAG,
+					"ReloadLocalFriendListAsyncTask onPostExecute");
+
+			// Notifyy to client
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifyAdditionalLocalUserDataLoaded(result);
+			}
+		}
+
+	}
+
 	private class LoadLocalFriendListAsyncTask extends
-			AsyncTask<Void, Void, ArrayList<FriendListData>> {
+			AsyncTask<Boolean, Void, ArrayList<FriendListData>> {
+
+		private boolean mIsServerRequired = false;
 
 		public LoadLocalFriendListAsyncTask() {
 			DbgUtil.showDebug(TAG, "LoadLocalDataAsyncTask");
 		}
 
 		@Override
-		protected ArrayList<FriendListData> doInBackground(Void... params) {
+		protected ArrayList<FriendListData> doInBackground(Boolean... params) {
 			DbgUtil.showDebug(TAG, "doInBackground");
+			mIsServerRequired = params[0];
 			try {
-				return mLocalDataHandler.getLocalUserDataset();
+				return mLocalDataHandler.getLocalUserDataset(0);
 			} catch (UserLocalDataHandlerException e) {
 				DbgUtil.showDebug(TAG,
 						"UserLocalDataHandlerException: " + e.getMessage());
@@ -406,16 +452,17 @@ public class FriendDataManager implements UserServerDataListener,
 
 			// Try to get new data
 			try {
-				// If result is null or size is 0, try to get all data
-				if (result == null || result.size() == 0) {
-					DbgUtil.showDebug(TAG, "result is null or size 0");
-					mServerDataHandler.requestAllNewUserData(mUserId);
-				} else {
-					// Otherwize, try to get only new data
-					DbgUtil.showDebug(TAG, "result size: " + result.size());
-					mServerDataHandler.requestNewUserData(mUserId);
+				if (mIsServerRequired) {
+					// If result is null or size is 0, try to get all data
+					if (result == null || result.size() == 0) {
+						DbgUtil.showDebug(TAG, "result is null or size 0");
+						mServerDataHandler.requestAllNewUserData(mUserId);
+					} else {
+						// Otherwize, try to get only new data
+						DbgUtil.showDebug(TAG, "result size: " + result.size());
+						mServerDataHandler.requestNewUserData(mUserId);
+					}
 				}
-
 			} catch (FriendDataManagerException e) {
 				DbgUtil.showDebug(TAG,
 						"FriendDataManagerException: " + e.getMessage());
@@ -461,40 +508,6 @@ public class FriendDataManager implements UserServerDataListener,
 
 		new LoadCurrentNotificationListAsyncTask().execute();
 	}
-
-	// private class LoadNearlestExpireNotificationAsyncTask extends
-	// AsyncTask<Void, Void, NotificationContentData> {
-	//
-	// public LoadNearlestExpireNotificationAsyncTask() {
-	// DbgUtil.showDebug(TAG, "LoadNearlestExpireNotificationAsyncTask");
-	// }
-	//
-	// @Override
-	// protected NotificationContentData doInBackground(Void... params) {
-	// DbgUtil.showDebug(TAG, "doInBackground");
-	// try {
-	// if (mLocalDataHandler != null) {
-	// return mLocalDataHandler.getNotificationNearestExpireData();
-	// }
-	// } catch (UserLocalDataHandlerException e) {
-	// DbgUtil.showDebug(TAG,
-	// "UserLocalDataHandlerException: " + e.getMessage());
-	// }
-	// return null;
-	// }
-	//
-	// @Override
-	// protected void onPostExecute(NotificationContentData result) {
-	// DbgUtil.showDebug(TAG, "onPostExecute");
-	// if (result != null) {
-	// DbgUtil.showDebug(TAG, "result: " + result);
-	// }
-	//
-	// for (FriendDataManagerListener listener : mListeners) {
-	// listener.notifiyNearlestExpireNotification(result);
-	// }
-	// }
-	// }
 
 	private class LoadCurrentNotificationListAsyncTask extends
 			AsyncTask<Void, Void, ArrayList<NotificationContentData>> {

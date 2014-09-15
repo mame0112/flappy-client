@@ -30,6 +30,8 @@ public class LcomConst {
 
 	public final static int MAX_MESSAGE_LENGTH = 16;
 
+	public final static int ITEM_ON_SCREEN = 100;
+
 	public final static String DATE_PATTERN = "dd-MM-yy:HH:mm:SS";
 
 	public final static String SERVLET_USER_ID = "servlet_userid";

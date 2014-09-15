@@ -1,13 +1,13 @@
 package com.mame.flappy.ui.view;
 
-import com.mame.flappy.constant.LcomConst;
-import com.mame.flappy.util.DbgUtil;
-
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.AdapterView;
+import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.DbgUtil;
 
 public class FriendListCustomListView extends ListView {
 
@@ -15,9 +15,14 @@ public class FriendListCustomListView extends ListView {
 
 	private FriendListCustomAdapter mAdapter = null;
 
+	private OnScrollListener mScrollListener = null;
+
+	private boolean mIsScrolling = false;
+
+	private FriendListScrollListener mListener = null;
+
 	public FriendListCustomListView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	public FriendListCustomListView(Context context, AttributeSet attrs,
@@ -30,11 +35,49 @@ public class FriendListCustomListView extends ListView {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void listViewUIReady(){
+		// Set scroll flag false
+		mIsScrolling = false;
+	}
 
 	@Override
 	public void setAdapter(ListAdapter adapter) {
 		super.setAdapter(adapter);
+
+
 		mAdapter = (FriendListCustomAdapter) adapter;
+		setOnScrollListener(mScrollListener);
+
+		mScrollListener = new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// DbgUtil.showDebug(TAG, "onScrollStateChanged");
+
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				DbgUtil.showDebug(TAG, firstVisibleItem + " / "
+						+ visibleItemCount + " / " + totalItemCount);
+
+				// To avoid first time automatic load
+				if (totalItemCount != 0) {
+					// To load when scroll comes to bottom of screen
+					if (totalItemCount == firstVisibleItem + visibleItemCount) {
+						if (mIsScrolling == false) {
+							int pageNum = (int) (totalItemCount / LcomConst.ITEM_ON_SCREEN);
+							loadAdditionalData(pageNum);
+							mIsScrolling = true;
+
+						}
+
+					}
+				}
+			}
+		};
 	}
 
 	@Override
@@ -46,4 +89,18 @@ public class FriendListCustomListView extends ListView {
 		}
 	}
 
+	public interface FriendListScrollListener {
+		public void onNotifyScrollPositionChnaged(int pageNum);
+	}
+
+	public void setListener(FriendListScrollListener listener) {
+		mListener = listener;
+	}
+
+	private void loadAdditionalData(int pageNum) {
+		DbgUtil.showDebug(TAG, "loadAdditionalData");
+		if (mListener != null) {
+			mListener.onNotifyScrollPositionChnaged(pageNum);
+		}
+	}
 }

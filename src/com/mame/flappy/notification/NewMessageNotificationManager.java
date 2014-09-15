@@ -334,4 +334,11 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		}
 
 	}
+
+	@Override
+	public void notifyAdditionalLocalUserDataLoaded(
+			ArrayList<FriendListData> userData) {
+		// TODO Auto-generated method stub
+		
+	}
 }

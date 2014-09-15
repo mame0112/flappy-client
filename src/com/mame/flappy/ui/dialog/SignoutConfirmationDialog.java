@@ -133,4 +133,11 @@ public class SignoutConfirmationDialog extends DialogFragment implements
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void notifyAdditionalLocalUserDataLoaded(
+			ArrayList<FriendListData> userData) {
+		// TODO Auto-generated method stub
+		
+	}
 }
