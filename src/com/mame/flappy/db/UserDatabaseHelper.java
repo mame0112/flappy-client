@@ -25,7 +25,9 @@ public class UserDatabaseHelper extends SQLiteOpenHelper {
 			+ " INTEGER DEFAULT 0, "
 			+ DatabaseDef.FriendshipColumns.LAST_MESSAGE + " TEXT, "
 			+ DatabaseDef.FriendshipColumns.MAIL_ADDRESS + " TEXT, "
-			+ DatabaseDef.FriendshipColumns.THUMBNAIL + " BLOB)";
+			+ DatabaseDef.FriendshipColumns.THUMBNAIL + " BLOB, "
+			+ DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE
+			+ " LONG DEFAULT 0)";
 
 	static final String MESSAGE_DATA_SQL = "CREATE TABLE IF NOT EXISTS "
 			+ DatabaseDef.MessageTable.TABLE_NAME + " ("

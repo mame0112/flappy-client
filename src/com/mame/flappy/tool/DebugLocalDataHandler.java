@@ -75,7 +75,7 @@ public class DebugLocalDataHandler extends UserLocalDataHandler {
 			// Set data to Friendship DB
 			// Need to check if the target friend has already been in DB
 			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
-					friendId, friendName, null, friendId, message, null);
+					friendId, friendName, null, friendId, message, null, date);
 			long friendshipId = sDatabase.insert(
 					DatabaseDef.FriendshipTable.TABLE_NAME, null,
 					valuesForFriendship);
@@ -119,7 +119,7 @@ public class DebugLocalDataHandler extends UserLocalDataHandler {
 		for (int i = 0; i < 500; i++) {
 			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
 					friendId + i, friendName + i, null, friendId, message + i,
-					null);
+					null, date);
 			long friendshipId = sDatabase.insert(
 					DatabaseDef.FriendshipTable.TABLE_NAME, null,
 					valuesForFriendship);

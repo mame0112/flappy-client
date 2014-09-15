@@ -57,6 +57,8 @@ public class DatabaseDef {
 		static final String MAIL_ADDRESS = "mail_address";
 
 		static final String THUMBNAIL = "thumbnail";
+
+		static final String LAST_CONTACTED_DATE = "last_contact_date";
 	}
 
 	/**

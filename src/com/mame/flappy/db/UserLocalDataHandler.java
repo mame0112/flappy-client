@@ -133,7 +133,10 @@ public class UserLocalDataHandler {
 		Cursor cursor = null;
 		ArrayList<FriendListData> datas = new ArrayList<FriendListData>();
 		try {
-			String sortOrder = DatabaseDef.FriendshipColumns.FRIEND_ID
+			// TOOD
+			// String sortOrder = DatabaseDef.FriendshipColumns.FRIEND_ID
+			// + " DESC LIMIT " + LcomConst.ITEM_ON_SCREEN;
+			String sortOrder = DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE
 					+ " DESC LIMIT " + LcomConst.ITEM_ON_SCREEN;
 			DbgUtil.showDebug(TAG, "sortOrder: " + sortOrder);
 			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
@@ -233,8 +236,11 @@ public class UserLocalDataHandler {
 		Cursor cursor = null;
 		ArrayList<FriendListData> datas = new ArrayList<FriendListData>();
 		try {
-			String sortOrder = DatabaseDef.FriendshipColumns.FRIEND_ID
-					+ " DESC LIMIT " + LcomConst.ITEM_ON_SCREEN + " OFFSET "
+			// TODO
+			String sortOrder = DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE
+					+ " DESC LIMIT "
+					+ LcomConst.ITEM_ON_SCREEN
+					+ " OFFSET "
 					+ (LcomConst.ITEM_ON_SCREEN * pageNum);
 			DbgUtil.showDebug(TAG, "sortOrder: " + sortOrder);
 			cursor = mContentResolver.query(DatabaseDef.FriendshipTable.URI,
@@ -451,7 +457,7 @@ public class UserLocalDataHandler {
 			// Need to check if the target friend has already been in DB
 			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
 					friendId, friendName, friendThumb, senderId, message,
-					mailAddress);
+					mailAddress, Long.valueOf(date));
 			long friendshipId = sDatabase.insert(
 					DatabaseDef.FriendshipTable.TABLE_NAME, null,
 					valuesForFriendship);
@@ -533,12 +539,12 @@ public class UserLocalDataHandler {
 						DbgUtil.showDebug(TAG, "user is not sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								senderId, senderName, null, senderId,
-								messageData, null);
+								messageData, null, Long.valueOf(date));
 					} else {
 						DbgUtil.showDebug(TAG, "user is sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								toUserId, toUserName, null, senderId,
-								messageData, null);
+								messageData, null, Long.valueOf(date));
 					}
 
 					long friendshipId = sDatabase.insert(
@@ -628,12 +634,12 @@ public class UserLocalDataHandler {
 						DbgUtil.showDebug(TAG, "user is not sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								senderId, senderName, null, senderId,
-								messageData, null);
+								messageData, null, Long.valueOf(date));
 					} else {
 						DbgUtil.showDebug(TAG, "user is sender");
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								toUserId, toUserName, null, senderId,
-								messageData, null);
+								messageData, null, Long.valueOf(date));
 					}
 
 					long friendshipId = sDatabase.insert(
@@ -683,13 +689,15 @@ public class UserLocalDataHandler {
 					if (senderId == userId) {
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								Integer.valueOf(friendId), friendName,
-								thumbnail, senderId, messageData, mailAddress);
+								thumbnail, senderId, messageData, mailAddress,
+								Long.valueOf(date));
 						where = DatabaseDef.FriendshipColumns.FRIEND_ID + "="
 								+ toUserId;
 					} else {
 						valuesForFriendship = getInsertContentValuesForFriendship(
 								Integer.valueOf(friendId), friendName,
-								thumbnail, senderId, messageData, mailAddress);
+								thumbnail, senderId, messageData, mailAddress,
+								Long.valueOf(date));
 						where = DatabaseDef.FriendshipColumns.FRIEND_ID + "="
 								+ senderId;
 					}
@@ -845,7 +853,7 @@ public class UserLocalDataHandler {
 			String where = null;
 			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
 					Integer.valueOf(friendId), friendName, null, senderId,
-					message, null);
+					message, null, Long.valueOf(date));
 			where = DatabaseDef.FriendshipColumns.FRIEND_ID + "=" + friendId;
 
 			long updateId = sDatabase.update(
@@ -1335,7 +1343,7 @@ public class UserLocalDataHandler {
 
 	protected ContentValues getInsertContentValuesForFriendship(int friendId,
 			String friendName, byte[] friendThumbnail, int lastSenderId,
-			String lastMessage, String mailAddress) {
+			String lastMessage, String mailAddress, long contactedTime) {
 		ContentValues values = new ContentValues();
 
 		values.put(DatabaseDef.FriendshipColumns.FRIEND_ID, friendId);
@@ -1344,6 +1352,8 @@ public class UserLocalDataHandler {
 		values.put(DatabaseDef.FriendshipColumns.LAST_MESSAGE, lastMessage);
 		values.put(DatabaseDef.FriendshipColumns.MAIL_ADDRESS, mailAddress);
 		values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, friendThumbnail);
+		values.put(DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE,
+				contactedTime);
 
 		return values;
 	}
