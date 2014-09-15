@@ -60,7 +60,8 @@ public class ConversationCustomListView extends ListView {
 						+ visibleItemCount + " / " + totalItemCount);
 
 				// To avoid first time automatic load
-				if (totalItemCount != 0) {
+				if (totalItemCount != 0
+						&& totalItemCount > LcomConst.ITEM_ON_SCREEN) {
 					// To load when scroll comes to bottom of screen
 					// (And "visibleItemCount != 0" is just for avoiding reload
 					// triggered in launch app case)

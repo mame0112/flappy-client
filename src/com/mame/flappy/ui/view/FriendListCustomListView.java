@@ -35,8 +35,8 @@ public class FriendListCustomListView extends ListView {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
 	}
-	
-	public void listViewUIReady(){
+
+	public void listViewUIReady() {
 		// Set scroll flag false
 		mIsScrolling = false;
 	}
@@ -44,7 +44,6 @@ public class FriendListCustomListView extends ListView {
 	@Override
 	public void setAdapter(ListAdapter adapter) {
 		super.setAdapter(adapter);
-
 
 		mAdapter = (FriendListCustomAdapter) adapter;
 		setOnScrollListener(mScrollListener);
@@ -64,7 +63,8 @@ public class FriendListCustomListView extends ListView {
 						+ visibleItemCount + " / " + totalItemCount);
 
 				// To avoid first time automatic load
-				if (totalItemCount != 0) {
+				if (totalItemCount != 0
+						&& totalItemCount > LcomConst.ITEM_ON_SCREEN) {
 					// To load when scroll comes to bottom of screen
 					if (totalItemCount == firstVisibleItem + visibleItemCount) {
 						if (mIsScrolling == false) {
