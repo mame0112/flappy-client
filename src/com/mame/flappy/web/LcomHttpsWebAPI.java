@@ -45,6 +45,7 @@ import android.os.Handler;
 import android.util.Log;
 
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.CipherUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PrngUtils;
 
@@ -114,7 +115,9 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			this.type = type;
 			postParams = new ArrayList<NameValuePair>();
 			for (int i = 0; i < key.length; i++) {
-				postParams.add(new BasicNameValuePair(key[i], value[i]));
+				String cipher = CipherUtil.encrypt(value[i]);
+				// postParams.add(new BasicNameValuePair(key[i], value[i]));
+				postParams.add(new BasicNameValuePair(key[i], cipher));
 			}
 		}
 

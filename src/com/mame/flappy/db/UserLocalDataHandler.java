@@ -165,6 +165,11 @@ public class UserLocalDataHandler {
 							String mailAddress = cursor
 									.getString(cursor
 											.getColumnIndex(DatabaseDef.FriendshipColumns.MAIL_ADDRESS));
+							String lastContactTime = cursor
+									.getString(cursor
+											.getColumnIndex(DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE));
+							DbgUtil.showDebug(TAG, "lastContactedTime: "
+									+ lastContactTime);
 
 							byte[] thumbnail = cursor
 									.getBlob(cursor

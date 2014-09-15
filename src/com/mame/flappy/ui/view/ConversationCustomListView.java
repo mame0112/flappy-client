@@ -70,7 +70,6 @@ public class ConversationCustomListView extends ListView {
 							int pageNum = (int) (totalItemCount / LcomConst.ITEM_ON_SCREEN);
 							loadAdditionalData(pageNum);
 							mIsScrolling = true;
-
 						}
 
 					}
