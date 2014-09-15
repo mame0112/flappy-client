@@ -62,12 +62,11 @@ public class UserLocalDataHandler {
 		Cursor cursor = null;
 		ArrayList<MessageItemData> datas = new ArrayList<MessageItemData>();
 		try {
-			// String selection = DatabaseDef.MessageColumns.TO_USER_ID + "=?";
 			String selection = DatabaseDef.MessageColumns.FROM_USER_ID + "=?"
 					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
 			String selectionArgs[] = { String.valueOf(targetUserId),
 					String.valueOf(targetUserId) };
-			String sortOrder = DatabaseDef.MessageColumns.DATE + " LIMIT 0, "
+			String sortOrder = DatabaseDef.MessageColumns.DATE + " DESC LIMIT "
 					+ LcomConst.ITEM_ON_SCREEN;
 			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
 					selection, selectionArgs, sortOrder);
@@ -331,6 +330,82 @@ public class UserLocalDataHandler {
 
 	public void setUserLocalDataListener(UserLocalDataListener listener) {
 		mListener = listener;
+	}
+
+	public ArrayList<MessageItemData> getAdditionalLocalConversationDataset(
+			int targetUserId, int pageNum) throws UserLocalDataHandlerException {
+
+		Cursor cursor = null;
+		ArrayList<MessageItemData> datas = new ArrayList<MessageItemData>();
+		DbgUtil.showDebug(TAG, "pageNum: " + pageNum);
+		try {
+			String selection = DatabaseDef.MessageColumns.FROM_USER_ID + "=?"
+					+ " OR " + DatabaseDef.MessageColumns.TO_USER_ID + "=?";
+			String selectionArgs[] = { String.valueOf(targetUserId),
+					String.valueOf(targetUserId) };
+			String sortOrder = DatabaseDef.MessageColumns.DATE + " DESC LIMIT "
+					+ LcomConst.ITEM_ON_SCREEN + " OFFSET "
+					+ (LcomConst.ITEM_ON_SCREEN * pageNum);
+			DbgUtil.showDebug(TAG, "sortOrder: " + sortOrder);
+
+			cursor = mContentResolver.query(DatabaseDef.MessageTable.URI, null,
+					selection, selectionArgs, sortOrder);
+			while (cursor != null && cursor.moveToNext()) {
+				String fromUserId = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_ID));
+				String fromUserName = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.FROM_USER_NAME));
+				String toUserId = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_ID));
+				String toUserName = cursor
+						.getString(cursor
+								.getColumnIndex(DatabaseDef.MessageColumns.TO_USER_NAME));
+				String message = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.MESSAGE));
+				String date = cursor.getString(cursor
+						.getColumnIndex(DatabaseDef.MessageColumns.DATE));
+				DbgUtil.showDebug(TAG, "message: " + message);
+
+				// Translate string into int
+				int fromUserIdInt = LcomConst.NO_USER;
+				int toUserIdInt = LcomConst.NO_USER;
+				long date2 = 0L;
+				if (fromUserId != null) {
+					fromUserIdInt = Integer.valueOf(fromUserId);
+					DbgUtil.showDebug(TAG, "fromUserId: " + fromUserId);
+				}
+				if (toUserId != null) {
+					toUserIdInt = Integer.valueOf(toUserId);
+					DbgUtil.showDebug(TAG, "toUserId: " + toUserId);
+				}
+				try {
+					date2 = Long.valueOf(date);
+				} catch (NumberFormatException e) {
+					DbgUtil.showDebug(TAG,
+							"NumberFormatException: " + e.getMessage());
+					TrackingUtil.trackExceptionMessage(mContext, TAG,
+							"NumberFormatException for getLocalMessageDataset: "
+									+ e.getMessage());
+				}
+
+				MessageItemData data = new MessageItemData(fromUserIdInt,
+						toUserIdInt, fromUserName, toUserName, message, date2,
+						null);
+				datas.add(data);
+			}
+		} catch (SQLException e) {
+			DbgUtil.showDebug(TAG, "SQLException: " + e.getMessage());
+			TrackingUtil.trackExceptionMessage(mContext, TAG, "SQLExeption: "
+					+ e.getMessage());
+		} finally {
+			if (cursor != null) {
+				cursor.close();
+			}
+		}
+		return datas;
+
 	}
 
 	// TODO need to care already friendship is registered case

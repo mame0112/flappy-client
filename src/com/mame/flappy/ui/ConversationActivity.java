@@ -43,6 +43,8 @@ import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.FriendDataManagerException;
+import com.mame.flappy.ui.view.ConversationCustomListView;
+import com.mame.flappy.ui.view.ConversationCustomListView.ConversationListScrollListener;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.HttpClientUtil;
@@ -55,7 +57,7 @@ import com.mame.flappy.web.LcomHttpWebAPI;
 import com.mame.flappy.web.LcomHttpWebAPI.LcomWebAPIListener;
 
 public class ConversationActivity extends LcomBaseActivity implements
-		FriendDataManagerListener {
+		FriendDataManagerListener, ConversationListScrollListener {
 
 	private final String TAG = LcomConst.TAG + "/ConversationActivity";
 
@@ -81,7 +83,8 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 	private ConversationListCustonAdapter mAdapter = null;
 
-	private ListView mListView = null;
+	// private ListView mListView = null;
+	private ConversationCustomListView mListView = null;
 
 	// private ProgressDialogFragment mProgressDialog = null;
 
@@ -162,8 +165,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 		mAdapter.setFriendThumbnail(mThumbnail);
 		// mAdapter.addAll(mConversationData);
 
-		mListView = (ListView) findViewById(R.id.conversationListView);
+		mListView = (ConversationCustomListView) findViewById(R.id.conversationListView);
 		mListView.setAdapter(mAdapter);
+		mListView.setListener(this);
 
 		FriendDataManager.initializeFriendDataManager(mUserId,
 				getApplicationContext());
@@ -294,6 +298,8 @@ public class ConversationActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "count: " + mListView.getCount());
 		mListView.setSelection(mListView.getCount() - 1);
 
+		mListView.listViewUIReady();
+
 	}
 
 	@Override
@@ -394,11 +400,6 @@ public class ConversationActivity extends LcomBaseActivity implements
 			DbgUtil.showDebug(TAG, "postDate: " + messageData.getPostedDate());
 		}
 
-		// if (!mActivity.isFinishing() && mProgressDialog != null
-		// && mProgressDialog.isShowing()) {
-		// mProgressDialog.dismiss();
-		// }
-
 		if (result) {
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHandler,
 					R.string.str_conversation_message_successfuly_sent);
@@ -467,11 +468,6 @@ public class ConversationActivity extends LcomBaseActivity implements
 			// Initialize flag
 			mIsNewDataReady = false;
 
-			// if (!mActivity.isFinishing() && mProgressDialog != null
-			// && mProgressDialog.isShowing()) {
-			// mProgressDialog.dismiss();
-			// }
-
 			new Thread(new Runnable() {
 				@Override
 				public void run() {
@@ -484,10 +480,6 @@ public class ConversationActivity extends LcomBaseActivity implements
 				}
 
 			}).start();
-
-			// if (mProgressDialog != null && mProgressDialog.isShowing()) {
-			// mProgressDialog.getDialog().dismiss();
-			// }
 
 		} else {
 			// If new data is not available yet.
@@ -606,13 +598,6 @@ public class ConversationActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
 	}
 
-	// @Override
-	// public void notifiyNearlestExpireNotification(NotificationContentData
-	// data) {
-	// DbgUtil.showDebug(TAG,
-	// "notifiyNearlestExpireNotification - not to be used");
-	// }
-
 	@Override
 	public void notifyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
@@ -623,8 +608,63 @@ public class ConversationActivity extends LcomBaseActivity implements
 	@Override
 	public void notifyAdditionalLocalUserDataLoaded(
 			ArrayList<FriendListData> userData) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
+	@Override
+	public void onNotifyScrollPositionChanged(int pageNum) {
+		DbgUtil.showDebug(TAG, "onNotifyScrollPositionChanged");
+		mManager.reloadConversationData(mTargetUserId, pageNum);
+	}
+
+	@Override
+	public void notifyAdditionalLocalConversationDataLoaded(
+			final ArrayList<MessageItemData> messageData) {
+		DbgUtil.showDebug(TAG, "notifyAdditionalLocalConversationDataLoaded");
+		if (mConversationData != null) {
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							if (mAdapter != null) {
+								// First, current scroll position
+								int scrollNum = mConversationData.size();
+								DbgUtil.showDebug(TAG, "scrollNum: "
+										+ scrollNum);
+
+								// Switch order of additional data come from
+								// Local by date
+								Collections.sort(messageData,
+										new ConversationDataComparator());
+
+								// Add them to data object on this Activity
+								mConversationData.addAll(0, messageData);
+
+								mListView.setAdapter(mAdapter);
+
+								// Set scroll position
+								mListView
+										.setSelection(LcomConst.ITEM_ON_SCREEN);
+
+								// If we reaches to bottom of screen (meaning
+								// all data is already loaded), we don't notify
+								// list view
+								if (messageData != null
+										&& messageData.size() >= LcomConst.ITEM_ON_SCREEN) {
+									mListView.listViewUIReady();
+								}
+
+								// Notify to adapter
+								mAdapter.notifyDataSetChanged();
+							}
+						}
+					});
+				}
+			}).start();
+
+		}
+	}
 }

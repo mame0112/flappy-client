@@ -339,6 +339,13 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	public void notifyAdditionalLocalUserDataLoaded(
 			ArrayList<FriendListData> userData) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void notifyAdditionalLocalConversationDataLoaded(
+			ArrayList<MessageItemData> userData) {
+		// TODO Auto-generated method stub
+
 	}
 }

@@ -321,11 +321,18 @@ public class FriendDataManager implements UserServerDataListener,
 				ArrayList<NotificationContentData> notifications);
 
 		/**
-		 * To be called when FriendDataManager finished to load nearlest expire
-		 * notification data
+		 * To be called when FriendDataManager finished to load additional
+		 * Friendlist data
 		 */
 		public void notifyAdditionalLocalUserDataLoaded(
 				ArrayList<FriendListData> userData);
+
+		/**
+		 * To be called when FriendDataManager finished to load additional
+		 * conversation data
+		 */
+		public void notifyAdditionalLocalConversationDataLoaded(
+				ArrayList<MessageItemData> userData);
 
 	}
 
@@ -411,6 +418,47 @@ public class FriendDataManager implements UserServerDataListener,
 			// Notifyy to client
 			for (FriendDataManagerListener listener : mListeners) {
 				listener.notifyAdditionalLocalUserDataLoaded(result);
+			}
+		}
+
+	}
+
+	public void reloadConversationData(int targetUserId, int pageNum) {
+		new ReloadConversationListAsyncTask().execute(targetUserId, pageNum);
+	}
+
+	private class ReloadConversationListAsyncTask extends
+			AsyncTask<Integer, Void, ArrayList<MessageItemData>> {
+
+		public ReloadConversationListAsyncTask() {
+			DbgUtil.showDebug(TAG, "ReloadConversationListAsyncTask");
+		}
+
+		@Override
+		protected ArrayList<MessageItemData> doInBackground(Integer... params) {
+
+			int targetUserId = params[0];
+			int pageNum = params[1];
+			try {
+				return mLocalDataHandler.getAdditionalLocalConversationDataset(
+						targetUserId, pageNum);
+			} catch (UserLocalDataHandlerException e) {
+				DbgUtil.showDebug(TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				TrackingUtil.trackExceptionMessage(mContext, TAG,
+						"UserLocalDataHandlerException: " + e.getMessage());
+				return null;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(ArrayList<MessageItemData> result) {
+			DbgUtil.showDebug(TAG,
+					"ReloadConversationListAsyncTask onPostExecute");
+
+			// Notifyy to client
+			for (FriendDataManagerListener listener : mListeners) {
+				listener.notifyAdditionalLocalConversationDataLoaded(result);
 			}
 		}
 

@@ -446,25 +446,33 @@ public class InvitationConfirmDialog extends DialogFragment implements
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
 	}
 
-//	@Override
-//	public void notifiyNearlestExpireNotification(NotificationContentData data) {
-//		DbgUtil.showDebug(TAG,
-//				"notifiyNearlestExpireNotification - not to be used");
-//
-//	}
+	// @Override
+	// public void notifiyNearlestExpireNotification(NotificationContentData
+	// data) {
+	// DbgUtil.showDebug(TAG,
+	// "notifiyNearlestExpireNotification - not to be used");
+	//
+	// }
 
 	@Override
 	public void notifyValidNotificationList(
 			ArrayList<NotificationContentData> notifications) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void notifyAdditionalLocalUserDataLoaded(
 			ArrayList<FriendListData> userData) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void notifyAdditionalLocalConversationDataLoaded(
+			ArrayList<MessageItemData> userData) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

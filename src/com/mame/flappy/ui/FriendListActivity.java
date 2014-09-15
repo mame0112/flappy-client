@@ -1074,7 +1074,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 			final ArrayList<FriendListData> userData) {
 		DbgUtil.showDebug(TAG, "notifyAdditionalLocalUserDataLoaded");
 
-		// Notify to list view and adapter
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -1097,6 +1096,8 @@ public class FriendListActivity extends LcomBaseActivity implements
 								mListView.listViewUIReady();
 							}
 
+							mListView.setAdapter(mAdapter);
+
 							// Set scroll ppsition
 							mListView.setSelection(scrollNum);
 
@@ -1107,6 +1108,13 @@ public class FriendListActivity extends LcomBaseActivity implements
 				});
 			}
 		}).start();
+
+	}
+
+	@Override
+	public void notifyAdditionalLocalConversationDataLoaded(
+			ArrayList<MessageItemData> userData) {
+		// TODO Auto-generated method stub
 
 	}
 }
