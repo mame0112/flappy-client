@@ -388,7 +388,7 @@ public class InvitationConfirmDialog extends DialogFragment implements
 				targetMessage, targetUserId, targetUserName, locale.toString(),
 				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION_CONFIRMED, key,
-				value);
+				value, targetMailAddress);
 	}
 
 	@Override

@@ -101,7 +101,7 @@ public class UserServerDataHandler implements
 					String.valueOf(targetUserId), targetUserName,
 					parsedMessage, date, String.valueOf(LcomConst.API_LEVEL) };
 			mWebAPI.sendData(LcomConst.SERVLET_NAME_SEND_ADD_MESSAGE, key,
-					value);
+					value, userName);
 			return true;
 		} else {
 			DbgUtil.showDebug(TAG, "parsed message is null");
@@ -127,7 +127,8 @@ public class UserServerDataHandler implements
 				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId),
 				String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_MESSAGE, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_MESSAGE, key, value,
+				String.valueOf(userId));
 
 	}
 
@@ -147,7 +148,8 @@ public class UserServerDataHandler implements
 				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId),
 				String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_ALL_USER_DATA, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_ALL_USER_DATA, key, value,
+				String.valueOf(userId));
 
 	}
 
@@ -168,7 +170,8 @@ public class UserServerDataHandler implements
 		String value[] = { origin, String.valueOf(userId),
 				String.valueOf(targetUserId),
 				String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_CONVERSATION_DATA, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_CONVERSATION_DATA, key, value,
+				String.valueOf(userId));
 
 	}
 
@@ -210,7 +213,7 @@ public class UserServerDataHandler implements
 				String value[] = { origin, parsedId,
 						String.valueOf(LcomConst.API_LEVEL) };
 				mWebAPI.sendData(LcomConst.SERVLET_FRIEBD_THUMBNAILS, key,
-						value);
+						value, parsedId);
 			}
 
 		} else {

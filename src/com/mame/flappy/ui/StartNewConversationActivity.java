@@ -399,7 +399,8 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 				LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId), userName,
 				mailAddress, String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value,
+				userName);
 	}
 
 	/**
@@ -420,7 +421,8 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 				LcomConst.SERVLET_MESSAGE_BODY, LcomConst.SERVLET_API_LEVEL };
 		String value[] = { origin, String.valueOf(userId), userName,
 				mailAddress, message, String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_NEW_INVITATION, key, value,
+				userName);
 	}
 
 	private void parseAndShowResponse(List<String> respList) {

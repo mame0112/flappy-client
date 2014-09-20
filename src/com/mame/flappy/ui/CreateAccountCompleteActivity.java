@@ -492,7 +492,8 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 		String value[] = { origin, userName, password, mailAddress,
 				thumbnailString, locale.toString(),
 				String.valueOf(LcomConst.API_LEVEL) };
-		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT, key, value);
+		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT, key, value,
+				userName);
 	}
 
 	private void changeCreateButtonState() {

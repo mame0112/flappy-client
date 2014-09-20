@@ -69,7 +69,7 @@ public class LcomDeviceIdRegisterHelper implements
 		return false;
 	}
 
-	public void checkGPSAndAndRegisterDeviceId(Activity activity, int userId) {
+	public void checkGPSAndAndRegisterDeviceId(Activity activity, long userId) {
 		DbgUtil.showDebug(TAG, "getAndRegisterDeviceId");
 
 		// If Google play service has already been installed, we try to get GCP
@@ -100,7 +100,7 @@ public class LcomDeviceIdRegisterHelper implements
 		}
 	}
 
-	private void registerInBackground(final Activity activity, final int userId) {
+	private void registerInBackground(final Activity activity, final long userId) {
 		new AsyncTask<Void, Void, String>() {
 			@Override
 			protected String doInBackground(Void... params) {
@@ -156,7 +156,7 @@ public class LcomDeviceIdRegisterHelper implements
 		return registrationId;
 	}
 
-	private void registerDeviceId(String deviceId, int userId) {
+	private void registerDeviceId(String deviceId, long userId) {
 		if (userId != LcomConst.NO_USER) {
 			DbgUtil.showDebug(TAG, "registerMessagepushDeviceId");
 
@@ -166,7 +166,8 @@ public class LcomDeviceIdRegisterHelper implements
 					LcomConst.SERVLET_API_LEVEL };
 			String value[] = { origin, String.valueOf(userId), deviceId,
 					String.valueOf(LcomConst.API_LEVEL) };
-			mWebAPI.sendData(LcomConst.SERVLET_REGISTER_DEVICE_ID, key, value);
+			mWebAPI.sendData(LcomConst.SERVLET_REGISTER_DEVICE_ID, key, value,
+					String.valueOf(userId));
 
 		}
 	}

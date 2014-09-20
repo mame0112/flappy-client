@@ -209,7 +209,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		String value[] = { origin, userName,
 				String.valueOf(LcomConst.API_LEVEL) };
 		mWebAPI.sendData(LcomConst.SERVLET_NAME_CREATE_ACCOUNT_CHECK_USER_NAME,
-				key, value);
+				key, value, userName);
 	}
 
 	private void changeNextButtonState() {

@@ -321,7 +321,7 @@ public class LoginActivity extends LcomBaseActivity implements
 			if (webAPI == null) {
 				throw new WebAPIException("WebAPI instance is null");
 			} else {
-				webAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value);
+				webAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value, userName);
 			}
 		} else {
 			throw new WebAPIException("activity is null");

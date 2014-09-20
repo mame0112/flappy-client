@@ -163,7 +163,7 @@ public class DebugConversationActivity extends LcomBaseActivity implements
 						String.valueOf(friendId), friendName, message, date,
 						String.valueOf(LcomConst.API_LEVEL) };
 				// TODO Should we use servlet with request new user data case?
-				mWebAPI.sendData(LcomConst.DEBUG_SERVLET, key, value);
+				mWebAPI.sendData(LcomConst.DEBUG_SERVLET, key, value, userName);
 				// mLocalDataHandler.addNewMessage(Integer.valueOf(userId),
 				// Integer.valueOf(friendId), userName, friendName,
 				// Integer.valueOf(senderId), message, date);

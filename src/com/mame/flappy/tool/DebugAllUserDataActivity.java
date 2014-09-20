@@ -62,7 +62,7 @@ public class DebugAllUserDataActivity extends LcomBaseActivity implements
 				String.valueOf(LcomConst.API_LEVEL) };
 		String key[] = { LcomConst.SERVLET_ORIGIN,
 				LcomConst.SERVLET_TOTAL_USER_NUM, LcomConst.SERVLET_API_LEVEL };
-		mWebAPI.sendData(LcomConst.DEBUG_SERVLET, key, value);
+		mWebAPI.sendData(LcomConst.DEBUG_SERVLET, key, value, totalNum);
 	}
 
 	@Override

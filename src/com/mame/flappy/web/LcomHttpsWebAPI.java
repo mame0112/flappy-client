@@ -70,15 +70,20 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 	private PostThread mPostThread = null;
 
+	private String mIdentifier = null;
+
 	public LcomHttpsWebAPI() {
 		PrngUtils.apply();
 	}
 
 	@Override
-	public void sendData(String servletName, String[] key, String[] value) {
+	public void sendData(String servletName, String[] key, String[] value,
+			String identifier) {
 		DbgUtil.showDebug(TAG, "sendData");
+		mIdentifier = identifier;
 		this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
-		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key, value);
+		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key, value,
+				identifier);
 		mHandler.postDelayed(new Runnable() {
 
 			@Override
@@ -110,15 +115,22 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		private List<String> mRespList = new ArrayList<String>();
 		HttpClient mClient = new MyHttpClient();
 
-		public PostThread(int type, String url, String[] key, String[] value) {
+		public PostThread(int type, String url, String[] key, String[] value,
+				String identifier) {
 			this.url = url;
 			this.type = type;
+			String secretKey = CipherUtil
+					.createSecretKeyFromIdentifier(identifier);
+			DbgUtil.showDebug(TAG, "secretKey: " + secretKey);
 			postParams = new ArrayList<NameValuePair>();
 			for (int i = 0; i < key.length; i++) {
-				String cipher = CipherUtil.encrypt(value[i]);
+				String cipher = CipherUtil.encrypt(value[i], secretKey);
 				// postParams.add(new BasicNameValuePair(key[i], value[i]));
 				postParams.add(new BasicNameValuePair(key[i], cipher));
 			}
+			// Send identifier
+			postParams.add(new BasicNameValuePair(LcomConst.SERVLET_IDENTIFIER,
+					secretKey));
 		}
 
 		@Override
@@ -146,10 +158,19 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 						try {
 							JSONArray jsonArray = new JSONArray(
 									result.getString());
-							for (int i = 0; i < jsonArray.length(); i++) {
-								mRespList.add(CipherUtil.decrypt(jsonArray
-										.getString(i)));
-								// Log.d(TAG, mRespList.get(i));
+							if (jsonArray != null) {
+
+								String secretKey = CipherUtil
+										.createSecretKeyFromIdentifier(mIdentifier);
+								DbgUtil.showDebug(TAG, "secretKey: "
+										+ secretKey);
+
+								for (int i = 0; i < jsonArray.length(); i++) {
+									DbgUtil.showDebug(TAG,
+											"json: " + jsonArray.getString(i));
+									mRespList.add(CipherUtil.decrypt(
+											jsonArray.getString(i), secretKey));
+								}
 							}
 						} catch (JSONException e) {
 							Log.e(TAG, "JSONException: " + e.getMessage());

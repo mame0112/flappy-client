@@ -62,6 +62,8 @@ public class LcomConst {
 
 	public final static String SERVLET_API_LEVEL = "servlet_api_level";
 
+	public final static String SERVLET_IDENTIFIER = "servlet_identifier";
+
 	// public final static String SERVLET_CONTEXT_IDENTIFIER =
 	// "servlet_identifier";
 

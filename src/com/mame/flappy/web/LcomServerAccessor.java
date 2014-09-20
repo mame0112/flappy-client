@@ -26,9 +26,10 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 		mAccessor = accessor;
 	}
 
-	public void sendData(String servletName, String[] key, String[] value) {
+	public void sendData(String servletName, String[] key, String[] value,
+			String identifier) {
 		DbgUtil.showDebug(TAG, "sendData");
-		mAccessor.sendData(servletName, key, value);
+		mAccessor.sendData(servletName, key, value, identifier);
 	}
 
 	public void interrupt() {
