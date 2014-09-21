@@ -732,11 +732,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_friendlist_signout:
 
-			// TODO
-			// SignoutConfirmationDialog dialog = new
-			// SignoutConfirmationDialog();
-			// dialog.show(getFragmentManager(), "SignoutConfirmation");
-			// dialog.setSignoutConfirmationListener(this);
+			//TODO
+//			SignoutConfirmationDialog dialog = new SignoutConfirmationDialog();
+//			dialog.show(getFragmentManager(), "SignoutConfirmation");
+//			dialog.setSignoutConfirmationListener(this);
 
 			return true;
 		case R.id.menu_friendlist_add:

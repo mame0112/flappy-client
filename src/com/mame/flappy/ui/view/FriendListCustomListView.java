@@ -63,11 +63,14 @@ public class FriendListCustomListView extends ListView {
 						+ visibleItemCount + " / " + totalItemCount);
 
 				// To avoid first time automatic load
-				if (totalItemCount != 0
-						&& totalItemCount > LcomConst.ITEM_ON_SCREEN) {
+				// if (totalItemCount != 0
+				// && totalItemCount > LcomConst.ITEM_ON_SCREEN) {
+				if (totalItemCount != 0 && firstVisibleItem != 0) {
 					// To load when scroll comes to bottom of screen
 					if (totalItemCount == firstVisibleItem + visibleItemCount) {
+						DbgUtil.showDebug(TAG, "A");
 						if (mIsScrolling == false) {
+							DbgUtil.showDebug(TAG, "B");
 							int pageNum = (int) (totalItemCount / LcomConst.ITEM_ON_SCREEN);
 							loadAdditionalData(pageNum);
 							mIsScrolling = true;
