@@ -60,12 +60,12 @@ public class ConversationCustomListView extends ListView {
 						+ visibleItemCount + " / " + totalItemCount);
 
 				// To avoid first time automatic load
-				if (totalItemCount != 0
-						&& totalItemCount > LcomConst.ITEM_ON_SCREEN) {
+				if (totalItemCount != 0 && visibleItemCount != 0) {
 					// To load when scroll comes to bottom of screen
 					// (And "visibleItemCount != 0" is just for avoiding reload
 					// triggered in launch app case)
-					if (0 == firstVisibleItem && visibleItemCount != 0) {
+					if (0 == firstVisibleItem
+							&& totalItemCount >= LcomConst.ITEM_ON_SCREEN) {
 						if (mIsScrolling == false) {
 							int pageNum = (int) (totalItemCount / LcomConst.ITEM_ON_SCREEN);
 							loadAdditionalData(pageNum);
