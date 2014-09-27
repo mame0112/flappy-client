@@ -293,7 +293,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		DbgUtil.showDebug(TAG, "mCurrentNotificationNum: "
 				+ mCurrentNotificationNum);
 
-		if (notifications != null) {
+		if (notifications != null && notifications.size() != 0) {
 			int size = notifications.size();
 
 			// If size increased
@@ -306,7 +306,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 				setAlarmManagerForRemoveNotification(mContext, fromUserId,
 						toUserId, expireDate);
 				mCurrentNotificationNum = size;
-				showNotification(mContext, fromUserId);
+				showNotification(mContext, toUserId);
 
 			} else {
 				if (size == 0) {

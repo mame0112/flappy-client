@@ -22,7 +22,6 @@ public class NewMessageNotification {
 
 	public void showNotiofication(Context context, int userId,
 			int notificationId) {
-
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context)
 				.setSmallIcon(R.drawable.flippy_statusbar_icon)

@@ -49,7 +49,6 @@ public class ConversationCustomListView extends ListView {
 
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// DbgUtil.showDebug(TAG, "onScrollStateChanged");
 
 			}
 

@@ -162,8 +162,6 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 								String secretKey = CipherUtil
 										.createSecretKeyFromIdentifier(mIdentifier);
-								DbgUtil.showDebug(TAG, "secretKey: "
-										+ secretKey);
 
 								for (int i = 0; i < jsonArray.length(); i++) {
 									mRespList.add(CipherUtil.decrypt(
