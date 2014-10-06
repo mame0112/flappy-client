@@ -61,7 +61,7 @@
         android:layout_marginTop="@dimen/create_account_block_padding"
         android:background="@drawable/edittext_frame"
         android:hint="@string/str_create_account_mail_address_hint"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:maxLength="64" />
 
     <LinearLayout

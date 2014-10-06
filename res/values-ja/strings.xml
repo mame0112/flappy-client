@@ -175,7 +175,7 @@
     <string name="str_flappy_about_title">flappyとは</string>
     <string name="str_flappy_about_desc">flappyは、ストレスなく「既読スルー」できる、ゆるふわコミュニケーションツールです。</string>
     <string name="str_flappy_about_stress_less_title">ストレスのないコミュニケーション</string>
-    <string name="str_flappy_about_stress_less_desc">あなたがお使いのメッセージ系アプリにストレスを感じていませんか？たくさんのメッセージを読んで、素早く返信・・・。もしその状況に疲れてしまっているのであれば、このFlappyを使ってみましょう。flappyは、あなたをそんなストレスから解放してくれます。</string>
+    <string name="str_flappy_about_stress_less_desc">あなたがお使いのメッセージ系アプリにストレスを感じていませんか？たくさんのメッセージを読んで、素早く返信・・・。もしその状況に疲れてしまっているのであれば、このflappyを使ってみましょう。flappyは、あなたをそんなストレスから解放してくれます。</string>
     <string name="str_flappy_about_disappear_message_title">消えるメッセージ</string>
     <string name="str_flappy_about_disappear_message_desc">flappyの最も特徴的な機能の1つは、読まないと消えるメッセージです。新着メッセージを30分〜1時間程度読まなかったら、そのメッセージは自動的に消えて読めなくなります。\n\n 一見不便ですが、「メッセージに気づかなかったから返信できなかった」という言い訳がしやすくなります。</string>
     <string name="str_flappy_about_merit_title">・・・ということは？</string>

@@ -178,9 +178,9 @@
     <string name="str_flappy_about_stress_less_title">Stress-less messaging</string>
     <string name="str_flappy_about_stress_less_desc">Don\'t you think current messaging apps is stressful? Too many messages and unanswered messages etc. Yes? Then, it would be good to use this "Flappy". It enable you to communicate with your friend without stress by to be disappeared message.</string>
     <string name="str_flappy_about_disappear_message_title">To be disappeard message</string>
-    <string name="str_flappy_about_disappear_message_desc">One of characteristics feature of flappy is to be disappeard message. If you don\'t read new message more than about 30 minutes, it will disappear automatically and you will not be abou to read it anymore.\n\n Apparently, it seems inconvenient as a messaging service, but for the sake of it, you never</string>
+    <string name="str_flappy_about_disappear_message_desc">One of characteristics feature of flappy is to be disappeard message. If you don\'t read new message more than about 30 minutes, it will disappear automatically and you will not be able to read it anymore.\n\n Apparently, it seems inconvenient as a messaging service, but for the sake of it, you never</string>
     <string name="str_flappy_about_merit_title">So what?</string>
-    <string name="str_flappy_about_merit_desc">This messagin service wiill not make message receiver reply message because you and your friend might missed the message before disappearing. It means message sender can send message without considering situation of receiver. As a result, you can send message more freely than now!</string>
+    <string name="str_flappy_about_merit_desc">This messaging service wiil not force message receiver reply message because you and your friend might missed the message before disappearing. It means message sender can send message without considering situation of receiver. As a result, you can send message more freely than now!</string>
     <string name="str_flappy_about_start_title">Let\'s get started</string>
     <string name="str_flappy_about_start_desc">Stress-less messaging service, \'flappy\'. Would you want to get started stress-less communication with your friend?</string>
     <string name="str_flappy_about_get_started_button">Get started</string>

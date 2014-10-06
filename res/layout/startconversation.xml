@@ -48,7 +48,7 @@
         android:layout_marginTop="@dimen/default_margin_vertical"
         android:background="@drawable/edittext_frame"
         android:hint="@string/str_invitation_input_mail_address_hint"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:paddingTop="@dimen/block_margin_top" />
 
     <TextView
