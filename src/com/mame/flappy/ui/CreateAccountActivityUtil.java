@@ -64,7 +64,13 @@ public class CreateAccountActivityUtil {
 	}
 
 	public static void openURL(Context c, String targetURL) {
-		Uri uri = Uri.parse(LcomConst.BASE_URL + targetURL);
+		Uri uri = null;
+		if (LcomConst.IS_DEBUG) {
+			uri = Uri.parse(LcomConst.DEVELOPMENT_BASE_URL + targetURL);
+		} else {
+			uri = Uri.parse(LcomConst.RELEASE_BASE_URL + targetURL);
+		}
+
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		c.startActivity(intent);

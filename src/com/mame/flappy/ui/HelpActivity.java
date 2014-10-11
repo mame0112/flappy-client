@@ -107,13 +107,29 @@ public class HelpActivity extends LcomBaseActivity {
 	}
 
 	private void openPrivacyPolicy() {
-		Uri uri = Uri.parse(LcomConst.BASE_URL + LcomConst.PRIVACY_AUTOHRITY);
+		Uri uri = null;
+		if (LcomConst.IS_DEBUG) {
+			uri = Uri.parse(LcomConst.DEVELOPMENT_BASE_URL
+					+ LcomConst.PRIVACY_AUTOHRITY);
+		} else {
+			uri = Uri.parse(LcomConst.RELEASE_BASE_URL
+					+ LcomConst.PRIVACY_AUTOHRITY);
+		}
+
 		Intent i = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(i);
 	}
 
 	private void openTermsOfService() {
-		Uri uri = Uri.parse(LcomConst.BASE_URL + LcomConst.TOC_AUTOHRITY);
+		Uri uri = null;
+		if (LcomConst.IS_DEBUG) {
+			uri = Uri.parse(LcomConst.DEVELOPMENT_BASE_URL
+					+ LcomConst.TOC_AUTOHRITY);
+		} else {
+			uri = Uri.parse(LcomConst.RELEASE_BASE_URL
+					+ LcomConst.TOC_AUTOHRITY);
+		}
+
 		Intent i = new Intent(Intent.ACTION_VIEW, uri);
 		startActivity(i);
 	}

@@ -4,9 +4,13 @@ public class LcomConst {
 
 	public final static String TAG = "LCom";
 
-	public final static String BASE_URL = "http://loosecommunication.appspot.com/";
+	public final static String DEVELOPMENT_BASE_URL = "http://loosecommunication.appspot.com/";
 
-	public final static String BASE_HTTPS_URL = "https://loosecommunication.appspot.com/";
+	public final static String DEVELOPMENT_BASE_HTTPS_URL = "https://loosecommunication.appspot.com/";
+
+	public final static String RELEASE_BASE_URL = "http://flappy-communication.appspot.com/";
+
+	public final static String RELEASE_BASE_HTTPS_URL = "https://flappy-communication.appspot.com/";
 
 	public final static String FLAPPY_MAIL_ADDRESS = "flappy.communication@gmail.com";
 
@@ -22,7 +26,7 @@ public class LcomConst {
 
 	public final static int API_LEVEL = 1;
 
-	public final static boolean IS_DEBUG = true;
+	public final static boolean IS_DEBUG = false;
 
 	public final static int NO_USER = -1;
 

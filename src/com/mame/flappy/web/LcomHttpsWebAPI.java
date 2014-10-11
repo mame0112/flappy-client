@@ -41,6 +41,7 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
@@ -81,7 +82,12 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			String identifier) {
 		DbgUtil.showDebug(TAG, "sendData");
 		mIdentifier = identifier;
-		this.url = LcomConst.BASE_HTTPS_URL + "/" + servletName;
+		if (LcomConst.IS_DEBUG) {
+			this.url = LcomConst.DEVELOPMENT_BASE_HTTPS_URL + "/" + servletName;
+		} else {
+			this.url = LcomConst.RELEASE_BASE_HTTPS_URL + "/" + servletName;
+		}
+
 		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key, value,
 				identifier);
 		mHandler.postDelayed(new Runnable() {
