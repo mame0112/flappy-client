@@ -93,7 +93,7 @@ public class LcomConst {
 
 	public final static int MAX_USER_NAME_LENGTH = 16;
 
-	public final static int MIN_USER_NAME_LENGTH = 4;
+	public final static int MIN_USER_NAME_LENGTH = 6;
 
 	public final static String EXTRA_USER_ID = "extra_user_id";
 
