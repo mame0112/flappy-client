@@ -108,12 +108,6 @@ public class FriendDataManager implements UserServerDataListener,
 					+ userId);
 		}
 
-		// TODO
-		// // Load server new data
-		// if (isForNew) {
-		// mServerDataHandler.requestNewUserData(userId);
-		// }
-
 		// Load local data
 		if (isForExisting) {
 			new LoadLocalFriendListAsyncTask().execute(isForNew);
@@ -515,21 +509,6 @@ public class FriendDataManager implements UserServerDataListener,
 				DbgUtil.showDebug(TAG,
 						"FriendDataManagerException: " + e.getMessage());
 			}
-
-			// if (result != null && result.size() != 0) {
-			// DbgUtil.showDebug(TAG, "size: " + result.size());
-			// for (FriendDataManagerListener listener : mListeners) {
-			// listener.notifyPresentDataset(result);
-			// }
-			// } else {
-			// try {
-			// mServerDataHandler.requestNewUserData(mUserId);
-			// } catch (FriendDataManagerException e) {
-			// DbgUtil.showDebug(TAG,
-			// "FriendDataManagerException: " + e.getMessage());
-			// }
-			// }
-
 		}
 	}
 

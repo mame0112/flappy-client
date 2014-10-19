@@ -258,21 +258,6 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 			// setProgressBarIndeterminateVisibility(true);
 
-			// Dismiss dialog if it is being shown
-			// if (!mActivity.isFinishing() && mProgressDialog != null
-			// && mProgressDialog.isShowing()) {
-			// mProgressDialog.dismiss();
-			// }
-
-			// Show prgoress dialog
-			// if (mProgressDialog != null) {
-			// mProgressDialog
-			// .setDialogTexts(
-			// getString(R.string.str_conversation_get_info_progress_title),
-			// getString(R.string.str_conversation_progress_desc));
-			// mProgressDialog.show(getFragmentManager(), "progress");
-			// }
-
 			mManager.requestMessageListDatasetWithTargetUser(mUserId,
 					mTargetUserId, true, true);
 		} catch (FriendDataManagerException e) {
