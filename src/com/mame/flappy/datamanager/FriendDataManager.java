@@ -732,18 +732,21 @@ public class FriendDataManager implements UserServerDataListener,
 	@Override
 	public void notifyUserAllDataSet(ArrayList<FriendListData> allData) {
 		DbgUtil.showDebug(TAG, "notifyUserAllDataSet");
-		for (FriendDataManagerListener listener : mListeners) {
-			listener.notifyNewDataset(allData);
-		}
 
 		if (mLocalDataHandler != null) {
 			try {
 				String userName = PreferenceUtil.getUserName(mContext);
 				mLocalDataHandler.addMultipleNewMessages(mUserId, userName,
 						allData);
+				for (FriendDataManagerListener listener : mListeners) {
+					listener.notifyNewDataset(allData);
+				}
 			} catch (UserLocalDataHandlerException e) {
 				DbgUtil.showDebug(TAG,
 						"UserLocalDataHandlerException: " + e.getMessage());
+				for (FriendDataManagerListener listener : mListeners) {
+					listener.notifyNewDataset(null);
+				}
 			}
 		}
 	}

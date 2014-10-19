@@ -466,7 +466,7 @@ public class UserLocalDataHandler {
 			long friendshipId = sDatabase.insert(
 					DatabaseDef.FriendshipTable.TABLE_NAME, null,
 					valuesForFriendship);
-			DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+			DbgUtil.showDebug(TAG, "friendshipId 1: " + friendshipId);
 			if (id < 0) {
 				// Failed.
 				DbgUtil.showDebug(TAG,
@@ -505,7 +505,15 @@ public class UserLocalDataHandler {
 		}
 	}
 
-	public void addMultipleNewMessages(long userId, String userName,
+	/**
+	 * 
+	 * @param userId
+	 * @param userName
+	 * @param newMessages
+	 * @return true if data store is successed
+	 * @throws UserLocalDataHandlerException
+	 */
+	public boolean addMultipleNewMessages(long userId, String userName,
 			ArrayList<FriendListData> newMessages)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addMultipleNewMessages");
@@ -516,11 +524,12 @@ public class UserLocalDataHandler {
 				.convertFormatFriendListToMessageItem(userId, userName,
 						newMessages);
 
-		addAllFriendshipAndFriendInfo(convertedMessages, userId, userName);
+		return addAllFriendshipAndFriendInfo(convertedMessages, userId,
+				userName);
 
 	}
 
-	private void addAllFriendshipAndFriendInfo(
+	private boolean addAllFriendshipAndFriendInfo(
 			ArrayList<MessageItemData> messageInfo, long userId, String userName)
 			throws UserLocalDataHandlerException {
 		DbgUtil.showDebug(TAG, "addAllFriendshipAndFriendInfo");
@@ -555,7 +564,7 @@ public class UserLocalDataHandler {
 					long friendshipId = sDatabase.insert(
 							DatabaseDef.FriendshipTable.TABLE_NAME, null,
 							valuesForFriendship);
-					DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+					DbgUtil.showDebug(TAG, "friendshipId 2: " + friendshipId);
 					if (friendshipId < 0) {
 						// Failed.
 						DbgUtil.showDebug(TAG,
@@ -568,8 +577,8 @@ public class UserLocalDataHandler {
 					}
 
 				}
-
 			}
+			return true;
 		} catch (IndexOutOfBoundsException e) {
 			DbgUtil.showDebug(TAG,
 					"IndexOutOfBoundsException: " + e.getMessage());
@@ -650,7 +659,7 @@ public class UserLocalDataHandler {
 					long friendshipId = sDatabase.insert(
 							DatabaseDef.FriendshipTable.TABLE_NAME, null,
 							valuesForFriendship);
-					DbgUtil.showDebug(TAG, "friendshipId: " + friendshipId);
+					DbgUtil.showDebug(TAG, "friendshipId 3: " + friendshipId);
 					if (friendshipId < 0) {
 						// Failed.
 						DbgUtil.showDebug(TAG,
