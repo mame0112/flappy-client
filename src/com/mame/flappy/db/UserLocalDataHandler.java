@@ -856,9 +856,9 @@ public class UserLocalDataHandler {
 			// Update latest message info on Friendship table
 
 			String where = null;
-			ContentValues valuesForFriendship = getInsertContentValuesForFriendship(
-					Integer.valueOf(friendId), friendName, null, senderId,
-					message, null, Long.valueOf(date));
+			ContentValues valuesForFriendship = getInsertContentValuesForFriendshipWithoutThumbnail(
+					Integer.valueOf(friendId), friendName, senderId, message,
+					null, Long.valueOf(date));
 			where = DatabaseDef.FriendshipColumns.FRIEND_ID + "=" + friendId;
 
 			long updateId = sDatabase.update(
@@ -915,10 +915,13 @@ public class UserLocalDataHandler {
 				throw new UserLocalDataHandlerException("Cursor is null");
 			}
 			try {
+				DbgUtil.showDebug(TAG, "A");
 				if (cursor != null) {
+					DbgUtil.showDebug(TAG, "B");
 					if (cursor.moveToFirst()) {
+						DbgUtil.showDebug(TAG, "C");
 						do {
-							DbgUtil.showDebug(TAG, "A: " + cursor.getCount());
+							DbgUtil.showDebug(TAG, "D");
 
 							String friendUserId = cursor
 									.getString(cursor
@@ -1357,6 +1360,22 @@ public class UserLocalDataHandler {
 		values.put(DatabaseDef.FriendshipColumns.LAST_MESSAGE, lastMessage);
 		values.put(DatabaseDef.FriendshipColumns.MAIL_ADDRESS, mailAddress);
 		values.put(DatabaseDef.FriendshipColumns.THUMBNAIL, friendThumbnail);
+		values.put(DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE,
+				contactedTime);
+
+		return values;
+	}
+
+	protected ContentValues getInsertContentValuesForFriendshipWithoutThumbnail(
+			int friendId, String friendName, int lastSenderId,
+			String lastMessage, String mailAddress, long contactedTime) {
+		ContentValues values = new ContentValues();
+
+		values.put(DatabaseDef.FriendshipColumns.FRIEND_ID, friendId);
+		values.put(DatabaseDef.FriendshipColumns.FRIEND_NAME, friendName);
+		values.put(DatabaseDef.FriendshipColumns.LAST_SENDER_ID, lastSenderId);
+		values.put(DatabaseDef.FriendshipColumns.LAST_MESSAGE, lastMessage);
+		values.put(DatabaseDef.FriendshipColumns.MAIL_ADDRESS, mailAddress);
 		values.put(DatabaseDef.FriendshipColumns.LAST_CONTACTED_DATE,
 				contactedTime);
 
