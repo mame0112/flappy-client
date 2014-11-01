@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.sound.FlappySoundManager;
 import com.mame.flappy.ui.dialog.SignoutConfirmationDialog;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PreferenceUtil;

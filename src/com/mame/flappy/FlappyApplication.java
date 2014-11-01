@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.sound.FlappySoundManager;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
@@ -19,6 +20,9 @@ public class FlappyApplication extends Application {
 	public void onCreate() {
 		DbgUtil.showDebug(TAG, "onCreate");
 
+		// Initialize FlappySoundManager
+		FlappySoundManager.initialize(getApplicationContext());
+
 		// Track device information
 		TrackingUtil.trackModel(getApplicationContext());
 	}
@@ -26,7 +30,9 @@ public class FlappyApplication extends Application {
 	@Override
 	public void onTerminate() {
 		DbgUtil.showDebug(TAG, "onTerminate");
-//		GCMRegistrar.onDestroy(this);
+
+		// Release sound file
+		FlappySoundManager.releaseSoundSource();
 	}
 
 	@Override

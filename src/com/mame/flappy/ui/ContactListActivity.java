@@ -3,15 +3,9 @@ package com.mame.flappy.ui;
 import java.util.ArrayList;
 
 import android.app.ActionBar;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.database.CursorIndexOutOfBoundsException;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +19,6 @@ import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.data.ContactsListData;
 import com.mame.flappy.db.ContactListDataLoaderManager;
-import com.mame.flappy.db.ContactListThumbnailLoader;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.TrackingUtil;
 
@@ -82,6 +75,7 @@ public class ContactListActivity extends LcomBaseActivity implements
 			}
 		});
 		mListView.setAdapter(mAdapter);
+
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
+import com.mame.flappy.sound.FlappySoundManager;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.NetworkUtil;
@@ -240,6 +241,7 @@ public class LoginActivity extends LcomBaseActivity implements
 		super.onResume();
 		mSignInResultView.setText("");
 		mSignInResultView.setVisibility(View.GONE);
+
 	}
 
 	private String checkAndShowErrorForUserName(String userName) {
@@ -321,7 +323,8 @@ public class LoginActivity extends LcomBaseActivity implements
 			if (webAPI == null) {
 				throw new WebAPIException("WebAPI instance is null");
 			} else {
-				webAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value, userName);
+				webAPI.sendData(LcomConst.SERVLET_NAME_LOGIN, key, value,
+						userName);
 			}
 		} else {
 			throw new WebAPIException("activity is null");

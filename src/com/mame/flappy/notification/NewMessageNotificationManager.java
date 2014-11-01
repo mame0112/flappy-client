@@ -17,6 +17,7 @@ import com.mame.flappy.data.NotificationContentData;
 import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.NewMessageNotificationManagerException;
+import com.mame.flappy.sound.FlappySoundManager;
 import com.mame.flappy.ui.FriendListActivity;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.PackageUtil;
@@ -112,74 +113,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		}
 	}
 
-	/**
-	 * Show notification depends on arguments. If the client calls this method,
-	 * this NewMessageNotificationManager will handle not only showing
-	 * notification, but alos remove it if the message is expires. And
-	 * targetUserId and targetUserName is not LcomConst.NoUser and null, this
-	 * manager will launch ConversationActivity. Otherwise, it shall launch
-	 * FriendListActivity
-	 * 
-	 * @param context
-	 * @param userId
-	 * @param targetUserId
-	 * @param latestPostedDate
-	 */
-	// public static void handleLastetMessagesAndShowNotification(Context
-	// context,
-	// ArrayList<NotificationContentData> datas)
-	// throws NewMessageNotificationManagerException {
-	// DbgUtil.showDebug(TAG, "handleLastetMessagesAndShowNotification");
-	//
-	// if (context == null) {
-	// throw new NewMessageNotificationManagerException("Context is null");
-	// }
-	//
-	// if (datas == null || datas.size() == 0) {
-	// throw new NewMessageNotificationManagerException(
-	// "NotificationContentData is null or size 0");
-	// }
-	//
-	// // mDataManager = FriendDataManager.getInstance();
-	//
-	// if (!mDataManager.isListenerAlreadyRegistered(sManager)) {
-	// DbgUtil.showDebug(
-	// TAG,
-	// "registered: "
-	// + mDataManager
-	// .isListenerAlreadyRegistered(sManager));
-	// // TOOD
-	// // Need to consider mDataManager.initialize
-	// mDataManager.setFriendDataManagerListener(sManager);
-	// }
-	//
-	// if (mDataManager != null) {
-	// long current = TimeUtil.getCurrentDate();
-	// boolean isMoreThanOneNew = false;
-	// for (NotificationContentData data : datas) {
-	// long expireDate = data.getExpireData();
-	// // Set AlarmManager if expireDate is later than current
-	// // time
-	// if (current < expireDate) {
-	// int number = data.getNumberOfMesage();
-	// if (number != 0) {
-	// isMoreThanOneNew = true;
-	// int fromUserId = data.getFromUserId();
-	// int toUserId = data.getToUserId();
-	// mDataManager.addNewNotification(fromUserId, toUserId,
-	// number, expireDate);
-	// }
-	// }
-	// }
-	//
-	// if (isMoreThanOneNew == true) {
-	// isMoreThanOneNew = false;
-	// operateNotification(context);
-	// }
-	// }
-	//
-	// }
-
 	private static void operateNotification(Context context) {
 		DbgUtil.showDebug(TAG, "operateNotification");
 
@@ -228,6 +161,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		DbgUtil.showDebug(TAG, "showNotification");
 		if (mNotification != null) {
 			mNotification.showNotiofication(context, userId, NOTIFICATION_ID);
+			FlappySoundManager.playNewMessageSound();
 		}
 	}
 
@@ -241,6 +175,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		// Remove all notification
 		if (mNotification != null) {
 			mNotification.removeNotification();
+			FlappySoundManager.playDisappearMessageSound();
 		}
 	}
 
