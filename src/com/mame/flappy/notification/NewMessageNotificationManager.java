@@ -18,10 +18,7 @@ import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.NewMessageNotificationManagerException;
 import com.mame.flappy.sound.FlappySoundManager;
-import com.mame.flappy.ui.FriendListActivity;
 import com.mame.flappy.util.DbgUtil;
-import com.mame.flappy.util.PackageUtil;
-import com.mame.flappy.util.PreferenceUtil;
 import com.mame.flappy.util.TimeUtil;
 
 public class NewMessageNotificationManager implements FriendDataManagerListener {
@@ -161,7 +158,6 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 		DbgUtil.showDebug(TAG, "showNotification");
 		if (mNotification != null) {
 			mNotification.showNotiofication(context, userId, NOTIFICATION_ID);
-			FlappySoundManager.playNewMessageSound();
 		}
 	}
 
@@ -242,6 +238,7 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 						toUserId, expireDate);
 				mCurrentNotificationNum = size;
 				showNotification(mContext, toUserId);
+				FlappySoundManager.playNewMessageSound();
 
 			} else {
 				if (size == 0) {
