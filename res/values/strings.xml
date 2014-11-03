@@ -13,6 +13,7 @@
 
     <!-- Option menu -->
     <string name="str_menu_help">Help</string>
+    <string name="str_menu_setting">Setting</string>
     <string name="str_menu_signout">Sign out</string>
     <string name="str_menu_add_new">Add friend</string>
     <string name="str_menu_update">Update</string>
@@ -190,5 +191,15 @@
     <string name="str_signout_confirm_desc">If you sign out, all local user data is deleted.</string>
     <string name="str_signout_dialog_positive">Sign out</string>
     <string name="str_signout_dialog_negative">Cancel</string>
+
+    <!-- Flappy Setting activity -->
+    <string name="str_flappy_setting_title">Setting</string>
+    <string name="str_flappy_setting_notification_subtitle">Notification</string>
+    <string name="str_flappy_setting_notification_sound_title">Sound</string>
+    <string name="str_flappy_setting_notification_sound_value_on">On</string>
+    <string name="str_flappy_setting_notification_sound_value_off">Off</string>
+    <string name="str_flappy_setting_notification_vibration_title">Vibration</string>
+    <string name="str_flappy_setting_notification_vibration_value_on">On</string>
+    <string name="str_flappy_setting_notification_vibration_value_off">Off</string>
 
 </resources>

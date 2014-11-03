@@ -71,7 +71,7 @@ public class TrackingUtil {
 	public static final String EVENT_ACTION_HELP = "Help view";
 
 	public static final String EVENT_ACTION_START_CONVERSATION = "Start Conversation view";
-	
+
 	public static final String EVENT_LABEL_WELCOME_HELP = "help";
 
 	public static final String EVENT_LABEL_LOGIN_BUTTON = "Login";
@@ -103,6 +103,8 @@ public class TrackingUtil {
 	public static final String EVENT_LABEL_FRIEND_LIST_FIRST_ADD_BUTTON = "Update friend list";
 
 	public static final String EVENT_LABEL_FRIEND_LIST_HELP = "help";
+
+	public static final String EVENT_LABEL_FRIEND_LIST_SETTING = "setting";
 
 	public static final String EVENT_LABEL_FRIEND_LIST_SIGN_OUT = "Sign out";
 

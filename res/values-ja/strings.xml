@@ -13,6 +13,7 @@
 
     <!-- Option menu -->
     <string name="str_menu_help">ヘルプ</string>
+    <string name="str_menu_setting">設定</string>
     <string name="str_menu_signout">ログアウト</string>
     <string name="str_menu_add_new">友達を追加</string>
     <string name="str_menu_update">更新</string>
@@ -189,5 +190,15 @@
     <string name="str_signout_confirm_desc">ログアウトすると、端末に保存されているメッセージ情報はすべて削除されます (一度以上会話を行った友達情報は保持されます)</string>
     <string name="str_signout_dialog_positive">ログアウト</string>
     <string name="str_signout_dialog_negative">キャンセル</string>
+
+    <!-- Flappy Setting activity -->
+    <string name="str_flappy_setting_title">設定</string>
+    <string name="str_flappy_setting_notification_subtitle">着信時</string>
+    <string name="str_flappy_setting_notification_sound_title">通知音</string>
+    <string name="str_flappy_setting_notification_sound_value_on">オン</string>
+    <string name="str_flappy_setting_notification_sound_value_off">オフ</string>
+    <string name="str_flappy_setting_notification_vibration_title">バイブレーション</string>
+    <string name="str_flappy_setting_notification_vibration_value_on">オン</string>
+    <string name="str_flappy_setting_notification_vibration_value_off">オフ</string>
 
 </resources>

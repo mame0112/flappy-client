@@ -53,6 +53,13 @@ public class FriendListActivityUtil {
 		context.startActivity(intent);
 	}
 
+	public static void startActivityForSetting(Context context) {
+		Intent intent = new Intent(context, SettingActivity.class);
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(intent);
+	}
+
 	public static void startActivityForWelcomeActivity(Activity activity) {
 		Intent intent = new Intent(activity, WelcomeActivity.class);
 		intent.setAction(Intent.ACTION_VIEW);

@@ -16,6 +16,8 @@ public class PreferenceUtil {
 	private static final String KEY_PUSH_APP_VERSION = "key_app_version";
 	private static final String KEY_LATEST_MESSAGE_POSTED_TIME = "key_latest_message_post_time";
 	private static final String KEY_THUMBNAIL_CHECK = "key_thumbnail_check";
+	private static final String KEY_PLAY_NOTIFICATION_SOUND = "key_play_notification_sound";
+	private static final String KEY_PLAY_NOTIFICATION_VIBRATION = "key_play_notification_vibration";
 
 	final static boolean DEFAULT_FIRST_LAUNCH = true;
 	final static int DEFAULT_TEXT_USER_ID = LcomConst.NO_USER;
@@ -25,6 +27,8 @@ public class PreferenceUtil {
 	final static long DEFAULT_THUMBNAIL_CHECK_TIME = 0L;
 
 	final static int DEFAULT_APP_VERSION = 1;
+	final static boolean DEFAULT_PLAY_NOTIFICATION_SOUND = true;
+	final static boolean DEFAULT_PLAY_NOTIFICATION_VIBRATION = true;
 
 	public static void setFirstTime(Context c, boolean isFirstTime) {
 		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
@@ -169,6 +173,45 @@ public class PreferenceUtil {
 		pref.edit().remove(KEY_LATEST_MESSAGE_POSTED_TIME).commit();
 	}
 
+	public static void setCurrentSoundSetting(Context c, boolean isPlay) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putBoolean(KEY_PLAY_NOTIFICATION_SOUND, isPlay).commit();
+	}
+
+	public static boolean getCurrentSoundSetting(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getBoolean(KEY_PLAY_NOTIFICATION_SOUND,
+				DEFAULT_PLAY_NOTIFICATION_SOUND);
+	}
+
+	public static void removeCurrentSoundSetting(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_PLAY_NOTIFICATION_SOUND).commit();
+	}
+
+	public static void setCurrentVibrationSetting(Context c, boolean isPlay) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().putBoolean(KEY_PLAY_NOTIFICATION_VIBRATION, isPlay)
+				.commit();
+	}
+
+	public static boolean getCurrentVibrationSetting(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		return pref.getBoolean(KEY_PLAY_NOTIFICATION_VIBRATION,
+				DEFAULT_PLAY_NOTIFICATION_VIBRATION);
+	}
+
+	public static void removeCurrentVibrationSetting(Context c) {
+		SharedPreferences pref = c.getSharedPreferences(PREF_KEY,
+				Context.MODE_PRIVATE);
+		pref.edit().remove(KEY_PLAY_NOTIFICATION_VIBRATION).commit();
+	}
+
 	/**
 	 * Remove all preference data. This shall be used for sigining out from this
 	 * application
@@ -183,6 +226,8 @@ public class PreferenceUtil {
 		removeLastThumbnailCheckTime(c);
 		removeCurrentAppVersionForGCM(c);
 		removeLatestMessagePostedTime(c);
+		// removeCurrentSoundSetting(c);
+		// removeCurrentVibrationSetting(c);
 	}
 
 }

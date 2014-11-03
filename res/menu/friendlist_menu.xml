@@ -16,6 +16,10 @@
         android:showAsAction="never"
         android:title="@string/str_menu_help"/>
     <item
+        android:id="@+id/menu_friendlist_setting"
+        android:showAsAction="never"
+        android:title="@string/str_menu_setting"/>
+    <item
         android:id="@+id/menu_friendlist_signout"
         android:showAsAction="never"
         android:title="@string/str_menu_signout"/>

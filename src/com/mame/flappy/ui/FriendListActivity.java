@@ -768,6 +768,15 @@ public class FriendListActivity extends LcomBaseActivity implements
 			FriendListActivityUtil
 					.startActivityForHelp(getApplicationContext());
 			return true;
+		case R.id.menu_friendlist_setting:
+			DbgUtil.showDebug(TAG, "menu_friendlist_setting");
+			TrackingUtil.trackEvent(getApplicationContext(),
+					TrackingUtil.EVENT_CATEGORY_FRIEND_LIST,
+					TrackingUtil.EVENT_ACTION_FRIEND_LIST_OPTION,
+					TrackingUtil.EVENT_LABEL_FRIEND_LIST_SETTING, 1);
+			FriendListActivityUtil
+					.startActivityForSetting(getApplicationContext());
+			break;
 		}
 		return false;
 	}

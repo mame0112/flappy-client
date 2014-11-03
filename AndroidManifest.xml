@@ -96,6 +96,11 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/str_flappy_about_main_itle" >
         </activity>
+        <activity
+            android:name="com.mame.flappy.ui.SettingActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/str_flappy_setting_title" >
+        </activity>
 
         <receiver
             android:name="com.mame.flappy.server.GcmBroadcastReceiver"

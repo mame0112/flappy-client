@@ -1,0 +1,16 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="@string/str_flappy_setting_notification_subtitle" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="setting_general_sound_preference"
+            android:summary="@string/str_flappy_setting_notification_sound_title"
+            android:title="@string/str_flappy_setting_notification_sound_title" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="setting_general_vibration_preference"
+            android:summary="@string/str_flappy_setting_notification_vibration_title"
+            android:title="@string/str_flappy_setting_notification_vibration_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
