@@ -28,6 +28,7 @@ import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.util.AlphaNumericFilter;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.TrackingUtil;
@@ -139,37 +140,40 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "next button pressed");
 
-				// Track next button tapped event
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
-						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
-						TrackingUtil.EVENT_LABEL_CREATE_NEXT_BUTTON, 1);
+				if (ButtonUtil.isClickable()) {
 
-				SpannableStringBuilder sbUserName = (SpannableStringBuilder) mUserNameEditText
-						.getText();
-				String userName = sbUserName.toString();
-				String result = checkAndShowErrorForUserName(userName);
-				if (result != null) {
-					mGoNextResultView.setVisibility(View.VISIBLE);
-					mGoNextResultView.setText(result);
-				} else {
-					mGoNextResultView.setVisibility(View.GONE);
-					try {
-						if (mProgressHelper != null) {
-							mProgressHelper
-									.showProgressDialog(
-											mActivity,
-											getString(R.string.str_create_account_check_name_title),
-											getString(R.string.str_create_account_check_name_desc),
-											TAG);
+					// Track next button tapped event
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
+							TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
+							TrackingUtil.EVENT_LABEL_CREATE_NEXT_BUTTON, 1);
+
+					SpannableStringBuilder sbUserName = (SpannableStringBuilder) mUserNameEditText
+							.getText();
+					String userName = sbUserName.toString();
+					String result = checkAndShowErrorForUserName(userName);
+					if (result != null) {
+						mGoNextResultView.setVisibility(View.VISIBLE);
+						mGoNextResultView.setText(result);
+					} else {
+						mGoNextResultView.setVisibility(View.GONE);
+						try {
+							if (mProgressHelper != null) {
+								mProgressHelper
+										.showProgressDialog(
+												mActivity,
+												getString(R.string.str_create_account_check_name_title),
+												getString(R.string.str_create_account_check_name_desc),
+												TAG);
+							}
+							sendcheckUserNameData(userName);
+						} catch (WebAPIException e) {
+							DbgUtil.showDebug(TAG,
+									"WebAPIException: " + e.getMessage());
+							TrackingUtil.trackExceptionMessage(
+									getApplicationContext(), TAG,
+									"WebAPIException: " + e.getMessage());
 						}
-						sendcheckUserNameData(userName);
-					} catch (WebAPIException e) {
-						DbgUtil.showDebug(TAG,
-								"WebAPIException: " + e.getMessage());
-						TrackingUtil.trackExceptionMessage(
-								getApplicationContext(), TAG,
-								"WebAPIException: " + e.getMessage());
 					}
 				}
 

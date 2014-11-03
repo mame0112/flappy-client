@@ -24,6 +24,7 @@ import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.ui.dialog.InvitationConfirmDialog;
 import com.mame.flappy.ui.dialog.InvitationConfirmDialog.InvitationConfirmationListener;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.NetworkUtil;
@@ -159,28 +160,33 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "Start conversation button pressed");
 
-				// Track Input message button pressed event
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
-						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
-						TrackingUtil.EVENT_LABEL_INPUT_MESSAGE, 1);
+				if (ButtonUtil.isClickable()) {
 
-				SpannableStringBuilder sbMailAddress = (SpannableStringBuilder) mMailEditText
-						.getText();
-				final String mailAddress = sbMailAddress.toString();
-				DbgUtil.showDebug(TAG, "mailAddress: " + mailAddress);
+					// Track Input message button pressed event
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
+							TrackingUtil.EVENT_ACTION_START_CONVERSATION,
+							TrackingUtil.EVENT_LABEL_INPUT_MESSAGE, 1);
 
-				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
-					if (mailAddress != null && mailAddress.length() != 0) {
-						DbgUtil.showDebug(TAG, "String from edit text");
-						// If mail address from edit text is available, we will
-						// use it.
-						checkInputInfoAndSendData(mailAddress);
-					} else {
-						DbgUtil.showDebug(TAG, "String from contacts list");
-						// If mail address from edit text is null, we will use
-						// address from Contacts list
-						checkInputInfoAndSendData(mMailAddressFromContacts);
+					SpannableStringBuilder sbMailAddress = (SpannableStringBuilder) mMailEditText
+							.getText();
+					final String mailAddress = sbMailAddress.toString();
+					DbgUtil.showDebug(TAG, "mailAddress: " + mailAddress);
+
+					if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
+						if (mailAddress != null && mailAddress.length() != 0) {
+							DbgUtil.showDebug(TAG, "String from edit text");
+							// If mail address from edit text is available, we
+							// will
+							// use it.
+							checkInputInfoAndSendData(mailAddress);
+						} else {
+							DbgUtil.showDebug(TAG, "String from contacts list");
+							// If mail address from edit text is null, we will
+							// use
+							// address from Contacts list
+							checkInputInfoAndSendData(mMailAddressFromContacts);
+						}
 					}
 				}
 			}
@@ -194,14 +200,18 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 			public void onClick(View view) {
 				DbgUtil.showDebug(TAG, "contacts list button pressed");
 
-				// Track Contact list button pressed event
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
-						TrackingUtil.EVENT_ACTION_START_CONVERSATION,
-						TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
+				if (ButtonUtil.isClickable()) {
 
-				StartNewConversationActivityUtil.startActivityForContactsList(
-						mActivity, REQUEST_CODE);
+					// Track Contact list button pressed event
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_START_CONVERSATION,
+							TrackingUtil.EVENT_ACTION_START_CONVERSATION,
+							TrackingUtil.EVENT_LABEL_CONTACT_LIST, 1);
+
+					StartNewConversationActivityUtil
+							.startActivityForContactsList(mActivity,
+									REQUEST_CODE);
+				}
 
 			}
 

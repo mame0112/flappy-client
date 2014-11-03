@@ -33,6 +33,7 @@ import com.mame.flappy.datamanager.FriendDataManager;
 import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.ui.StartNewConversationActivityUtil;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.LocaleUtil;
@@ -140,39 +141,42 @@ public class InvitationConfirmDialog extends DialogFragment implements
 			@Override
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "onClick");
-				try {
-					TrackingUtil
-							.trackEvent(
-									activity,
-									TrackingUtil.EVENT_CATEGORY_MESSAGE_INPUT_DIALOG,
-									TrackingUtil.EVENT_ACTION_INPUT_MESSAGE,
-									TrackingUtil.EVENT_LABEL_SEND_NEW_MESSAGE_BUTTON,
-									1);
+				if (ButtonUtil.isClickable()) {
+					try {
+						TrackingUtil
+								.trackEvent(
+										activity,
+										TrackingUtil.EVENT_CATEGORY_MESSAGE_INPUT_DIALOG,
+										TrackingUtil.EVENT_ACTION_INPUT_MESSAGE,
+										TrackingUtil.EVENT_LABEL_SEND_NEW_MESSAGE_BUTTON,
+										1);
 
-					if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
-						final String targetMessage = mMessageEditText.getText()
-								.toString();
-						DbgUtil.showDebug(TAG, "targetMessage: "
-								+ targetMessage);
-						if (!StringUtil
-								.isContainPreservedCharacters(targetMessage)) {
-							mSendProgressText.setVisibility(View.VISIBLE);
-							mPositiveButton.setEnabled(false);
-							mNegativeButton.setEnabled(false);
+						if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
+							final String targetMessage = mMessageEditText
+									.getText().toString();
+							DbgUtil.showDebug(TAG, "targetMessage: "
+									+ targetMessage);
+							if (!StringUtil
+									.isContainPreservedCharacters(targetMessage)) {
+								mSendProgressText.setVisibility(View.VISIBLE);
+								mPositiveButton.setEnabled(false);
+								mNegativeButton.setEnabled(false);
 
-							sendConfirmedMessage(userId, userName,
-									targetUserId, targetUserName,
-									targetMailAddress, targetMessage);
-						} else {
-							Toast.makeText(getActivity(),
-									R.string.str_generic_preserved_char_error,
-									Toast.LENGTH_SHORT).show();
+								sendConfirmedMessage(userId, userName,
+										targetUserId, targetUserName,
+										targetMailAddress, targetMessage);
+							} else {
+								Toast.makeText(
+										getActivity(),
+										R.string.str_generic_preserved_char_error,
+										Toast.LENGTH_SHORT).show();
+							}
 						}
+					} catch (WebAPIException e) {
+						DbgUtil.showDebug(TAG,
+								"WebAPIException: " + e.getMessage());
 					}
-				} catch (WebAPIException e) {
-					DbgUtil.showDebug(TAG, "WebAPIException: " + e.getMessage());
 				}
-
 			}
 		});
 

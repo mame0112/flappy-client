@@ -25,6 +25,7 @@ import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.server.LcomDeviceIdRegisterHelper;
 import com.mame.flappy.server.LcomDeviceIdRegisterHelper.LcomPushRegistrationHelperListener;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.FileUtil;
@@ -174,23 +175,29 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 			@Override
 			public void onClick(View view) {
 				DbgUtil.showDebug(TAG, "Create account button pressed");
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
-						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
-						TrackingUtil.EVENT_LABEL_CREATE_ACCOUNT_EXEC_BUTTON, 1);
-				if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
-					boolean checkResult = checkAndCreateAccountOrShowError(mActivity);
+				if (ButtonUtil.isClickable()) {
+					TrackingUtil
+							.trackEvent(
+									getApplicationContext(),
+									TrackingUtil.EVENT_CATEGORY_CREATE_ACCOUNT,
+									TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
+									TrackingUtil.EVENT_LABEL_CREATE_ACCOUNT_EXEC_BUTTON,
+									1);
+					if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
+						boolean checkResult = checkAndCreateAccountOrShowError(mActivity);
 
-					// If password and mail address is correct, show progress
-					// dalog.
-					if (checkResult) {
-						if (mProgressHelper != null) {
-							mProgressHelper
-									.showProgressDialog(
-											mActivity,
-											getString(R.string.str_login_progress_title),
-											getString(R.string.str_generic_wait_desc),
-											TAG);
+						// If password and mail address is correct, show
+						// progress
+						// dalog.
+						if (checkResult) {
+							if (mProgressHelper != null) {
+								mProgressHelper
+										.showProgressDialog(
+												mActivity,
+												getString(R.string.str_login_progress_title),
+												getString(R.string.str_generic_wait_desc),
+												TAG);
+							}
 						}
 					}
 				}

@@ -22,6 +22,7 @@ import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.WebAPIException;
 import com.mame.flappy.sound.FlappySoundManager;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.NetworkUtil;
@@ -124,51 +125,54 @@ public class LoginActivity extends LcomBaseActivity implements
 			@Override
 			public void onClick(View arg0) {
 
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_LOGIN,
-						TrackingUtil.EVENT_ACTION_LOGIN_EXECUTION,
-						TrackingUtil.EVENT_LABEL_LOGIN_EXEC_BUTTON, 1);
+				if (ButtonUtil.isClickable()) {
 
-				DbgUtil.showDebug(TAG, "Login Button pressed");
-				if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
-					SpannableStringBuilder sbUsername = (SpannableStringBuilder) mUserNameEditBox
-							.getText();
-					String userName = sbUsername.toString();
-					String result = checkAndShowErrorForUserName(userName);
-					if (result == null) {
-						SpannableStringBuilder sbPassword = (SpannableStringBuilder) mPasswordEditBox
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_LOGIN,
+							TrackingUtil.EVENT_ACTION_LOGIN_EXECUTION,
+							TrackingUtil.EVENT_LABEL_LOGIN_EXEC_BUTTON, 1);
+
+					DbgUtil.showDebug(TAG, "Login Button pressed");
+					if (NetworkUtil.isNetworkAvailable(activity, mHandler)) {
+						SpannableStringBuilder sbUsername = (SpannableStringBuilder) mUserNameEditBox
 								.getText();
-						String password = sbPassword.toString();
-						DbgUtil.showDebug(TAG, "password: " + password);
-						String resultPassword = checkAndShowErrorForPassword(password);
-						if (resultPassword == null) {
-							try {
-								DbgUtil.showDebug(TAG, "sendLoginData");
+						String userName = sbUsername.toString();
+						String result = checkAndShowErrorForUserName(userName);
+						if (result == null) {
+							SpannableStringBuilder sbPassword = (SpannableStringBuilder) mPasswordEditBox
+									.getText();
+							String password = sbPassword.toString();
+							DbgUtil.showDebug(TAG, "password: " + password);
+							String resultPassword = checkAndShowErrorForPassword(password);
+							if (resultPassword == null) {
+								try {
+									DbgUtil.showDebug(TAG, "sendLoginData");
 
-								if (mProgressHelper != null) {
-									mProgressHelper
-											.showProgressDialog(
-													mActivity,
-													getString(R.string.str_login_progress_title),
-													getString(R.string.str_generic_wait_desc),
-													TAG);
+									if (mProgressHelper != null) {
+										mProgressHelper
+												.showProgressDialog(
+														mActivity,
+														getString(R.string.str_login_progress_title),
+														getString(R.string.str_generic_wait_desc),
+														TAG);
+									}
+
+									sendLoginData(mWebAPI, activity, userName,
+											password);
+								} catch (WebAPIException e) {
+									DbgUtil.showDebug(TAG, e.getMessage());
 								}
-
-								sendLoginData(mWebAPI, activity, userName,
-										password);
-							} catch (WebAPIException e) {
-								DbgUtil.showDebug(TAG, e.getMessage());
+							} else {
+								mSignInResultView.setVisibility(View.VISIBLE);
+								mSignInResultView.setText(resultPassword);
+								DbgUtil.showDebug(TAG, "Password is Invalid:"
+										+ resultPassword);
 							}
 						} else {
 							mSignInResultView.setVisibility(View.VISIBLE);
-							mSignInResultView.setText(resultPassword);
-							DbgUtil.showDebug(TAG, "Password is Invalid:"
-									+ resultPassword);
+							mSignInResultView.setText(result);
+							DbgUtil.showDebug(TAG, "User name is Invalid.");
 						}
-					} else {
-						mSignInResultView.setVisibility(View.VISIBLE);
-						mSignInResultView.setText(result);
-						DbgUtil.showDebug(TAG, "User name is Invalid.");
 					}
 				}
 			}

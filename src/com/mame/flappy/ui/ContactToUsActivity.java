@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import com.mame.flappy.LcomBaseActivity;
 import com.mame.flappy.R;
 import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 
 public class ContactToUsActivity extends LcomBaseActivity {
@@ -49,33 +50,38 @@ public class ContactToUsActivity extends LcomBaseActivity {
 			public void onClick(View arg0) {
 				DbgUtil.showDebug(TAG, "sendMail button");
 
-				SpannableStringBuilder comment = (SpannableStringBuilder) mCommentEditText
-						.getText();
-				String commentText = comment.toString();
+				if (ButtonUtil.isClickable()) {
+					SpannableStringBuilder comment = (SpannableStringBuilder) mCommentEditText
+							.getText();
+					String commentText = comment.toString();
 
-				String item = (String) mTitleSpinner.getSelectedItem();
-				DbgUtil.showDebug(TAG, "item: " + item);
+					String item = (String) mTitleSpinner.getSelectedItem();
+					DbgUtil.showDebug(TAG, "item: " + item);
 
-				Uri uri = Uri.parse(MAIL_TO + LcomConst.FLAPPY_MAIL_ADDRESS);
-				Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-				if (item != null) {
-					intent.putExtra(Intent.EXTRA_SUBJECT,
-							getString(R.string.str_help_mail_title) + " / "
-									+ item);
-				} else {
-					intent.putExtra(Intent.EXTRA_TEXT,
-							getString(R.string.str_help_mail_title) + " / "
-									+ getString(R.string.str_help_no_subject));
+					Uri uri = Uri
+							.parse(MAIL_TO + LcomConst.FLAPPY_MAIL_ADDRESS);
+					Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
+					if (item != null) {
+						intent.putExtra(Intent.EXTRA_SUBJECT,
+								getString(R.string.str_help_mail_title) + " / "
+										+ item);
+					} else {
+						intent.putExtra(
+								Intent.EXTRA_TEXT,
+								getString(R.string.str_help_mail_title)
+										+ " / "
+										+ getString(R.string.str_help_no_subject));
+					}
+
+					if (commentText != null) {
+						intent.putExtra(Intent.EXTRA_TEXT, commentText);
+					} else {
+						intent.putExtra(Intent.EXTRA_TEXT,
+								getString(R.string.str_help_no_comment));
+					}
+
+					startActivity(intent);
 				}
-
-				if (commentText != null) {
-					intent.putExtra(Intent.EXTRA_TEXT, commentText);
-				} else {
-					intent.putExtra(Intent.EXTRA_TEXT,
-							getString(R.string.str_help_no_comment));
-				}
-
-				startActivity(intent);
 			}
 
 		});

@@ -45,6 +45,7 @@ import com.mame.flappy.datamanager.FriendDataManager.FriendDataManagerListener;
 import com.mame.flappy.exception.FriendDataManagerException;
 import com.mame.flappy.ui.view.ConversationCustomListView;
 import com.mame.flappy.ui.view.ConversationCustomListView.ConversationListScrollListener;
+import com.mame.flappy.util.ButtonUtil;
 import com.mame.flappy.util.DbgUtil;
 import com.mame.flappy.util.FeedbackUtil;
 import com.mame.flappy.util.HttpClientUtil;
@@ -207,36 +208,42 @@ public class ConversationActivity extends LcomBaseActivity implements
 			public void onClick(View view) {
 				DbgUtil.showDebug(TAG, "onClick");
 
-				TrackingUtil.trackEvent(getApplicationContext(),
-						TrackingUtil.EVENT_CATEGORY_CONVERSATION,
-						TrackingUtil.EVENT_ACTION_CONVERSATION,
-						TrackingUtil.EVENT_LABEL_CONVERSATION_SEND_BUTTON, 1);
+				if (ButtonUtil.isClickable()) {
+					TrackingUtil.trackEvent(getApplicationContext(),
+							TrackingUtil.EVENT_CATEGORY_CONVERSATION,
+							TrackingUtil.EVENT_ACTION_CONVERSATION,
+							TrackingUtil.EVENT_LABEL_CONVERSATION_SEND_BUTTON,
+							1);
 
-				if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
-					SpannableStringBuilder sbMessage = (SpannableStringBuilder) mConversationEditText
-							.getText();
-					String message = sbMessage.toString();
-					if (message != null) {
-						if (!StringUtil.isContainPreservedCharacters(message)) {
-							// Track the number of texts in one message
-							TrackingUtil.trackNumberOfCharInOneMessage(
-									getApplicationContext(), message.length());
+					if (NetworkUtil.isNetworkAvailable(mActivity, mHandler)) {
+						SpannableStringBuilder sbMessage = (SpannableStringBuilder) mConversationEditText
+								.getText();
+						String message = sbMessage.toString();
+						if (message != null) {
+							if (!StringUtil
+									.isContainPreservedCharacters(message)) {
+								// Track the number of texts in one message
+								TrackingUtil.trackNumberOfCharInOneMessage(
+										getApplicationContext(),
+										message.length());
 
-							setProgressBarIndeterminateVisibility(true);
+								setProgressBarIndeterminateVisibility(true);
 
-							long date = TimeUtil.getCurrentDate();
-							sendAndRegisterMessage(mUserId, mTargetUserId,
-									mUserName, mTargetUserName, message,
-									String.valueOf(date));
+								long date = TimeUtil.getCurrentDate();
+								sendAndRegisterMessage(mUserId, mTargetUserId,
+										mUserName, mTargetUserName, message,
+										String.valueOf(date));
+							} else {
+								Toast.makeText(
+										getApplicationContext(),
+										R.string.str_generic_preserved_char_error,
+										Toast.LENGTH_SHORT).show();
+							}
 						} else {
 							Toast.makeText(getApplicationContext(),
-									R.string.str_generic_preserved_char_error,
+									R.string.str_conversation_no_text_input,
 									Toast.LENGTH_SHORT).show();
 						}
-					} else {
-						Toast.makeText(getApplicationContext(),
-								R.string.str_conversation_no_text_input,
-								Toast.LENGTH_SHORT).show();
 					}
 				}
 			}
