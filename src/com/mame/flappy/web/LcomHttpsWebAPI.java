@@ -117,6 +117,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 	public void destroyAccessor() {
 		mTargetUrl = null;
 		mPostThread = null;
+		mListener = null;
 	}
 
 	private class PostThread extends Thread {

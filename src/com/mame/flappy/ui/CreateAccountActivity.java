@@ -63,7 +63,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 
 	private Bitmap mThumbBitmap = null;
 
-	private Activity mActivity = null;
+	// private Activity mActivity = null;
 
 	private ProgressDialogFragmentHelper mProgressHelper = null;
 
@@ -73,20 +73,13 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.createaccount);
 
-		mActivity = this;
+		final Activity activity = this;
 
 		mWebAPI = new LcomServerAccessor();
 		mWebAPI.setListener(this);
 
-		// mWebAPI = new LcomHttpWebAPI();
-		// mWebAPI.setListener(this);
-
 		ActionBar actionbar = getActionBar();
 		actionbar.setDisplayHomeAsUpEnabled(true);
-
-		// mProgressDialog = ProgressDialogFragment.newInstance(
-		// getString(R.string.str_create_account_check_name_title),
-		// getString(R.string.str_create_account_check_name_desc));
 
 		mProgressHelper = new ProgressDialogFragmentHelper();
 
@@ -95,6 +88,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		mGoNextResultView.setVisibility(View.GONE);
 
 		mThumbnailButton = (ImageButton) findViewById(R.id.selectThumbnailtButton);
+		final Activity a = this;
 		mThumbnailButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
@@ -106,7 +100,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 						TrackingUtil.EVENT_ACTION_CREATE_ACCOUNT_EXECUTION,
 						TrackingUtil.EVENT_LABEL_CREATE_THUMBNAIL_BUTTON, 1);
 
-				CreateAccountActivityUtil.launchPhotoPicker(mActivity,
+				CreateAccountActivityUtil.launchPhotoPicker(a,
 						PHOTO_REQUEST_CODE);
 			}
 		});
@@ -161,7 +155,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 							if (mProgressHelper != null) {
 								mProgressHelper
 										.showProgressDialog(
-												mActivity,
+												activity,
 												getString(R.string.str_create_account_check_name_title),
 												getString(R.string.str_create_account_check_name_desc),
 												TAG);
@@ -211,6 +205,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		if (mWebAPI != null) {
 			mWebAPI.removeListener();
 		}
+
 	}
 
 	private void sendcheckUserNameData(String userName) throws WebAPIException {
@@ -300,7 +295,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "onResponseReceived");
 
 		if (mProgressHelper != null) {
-			mProgressHelper.dismissDialog(mActivity, TAG);
+			mProgressHelper.dismissDialog(this, TAG);
 		}
 
 		if (respList != null) {
@@ -317,7 +312,7 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "onAPITimeoput");
 
 		if (mProgressHelper != null) {
-			mProgressHelper.dismissDialog(mActivity, TAG);
+			mProgressHelper.dismissDialog(this, TAG);
 		}
 		FeedbackUtil.showTimeoutToast(getApplicationContext(), mHandler);
 	}
