@@ -56,6 +56,15 @@ public class UserServerDataHandler implements
 		mContext = context;
 	}
 
+	public void destoryUserServerDataHandler() {
+		if (mContext != null) {
+			mContext = null;
+		}
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
+
 	/**
 	 * Return true if Web API call is success. Otherwise, return false.
 	 * 

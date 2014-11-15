@@ -286,6 +286,14 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
+
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		DbgUtil.showDebug(TAG, "onActivityResult");

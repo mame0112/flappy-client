@@ -44,6 +44,12 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 		mListener = listener;
 	}
 
+	public void removeListener() {
+		if (mListener != null) {
+			mListener = null;
+		}
+	}
+
 	@Override
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "setListener");

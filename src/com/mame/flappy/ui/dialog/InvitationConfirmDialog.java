@@ -210,6 +210,11 @@ public class InvitationConfirmDialog extends DialogFragment implements
 
 		if (mManager != null) {
 			mManager.removeFriendDataManagerListener(this);
+			// mManager.destroyFriendDataManager();
+		}
+
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
 		}
 	}
 
@@ -449,14 +454,6 @@ public class InvitationConfirmDialog extends DialogFragment implements
 	public void notifyLatestStoredMessage(FriendListData result) {
 		DbgUtil.showDebug(TAG, "notifyLatestStoredMessage - not to be used");
 	}
-
-	// @Override
-	// public void notifiyNearlestExpireNotification(NotificationContentData
-	// data) {
-	// DbgUtil.showDebug(TAG,
-	// "notifiyNearlestExpireNotification - not to be used");
-	//
-	// }
 
 	@Override
 	public void notifyValidNotificationList(

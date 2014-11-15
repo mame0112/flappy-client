@@ -52,6 +52,9 @@ public class FlappySoundManager {
 		if (mSoundPool != null) {
 			mSoundPool.release();
 		}
+		if (mContext != null) {
+			mContext = null;
+		}
 	}
 
 }

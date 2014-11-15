@@ -355,6 +355,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 		super.onDestroy();
 		if (mManager != null) {
 			mManager.removeFriendDataManagerListener(this);
+//			mManager.destroyFriendDataManager();
 		}
 	}
 

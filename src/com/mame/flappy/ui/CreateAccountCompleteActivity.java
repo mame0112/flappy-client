@@ -245,8 +245,12 @@ public class CreateAccountCompleteActivity extends LcomBaseActivity implements
 		super.onPause();
 	}
 
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
 	}
 
 	@Override

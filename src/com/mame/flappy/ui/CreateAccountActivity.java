@@ -205,6 +205,14 @@ public class CreateAccountActivity extends LcomBaseActivity implements
 		TrackingUtil.trackActivityStop(this);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
+
 	private void sendcheckUserNameData(String userName) throws WebAPIException {
 		DbgUtil.showDebug(TAG, "sendcheckUserNameData");
 		String origin = TAG;

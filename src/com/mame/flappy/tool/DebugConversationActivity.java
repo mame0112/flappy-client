@@ -174,6 +174,14 @@ public class DebugConversationActivity extends LcomBaseActivity implements
 	}
 
 	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
+
+	@Override
 	public void onResponseReceived(List<String> respList) {
 		// TODO Auto-generated method stub
 

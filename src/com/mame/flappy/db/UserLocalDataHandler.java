@@ -46,6 +46,16 @@ public class UserLocalDataHandler {
 		mContentResolver = context.getContentResolver();
 	}
 
+	public void destroyUserLocalDataHandler() {
+		if (mContext != null) {
+			mContext = null;
+		}
+		if (mContentResolver != null) {
+			mContentResolver = null;
+		}
+
+	}
+
 	private synchronized void setDatabase() {
 		if (sDatabase == null || !sDatabase.isOpen()) {
 			UserDatabaseHelper helper = new UserDatabaseHelper(mContext);

@@ -87,4 +87,12 @@ public class DebugAllUserDataActivity extends LcomBaseActivity implements
 		// TODO Auto-generated method stub
 
 	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
 }

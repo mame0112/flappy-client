@@ -58,6 +58,18 @@ public class FriendDataManager implements UserServerDataListener,
 		mLocalDataHandler.setUserLocalDataListener(sDataManager);
 	}
 
+	public static void destroyFriendDataManager() {
+		if (mContext != null) {
+			mContext = null;
+		}
+		if (mServerDataHandler != null) {
+			mServerDataHandler.destoryUserServerDataHandler();
+		}
+		if (mLocalDataHandler != null) {
+			mLocalDataHandler.destroyUserLocalDataHandler();
+		}
+	}
+
 	private FriendDataManager() {
 	}
 

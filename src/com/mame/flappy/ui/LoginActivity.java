@@ -248,6 +248,14 @@ public class LoginActivity extends LcomBaseActivity implements
 
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mWebAPI != null) {
+			mWebAPI.removeListener();
+		}
+	}
+
 	private String checkAndShowErrorForUserName(String userName) {
 		DbgUtil.showDebug(TAG, "checkAndShowErrorForUserName");
 		String result = null;
