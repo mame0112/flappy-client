@@ -10,7 +10,7 @@ import android.os.Bundle;
 
 public class LcomBaseActivity extends Activity {
 
-	private final String TAG = LcomConst.TAG + "/LcomDefaultActivity";
+	private final String TAG = LcomConst.TAG + "/LcomBaseActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

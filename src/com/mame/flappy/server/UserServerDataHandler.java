@@ -63,6 +63,9 @@ public class UserServerDataHandler implements
 		if (mWebAPI != null) {
 			mWebAPI.removeListener();
 		}
+
+		mRequestContext = null;
+
 	}
 
 	/**

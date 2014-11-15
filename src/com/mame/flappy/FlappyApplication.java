@@ -19,6 +19,7 @@ public class FlappyApplication extends Application {
 
 	@Override
 	public void onCreate() {
+		super.onCreate();
 		DbgUtil.showDebug(TAG, "onCreate");
 
 		// Initialize FlappySoundManager
@@ -30,6 +31,7 @@ public class FlappyApplication extends Application {
 
 	@Override
 	public void onTerminate() {
+		super.onTerminate();
 		DbgUtil.showDebug(TAG, "onTerminate");
 
 		// Release sound file

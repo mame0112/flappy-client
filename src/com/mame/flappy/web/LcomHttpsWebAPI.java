@@ -54,9 +54,7 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 
 	private static final String TAG = LcomConst.TAG + "/LcomHttpsWebAPI";
 
-	private String url;
-
-	private List<NameValuePair> postParams;
+	private String mTargetUrl = null;
 
 	private LcomWebAccessorListener mListener = null;
 
@@ -83,12 +81,13 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		DbgUtil.showDebug(TAG, "sendData");
 		mIdentifier = identifier;
 		if (LcomConst.IS_DEBUG) {
-			this.url = LcomConst.DEVELOPMENT_BASE_HTTPS_URL + "/" + servletName;
+			mTargetUrl = LcomConst.DEVELOPMENT_BASE_HTTPS_URL + "/"
+					+ servletName;
 		} else {
-			this.url = LcomConst.RELEASE_BASE_HTTPS_URL + "/" + servletName;
+			mTargetUrl = LcomConst.RELEASE_BASE_HTTPS_URL + "/" + servletName;
 		}
 
-		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, url, key, value,
+		mPostThread = new PostThread(ACT_HTTPS_UPLOAD, mTargetUrl, key, value,
 				identifier);
 		mHandler.postDelayed(new Runnable() {
 
@@ -112,6 +111,12 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 		if (mPostThread != null && mPostThread.isAlive() == true) {
 			mPostThread.interrupt();
 		}
+	}
+
+	@Override
+	public void destroyAccessor() {
+		mTargetUrl = null;
+		mPostThread = null;
 	}
 
 	private class PostThread extends Thread {
@@ -193,6 +198,11 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} finally {
+				this.url = null;
+				this.postParams = null;
+				this.mRespList = null;
+				mClient = null;
 			}
 		}
 

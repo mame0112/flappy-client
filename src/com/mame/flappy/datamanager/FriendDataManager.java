@@ -52,10 +52,15 @@ public class FriendDataManager implements UserServerDataListener,
 		DbgUtil.showDebug(TAG, "initializeFriendDataManager userId:" + userId);
 		mContext = context;
 		mUserId = userId;
-		mServerDataHandler = new UserServerDataHandler(context);
-		mServerDataHandler.setFriendListUpdateDataListener(sDataManager);
-		mLocalDataHandler = new UserLocalDataHandler(context);
-		mLocalDataHandler.setUserLocalDataListener(sDataManager);
+		if (mServerDataHandler == null) {
+			mServerDataHandler = new UserServerDataHandler(context);
+			mServerDataHandler.setFriendListUpdateDataListener(sDataManager);
+		}
+
+		if (mLocalDataHandler == null) {
+			mLocalDataHandler = new UserLocalDataHandler(context);
+			mLocalDataHandler.setUserLocalDataListener(sDataManager);
+		}
 	}
 
 	public static void destroyFriendDataManager() {

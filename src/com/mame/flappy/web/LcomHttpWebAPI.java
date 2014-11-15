@@ -58,7 +58,8 @@ public class LcomHttpWebAPI implements LcomAbstractServerAccessor {
 	// // this.mContext = context;
 	// }
 
-	public void sendData(String servletName, String[] key, String[] value, String identifier) {
+	public void sendData(String servletName, String[] key, String[] value,
+			String identifier) {
 		String url = BASE_URL + "/" + servletName;
 		PostThread mPostThread = new PostThread(ACT_UPLOAD, url, key, value);
 		mHandler.postDelayed(new Runnable() {
@@ -169,6 +170,11 @@ public class LcomHttpWebAPI implements LcomAbstractServerAccessor {
 	public void interrupt() {
 		// TODO Need to add interrupt operation here.
 
+	}
+
+	@Override
+	public void destroyAccessor() {
+		// TODO Need to add destory operation here.
 	}
 
 }
