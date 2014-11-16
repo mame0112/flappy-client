@@ -20,6 +20,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -99,7 +100,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 	private LcomDeviceIdRegisterHelper mHelper = null;
 
-	private ProgressDialogFragmentHelper mProgressHelper = null;
+	// private ProgressDialogFragmentHelper mProgressHelper = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +108,9 @@ public class FriendListActivity extends LcomBaseActivity implements
 		DbgUtil.showDebug(TAG, "onCreate");
 
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		setContentView(R.layout.friendlist);
 
 		Intent intent = getIntent();
@@ -183,7 +187,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}
 		});
 
-		mProgressHelper = new ProgressDialogFragmentHelper();
+		// mProgressHelper = new ProgressDialogFragmentHelper();
 
 	}
 
@@ -196,11 +200,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 			// actual data.
 			requestUserData(true, true);
 
-			if (mProgressHelper != null) {
-				mProgressHelper.showProgressDialog(this,
-						getString(R.string.str_friendlist_progress_title),
-						getString(R.string.str_friendlist_progress_desc), TAG);
-			}
+			setProgressBarIndeterminateVisibility(true);
+			// if (mProgressHelper != null) {
+			// mProgressHelper.showProgressDialog(this,
+			// getString(R.string.str_friendlist_progress_title),
+			// getString(R.string.str_friendlist_progress_desc), TAG);
+			// }
 		}
 
 	}
@@ -270,9 +275,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 		// mManager.removeFriendDataManagerListener(this);
 
-		if (mProgressHelper != null) {
-			mProgressHelper.dismissDialog(this, TAG);
-		}
+		// if (mProgressHelper != null) {
+		// mProgressHelper.dismissDialog(this, TAG);
+		// }
+		setProgressBarIndeterminateVisibility(false);
 
 		if (mManager != null) {
 			mManager.interruptOperation();
@@ -297,7 +303,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		super.onDestroy();
 		if (mManager != null) {
 			mManager.removeFriendDataManagerListener(this);
-//			mManager.destroyFriendDataManager();
+			// mManager.destroyFriendDataManager();
 		}
 	}
 
@@ -443,9 +449,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (mProgressHelper != null) {
-				mProgressHelper.dismissDialog(this, TAG);
-			}
+			// if (mProgressHelper != null) {
+			// mProgressHelper.dismissDialog(this, TAG);
+			// }
+			setProgressBarIndeterminateVisibility(false);
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -599,9 +606,10 @@ public class FriendListActivity extends LcomBaseActivity implements
 			}).start();
 
 			// dismiss progress
-			if (mProgressHelper != null) {
-				mProgressHelper.dismissDialog(this, TAG);
-			}
+			// if (mProgressHelper != null) {
+			// mProgressHelper.dismissDialog(this, TAG);
+			// }
+			setProgressBarIndeterminateVisibility(false);
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -806,11 +814,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 			mFriendListData.clear();
 		}
 		requestUserData(true, true);
-		if (mProgressHelper != null) {
-			mProgressHelper.showProgressDialog(this,
-					getString(R.string.str_friendlist_progress_title),
-					getString(R.string.str_friendlist_progress_desc), TAG);
-		}
+		// if (mProgressHelper != null) {
+		// mProgressHelper.showProgressDialog(this,
+		// getString(R.string.str_friendlist_progress_title),
+		// getString(R.string.str_friendlist_progress_desc), TAG);
+		// }
+		setProgressBarIndeterminateVisibility(true);
 	}
 
 	@Override
@@ -878,11 +887,12 @@ public class FriendListActivity extends LcomBaseActivity implements
 	@Override
 	public void onDeviceIdRegistrationFinished(boolean result) {
 		DbgUtil.showDebug(TAG, "onDeviceIdRegistrationFinished");
-		if (mProgressHelper != null) {
-			mProgressHelper.showProgressDialog(this,
-					getString(R.string.str_friendlist_progress_title),
-					getString(R.string.str_friendlist_progress_desc), TAG);
-		}
+		// if (mProgressHelper != null) {
+		// mProgressHelper.showProgressDialog(this,
+		// getString(R.string.str_friendlist_progress_title),
+		// getString(R.string.str_friendlist_progress_desc), TAG);
+		// }
+		setProgressBarIndeterminateVisibility(true);
 		requestUserData(true, true);
 	}
 
