@@ -452,7 +452,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			// if (mProgressHelper != null) {
 			// mProgressHelper.dismissDialog(this, TAG);
 			// }
-			setProgressBarIndeterminateVisibility(false);
+			changeProgressSpinnerState(false);
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -609,7 +609,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 			// if (mProgressHelper != null) {
 			// mProgressHelper.dismissDialog(this, TAG);
 			// }
-			setProgressBarIndeterminateVisibility(false);
+			changeProgressSpinnerState(false);
 
 			try {
 				mManager.requestFriendsNewThumbnail();
@@ -892,7 +892,7 @@ public class FriendListActivity extends LcomBaseActivity implements
 		// getString(R.string.str_friendlist_progress_title),
 		// getString(R.string.str_friendlist_progress_desc), TAG);
 		// }
-		setProgressBarIndeterminateVisibility(true);
+		changeProgressSpinnerState(true);
 		requestUserData(true, true);
 	}
 
@@ -942,6 +942,15 @@ public class FriendListActivity extends LcomBaseActivity implements
 				}).start();
 			}
 		}
+	}
+
+	private void changeProgressSpinnerState(final boolean state) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				setProgressBarIndeterminateVisibility(state);
+			}
+		});
 	}
 
 	private void revertLatestMessage(int targetUserId) {

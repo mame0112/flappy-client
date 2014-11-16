@@ -2,6 +2,7 @@ package com.mame.flappy.ui;
 
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,6 +47,9 @@ public class WelcomeActivity extends LcomBaseActivity implements
 					.startActivityForFriendList(this, userId, userName);
 			finish();
 		}
+
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 
 		mSigninButton = (Button) findViewById(R.id.welcomeSigninButton);
 		mSigninButton.setOnClickListener(new OnClickListener() {
