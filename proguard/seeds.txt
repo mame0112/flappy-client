@@ -1,0 +1,2019 @@
+android.support.v4.app.BackStackState
+android.support.v4.app.BackStackState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.Fragment$SavedState
+android.support.v4.app.Fragment$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentManagerState
+android.support.v4.app.FragmentManagerState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentState
+android.support.v4.app.FragmentState: android.os.Parcelable$Creator CREATOR
+android.support.v4.app.FragmentTabHost: void setOnTabChangedListener(android.widget.TabHost$OnTabChangeListener)
+android.support.v4.app.FragmentTabHost$SavedState
+android.support.v4.app.FragmentTabHost$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status[] values()
+android.support.v4.content.ModernAsyncTask$Status: android.support.v4.content.ModernAsyncTask$Status valueOf(java.lang.String)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColor(int)
+android.support.v4.view.PagerTabStrip: void setTabIndicatorColorResource(int)
+android.support.v4.view.PagerTabStrip: int getTabIndicatorColor()
+android.support.v4.view.PagerTabStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.PagerTabStrip: void setBackgroundColor(int)
+android.support.v4.view.PagerTabStrip: void setBackgroundResource(int)
+android.support.v4.view.PagerTabStrip: void setDrawFullUnderline(boolean)
+android.support.v4.view.PagerTabStrip: boolean getDrawFullUnderline()
+android.support.v4.view.PagerTabStrip: int getMinHeight()
+android.support.v4.view.PagerTitleStrip: void setSingleLineAllCaps(android.widget.TextView)
+android.support.v4.view.PagerTitleStrip: void setTextSpacing(int)
+android.support.v4.view.PagerTitleStrip: int getTextSpacing()
+android.support.v4.view.PagerTitleStrip: void setNonPrimaryAlpha(float)
+android.support.v4.view.PagerTitleStrip: void setTextColor(int)
+android.support.v4.view.PagerTitleStrip: void setGravity(int)
+android.support.v4.view.PagerTitleStrip: int getMinHeight()
+android.support.v4.view.ViewPager: void setScrollState(int)
+android.support.v4.view.ViewPager: void setAdapter(android.support.v4.view.PagerAdapter)
+android.support.v4.view.ViewPager: android.support.v4.view.PagerAdapter getAdapter()
+android.support.v4.view.ViewPager: void setOnAdapterChangeListener(android.support.v4.view.ViewPager$OnAdapterChangeListener)
+android.support.v4.view.ViewPager: int getClientWidth()
+android.support.v4.view.ViewPager: void setCurrentItem(int)
+android.support.v4.view.ViewPager: int getCurrentItem()
+android.support.v4.view.ViewPager: void setOnPageChangeListener(android.support.v4.view.ViewPager$OnPageChangeListener)
+android.support.v4.view.ViewPager: void setChildrenDrawingOrderEnabledCompat(boolean)
+android.support.v4.view.ViewPager: int getOffscreenPageLimit()
+android.support.v4.view.ViewPager: void setOffscreenPageLimit(int)
+android.support.v4.view.ViewPager: void setPageMargin(int)
+android.support.v4.view.ViewPager: int getPageMargin()
+android.support.v4.view.ViewPager: void setPageMarginDrawable(android.graphics.drawable.Drawable)
+android.support.v4.view.ViewPager: void setPageMarginDrawable(int)
+android.support.v4.view.ViewPager: void setScrollingCacheEnabled(boolean)
+android.support.v4.view.ViewPager$SavedState
+android.support.v4.view.ViewPager$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.DrawerLayout: void setScrimColor(int)
+android.support.v4.widget.DrawerLayout: void setDrawerListener(android.support.v4.widget.DrawerLayout$DrawerListener)
+android.support.v4.widget.DrawerLayout: void setDrawerLockMode(int)
+android.support.v4.widget.DrawerLayout$SavedState
+android.support.v4.widget.DrawerLayout$SavedState: android.os.Parcelable$Creator CREATOR
+android.support.v4.widget.SlidingPaneLayout: void setParallaxDistance(int)
+android.support.v4.widget.SlidingPaneLayout: int getParallaxDistance()
+android.support.v4.widget.SlidingPaneLayout: void setSliderFadeColor(int)
+android.support.v4.widget.SlidingPaneLayout: int getSliderFadeColor()
+android.support.v4.widget.SlidingPaneLayout: void setCoveredFadeColor(int)
+android.support.v4.widget.SlidingPaneLayout: int getCoveredFadeColor()
+android.support.v4.widget.SlidingPaneLayout: void setPanelSlideListener(android.support.v4.widget.SlidingPaneLayout$PanelSlideListener)
+android.support.v4.widget.SlidingPaneLayout: void setShadowDrawable(android.graphics.drawable.Drawable)
+android.support.v4.widget.SlidingPaneLayout: void setShadowResource(int)
+android.support.v4.widget.SlidingPaneLayout$SavedState
+android.support.v4.widget.SlidingPaneLayout$SavedState: android.os.Parcelable$Creator CREATOR
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode[] values()
+com.google.ads.AdRequest$ErrorCode: com.google.ads.AdRequest$ErrorCode valueOf(java.lang.String)
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender[] values()
+com.google.ads.AdRequest$Gender: com.google.ads.AdRequest$Gender valueOf(java.lang.String)
+com.google.analytics.containertag.common.FunctionType: com.google.analytics.containertag.common.FunctionType[] values()
+com.google.analytics.containertag.common.FunctionType: com.google.analytics.containertag.common.FunctionType valueOf(java.lang.String)
+com.google.analytics.containertag.common.Key: com.google.analytics.containertag.common.Key[] values()
+com.google.analytics.containertag.common.Key: com.google.analytics.containertag.common.Key valueOf(java.lang.String)
+com.google.analytics.containertag.proto.Debug$EventInfo$EventType: com.google.analytics.containertag.proto.Debug$EventInfo$EventType[] values()
+com.google.analytics.containertag.proto.Debug$EventInfo$EventType: com.google.analytics.containertag.proto.Debug$EventInfo$EventType valueOf(java.lang.String)
+com.google.analytics.containertag.proto.MutableDebug$EventInfo$EventType: com.google.analytics.containertag.proto.MutableDebug$EventInfo$EventType[] values()
+com.google.analytics.containertag.proto.MutableDebug$EventInfo$EventType: com.google.analytics.containertag.proto.MutableDebug$EventInfo$EventType valueOf(java.lang.String)
+com.google.analytics.containertag.proto.MutableServing$CacheOption$CacheLevel: com.google.analytics.containertag.proto.MutableServing$CacheOption$CacheLevel[] values()
+com.google.analytics.containertag.proto.MutableServing$CacheOption$CacheLevel: com.google.analytics.containertag.proto.MutableServing$CacheOption$CacheLevel valueOf(java.lang.String)
+com.google.analytics.containertag.proto.MutableServing$ResourceState: com.google.analytics.containertag.proto.MutableServing$ResourceState[] values()
+com.google.analytics.containertag.proto.MutableServing$ResourceState: com.google.analytics.containertag.proto.MutableServing$ResourceState valueOf(java.lang.String)
+com.google.analytics.containertag.proto.MutableServing$ResourceType: com.google.analytics.containertag.proto.MutableServing$ResourceType[] values()
+com.google.analytics.containertag.proto.MutableServing$ResourceType: com.google.analytics.containertag.proto.MutableServing$ResourceType valueOf(java.lang.String)
+com.google.analytics.containertag.proto.Serving$CacheOption$CacheLevel: com.google.analytics.containertag.proto.Serving$CacheOption$CacheLevel[] values()
+com.google.analytics.containertag.proto.Serving$CacheOption$CacheLevel: com.google.analytics.containertag.proto.Serving$CacheOption$CacheLevel valueOf(java.lang.String)
+com.google.analytics.containertag.proto.Serving$ResourceState: com.google.analytics.containertag.proto.Serving$ResourceState[] values()
+com.google.analytics.containertag.proto.Serving$ResourceState: com.google.analytics.containertag.proto.Serving$ResourceState valueOf(java.lang.String)
+com.google.analytics.containertag.proto.Serving$ResourceType: com.google.analytics.containertag.proto.Serving$ResourceType[] values()
+com.google.analytics.containertag.proto.Serving$ResourceType: com.google.analytics.containertag.proto.Serving$ResourceType valueOf(java.lang.String)
+com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Escaping: com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Escaping[] values()
+com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Escaping: com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Escaping valueOf(java.lang.String)
+com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Type: com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Type[] values()
+com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Type: com.google.analytics.midtier.proto.containertag.MutableTypeSystem$Value$Type valueOf(java.lang.String)
+com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Escaping: com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Escaping[] values()
+com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Escaping: com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Escaping valueOf(java.lang.String)
+com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Type: com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Type[] values()
+com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Type: com.google.analytics.midtier.proto.containertag.TypeSystem$Value$Type valueOf(java.lang.String)
+com.google.analytics.tracking.android.GAServiceProxy$ConnectState: com.google.analytics.tracking.android.GAServiceProxy$ConnectState[] values()
+com.google.analytics.tracking.android.GAServiceProxy$ConnectState: com.google.analytics.tracking.android.GAServiceProxy$ConnectState valueOf(java.lang.String)
+com.google.analytics.tracking.android.GAUsage$Field: com.google.analytics.tracking.android.GAUsage$Field[] values()
+com.google.analytics.tracking.android.GAUsage$Field: com.google.analytics.tracking.android.GAUsage$Field valueOf(java.lang.String)
+com.google.analytics.tracking.android.Logger$LogLevel: com.google.analytics.tracking.android.Logger$LogLevel[] values()
+com.google.analytics.tracking.android.Logger$LogLevel: com.google.analytics.tracking.android.Logger$LogLevel valueOf(java.lang.String)
+com.google.android.gms.R$attr: int adSize
+com.google.android.gms.R$attr: int adSizes
+com.google.android.gms.R$attr: int adUnitId
+com.google.android.gms.R$attr: int cameraBearing
+com.google.android.gms.R$attr: int cameraTargetLat
+com.google.android.gms.R$attr: int cameraTargetLng
+com.google.android.gms.R$attr: int cameraTilt
+com.google.android.gms.R$attr: int cameraZoom
+com.google.android.gms.R$attr: int mapType
+com.google.android.gms.R$attr: int uiCompass
+com.google.android.gms.R$attr: int uiRotateGestures
+com.google.android.gms.R$attr: int uiScrollGestures
+com.google.android.gms.R$attr: int uiTiltGestures
+com.google.android.gms.R$attr: int uiZoomControls
+com.google.android.gms.R$attr: int uiZoomGestures
+com.google.android.gms.R$attr: int useViewLifecycle
+com.google.android.gms.R$attr: int zOrderOnTop
+com.google.android.gms.R$color: int common_action_bar_splitter
+com.google.android.gms.R$color: int common_signin_btn_dark_text_default
+com.google.android.gms.R$color: int common_signin_btn_dark_text_disabled
+com.google.android.gms.R$color: int common_signin_btn_dark_text_focused
+com.google.android.gms.R$color: int common_signin_btn_dark_text_pressed
+com.google.android.gms.R$color: int common_signin_btn_default_background
+com.google.android.gms.R$color: int common_signin_btn_light_text_default
+com.google.android.gms.R$color: int common_signin_btn_light_text_disabled
+com.google.android.gms.R$color: int common_signin_btn_light_text_focused
+com.google.android.gms.R$color: int common_signin_btn_light_text_pressed
+com.google.android.gms.R$color: int common_signin_btn_text_dark
+com.google.android.gms.R$color: int common_signin_btn_text_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_disabled_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_normal_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_normal_light
+com.google.android.gms.R$drawable: int common_signin_btn_icon_pressed_dark
+com.google.android.gms.R$drawable: int common_signin_btn_icon_pressed_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_disabled_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_focus_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_focus_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_normal_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_normal_light
+com.google.android.gms.R$drawable: int common_signin_btn_text_pressed_dark
+com.google.android.gms.R$drawable: int common_signin_btn_text_pressed_light
+com.google.android.gms.R$drawable: int ic_plusone_medium_off_client
+com.google.android.gms.R$drawable: int ic_plusone_small_off_client
+com.google.android.gms.R$drawable: int ic_plusone_standard_off_client
+com.google.android.gms.R$drawable: int ic_plusone_tall_off_client
+com.google.android.gms.R$id: int hybrid
+com.google.android.gms.R$id: int none
+com.google.android.gms.R$id: int normal
+com.google.android.gms.R$id: int satellite
+com.google.android.gms.R$id: int terrain
+com.google.android.gms.R$integer: int google_play_services_version
+com.google.android.gms.R$string: int auth_client_needs_enabling_title
+com.google.android.gms.R$string: int auth_client_needs_installation_title
+com.google.android.gms.R$string: int auth_client_needs_update_title
+com.google.android.gms.R$string: int auth_client_play_services_err_notification_msg
+com.google.android.gms.R$string: int auth_client_requested_by_msg
+com.google.android.gms.R$string: int auth_client_using_bad_version_title
+com.google.android.gms.R$string: int common_google_play_services_enable_button
+com.google.android.gms.R$string: int common_google_play_services_enable_text
+com.google.android.gms.R$string: int common_google_play_services_enable_title
+com.google.android.gms.R$string: int common_google_play_services_install_button
+com.google.android.gms.R$string: int common_google_play_services_install_text_phone
+com.google.android.gms.R$string: int common_google_play_services_install_text_tablet
+com.google.android.gms.R$string: int common_google_play_services_install_title
+com.google.android.gms.R$string: int common_google_play_services_invalid_account_text
+com.google.android.gms.R$string: int common_google_play_services_invalid_account_title
+com.google.android.gms.R$string: int common_google_play_services_network_error_text
+com.google.android.gms.R$string: int common_google_play_services_network_error_title
+com.google.android.gms.R$string: int common_google_play_services_unknown_issue
+com.google.android.gms.R$string: int common_google_play_services_unsupported_date_text
+com.google.android.gms.R$string: int common_google_play_services_unsupported_text
+com.google.android.gms.R$string: int common_google_play_services_unsupported_title
+com.google.android.gms.R$string: int common_google_play_services_update_button
+com.google.android.gms.R$string: int common_google_play_services_update_text
+com.google.android.gms.R$string: int common_google_play_services_update_title
+com.google.android.gms.R$string: int common_signin_button_text
+com.google.android.gms.R$string: int common_signin_button_text_long
+com.google.android.gms.R$string: int location_client_powered_by_google
+com.google.android.gms.R$styleable: int[] AdsAttrs
+com.google.android.gms.R$styleable: int AdsAttrs_adSize
+com.google.android.gms.R$styleable: int AdsAttrs_adSizes
+com.google.android.gms.R$styleable: int AdsAttrs_adUnitId
+com.google.android.gms.R$styleable: int[] MapAttrs
+com.google.android.gms.R$styleable: int MapAttrs_cameraBearing
+com.google.android.gms.R$styleable: int MapAttrs_cameraTargetLat
+com.google.android.gms.R$styleable: int MapAttrs_cameraTargetLng
+com.google.android.gms.R$styleable: int MapAttrs_cameraTilt
+com.google.android.gms.R$styleable: int MapAttrs_cameraZoom
+com.google.android.gms.R$styleable: int MapAttrs_mapType
+com.google.android.gms.R$styleable: int MapAttrs_uiCompass
+com.google.android.gms.R$styleable: int MapAttrs_uiRotateGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiScrollGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiTiltGestures
+com.google.android.gms.R$styleable: int MapAttrs_uiZoomControls
+com.google.android.gms.R$styleable: int MapAttrs_uiZoomGestures
+com.google.android.gms.R$styleable: int MapAttrs_useViewLifecycle
+com.google.android.gms.R$styleable: int MapAttrs_zOrderOnTop
+com.google.android.gms.ads.AdView: com.google.android.gms.ads.AdListener getAdListener()
+com.google.android.gms.ads.AdView: com.google.android.gms.ads.AdSize getAdSize()
+com.google.android.gms.ads.AdView: java.lang.String getAdUnitId()
+com.google.android.gms.ads.AdView: void setAdListener(com.google.android.gms.ads.AdListener)
+com.google.android.gms.ads.AdView: void setAdSize(com.google.android.gms.ads.AdSize)
+com.google.android.gms.ads.AdView: void setAdUnitId(java.lang.String)
+com.google.android.gms.ads.doubleclick.PublisherAdView: com.google.android.gms.ads.AdListener getAdListener()
+com.google.android.gms.ads.doubleclick.PublisherAdView: com.google.android.gms.ads.AdSize getAdSize()
+com.google.android.gms.ads.doubleclick.PublisherAdView: com.google.android.gms.ads.AdSize[] getAdSizes()
+com.google.android.gms.ads.doubleclick.PublisherAdView: java.lang.String getAdUnitId()
+com.google.android.gms.ads.doubleclick.PublisherAdView: com.google.android.gms.ads.doubleclick.AppEventListener getAppEventListener()
+com.google.android.gms.ads.doubleclick.PublisherAdView: void setAdListener(com.google.android.gms.ads.AdListener)
+com.google.android.gms.ads.doubleclick.PublisherAdView: void setAdSizes(com.google.android.gms.ads.AdSize[])
+com.google.android.gms.ads.doubleclick.PublisherAdView: void setAdUnitId(java.lang.String)
+com.google.android.gms.ads.doubleclick.PublisherAdView: void setAppEventListener(com.google.android.gms.ads.doubleclick.AppEventListener)
+com.google.android.gms.ads.search.SearchAdView: com.google.android.gms.ads.AdListener getAdListener()
+com.google.android.gms.ads.search.SearchAdView: com.google.android.gms.ads.AdSize getAdSize()
+com.google.android.gms.ads.search.SearchAdView: java.lang.String getAdUnitId()
+com.google.android.gms.ads.search.SearchAdView: void setAdListener(com.google.android.gms.ads.AdListener)
+com.google.android.gms.ads.search.SearchAdView: void setAdSize(com.google.android.gms.ads.AdSize)
+com.google.android.gms.ads.search.SearchAdView: void setAdUnitId(java.lang.String)
+com.google.android.gms.analytics.internal.Command
+com.google.android.gms.analytics.internal.Command: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.analytics.s$a: com.google.android.gms.analytics.s$a[] values()
+com.google.android.gms.analytics.s$a: com.google.android.gms.analytics.s$a valueOf(java.lang.String)
+com.google.android.gms.analytics.u$a: com.google.android.gms.analytics.u$a[] values()
+com.google.android.gms.analytics.u$a: com.google.android.gms.analytics.u$a valueOf(java.lang.String)
+com.google.android.gms.cast.ApplicationMetadata
+com.google.android.gms.cast.ApplicationMetadata: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.cast.CastDevice
+com.google.android.gms.cast.CastDevice: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.common.SignInButton: void setSize(int)
+com.google.android.gms.common.SignInButton: void setColorScheme(int)
+com.google.android.gms.common.SignInButton: void setOnClickListener(android.view.View$OnClickListener)
+com.google.android.gms.common.SignInButton: void setEnabled(boolean)
+com.google.android.gms.common.api.Status
+com.google.android.gms.common.data.DataHolder
+com.google.android.gms.common.images.ImageManager$ImageReceiver
+com.google.android.gms.common.images.WebImage
+com.google.android.gms.common.images.WebImage: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.common.internal.safeparcel.SafeParcelable
+com.google.android.gms.drive.Contents
+com.google.android.gms.drive.Contents: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.DriveId
+com.google.android.gms.drive.DriveId: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.events.ChangeEvent
+com.google.android.gms.drive.events.ChangeEvent: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.events.ConflictEvent
+com.google.android.gms.drive.events.ConflictEvent: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.events.DriveEvent
+com.google.android.gms.drive.events.ResourceEvent
+com.google.android.gms.drive.internal.AddEventListenerRequest
+com.google.android.gms.drive.internal.AddEventListenerRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.AuthorizeAccessRequest
+com.google.android.gms.drive.internal.AuthorizeAccessRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CloseContentsAndUpdateMetadataRequest
+com.google.android.gms.drive.internal.CloseContentsAndUpdateMetadataRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CloseContentsRequest
+com.google.android.gms.drive.internal.CloseContentsRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CreateContentsRequest
+com.google.android.gms.drive.internal.CreateContentsRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CreateFileIntentSenderRequest
+com.google.android.gms.drive.internal.CreateFileIntentSenderRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CreateFileRequest
+com.google.android.gms.drive.internal.CreateFileRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.CreateFolderRequest
+com.google.android.gms.drive.internal.CreateFolderRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.DisconnectRequest
+com.google.android.gms.drive.internal.DisconnectRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.GetMetadataRequest
+com.google.android.gms.drive.internal.GetMetadataRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.ListParentsRequest
+com.google.android.gms.drive.internal.ListParentsRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnContentsResponse
+com.google.android.gms.drive.internal.OnContentsResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnDownloadProgressResponse
+com.google.android.gms.drive.internal.OnDownloadProgressResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnDriveIdResponse
+com.google.android.gms.drive.internal.OnDriveIdResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnEventResponse
+com.google.android.gms.drive.internal.OnEventResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnListEntriesResponse
+com.google.android.gms.drive.internal.OnListEntriesResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnListParentsResponse
+com.google.android.gms.drive.internal.OnListParentsResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OnMetadataResponse
+com.google.android.gms.drive.internal.OnMetadataResponse: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OpenContentsRequest
+com.google.android.gms.drive.internal.OpenContentsRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.OpenFileIntentSenderRequest
+com.google.android.gms.drive.internal.OpenFileIntentSenderRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.QueryRequest
+com.google.android.gms.drive.internal.QueryRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.RemoveEventListenerRequest
+com.google.android.gms.drive.internal.RemoveEventListenerRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.TrashResourceRequest
+com.google.android.gms.drive.internal.TrashResourceRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.internal.UpdateMetadataRequest
+com.google.android.gms.drive.internal.UpdateMetadataRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.metadata.internal.MetadataBundle
+com.google.android.gms.drive.metadata.internal.MetadataBundle: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.Query
+com.google.android.gms.drive.query.Query: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.internal.ComparisonFilter
+com.google.android.gms.drive.query.internal.FieldOnlyFilter
+com.google.android.gms.drive.query.internal.FieldOnlyFilter: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.internal.FilterHolder
+com.google.android.gms.drive.query.internal.FilterHolder: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.internal.InFilter
+com.google.android.gms.drive.query.internal.LogicalFilter
+com.google.android.gms.drive.query.internal.LogicalFilter: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.internal.NotFilter
+com.google.android.gms.drive.query.internal.NotFilter: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.drive.query.internal.Operator
+com.google.android.gms.drive.query.internal.Operator: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.Game
+com.google.android.gms.games.GameEntity
+com.google.android.gms.games.GameEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.Player
+com.google.android.gms.games.PlayerEntity
+com.google.android.gms.games.PlayerEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.b
+com.google.android.gms.games.d
+com.google.android.gms.games.multiplayer.Invitation
+com.google.android.gms.games.multiplayer.InvitationEntity
+com.google.android.gms.games.multiplayer.InvitationEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.Participant
+com.google.android.gms.games.multiplayer.ParticipantEntity
+com.google.android.gms.games.multiplayer.ParticipantEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.ParticipantResult
+com.google.android.gms.games.multiplayer.b
+com.google.android.gms.games.multiplayer.d
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage
+com.google.android.gms.games.multiplayer.realtime.RealTimeMessage: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.Room
+com.google.android.gms.games.multiplayer.realtime.RoomEntity
+com.google.android.gms.games.multiplayer.realtime.RoomEntity: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.games.multiplayer.realtime.c
+com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatch
+com.google.android.gms.games.multiplayer.turnbased.TurnBasedMatchEntity
+com.google.android.gms.games.multiplayer.turnbased.a
+com.google.android.gms.games.request.GameRequest
+com.google.android.gms.games.request.GameRequestEntity
+com.google.android.gms.games.request.a
+com.google.android.gms.identity.intents.UserAddressRequest
+com.google.android.gms.identity.intents.UserAddressRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.identity.intents.model.CountrySpecification
+com.google.android.gms.identity.intents.model.CountrySpecification: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.identity.intents.model.UserAddress
+com.google.android.gms.identity.intents.model.UserAddress: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.a: com.google.android.gms.internal.a[] values()
+com.google.android.gms.internal.a: com.google.android.gms.internal.a valueOf(java.lang.String)
+com.google.android.gms.internal.ab
+com.google.android.gms.internal.am
+com.google.android.gms.internal.b: com.google.android.gms.internal.b[] values()
+com.google.android.gms.internal.b: com.google.android.gms.internal.b valueOf(java.lang.String)
+com.google.android.gms.internal.bn
+com.google.android.gms.internal.bq
+com.google.android.gms.internal.cd
+com.google.android.gms.internal.cf
+com.google.android.gms.internal.db
+com.google.android.gms.internal.dd: void setContext(android.content.Context)
+com.google.android.gms.internal.di
+com.google.android.gms.internal.di: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.do: com.google.android.gms.internal.do[] values()
+com.google.android.gms.internal.do: com.google.android.gms.internal.do valueOf(java.lang.String)
+com.google.android.gms.internal.ee$a
+com.google.android.gms.internal.eg
+com.google.android.gms.internal.ew
+com.google.android.gms.internal.ey
+com.google.android.gms.internal.ey$a
+com.google.android.gms.internal.fb$a
+com.google.android.gms.internal.fe
+com.google.android.gms.internal.fe$a
+com.google.android.gms.internal.fe$b
+com.google.android.gms.internal.fh
+com.google.android.gms.internal.fy
+com.google.android.gms.internal.gy
+com.google.android.gms.internal.gz
+com.google.android.gms.internal.hj
+com.google.android.gms.internal.hn
+com.google.android.gms.internal.hp
+com.google.android.gms.internal.hr
+com.google.android.gms.internal.ht
+com.google.android.gms.internal.hx
+com.google.android.gms.internal.hx$a
+com.google.android.gms.internal.hz
+com.google.android.gms.internal.id
+com.google.android.gms.internal.im
+com.google.android.gms.internal.io
+com.google.android.gms.internal.ir
+com.google.android.gms.internal.ir$a
+com.google.android.gms.internal.ir$b
+com.google.android.gms.internal.ir$b$a
+com.google.android.gms.internal.ir$b$b
+com.google.android.gms.internal.ir$c
+com.google.android.gms.internal.ir$d
+com.google.android.gms.internal.ir$f
+com.google.android.gms.internal.ir$g
+com.google.android.gms.internal.ir$h
+com.google.android.gms.internal.jh
+com.google.android.gms.internal.jh: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jj
+com.google.android.gms.internal.jj: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jl
+com.google.android.gms.internal.jl: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jm
+com.google.android.gms.internal.jm: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jp
+com.google.android.gms.internal.jp: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jr
+com.google.android.gms.internal.jr: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jt
+com.google.android.gms.internal.jt: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.jv
+com.google.android.gms.internal.jv: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.internal.z
+com.google.android.gms.location.ActivityRecognitionResult
+com.google.android.gms.location.DetectedActivity
+com.google.android.gms.location.LocationRequest
+com.google.android.gms.location.b
+com.google.android.gms.maps.GoogleMapOptions
+com.google.android.gms.maps.MapView: com.google.android.gms.maps.GoogleMap getMap()
+com.google.android.gms.maps.model.CameraPosition
+com.google.android.gms.maps.model.CircleOptions
+com.google.android.gms.maps.model.GroundOverlayOptions
+com.google.android.gms.maps.model.LatLng
+com.google.android.gms.maps.model.LatLngBounds
+com.google.android.gms.maps.model.MarkerOptions
+com.google.android.gms.maps.model.PolygonOptions
+com.google.android.gms.maps.model.PolylineOptions
+com.google.android.gms.maps.model.Tile
+com.google.android.gms.maps.model.TileOverlayOptions
+com.google.android.gms.maps.model.VisibleRegion
+com.google.android.gms.plus.PlusOneButton: void setOnPlusOneClickListener(com.google.android.gms.plus.PlusOneButton$OnPlusOneClickListener)
+com.google.android.gms.plus.PlusOneButton: void setAnnotation(int)
+com.google.android.gms.plus.PlusOneButton: void setSize(int)
+com.google.android.gms.plus.internal.PlusCommonExtras
+com.google.android.gms.plus.internal.h
+com.google.android.gms.tagmanager.az$a: com.google.android.gms.tagmanager.az$a[] values()
+com.google.android.gms.tagmanager.az$a: com.google.android.gms.tagmanager.az$a valueOf(java.lang.String)
+com.google.android.gms.tagmanager.bg$a: com.google.android.gms.tagmanager.bg$a[] values()
+com.google.android.gms.tagmanager.bg$a: com.google.android.gms.tagmanager.bg$a valueOf(java.lang.String)
+com.google.android.gms.tagmanager.ce$a: com.google.android.gms.tagmanager.ce$a[] values()
+com.google.android.gms.tagmanager.ce$a: com.google.android.gms.tagmanager.ce$a valueOf(java.lang.String)
+com.google.android.gms.wallet.Address
+com.google.android.gms.wallet.Address: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.Cart
+com.google.android.gms.wallet.Cart: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.CountrySpecification
+com.google.android.gms.wallet.CountrySpecification: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.FullWallet
+com.google.android.gms.wallet.FullWallet: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.FullWalletRequest
+com.google.android.gms.wallet.FullWalletRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.InstrumentInfo
+com.google.android.gms.wallet.InstrumentInfo: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.LineItem
+com.google.android.gms.wallet.LineItem: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.LoyaltyWalletObject
+com.google.android.gms.wallet.LoyaltyWalletObject: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.MaskedWallet
+com.google.android.gms.wallet.MaskedWallet: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.MaskedWalletRequest
+com.google.android.gms.wallet.MaskedWalletRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.NotifyTransactionStatusRequest
+com.google.android.gms.wallet.NotifyTransactionStatusRequest: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.OfferWalletObject
+com.google.android.gms.wallet.OfferWalletObject: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.ProxyCard
+com.google.android.gms.wallet.ProxyCard: android.os.Parcelable$Creator CREATOR
+com.google.android.gms.wallet.d
+com.google.android.gms.wallet.d: android.os.Parcelable$Creator CREATOR
+com.google.common.base.CaseFormat: com.google.common.base.CaseFormat[] values()
+com.google.common.base.CaseFormat: com.google.common.base.CaseFormat valueOf(java.lang.String)
+com.google.common.base.Equivalences$Impl: com.google.common.base.Equivalences$Impl[] values()
+com.google.common.base.Equivalences$Impl: com.google.common.base.Equivalences$Impl valueOf(java.lang.String)
+com.google.common.base.Functions$IdentityFunction: com.google.common.base.Functions$IdentityFunction[] values()
+com.google.common.base.Functions$IdentityFunction: com.google.common.base.Functions$IdentityFunction valueOf(java.lang.String)
+com.google.common.base.Functions$ToStringFunction: com.google.common.base.Functions$ToStringFunction[] values()
+com.google.common.base.Functions$ToStringFunction: com.google.common.base.Functions$ToStringFunction valueOf(java.lang.String)
+com.google.common.base.Predicates$ObjectPredicate: com.google.common.base.Predicates$ObjectPredicate[] values()
+com.google.common.base.Predicates$ObjectPredicate: com.google.common.base.Predicates$ObjectPredicate valueOf(java.lang.String)
+com.google.common.base.Splitter$AbstractIterator$State: com.google.common.base.Splitter$AbstractIterator$State[] values()
+com.google.common.base.Splitter$AbstractIterator$State: com.google.common.base.Splitter$AbstractIterator$State valueOf(java.lang.String)
+com.google.common.base.Suppliers$SupplierFunction: com.google.common.base.Suppliers$SupplierFunction[] values()
+com.google.common.base.Suppliers$SupplierFunction: com.google.common.base.Suppliers$SupplierFunction valueOf(java.lang.String)
+com.google.common.collect.AbstractIterator$State: com.google.common.collect.AbstractIterator$State[] values()
+com.google.common.collect.AbstractIterator$State: com.google.common.collect.AbstractIterator$State valueOf(java.lang.String)
+com.google.common.collect.Constraints$NotNullConstraint: com.google.common.collect.Constraints$NotNullConstraint[] values()
+com.google.common.collect.Constraints$NotNullConstraint: com.google.common.collect.Constraints$NotNullConstraint valueOf(java.lang.String)
+com.google.common.collect.CustomConcurrentHashMap$EntryFactory: com.google.common.collect.CustomConcurrentHashMap$EntryFactory[] values()
+com.google.common.collect.CustomConcurrentHashMap$EntryFactory: com.google.common.collect.CustomConcurrentHashMap$EntryFactory valueOf(java.lang.String)
+com.google.common.collect.CustomConcurrentHashMap$NullEntry: com.google.common.collect.CustomConcurrentHashMap$NullEntry[] values()
+com.google.common.collect.CustomConcurrentHashMap$NullEntry: com.google.common.collect.CustomConcurrentHashMap$NullEntry valueOf(java.lang.String)
+com.google.common.collect.CustomConcurrentHashMap$Strength: com.google.common.collect.CustomConcurrentHashMap$Strength[] values()
+com.google.common.collect.CustomConcurrentHashMap$Strength: com.google.common.collect.CustomConcurrentHashMap$Strength valueOf(java.lang.String)
+com.google.common.collect.MapConstraints$NotNullMapConstraint: com.google.common.collect.MapConstraints$NotNullMapConstraint[] values()
+com.google.common.collect.MapConstraints$NotNullMapConstraint: com.google.common.collect.MapConstraints$NotNullMapConstraint valueOf(java.lang.String)
+com.google.common.collect.MapMaker$NullListener: com.google.common.collect.MapMaker$NullListener[] values()
+com.google.common.collect.MapMaker$NullListener: com.google.common.collect.MapMaker$NullListener valueOf(java.lang.String)
+com.google.common.collect.SortedLists$Relation: com.google.common.collect.SortedLists$Relation[] values()
+com.google.common.collect.SortedLists$Relation: com.google.common.collect.SortedLists$Relation valueOf(java.lang.String)
+com.google.common.primitives.Booleans$LexicographicalComparator: com.google.common.primitives.Booleans$LexicographicalComparator[] values()
+com.google.common.primitives.Booleans$LexicographicalComparator: com.google.common.primitives.Booleans$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Chars$LexicographicalComparator: com.google.common.primitives.Chars$LexicographicalComparator[] values()
+com.google.common.primitives.Chars$LexicographicalComparator: com.google.common.primitives.Chars$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Doubles$LexicographicalComparator: com.google.common.primitives.Doubles$LexicographicalComparator[] values()
+com.google.common.primitives.Doubles$LexicographicalComparator: com.google.common.primitives.Doubles$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Floats$LexicographicalComparator: com.google.common.primitives.Floats$LexicographicalComparator[] values()
+com.google.common.primitives.Floats$LexicographicalComparator: com.google.common.primitives.Floats$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Ints$LexicographicalComparator: com.google.common.primitives.Ints$LexicographicalComparator[] values()
+com.google.common.primitives.Ints$LexicographicalComparator: com.google.common.primitives.Ints$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Longs$LexicographicalComparator: com.google.common.primitives.Longs$LexicographicalComparator[] values()
+com.google.common.primitives.Longs$LexicographicalComparator: com.google.common.primitives.Longs$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.Shorts$LexicographicalComparator: com.google.common.primitives.Shorts$LexicographicalComparator[] values()
+com.google.common.primitives.Shorts$LexicographicalComparator: com.google.common.primitives.Shorts$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.SignedBytes$LexicographicalComparator: com.google.common.primitives.SignedBytes$LexicographicalComparator[] values()
+com.google.common.primitives.SignedBytes$LexicographicalComparator: com.google.common.primitives.SignedBytes$LexicographicalComparator valueOf(java.lang.String)
+com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$PureJavaComparator: com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$PureJavaComparator[] values()
+com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$PureJavaComparator: com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$PureJavaComparator valueOf(java.lang.String)
+com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator: com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator[] values()
+com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator: com.google.common.primitives.UnsignedBytes$LexicographicalComparatorHolder$UnsafeComparator valueOf(java.lang.String)
+com.google.common.util.concurrent.Service$State: com.google.common.util.concurrent.Service$State[] values()
+com.google.common.util.concurrent.Service$State: com.google.common.util.concurrent.Service$State valueOf(java.lang.String)
+com.google.tagmanager.Container$RefreshFailure: com.google.tagmanager.Container$RefreshFailure[] values()
+com.google.tagmanager.Container$RefreshFailure: com.google.tagmanager.Container$RefreshFailure valueOf(java.lang.String)
+com.google.tagmanager.Container$RefreshType: com.google.tagmanager.Container$RefreshType[] values()
+com.google.tagmanager.Container$RefreshType: com.google.tagmanager.Container$RefreshType valueOf(java.lang.String)
+com.google.tagmanager.ContainerOpener$OpenType: com.google.tagmanager.ContainerOpener$OpenType[] values()
+com.google.tagmanager.ContainerOpener$OpenType: com.google.tagmanager.ContainerOpener$OpenType valueOf(java.lang.String)
+com.google.tagmanager.JoinerMacro$EscapeType: com.google.tagmanager.JoinerMacro$EscapeType[] values()
+com.google.tagmanager.JoinerMacro$EscapeType: com.google.tagmanager.JoinerMacro$EscapeType valueOf(java.lang.String)
+com.google.tagmanager.LoadCallback$Failure: com.google.tagmanager.LoadCallback$Failure[] values()
+com.google.tagmanager.LoadCallback$Failure: com.google.tagmanager.LoadCallback$Failure valueOf(java.lang.String)
+com.google.tagmanager.Logger$LogLevel: com.google.tagmanager.Logger$LogLevel[] values()
+com.google.tagmanager.Logger$LogLevel: com.google.tagmanager.Logger$LogLevel valueOf(java.lang.String)
+com.google.tagmanager.PreviewManager$PreviewMode: com.google.tagmanager.PreviewManager$PreviewMode[] values()
+com.google.tagmanager.PreviewManager$PreviewMode: com.google.tagmanager.PreviewManager$PreviewMode valueOf(java.lang.String)
+com.google.tagmanager.TagManager$RefreshMode: com.google.tagmanager.TagManager$RefreshMode[] values()
+com.google.tagmanager.TagManager$RefreshMode: com.google.tagmanager.TagManager$RefreshMode valueOf(java.lang.String)
+com.google.tagmanager.protobuf.WireFormat$FieldType: com.google.tagmanager.protobuf.WireFormat$FieldType[] values()
+com.google.tagmanager.protobuf.WireFormat$FieldType: com.google.tagmanager.protobuf.WireFormat$FieldType valueOf(java.lang.String)
+com.google.tagmanager.protobuf.WireFormat$JavaType: com.google.tagmanager.protobuf.WireFormat$JavaType[] values()
+com.google.tagmanager.protobuf.WireFormat$JavaType: com.google.tagmanager.protobuf.WireFormat$JavaType valueOf(java.lang.String)
+com.mame.flappy.FlappyApplication
+com.mame.flappy.FlappyApplication: FlappyApplication()
+com.mame.flappy.LcomBaseActivity
+com.mame.flappy.LcomBaseActivity: LcomBaseActivity()
+com.mame.flappy.R$array: int contact_category
+com.mame.flappy.R$array: int help_label
+com.mame.flappy.R$attr: int adSize
+com.mame.flappy.R$attr: int adSizes
+com.mame.flappy.R$attr: int adUnitId
+com.mame.flappy.R$attr: int cameraBearing
+com.mame.flappy.R$attr: int cameraTargetLat
+com.mame.flappy.R$attr: int cameraTargetLng
+com.mame.flappy.R$attr: int cameraTilt
+com.mame.flappy.R$attr: int cameraZoom
+com.mame.flappy.R$attr: int mapType
+com.mame.flappy.R$attr: int uiCompass
+com.mame.flappy.R$attr: int uiRotateGestures
+com.mame.flappy.R$attr: int uiScrollGestures
+com.mame.flappy.R$attr: int uiTiltGestures
+com.mame.flappy.R$attr: int uiZoomControls
+com.mame.flappy.R$attr: int uiZoomGestures
+com.mame.flappy.R$attr: int useViewLifecycle
+com.mame.flappy.R$attr: int zOrderOnTop
+com.mame.flappy.R$bool: int ga_anonymizeIp
+com.mame.flappy.R$bool: int ga_autoActivityTracking
+com.mame.flappy.R$bool: int ga_reportUncaughtExceptions
+com.mame.flappy.R$color: int common_action_bar_splitter
+com.mame.flappy.R$color: int common_signin_btn_dark_text_default
+com.mame.flappy.R$color: int common_signin_btn_dark_text_disabled
+com.mame.flappy.R$color: int common_signin_btn_dark_text_focused
+com.mame.flappy.R$color: int common_signin_btn_dark_text_pressed
+com.mame.flappy.R$color: int common_signin_btn_default_background
+com.mame.flappy.R$color: int common_signin_btn_light_text_default
+com.mame.flappy.R$color: int common_signin_btn_light_text_disabled
+com.mame.flappy.R$color: int common_signin_btn_light_text_focused
+com.mame.flappy.R$color: int common_signin_btn_light_text_pressed
+com.mame.flappy.R$color: int common_signin_btn_text_dark
+com.mame.flappy.R$color: int common_signin_btn_text_light
+com.mame.flappy.R$color: int flappy_basic_black
+com.mame.flappy.R$color: int flappy_blue
+com.mame.flappy.R$color: int flappy_dark_pink
+com.mame.flappy.R$color: int flappy_disabled_gray
+com.mame.flappy.R$color: int flappy_light_pink
+com.mame.flappy.R$color: int flappy_note_green
+com.mame.flappy.R$color: int flappy_pink
+com.mame.flappy.R$color: int flappy_white
+com.mame.flappy.R$dimen: int about_flappy_horizontal_margin
+com.mame.flappy.R$dimen: int about_flappy_horizontal_padding
+com.mame.flappy.R$dimen: int about_sentence_margin
+com.mame.flappy.R$dimen: int activity_horizontal_margin
+com.mame.flappy.R$dimen: int activity_vertical_margin
+com.mame.flappy.R$dimen: int add_friend_padding
+com.mame.flappy.R$dimen: int block_margin_bottom
+com.mame.flappy.R$dimen: int block_margin_top
+com.mame.flappy.R$dimen: int contact_margin_bottom
+com.mame.flappy.R$dimen: int contact_margin_dislay_top
+com.mame.flappy.R$dimen: int contact_margin_top
+com.mame.flappy.R$dimen: int conversation_bottom
+com.mame.flappy.R$dimen: int conversation_list_image_size
+com.mame.flappy.R$dimen: int create_account_block_padding
+com.mame.flappy.R$dimen: int default_font_size_description
+com.mame.flappy.R$dimen: int default_font_size_larze
+com.mame.flappy.R$dimen: int default_font_size_middle
+com.mame.flappy.R$dimen: int default_font_size_small
+com.mame.flappy.R$dimen: int default_font_size_subtitle
+com.mame.flappy.R$dimen: int default_margin
+com.mame.flappy.R$dimen: int default_margin_vertical
+com.mame.flappy.R$dimen: int default_mini_thumbnail_size
+com.mame.flappy.R$dimen: int default_padding
+com.mame.flappy.R$dimen: int default_padding_vertical
+com.mame.flappy.R$dimen: int default_text_size
+com.mame.flappy.R$dimen: int default_thumbnail_size
+com.mame.flappy.R$dimen: int default_title_size
+com.mame.flappy.R$dimen: int friend_list_image_size
+com.mame.flappy.R$dimen: int mini_button_width
+com.mame.flappy.R$dimen: int no_padding
+com.mame.flappy.R$dimen: int title_margin_bottom
+com.mame.flappy.R$dimen: int title_margin_top
+com.mame.flappy.R$dimen: int title_text_size
+com.mame.flappy.R$drawable: int add_thumbnail_button
+com.mame.flappy.R$drawable: int common_signin_btn_icon_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_disabled_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_disabled_focus_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_disabled_focus_light
+com.mame.flappy.R$drawable: int common_signin_btn_icon_disabled_light
+com.mame.flappy.R$drawable: int common_signin_btn_icon_focus_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_focus_light
+com.mame.flappy.R$drawable: int common_signin_btn_icon_light
+com.mame.flappy.R$drawable: int common_signin_btn_icon_normal_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_normal_light
+com.mame.flappy.R$drawable: int common_signin_btn_icon_pressed_dark
+com.mame.flappy.R$drawable: int common_signin_btn_icon_pressed_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_disabled_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_disabled_focus_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_disabled_focus_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_disabled_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_focus_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_focus_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_normal_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_normal_light
+com.mame.flappy.R$drawable: int common_signin_btn_text_pressed_dark
+com.mame.flappy.R$drawable: int common_signin_btn_text_pressed_light
+com.mame.flappy.R$drawable: int edittext_focused
+com.mame.flappy.R$drawable: int edittext_frame
+com.mame.flappy.R$drawable: int edittext_normal
+com.mame.flappy.R$drawable: int flappy_app_icon
+com.mame.flappy.R$drawable: int flappy_comment_bg_normal
+com.mame.flappy.R$drawable: int flappy_comment_reverse_bg
+com.mame.flappy.R$drawable: int flappy_conversation_message_bg
+com.mame.flappy.R$drawable: int flappy_default_thumbnail_large
+com.mame.flappy.R$drawable: int flappy_default_thumbnail_small
+com.mame.flappy.R$drawable: int flappy_help_about
+com.mame.flappy.R$drawable: int flappy_help_disappear
+com.mame.flappy.R$drawable: int flappy_help_no_reply
+com.mame.flappy.R$drawable: int flappy_help_no_stress
+com.mame.flappy.R$drawable: int flappy_new_message_number_1
+com.mame.flappy.R$drawable: int flappy_new_message_number_10
+com.mame.flappy.R$drawable: int flappy_new_message_number_10plus
+com.mame.flappy.R$drawable: int flappy_new_message_number_2
+com.mame.flappy.R$drawable: int flappy_new_message_number_3
+com.mame.flappy.R$drawable: int flappy_new_message_number_4
+com.mame.flappy.R$drawable: int flappy_new_message_number_5
+com.mame.flappy.R$drawable: int flappy_new_message_number_6
+com.mame.flappy.R$drawable: int flappy_new_message_number_7
+com.mame.flappy.R$drawable: int flappy_new_message_number_8
+com.mame.flappy.R$drawable: int flappy_new_message_number_9
+com.mame.flappy.R$drawable: int flappy_new_message_number_bg
+com.mame.flappy.R$drawable: int flappy_plug_icon
+com.mame.flappy.R$drawable: int flappy_update_icon
+com.mame.flappy.R$drawable: int flippy_statusbar_icon
+com.mame.flappy.R$drawable: int ic_plusone_medium_off_client
+com.mame.flappy.R$drawable: int ic_plusone_small_off_client
+com.mame.flappy.R$drawable: int ic_plusone_standard_off_client
+com.mame.flappy.R$drawable: int ic_plusone_tall_off_client
+com.mame.flappy.R$drawable: int lcom_normal_button_disabled
+com.mame.flappy.R$drawable: int lcom_normal_button_focused
+com.mame.flappy.R$drawable: int lcom_normal_button_normal
+com.mame.flappy.R$drawable: int lcom_normal_button_pressed
+com.mame.flappy.R$drawable: int lcom_signup_button_disabled
+com.mame.flappy.R$drawable: int lcom_signup_button_focused
+com.mame.flappy.R$drawable: int lcom_signup_button_normal
+com.mame.flappy.R$drawable: int lcom_signup_button_pressed
+com.mame.flappy.R$drawable: int message_edittext_focused
+com.mame.flappy.R$drawable: int message_edittext_frame
+com.mame.flappy.R$drawable: int message_edittext_normal
+com.mame.flappy.R$drawable: int normal_button
+com.mame.flappy.R$drawable: int normal_button_text
+com.mame.flappy.R$drawable: int signup_button
+com.mame.flappy.R$drawable: int welcome_background
+com.mame.flappy.R$drawable: int welcome_title_logo
+com.mame.flappy.R$id: int aboutGetStartedButton
+com.mame.flappy.R$id: int accountNextButton
+com.mame.flappy.R$id: int confirmForFromContactsDesc
+com.mame.flappy.R$id: int contactListThumbnail
+com.mame.flappy.R$id: int contactToUsButton
+com.mame.flappy.R$id: int contactToUsComment
+com.mame.flappy.R$id: int contactToUsDesc
+com.mame.flappy.R$id: int contactToUsTitle
+com.mame.flappy.R$id: int contactsListAddress
+com.mame.flappy.R$id: int contactsListButton
+com.mame.flappy.R$id: int contactsListListView
+com.mame.flappy.R$id: int contactsListName
+com.mame.flappy.R$id: int conversationDate
+com.mame.flappy.R$id: int conversationDateReverse
+com.mame.flappy.R$id: int conversationEditText
+com.mame.flappy.R$id: int conversationFriendLayout
+com.mame.flappy.R$id: int conversationListView
+com.mame.flappy.R$id: int conversationMessage
+com.mame.flappy.R$id: int conversationMessageReverse
+com.mame.flappy.R$id: int conversationMyLayout
+com.mame.flappy.R$id: int conversationSendButton
+com.mame.flappy.R$id: int conversationThumbnail
+com.mame.flappy.R$id: int conversationUserName
+com.mame.flappy.R$id: int createAccountDoneButton
+com.mame.flappy.R$id: int createCompleteMailAddress
+com.mame.flappy.R$id: int createCompletePassword
+com.mame.flappy.R$id: int createCompletePasswordAgain
+com.mame.flappy.R$id: int createCompleteResultView
+com.mame.flappy.R$id: int createPrivacyPolicy
+com.mame.flappy.R$id: int createResultView
+com.mame.flappy.R$id: int createTearmsOfService
+com.mame.flappy.R$id: int createUserName
+com.mame.flappy.R$id: int debugAddDummyDataButton
+com.mame.flappy.R$id: int debugAddDummyFriendshipButton
+com.mame.flappy.R$id: int debugAllUserButton
+com.mame.flappy.R$id: int debugAllUserNumberButton
+com.mame.flappy.R$id: int debugAllUserNumberText
+com.mame.flappy.R$id: int debugBackToMainButton
+com.mame.flappy.R$id: int debugConversationAddButton
+com.mame.flappy.R$id: int debugConversationButton
+com.mame.flappy.R$id: int debugConversationDate
+com.mame.flappy.R$id: int debugConversationFriendId
+com.mame.flappy.R$id: int debugConversationFriendName
+com.mame.flappy.R$id: int debugConversationMessage
+com.mame.flappy.R$id: int debugConversationSenderId
+com.mame.flappy.R$id: int debugConversationServerAddButton
+com.mame.flappy.R$id: int debugConversationUesrName
+com.mame.flappy.R$id: int debugConversationUserId
+com.mame.flappy.R$id: int debugFriendshipAddButton
+com.mame.flappy.R$id: int debugFriendshipButton
+com.mame.flappy.R$id: int debugFriendshipDate
+com.mame.flappy.R$id: int debugFriendshipFriendId
+com.mame.flappy.R$id: int debugFriendshipFriendName
+com.mame.flappy.R$id: int debugFriendshipMail
+com.mame.flappy.R$id: int debugFriendshipMessage
+com.mame.flappy.R$id: int debugFriendshipSenderId
+com.mame.flappy.R$id: int debugFriendshipUesrName
+com.mame.flappy.R$id: int debugFriendshipUserId
+com.mame.flappy.R$id: int directInputDesc
+com.mame.flappy.R$id: int firstFriendAddButton
+com.mame.flappy.R$id: int firstFriendAddText
+com.mame.flappy.R$id: int flappyAboutDesc
+com.mame.flappy.R$id: int flappyAboutTitle
+com.mame.flappy.R$id: int friendListView
+com.mame.flappy.R$id: int friendUserName
+com.mame.flappy.R$id: int fromContactsDesc
+com.mame.flappy.R$id: int helpListView
+com.mame.flappy.R$id: int hybrid
+com.mame.flappy.R$id: int inviMsgDlgMessageEditText
+com.mame.flappy.R$id: int inviMsgDlgMessageNegative
+com.mame.flappy.R$id: int inviMsgDlgMessagePositive
+com.mame.flappy.R$id: int lastMessage
+com.mame.flappy.R$id: int loginButton
+com.mame.flappy.R$id: int mailFromContacts
+com.mame.flappy.R$id: int menu_friendlist_add
+com.mame.flappy.R$id: int menu_friendlist_help
+com.mame.flappy.R$id: int menu_friendlist_setting
+com.mame.flappy.R$id: int menu_friendlist_signout
+com.mame.flappy.R$id: int menu_friendlist_update
+com.mame.flappy.R$id: int menu_login_help
+com.mame.flappy.R$id: int menu_welcome_help
+com.mame.flappy.R$id: int newConversationStartButton
+com.mame.flappy.R$id: int newInviResultView
+com.mame.flappy.R$id: int newMailAddressEditText
+com.mame.flappy.R$id: int none
+com.mame.flappy.R$id: int normal
+com.mame.flappy.R$id: int numOfNewMessage
+com.mame.flappy.R$id: int satellite
+com.mame.flappy.R$id: int selectThumbnailtButton
+com.mame.flappy.R$id: int sendMessageProgressText
+com.mame.flappy.R$id: int signinPassword
+com.mame.flappy.R$id: int signinResult
+com.mame.flappy.R$id: int signinUserName
+com.mame.flappy.R$id: int terrain
+com.mame.flappy.R$id: int thumbnailArea
+com.mame.flappy.R$id: int userThumbnail
+com.mame.flappy.R$id: int usreNameFromContacts
+com.mame.flappy.R$id: int welcomeCreateAccountButton
+com.mame.flappy.R$id: int welcomeSigninButton
+com.mame.flappy.R$integer: int ga_dispatchPeriod
+com.mame.flappy.R$integer: int google_play_services_version
+com.mame.flappy.R$layout: int activity_login
+com.mame.flappy.R$layout: int activity_main
+com.mame.flappy.R$layout: int contact_to_us
+com.mame.flappy.R$layout: int contactslist
+com.mame.flappy.R$layout: int contactslist_item
+com.mame.flappy.R$layout: int conversation
+com.mame.flappy.R$layout: int conversationlist_item
+com.mame.flappy.R$layout: int create_account_complete
+com.mame.flappy.R$layout: int createaccount
+com.mame.flappy.R$layout: int debug_alluser
+com.mame.flappy.R$layout: int debug_conversation
+com.mame.flappy.R$layout: int debug_friendship
+com.mame.flappy.R$layout: int flappy_about
+com.mame.flappy.R$layout: int friendlist
+com.mame.flappy.R$layout: int friendlist_item
+com.mame.flappy.R$layout: int help
+com.mame.flappy.R$layout: int invitation_confirm_dialog
+com.mame.flappy.R$layout: int myprofile
+com.mame.flappy.R$layout: int startconversation
+com.mame.flappy.R$layout: int welcome
+com.mame.flappy.R$menu: int about_menu
+com.mame.flappy.R$menu: int contact_menu
+com.mame.flappy.R$menu: int friendlist_menu
+com.mame.flappy.R$menu: int help_menu
+com.mame.flappy.R$menu: int login
+com.mame.flappy.R$menu: int signup_complete_menu
+com.mame.flappy.R$menu: int signup_menu
+com.mame.flappy.R$menu: int start_conversation_menu
+com.mame.flappy.R$menu: int welcome_menu
+com.mame.flappy.R$raw: int disappear_message
+com.mame.flappy.R$raw: int new_message
+com.mame.flappy.R$string: int action_settings
+com.mame.flappy.R$string: int app_name
+com.mame.flappy.R$string: int auth_client_needs_enabling_title
+com.mame.flappy.R$string: int auth_client_needs_installation_title
+com.mame.flappy.R$string: int auth_client_needs_update_title
+com.mame.flappy.R$string: int auth_client_play_services_err_notification_msg
+com.mame.flappy.R$string: int auth_client_requested_by_msg
+com.mame.flappy.R$string: int auth_client_using_bad_version_title
+com.mame.flappy.R$string: int common_google_play_services_enable_button
+com.mame.flappy.R$string: int common_google_play_services_enable_text
+com.mame.flappy.R$string: int common_google_play_services_enable_title
+com.mame.flappy.R$string: int common_google_play_services_install_button
+com.mame.flappy.R$string: int common_google_play_services_install_text_phone
+com.mame.flappy.R$string: int common_google_play_services_install_text_tablet
+com.mame.flappy.R$string: int common_google_play_services_install_title
+com.mame.flappy.R$string: int common_google_play_services_invalid_account_text
+com.mame.flappy.R$string: int common_google_play_services_invalid_account_title
+com.mame.flappy.R$string: int common_google_play_services_network_error_text
+com.mame.flappy.R$string: int common_google_play_services_network_error_title
+com.mame.flappy.R$string: int common_google_play_services_unknown_issue
+com.mame.flappy.R$string: int common_google_play_services_unsupported_date_text
+com.mame.flappy.R$string: int common_google_play_services_unsupported_text
+com.mame.flappy.R$string: int common_google_play_services_unsupported_title
+com.mame.flappy.R$string: int common_google_play_services_update_button
+com.mame.flappy.R$string: int common_google_play_services_update_text
+com.mame.flappy.R$string: int common_google_play_services_update_title
+com.mame.flappy.R$string: int common_signin_button_text
+com.mame.flappy.R$string: int common_signin_button_text_long
+com.mame.flappy.R$string: int ga_logLevel
+com.mame.flappy.R$string: int ga_sampleFrequency
+com.mame.flappy.R$string: int ga_trackingId
+com.mame.flappy.R$string: int location_client_powered_by_google
+com.mame.flappy.R$string: int str_contact_us_desc
+com.mame.flappy.R$string: int str_contact_us_message_hint
+com.mame.flappy.R$string: int str_contact_us_message_title_prompt
+com.mame.flappy.R$string: int str_contact_us_title
+com.mame.flappy.R$string: int str_contactslist_confirm_failed_to_store_data
+com.mame.flappy.R$string: int str_contactslist_confirm_maiL_cannot_be_sent
+com.mame.flappy.R$string: int str_contactslist_confirm_successfuly_sent
+com.mame.flappy.R$string: int str_contactslist_confirm_title
+com.mame.flappy.R$string: int str_contactslist_confirm_unknown_error
+com.mame.flappy.R$string: int str_contactslist_error_no_contact
+com.mame.flappy.R$string: int str_contactslist_title
+com.mame.flappy.R$string: int str_conversation_get_info_progress_title
+com.mame.flappy.R$string: int str_conversation_message_fail_sent
+com.mame.flappy.R$string: int str_conversation_message_page
+com.mame.flappy.R$string: int str_conversation_message_successfuly_sent
+com.mame.flappy.R$string: int str_conversation_no_message
+com.mame.flappy.R$string: int str_conversation_no_text_input
+com.mame.flappy.R$string: int str_conversation_progress_desc
+com.mame.flappy.R$string: int str_conversation_progress_title
+com.mame.flappy.R$string: int str_conversation_send_button
+com.mame.flappy.R$string: int str_conversation_send_hint_text
+com.mame.flappy.R$string: int str_conversation_time_unknown
+com.mame.flappy.R$string: int str_conversation_title
+com.mame.flappy.R$string: int str_conversation_user_name_not_set
+com.mame.flappy.R$string: int str_create_account_check_name_desc
+com.mame.flappy.R$string: int str_create_account_check_name_title
+com.mame.flappy.R$string: int str_create_account_create_account_done_button
+com.mame.flappy.R$string: int str_create_account_create_fail_invalid_address
+com.mame.flappy.R$string: int str_create_account_fail_address_invalid_char
+com.mame.flappy.R$string: int str_create_account_fail_address_invalid_char_code
+com.mame.flappy.R$string: int str_create_account_fail_address_null
+com.mame.flappy.R$string: int str_create_account_fail_invalid_password
+com.mame.flappy.R$string: int str_create_account_fail_password_invalid_length
+com.mame.flappy.R$string: int str_create_account_fail_password_not_half_char
+com.mame.flappy.R$string: int str_create_account_fail_password_null
+com.mame.flappy.R$string: int str_create_account_fail_server_error
+com.mame.flappy.R$string: int str_create_account_fail_user_exist
+com.mame.flappy.R$string: int str_create_account_fail_username_invalid_length
+com.mame.flappy.R$string: int str_create_account_fail_username_not_half_char
+com.mame.flappy.R$string: int str_create_account_fail_username_null
+com.mame.flappy.R$string: int str_create_account_mail_address_hint
+com.mame.flappy.R$string: int str_create_account_next_button
+com.mame.flappy.R$string: int str_create_account_password_desc
+com.mame.flappy.R$string: int str_create_account_password_hint
+com.mame.flappy.R$string: int str_create_account_password_hint_again
+com.mame.flappy.R$string: int str_create_account_photo_desc
+com.mame.flappy.R$string: int str_create_account_photo_title
+com.mame.flappy.R$string: int str_create_account_privacy_policy
+com.mame.flappy.R$string: int str_create_account_tearms_of_service
+com.mame.flappy.R$string: int str_create_account_title
+com.mame.flappy.R$string: int str_create_account_tos_privacy_between
+com.mame.flappy.R$string: int str_create_account_tos_privacy_desc1
+com.mame.flappy.R$string: int str_create_account_tos_privacy_desc2
+com.mame.flappy.R$string: int str_create_account_username_desc
+com.mame.flappy.R$string: int str_create_account_username_hint
+com.mame.flappy.R$string: int str_flappy_about_desc
+com.mame.flappy.R$string: int str_flappy_about_disappear_message_desc
+com.mame.flappy.R$string: int str_flappy_about_disappear_message_title
+com.mame.flappy.R$string: int str_flappy_about_get_started_button
+com.mame.flappy.R$string: int str_flappy_about_main_itle
+com.mame.flappy.R$string: int str_flappy_about_merit_desc
+com.mame.flappy.R$string: int str_flappy_about_merit_title
+com.mame.flappy.R$string: int str_flappy_about_start_desc
+com.mame.flappy.R$string: int str_flappy_about_start_title
+com.mame.flappy.R$string: int str_flappy_about_stress_less_desc
+com.mame.flappy.R$string: int str_flappy_about_stress_less_title
+com.mame.flappy.R$string: int str_flappy_about_title
+com.mame.flappy.R$string: int str_flappy_setting_notification_sound_title
+com.mame.flappy.R$string: int str_flappy_setting_notification_sound_value_off
+com.mame.flappy.R$string: int str_flappy_setting_notification_sound_value_on
+com.mame.flappy.R$string: int str_flappy_setting_notification_subtitle
+com.mame.flappy.R$string: int str_flappy_setting_notification_vibration_title
+com.mame.flappy.R$string: int str_flappy_setting_notification_vibration_value_off
+com.mame.flappy.R$string: int str_flappy_setting_notification_vibration_value_on
+com.mame.flappy.R$string: int str_flappy_setting_title
+com.mame.flappy.R$string: int str_friendlist_first_add_button
+com.mame.flappy.R$string: int str_friendlist_first_add_text
+com.mame.flappy.R$string: int str_friendlist_message_disappeared
+com.mame.flappy.R$string: int str_friendlist_progress_desc
+com.mame.flappy.R$string: int str_friendlist_progress_title
+com.mame.flappy.R$string: int str_friendlist_title
+com.mame.flappy.R$string: int str_generic_no_network_error
+com.mame.flappy.R$string: int str_generic_ok
+com.mame.flappy.R$string: int str_generic_preserved_char_error
+com.mame.flappy.R$string: int str_generic_server_time_out
+com.mame.flappy.R$string: int str_generic_server_timeout
+com.mame.flappy.R$string: int str_generic_time_before
+com.mame.flappy.R$string: int str_generic_time_hour
+com.mame.flappy.R$string: int str_generic_time_min
+com.mame.flappy.R$string: int str_generic_time_sec
+com.mame.flappy.R$string: int str_generic_time_unknown_date
+com.mame.flappy.R$string: int str_generic_unknown_error
+com.mame.flappy.R$string: int str_generic_wait_desc
+com.mame.flappy.R$string: int str_help_contact
+com.mame.flappy.R$string: int str_help_for_ads
+com.mame.flappy.R$string: int str_help_for_apply
+com.mame.flappy.R$string: int str_help_for_bug
+com.mame.flappy.R$string: int str_help_for_how_to_use
+com.mame.flappy.R$string: int str_help_for_improve_request
+com.mame.flappy.R$string: int str_help_for_others
+com.mame.flappy.R$string: int str_help_mail_title
+com.mame.flappy.R$string: int str_help_no_comment
+com.mame.flappy.R$string: int str_help_no_subject
+com.mame.flappy.R$string: int str_help_not_selected
+com.mame.flappy.R$string: int str_help_privacy_policy
+com.mame.flappy.R$string: int str_help_send_mail_button
+com.mame.flappy.R$string: int str_help_title
+com.mame.flappy.R$string: int str_help_tos
+com.mame.flappy.R$string: int str_help_what_is_this
+com.mame.flappy.R$string: int str_invitation_address_null
+com.mame.flappy.R$string: int str_invitation_confirm_desc
+com.mame.flappy.R$string: int str_invitation_direct_input_desc
+com.mame.flappy.R$string: int str_invitation_input_mail_address_hint
+com.mame.flappy.R$string: int str_invitation_input_message_button
+com.mame.flappy.R$string: int str_invitation_input_message_hint
+com.mame.flappy.R$string: int str_invitation_input_message_title
+com.mame.flappy.R$string: int str_invitation_invalid_mail_address
+com.mame.flappy.R$string: int str_invitation_mail_address_check_title
+com.mame.flappy.R$string: int str_invitation_mail_cannot_be_sent
+com.mame.flappy.R$string: int str_invitation_message_send_progress_text
+com.mame.flappy.R$string: int str_invitation_select_from_contacts_button
+com.mame.flappy.R$string: int str_invitation_select_from_contacts_desc
+com.mame.flappy.R$string: int str_invitation_send_cancel_button
+com.mame.flappy.R$string: int str_invitation_send_message_button
+com.mame.flappy.R$string: int str_invitation_send_message_prog_dialog_title
+com.mame.flappy.R$string: int str_invitation_successfully_invited
+com.mame.flappy.R$string: int str_invitation_title
+com.mame.flappy.R$string: int str_invitation_unknown_error
+com.mame.flappy.R$string: int str_login_create_account_button
+com.mame.flappy.R$string: int str_login_login_button
+com.mame.flappy.R$string: int str_login_login_desc
+com.mame.flappy.R$string: int str_login_login_fail_login_failed
+com.mame.flappy.R$string: int str_login_login_fail_no_user
+com.mame.flappy.R$string: int str_login_login_fail_password_invalid_length
+com.mame.flappy.R$string: int str_login_login_fail_password_not_half_char
+com.mame.flappy.R$string: int str_login_login_fail_password_null
+com.mame.flappy.R$string: int str_login_login_fail_unknown_error
+com.mame.flappy.R$string: int str_login_login_fail_username_invalid_length
+com.mame.flappy.R$string: int str_login_login_fail_username_not_half_char
+com.mame.flappy.R$string: int str_login_login_fail_username_null
+com.mame.flappy.R$string: int str_login_name
+com.mame.flappy.R$string: int str_login_no_user_account
+com.mame.flappy.R$string: int str_login_progress_title
+com.mame.flappy.R$string: int str_login_start_hint_password
+com.mame.flappy.R$string: int str_login_start_hint_user_name
+com.mame.flappy.R$string: int str_menu_add_new
+com.mame.flappy.R$string: int str_menu_help
+com.mame.flappy.R$string: int str_menu_setting
+com.mame.flappy.R$string: int str_menu_signout
+com.mame.flappy.R$string: int str_menu_update
+com.mame.flappy.R$string: int str_notification_app_name
+com.mame.flappy.R$string: int str_notification_content_text
+com.mame.flappy.R$string: int str_notification_ticker_text
+com.mame.flappy.R$string: int str_signout_confirm_desc
+com.mame.flappy.R$string: int str_signout_confirm_title
+com.mame.flappy.R$string: int str_signout_dialog_negative
+com.mame.flappy.R$string: int str_signout_dialog_positive
+com.mame.flappy.R$string: int str_welcome_already_have_account
+com.mame.flappy.R$string: int str_welcome_create_account_button
+com.mame.flappy.R$string: int str_welcome_desc
+com.mame.flappy.R$string: int str_welcome_not_have_account
+com.mame.flappy.R$string: int str_welcome_signin_button
+com.mame.flappy.R$string: int str_welcome_title
+com.mame.flappy.R$style: int AboutDescription
+com.mame.flappy.R$style: int AboutSubTitle
+com.mame.flappy.R$style: int AppBaseTheme
+com.mame.flappy.R$style: int AppTheme
+com.mame.flappy.R$style: int EditTextStyle
+com.mame.flappy.R$style: int GeneralInageDescription
+com.mame.flappy.R$style: int LcomActionBarStyle
+com.mame.flappy.R$style: int LcomNormalButtonTheme
+com.mame.flappy.R$style: int OptionMenuTextStyle
+com.mame.flappy.R$style: int WarningTextStyle
+com.mame.flappy.R$style: int WelcomeDescription
+com.mame.flappy.R$styleable: int[] AdsAttrs
+com.mame.flappy.R$styleable: int AdsAttrs_adSize
+com.mame.flappy.R$styleable: int AdsAttrs_adSizes
+com.mame.flappy.R$styleable: int AdsAttrs_adUnitId
+com.mame.flappy.R$styleable: int[] MapAttrs
+com.mame.flappy.R$styleable: int MapAttrs_cameraBearing
+com.mame.flappy.R$styleable: int MapAttrs_cameraTargetLat
+com.mame.flappy.R$styleable: int MapAttrs_cameraTargetLng
+com.mame.flappy.R$styleable: int MapAttrs_cameraTilt
+com.mame.flappy.R$styleable: int MapAttrs_cameraZoom
+com.mame.flappy.R$styleable: int MapAttrs_mapType
+com.mame.flappy.R$styleable: int MapAttrs_uiCompass
+com.mame.flappy.R$styleable: int MapAttrs_uiRotateGestures
+com.mame.flappy.R$styleable: int MapAttrs_uiScrollGestures
+com.mame.flappy.R$styleable: int MapAttrs_uiTiltGestures
+com.mame.flappy.R$styleable: int MapAttrs_uiZoomControls
+com.mame.flappy.R$styleable: int MapAttrs_uiZoomGestures
+com.mame.flappy.R$styleable: int MapAttrs_useViewLifecycle
+com.mame.flappy.R$styleable: int MapAttrs_zOrderOnTop
+com.mame.flappy.R$xml: int setting_preference
+com.mame.flappy.constant.LcomConst$LOCALE_SETTING: com.mame.flappy.constant.LcomConst$LOCALE_SETTING[] values()
+com.mame.flappy.constant.LcomConst$LOCALE_SETTING: com.mame.flappy.constant.LcomConst$LOCALE_SETTING valueOf(java.lang.String)
+com.mame.flappy.constant.LcomConst$ServerRequestContext: com.mame.flappy.constant.LcomConst$ServerRequestContext[] values()
+com.mame.flappy.constant.LcomConst$ServerRequestContext: com.mame.flappy.constant.LcomConst$ServerRequestContext valueOf(java.lang.String)
+com.mame.flappy.db.DatabaseContentProvider
+com.mame.flappy.db.DatabaseContentProvider: DatabaseContentProvider()
+com.mame.flappy.notification.NewMessageNotificationReceiver
+com.mame.flappy.notification.NewMessageNotificationReceiver: NewMessageNotificationReceiver()
+com.mame.flappy.notification.NewMessageNotificationService
+com.mame.flappy.notification.NewMessageNotificationService: NewMessageNotificationService()
+com.mame.flappy.notification.NewMessageNotificationService: NewMessageNotificationService(java.lang.String)
+com.mame.flappy.server.GCMIntentService
+com.mame.flappy.server.GCMIntentService: GCMIntentService()
+com.mame.flappy.server.GcmBroadcastReceiver
+com.mame.flappy.server.GcmBroadcastReceiver: GcmBroadcastReceiver()
+com.mame.flappy.ui.ContactListActivity
+com.mame.flappy.ui.ContactListActivity: ContactListActivity()
+com.mame.flappy.ui.ContactToUsActivity
+com.mame.flappy.ui.ContactToUsActivity: ContactToUsActivity()
+com.mame.flappy.ui.ConversationActivity
+com.mame.flappy.ui.ConversationActivity: ConversationActivity()
+com.mame.flappy.ui.CreateAccountActivity
+com.mame.flappy.ui.CreateAccountActivity: CreateAccountActivity()
+com.mame.flappy.ui.CreateAccountCompleteActivity
+com.mame.flappy.ui.CreateAccountCompleteActivity: CreateAccountCompleteActivity()
+com.mame.flappy.ui.FlappyAboutActivity
+com.mame.flappy.ui.FlappyAboutActivity: FlappyAboutActivity()
+com.mame.flappy.ui.FriendListActivity
+com.mame.flappy.ui.FriendListActivity: FriendListActivity()
+com.mame.flappy.ui.HelpActivity
+com.mame.flappy.ui.HelpActivity: HelpActivity()
+com.mame.flappy.ui.LoginActivity
+com.mame.flappy.ui.LoginActivity: LoginActivity()
+com.mame.flappy.ui.SettingActivity
+com.mame.flappy.ui.SettingActivity: SettingActivity()
+com.mame.flappy.ui.StartNewConversationActivity
+com.mame.flappy.ui.StartNewConversationActivity: StartNewConversationActivity()
+com.mame.flappy.ui.WelcomeActivity
+com.mame.flappy.ui.WelcomeActivity: WelcomeActivity()
+com.mame.flappy.ui.view.ConversationCustomListView
+com.mame.flappy.ui.view.ConversationCustomListView: ConversationCustomListView(android.content.Context)
+com.mame.flappy.ui.view.ConversationCustomListView: ConversationCustomListView(android.content.Context,android.util.AttributeSet,int)
+com.mame.flappy.ui.view.ConversationCustomListView: ConversationCustomListView(android.content.Context,android.util.AttributeSet)
+com.mame.flappy.ui.view.ConversationCustomListView: void setAdapter(android.widget.ListAdapter)
+com.mame.flappy.ui.view.ConversationCustomListView: void setListener(com.mame.flappy.ui.view.ConversationCustomListView$ConversationListScrollListener)
+com.mame.flappy.ui.view.FriendListCustomListView
+com.mame.flappy.ui.view.FriendListCustomListView: FriendListCustomListView(android.content.Context)
+com.mame.flappy.ui.view.FriendListCustomListView: FriendListCustomListView(android.content.Context,android.util.AttributeSet,int)
+com.mame.flappy.ui.view.FriendListCustomListView: FriendListCustomListView(android.content.Context,android.util.AttributeSet)
+com.mame.flappy.ui.view.FriendListCustomListView: void setAdapter(android.widget.ListAdapter)
+com.mame.flappy.ui.view.FriendListCustomListView: void setListener(com.mame.flappy.ui.view.FriendListCustomListView$FriendListScrollListener)
+javax.annotation.meta.When: javax.annotation.meta.When[] values()
+javax.annotation.meta.When: javax.annotation.meta.When valueOf(java.lang.String)
+net.sqlcipher.AbstractCursor
+net.sqlcipher.AbstractCursor: java.lang.String TAG
+net.sqlcipher.AbstractCursor: android.database.DataSetObservable mDataSetObservable
+net.sqlcipher.AbstractCursor: android.database.ContentObservable mContentObservable
+net.sqlcipher.AbstractCursor: java.util.HashMap mUpdatedRows
+net.sqlcipher.AbstractCursor: int mRowIdColumnIndex
+net.sqlcipher.AbstractCursor: int mPos
+net.sqlcipher.AbstractCursor: java.lang.Long mCurrentRowID
+net.sqlcipher.AbstractCursor: android.content.ContentResolver mContentResolver
+net.sqlcipher.AbstractCursor: boolean mClosed
+net.sqlcipher.AbstractCursor: android.net.Uri mNotifyUri
+net.sqlcipher.AbstractCursor: android.database.ContentObserver mSelfObserver
+net.sqlcipher.AbstractCursor: java.lang.Object mSelfObserverLock
+net.sqlcipher.AbstractCursor: boolean mSelfObserverRegistered
+net.sqlcipher.AbstractCursor: int getCount()
+net.sqlcipher.AbstractCursor: java.lang.String[] getColumnNames()
+net.sqlcipher.AbstractCursor: java.lang.String getString(int)
+net.sqlcipher.AbstractCursor: short getShort(int)
+net.sqlcipher.AbstractCursor: int getInt(int)
+net.sqlcipher.AbstractCursor: long getLong(int)
+net.sqlcipher.AbstractCursor: float getFloat(int)
+net.sqlcipher.AbstractCursor: double getDouble(int)
+net.sqlcipher.AbstractCursor: boolean isNull(int)
+net.sqlcipher.AbstractCursor: int getType(int)
+net.sqlcipher.AbstractCursor: byte[] getBlob(int)
+net.sqlcipher.AbstractCursor: net.sqlcipher.CursorWindow getWindow()
+net.sqlcipher.AbstractCursor: int getColumnCount()
+net.sqlcipher.AbstractCursor: void deactivate()
+net.sqlcipher.AbstractCursor: void deactivateInternal()
+net.sqlcipher.AbstractCursor: boolean requery()
+net.sqlcipher.AbstractCursor: boolean isClosed()
+net.sqlcipher.AbstractCursor: void close()
+net.sqlcipher.AbstractCursor: boolean commitUpdates(java.util.Map)
+net.sqlcipher.AbstractCursor: boolean deleteRow()
+net.sqlcipher.AbstractCursor: boolean onMove(int,int)
+net.sqlcipher.AbstractCursor: void copyStringToBuffer(int,android.database.CharArrayBuffer)
+net.sqlcipher.AbstractCursor: AbstractCursor()
+net.sqlcipher.AbstractCursor: int getPosition()
+net.sqlcipher.AbstractCursor: boolean moveToPosition(int)
+net.sqlcipher.AbstractCursor: void fillWindow(int,android.database.CursorWindow)
+net.sqlcipher.AbstractCursor: boolean move(int)
+net.sqlcipher.AbstractCursor: boolean moveToFirst()
+net.sqlcipher.AbstractCursor: boolean moveToLast()
+net.sqlcipher.AbstractCursor: boolean moveToNext()
+net.sqlcipher.AbstractCursor: boolean moveToPrevious()
+net.sqlcipher.AbstractCursor: boolean isFirst()
+net.sqlcipher.AbstractCursor: boolean isLast()
+net.sqlcipher.AbstractCursor: boolean isBeforeFirst()
+net.sqlcipher.AbstractCursor: boolean isAfterLast()
+net.sqlcipher.AbstractCursor: int getColumnIndex(java.lang.String)
+net.sqlcipher.AbstractCursor: int getColumnIndexOrThrow(java.lang.String)
+net.sqlcipher.AbstractCursor: java.lang.String getColumnName(int)
+net.sqlcipher.AbstractCursor: boolean updateBlob(int,byte[])
+net.sqlcipher.AbstractCursor: boolean updateString(int,java.lang.String)
+net.sqlcipher.AbstractCursor: boolean updateShort(int,short)
+net.sqlcipher.AbstractCursor: boolean updateInt(int,int)
+net.sqlcipher.AbstractCursor: boolean updateLong(int,long)
+net.sqlcipher.AbstractCursor: boolean updateFloat(int,float)
+net.sqlcipher.AbstractCursor: boolean updateDouble(int,double)
+net.sqlcipher.AbstractCursor: boolean updateToNull(int)
+net.sqlcipher.AbstractCursor: boolean update(int,java.lang.Object)
+net.sqlcipher.AbstractCursor: boolean hasUpdates()
+net.sqlcipher.AbstractCursor: void abortUpdates()
+net.sqlcipher.AbstractCursor: boolean commitUpdates()
+net.sqlcipher.AbstractCursor: boolean supportsUpdates()
+net.sqlcipher.AbstractCursor: void registerContentObserver(android.database.ContentObserver)
+net.sqlcipher.AbstractCursor: void unregisterContentObserver(android.database.ContentObserver)
+net.sqlcipher.AbstractCursor: void notifyDataSetChange()
+net.sqlcipher.AbstractCursor: android.database.DataSetObservable getDataSetObservable()
+net.sqlcipher.AbstractCursor: void registerDataSetObserver(android.database.DataSetObserver)
+net.sqlcipher.AbstractCursor: void unregisterDataSetObserver(android.database.DataSetObserver)
+net.sqlcipher.AbstractCursor: void onChange(boolean)
+net.sqlcipher.AbstractCursor: void setNotificationUri(android.content.ContentResolver,android.net.Uri)
+net.sqlcipher.AbstractCursor: android.net.Uri getNotificationUri()
+net.sqlcipher.AbstractCursor: boolean getWantsAllOnMoveCalls()
+net.sqlcipher.AbstractCursor: android.os.Bundle getExtras()
+net.sqlcipher.AbstractCursor: android.os.Bundle respond(android.os.Bundle)
+net.sqlcipher.AbstractCursor: boolean isFieldUpdated(int)
+net.sqlcipher.AbstractCursor: java.lang.Object getUpdatedField(int)
+net.sqlcipher.AbstractCursor: void checkPosition()
+net.sqlcipher.AbstractCursor: void finalize()
+net.sqlcipher.AbstractCursor: android.database.CursorWindow getWindow()
+net.sqlcipher.AbstractCursor$SelfContentObserver
+net.sqlcipher.AbstractCursor$SelfContentObserver: java.lang.ref.WeakReference mCursor
+net.sqlcipher.AbstractCursor$SelfContentObserver: AbstractCursor$SelfContentObserver(net.sqlcipher.AbstractCursor)
+net.sqlcipher.AbstractCursor$SelfContentObserver: boolean deliverSelfNotifications()
+net.sqlcipher.AbstractCursor$SelfContentObserver: void onChange(boolean)
+net.sqlcipher.AbstractWindowedCursor
+net.sqlcipher.AbstractWindowedCursor: net.sqlcipher.CursorWindow mWindow
+net.sqlcipher.AbstractWindowedCursor: AbstractWindowedCursor()
+net.sqlcipher.AbstractWindowedCursor: byte[] getBlob(int)
+net.sqlcipher.AbstractWindowedCursor: java.lang.String getString(int)
+net.sqlcipher.AbstractWindowedCursor: void copyStringToBuffer(int,android.database.CharArrayBuffer)
+net.sqlcipher.AbstractWindowedCursor: short getShort(int)
+net.sqlcipher.AbstractWindowedCursor: int getInt(int)
+net.sqlcipher.AbstractWindowedCursor: long getLong(int)
+net.sqlcipher.AbstractWindowedCursor: float getFloat(int)
+net.sqlcipher.AbstractWindowedCursor: double getDouble(int)
+net.sqlcipher.AbstractWindowedCursor: boolean isNull(int)
+net.sqlcipher.AbstractWindowedCursor: boolean isBlob(int)
+net.sqlcipher.AbstractWindowedCursor: boolean isString(int)
+net.sqlcipher.AbstractWindowedCursor: boolean isLong(int)
+net.sqlcipher.AbstractWindowedCursor: boolean isFloat(int)
+net.sqlcipher.AbstractWindowedCursor: int getType(int)
+net.sqlcipher.AbstractWindowedCursor: void checkPosition()
+net.sqlcipher.AbstractWindowedCursor: net.sqlcipher.CursorWindow getWindow()
+net.sqlcipher.AbstractWindowedCursor: void setWindow(net.sqlcipher.CursorWindow)
+net.sqlcipher.AbstractWindowedCursor: boolean hasWindow()
+net.sqlcipher.AbstractWindowedCursor: android.database.CursorWindow getWindow()
+net.sqlcipher.BuildConfig
+net.sqlcipher.BuildConfig: boolean DEBUG
+net.sqlcipher.BuildConfig: BuildConfig()
+net.sqlcipher.BulkCursorNative
+net.sqlcipher.BulkCursorNative: BulkCursorNative()
+net.sqlcipher.BulkCursorNative: net.sqlcipher.IBulkCursor asInterface(android.os.IBinder)
+net.sqlcipher.BulkCursorNative: boolean onTransact(int,android.os.Parcel,android.os.Parcel,int)
+net.sqlcipher.BulkCursorNative: android.os.IBinder asBinder()
+net.sqlcipher.BulkCursorProxy
+net.sqlcipher.BulkCursorProxy: android.os.IBinder mRemote
+net.sqlcipher.BulkCursorProxy: android.os.Bundle mExtras
+net.sqlcipher.BulkCursorProxy: BulkCursorProxy(android.os.IBinder)
+net.sqlcipher.BulkCursorProxy: android.os.IBinder asBinder()
+net.sqlcipher.BulkCursorProxy: net.sqlcipher.CursorWindow getWindow(int)
+net.sqlcipher.BulkCursorProxy: void onMove(int)
+net.sqlcipher.BulkCursorProxy: int count()
+net.sqlcipher.BulkCursorProxy: java.lang.String[] getColumnNames()
+net.sqlcipher.BulkCursorProxy: void deactivate()
+net.sqlcipher.BulkCursorProxy: void close()
+net.sqlcipher.BulkCursorProxy: int requery(net.sqlcipher.IContentObserver,net.sqlcipher.CursorWindow)
+net.sqlcipher.BulkCursorProxy: boolean updateRows(java.util.Map)
+net.sqlcipher.BulkCursorProxy: boolean deleteRow(int)
+net.sqlcipher.BulkCursorProxy: boolean getWantsAllOnMoveCalls()
+net.sqlcipher.BulkCursorProxy: android.os.Bundle getExtras()
+net.sqlcipher.BulkCursorProxy: android.os.Bundle respond(android.os.Bundle)
+net.sqlcipher.BulkCursorToCursorAdaptor
+net.sqlcipher.BulkCursorToCursorAdaptor: java.lang.String TAG
+net.sqlcipher.BulkCursorToCursorAdaptor: net.sqlcipher.AbstractCursor$SelfContentObserver mObserverBridge
+net.sqlcipher.BulkCursorToCursorAdaptor: net.sqlcipher.IBulkCursor mBulkCursor
+net.sqlcipher.BulkCursorToCursorAdaptor: int mCount
+net.sqlcipher.BulkCursorToCursorAdaptor: java.lang.String[] mColumns
+net.sqlcipher.BulkCursorToCursorAdaptor: boolean mWantsAllOnMoveCalls
+net.sqlcipher.BulkCursorToCursorAdaptor: BulkCursorToCursorAdaptor()
+net.sqlcipher.BulkCursorToCursorAdaptor: void set(net.sqlcipher.IBulkCursor)
+net.sqlcipher.BulkCursorToCursorAdaptor: void set(net.sqlcipher.IBulkCursor,int,int)
+net.sqlcipher.BulkCursorToCursorAdaptor: int findRowIdColumnIndex(java.lang.String[])
+net.sqlcipher.BulkCursorToCursorAdaptor: net.sqlcipher.IContentObserver getObserver()
+net.sqlcipher.BulkCursorToCursorAdaptor: int getCount()
+net.sqlcipher.BulkCursorToCursorAdaptor: boolean onMove(int,int)
+net.sqlcipher.BulkCursorToCursorAdaptor: void deactivate()
+net.sqlcipher.BulkCursorToCursorAdaptor: void close()
+net.sqlcipher.BulkCursorToCursorAdaptor: boolean requery()
+net.sqlcipher.BulkCursorToCursorAdaptor: boolean deleteRow()
+net.sqlcipher.BulkCursorToCursorAdaptor: java.lang.String[] getColumnNames()
+net.sqlcipher.BulkCursorToCursorAdaptor: boolean commitUpdates(java.util.Map)
+net.sqlcipher.BulkCursorToCursorAdaptor: android.os.Bundle getExtras()
+net.sqlcipher.BulkCursorToCursorAdaptor: android.os.Bundle respond(android.os.Bundle)
+net.sqlcipher.BulkCursorToCursorAdaptor: void copyStringToBuffer(int,android.database.CharArrayBuffer)
+net.sqlcipher.BulkCursorToCursorAdaptor: void registerContentObserver(android.database.ContentObserver)
+net.sqlcipher.BulkCursorToCursorAdaptor: void registerDataSetObserver(android.database.DataSetObserver)
+net.sqlcipher.BulkCursorToCursorAdaptor: void unregisterContentObserver(android.database.ContentObserver)
+net.sqlcipher.BulkCursorToCursorAdaptor: void unregisterDataSetObserver(android.database.DataSetObserver)
+net.sqlcipher.CrossProcessCursorWrapper
+net.sqlcipher.CrossProcessCursorWrapper: CrossProcessCursorWrapper(net.sqlcipher.Cursor)
+net.sqlcipher.CrossProcessCursorWrapper: android.database.CursorWindow getWindow()
+net.sqlcipher.CrossProcessCursorWrapper: void fillWindow(int,android.database.CursorWindow)
+net.sqlcipher.CrossProcessCursorWrapper: boolean onMove(int,int)
+net.sqlcipher.Cursor
+net.sqlcipher.Cursor: int FIELD_TYPE_NULL
+net.sqlcipher.Cursor: int FIELD_TYPE_INTEGER
+net.sqlcipher.Cursor: int FIELD_TYPE_FLOAT
+net.sqlcipher.Cursor: int FIELD_TYPE_STRING
+net.sqlcipher.Cursor: int FIELD_TYPE_BLOB
+net.sqlcipher.Cursor: int getType(int)
+net.sqlcipher.CursorIndexOutOfBoundsException
+net.sqlcipher.CursorIndexOutOfBoundsException: CursorIndexOutOfBoundsException(int,int)
+net.sqlcipher.CursorIndexOutOfBoundsException: CursorIndexOutOfBoundsException(java.lang.String)
+net.sqlcipher.CursorWindow
+net.sqlcipher.CursorWindow: int nWindow
+net.sqlcipher.CursorWindow: int mStartPos
+net.sqlcipher.CursorWindow: android.os.Parcelable$Creator CREATOR
+net.sqlcipher.CursorWindow: CursorWindow(boolean)
+net.sqlcipher.CursorWindow: int getStartPosition()
+net.sqlcipher.CursorWindow: void setStartPosition(int)
+net.sqlcipher.CursorWindow: int getNumRows()
+net.sqlcipher.CursorWindow: int getNumRows_native()
+net.sqlcipher.CursorWindow: boolean setNumColumns(int)
+net.sqlcipher.CursorWindow: boolean setNumColumns_native(int)
+net.sqlcipher.CursorWindow: boolean allocRow()
+net.sqlcipher.CursorWindow: boolean allocRow_native()
+net.sqlcipher.CursorWindow: void freeLastRow()
+net.sqlcipher.CursorWindow: void freeLastRow_native()
+net.sqlcipher.CursorWindow: boolean putBlob(byte[],int,int)
+net.sqlcipher.CursorWindow: boolean putBlob_native(byte[],int,int)
+net.sqlcipher.CursorWindow: boolean putString(java.lang.String,int,int)
+net.sqlcipher.CursorWindow: boolean putString_native(java.lang.String,int,int)
+net.sqlcipher.CursorWindow: boolean putLong(long,int,int)
+net.sqlcipher.CursorWindow: boolean putLong_native(long,int,int)
+net.sqlcipher.CursorWindow: boolean putDouble(double,int,int)
+net.sqlcipher.CursorWindow: boolean putDouble_native(double,int,int)
+net.sqlcipher.CursorWindow: boolean putNull(int,int)
+net.sqlcipher.CursorWindow: boolean putNull_native(int,int)
+net.sqlcipher.CursorWindow: boolean isNull(int,int)
+net.sqlcipher.CursorWindow: boolean isNull_native(int,int)
+net.sqlcipher.CursorWindow: byte[] getBlob(int,int)
+net.sqlcipher.CursorWindow: byte[] getBlob_native(int,int)
+net.sqlcipher.CursorWindow: int getType(int,int)
+net.sqlcipher.CursorWindow: boolean isBlob(int,int)
+net.sqlcipher.CursorWindow: boolean isLong(int,int)
+net.sqlcipher.CursorWindow: boolean isFloat(int,int)
+net.sqlcipher.CursorWindow: boolean isString(int,int)
+net.sqlcipher.CursorWindow: boolean isBlob_native(int,int)
+net.sqlcipher.CursorWindow: boolean isString_native(int,int)
+net.sqlcipher.CursorWindow: boolean isInteger_native(int,int)
+net.sqlcipher.CursorWindow: boolean isFloat_native(int,int)
+net.sqlcipher.CursorWindow: int getType_native(int,int)
+net.sqlcipher.CursorWindow: java.lang.String getString(int,int)
+net.sqlcipher.CursorWindow: java.lang.String getString_native(int,int)
+net.sqlcipher.CursorWindow: void copyStringToBuffer(int,int,android.database.CharArrayBuffer)
+net.sqlcipher.CursorWindow: char[] copyStringToBuffer_native(int,int,int,android.database.CharArrayBuffer)
+net.sqlcipher.CursorWindow: long getLong(int,int)
+net.sqlcipher.CursorWindow: long getLong_native(int,int)
+net.sqlcipher.CursorWindow: double getDouble(int,int)
+net.sqlcipher.CursorWindow: double getDouble_native(int,int)
+net.sqlcipher.CursorWindow: short getShort(int,int)
+net.sqlcipher.CursorWindow: int getInt(int,int)
+net.sqlcipher.CursorWindow: float getFloat(int,int)
+net.sqlcipher.CursorWindow: void clear()
+net.sqlcipher.CursorWindow: void native_clear()
+net.sqlcipher.CursorWindow: void close()
+net.sqlcipher.CursorWindow: void close_native()
+net.sqlcipher.CursorWindow: void finalize()
+net.sqlcipher.CursorWindow: net.sqlcipher.CursorWindow newFromParcel(android.os.Parcel)
+net.sqlcipher.CursorWindow: int describeContents()
+net.sqlcipher.CursorWindow: void writeToParcel(android.os.Parcel,int)
+net.sqlcipher.CursorWindow: CursorWindow(android.os.Parcel,int)
+net.sqlcipher.CursorWindow: android.os.IBinder native_getBinder()
+net.sqlcipher.CursorWindow: void native_init(boolean)
+net.sqlcipher.CursorWindow: void native_init(android.os.IBinder)
+net.sqlcipher.CursorWindow: void onAllReferencesReleased()
+net.sqlcipher.CursorWindow: void <clinit>()
+net.sqlcipher.CursorWindow$1
+net.sqlcipher.CursorWindow$1: CursorWindow$1()
+net.sqlcipher.CursorWindow$1: net.sqlcipher.CursorWindow createFromParcel(android.os.Parcel)
+net.sqlcipher.CursorWindow$1: net.sqlcipher.CursorWindow[] newArray(int)
+net.sqlcipher.CursorWindow$1: java.lang.Object[] newArray(int)
+net.sqlcipher.CursorWindow$1: java.lang.Object createFromParcel(android.os.Parcel)
+net.sqlcipher.CursorWrapper
+net.sqlcipher.CursorWrapper: net.sqlcipher.Cursor mCursor
+net.sqlcipher.CursorWrapper: CursorWrapper(net.sqlcipher.Cursor)
+net.sqlcipher.CursorWrapper: int getType(int)
+net.sqlcipher.DatabaseUtils
+net.sqlcipher.DatabaseUtils: java.lang.String TAG
+net.sqlcipher.DatabaseUtils: boolean DEBUG
+net.sqlcipher.DatabaseUtils: boolean LOCAL_LOGV
+net.sqlcipher.DatabaseUtils: java.lang.String[] countProjection
+net.sqlcipher.DatabaseUtils: java.text.Collator mColl
+net.sqlcipher.DatabaseUtils: DatabaseUtils()
+net.sqlcipher.DatabaseUtils: void writeExceptionToParcel(android.os.Parcel,java.lang.Exception)
+net.sqlcipher.DatabaseUtils: void readExceptionFromParcel(android.os.Parcel)
+net.sqlcipher.DatabaseUtils: void readExceptionWithFileNotFoundExceptionFromParcel(android.os.Parcel)
+net.sqlcipher.DatabaseUtils: void readExceptionWithOperationApplicationExceptionFromParcel(android.os.Parcel)
+net.sqlcipher.DatabaseUtils: void readExceptionFromParcel(android.os.Parcel,java.lang.String,int)
+net.sqlcipher.DatabaseUtils: void bindObjectToProgram(net.sqlcipher.database.SQLiteProgram,int,java.lang.Object)
+net.sqlcipher.DatabaseUtils: int getTypeOfObject(java.lang.Object)
+net.sqlcipher.DatabaseUtils: void appendEscapedSQLString(java.lang.StringBuilder,java.lang.String)
+net.sqlcipher.DatabaseUtils: java.lang.String sqlEscapeString(java.lang.String)
+net.sqlcipher.DatabaseUtils: void appendValueToSql(java.lang.StringBuilder,java.lang.Object)
+net.sqlcipher.DatabaseUtils: java.lang.String concatenateWhere(java.lang.String,java.lang.String)
+net.sqlcipher.DatabaseUtils: java.lang.String getCollationKey(java.lang.String)
+net.sqlcipher.DatabaseUtils: java.lang.String getHexCollationKey(java.lang.String)
+net.sqlcipher.DatabaseUtils: int getKeyLen(byte[])
+net.sqlcipher.DatabaseUtils: byte[] getCollationKeyInBytes(java.lang.String)
+net.sqlcipher.DatabaseUtils: void dumpCursor(net.sqlcipher.Cursor)
+net.sqlcipher.DatabaseUtils: void dumpCursor(net.sqlcipher.Cursor,java.io.PrintStream)
+net.sqlcipher.DatabaseUtils: void dumpCursor(net.sqlcipher.Cursor,java.lang.StringBuilder)
+net.sqlcipher.DatabaseUtils: java.lang.String dumpCursorToString(net.sqlcipher.Cursor)
+net.sqlcipher.DatabaseUtils: void dumpCurrentRow(net.sqlcipher.Cursor)
+net.sqlcipher.DatabaseUtils: void dumpCurrentRow(net.sqlcipher.Cursor,java.io.PrintStream)
+net.sqlcipher.DatabaseUtils: void dumpCurrentRow(net.sqlcipher.Cursor,java.lang.StringBuilder)
+net.sqlcipher.DatabaseUtils: java.lang.String dumpCurrentRowToString(net.sqlcipher.Cursor)
+net.sqlcipher.DatabaseUtils: void cursorStringToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues)
+net.sqlcipher.DatabaseUtils: void cursorStringToInsertHelper(net.sqlcipher.Cursor,java.lang.String,net.sqlcipher.DatabaseUtils$InsertHelper,int)
+net.sqlcipher.DatabaseUtils: void cursorStringToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorIntToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues)
+net.sqlcipher.DatabaseUtils: void cursorIntToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorLongToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues)
+net.sqlcipher.DatabaseUtils: void cursorLongToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorDoubleToCursorValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues)
+net.sqlcipher.DatabaseUtils: void cursorDoubleToContentValues(net.sqlcipher.Cursor,java.lang.String,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorRowToContentValues(net.sqlcipher.Cursor,android.content.ContentValues)
+net.sqlcipher.DatabaseUtils: long queryNumEntries(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.DatabaseUtils: long longForQuery(net.sqlcipher.database.SQLiteDatabase,java.lang.String,java.lang.String[])
+net.sqlcipher.DatabaseUtils: long longForQuery(net.sqlcipher.database.SQLiteStatement,java.lang.String[])
+net.sqlcipher.DatabaseUtils: java.lang.String stringForQuery(net.sqlcipher.database.SQLiteDatabase,java.lang.String,java.lang.String[])
+net.sqlcipher.DatabaseUtils: java.lang.String stringForQuery(net.sqlcipher.database.SQLiteStatement,java.lang.String[])
+net.sqlcipher.DatabaseUtils: void cursorStringToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorLongToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorShortToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorIntToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorFloatToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorDoubleToContentValuesIfPresent(net.sqlcipher.Cursor,android.content.ContentValues,java.lang.String)
+net.sqlcipher.DatabaseUtils: void cursorFillWindow(net.sqlcipher.Cursor,int,android.database.CursorWindow)
+net.sqlcipher.DatabaseUtils: void <clinit>()
+net.sqlcipher.DatabaseUtils$InsertHelper
+net.sqlcipher.DatabaseUtils$InsertHelper: net.sqlcipher.database.SQLiteDatabase mDb
+net.sqlcipher.DatabaseUtils$InsertHelper: java.lang.String mTableName
+net.sqlcipher.DatabaseUtils$InsertHelper: java.util.HashMap mColumns
+net.sqlcipher.DatabaseUtils$InsertHelper: java.lang.String mInsertSQL
+net.sqlcipher.DatabaseUtils$InsertHelper: net.sqlcipher.database.SQLiteStatement mInsertStatement
+net.sqlcipher.DatabaseUtils$InsertHelper: net.sqlcipher.database.SQLiteStatement mReplaceStatement
+net.sqlcipher.DatabaseUtils$InsertHelper: net.sqlcipher.database.SQLiteStatement mPreparedStatement
+net.sqlcipher.DatabaseUtils$InsertHelper: int TABLE_INFO_PRAGMA_COLUMNNAME_INDEX
+net.sqlcipher.DatabaseUtils$InsertHelper: int TABLE_INFO_PRAGMA_DEFAULT_INDEX
+net.sqlcipher.DatabaseUtils$InsertHelper: DatabaseUtils$InsertHelper(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.DatabaseUtils$InsertHelper: void buildSQL()
+net.sqlcipher.DatabaseUtils$InsertHelper: net.sqlcipher.database.SQLiteStatement getStatement(boolean)
+net.sqlcipher.DatabaseUtils$InsertHelper: long insertInternal(android.content.ContentValues,boolean)
+net.sqlcipher.DatabaseUtils$InsertHelper: int getColumnIndex(java.lang.String)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,double)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,float)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,long)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,int)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,boolean)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bindNull(int)
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,byte[])
+net.sqlcipher.DatabaseUtils$InsertHelper: void bind(int,java.lang.String)
+net.sqlcipher.DatabaseUtils$InsertHelper: long insert(android.content.ContentValues)
+net.sqlcipher.DatabaseUtils$InsertHelper: long execute()
+net.sqlcipher.DatabaseUtils$InsertHelper: void prepareForInsert()
+net.sqlcipher.DatabaseUtils$InsertHelper: void prepareForReplace()
+net.sqlcipher.DatabaseUtils$InsertHelper: long replace(android.content.ContentValues)
+net.sqlcipher.DatabaseUtils$InsertHelper: void close()
+net.sqlcipher.IBulkCursor
+net.sqlcipher.IBulkCursor: java.lang.String descriptor
+net.sqlcipher.IBulkCursor: int GET_CURSOR_WINDOW_TRANSACTION
+net.sqlcipher.IBulkCursor: int COUNT_TRANSACTION
+net.sqlcipher.IBulkCursor: int GET_COLUMN_NAMES_TRANSACTION
+net.sqlcipher.IBulkCursor: int UPDATE_ROWS_TRANSACTION
+net.sqlcipher.IBulkCursor: int DELETE_ROW_TRANSACTION
+net.sqlcipher.IBulkCursor: int DEACTIVATE_TRANSACTION
+net.sqlcipher.IBulkCursor: int REQUERY_TRANSACTION
+net.sqlcipher.IBulkCursor: int ON_MOVE_TRANSACTION
+net.sqlcipher.IBulkCursor: int WANTS_ON_MOVE_TRANSACTION
+net.sqlcipher.IBulkCursor: int GET_EXTRAS_TRANSACTION
+net.sqlcipher.IBulkCursor: int RESPOND_TRANSACTION
+net.sqlcipher.IBulkCursor: int CLOSE_TRANSACTION
+net.sqlcipher.IBulkCursor: net.sqlcipher.CursorWindow getWindow(int)
+net.sqlcipher.IBulkCursor: void onMove(int)
+net.sqlcipher.IBulkCursor: int count()
+net.sqlcipher.IBulkCursor: java.lang.String[] getColumnNames()
+net.sqlcipher.IBulkCursor: boolean updateRows(java.util.Map)
+net.sqlcipher.IBulkCursor: boolean deleteRow(int)
+net.sqlcipher.IBulkCursor: void deactivate()
+net.sqlcipher.IBulkCursor: void close()
+net.sqlcipher.IBulkCursor: int requery(net.sqlcipher.IContentObserver,net.sqlcipher.CursorWindow)
+net.sqlcipher.IBulkCursor: boolean getWantsAllOnMoveCalls()
+net.sqlcipher.IBulkCursor: android.os.Bundle getExtras()
+net.sqlcipher.IBulkCursor: android.os.Bundle respond(android.os.Bundle)
+net.sqlcipher.IContentObserver
+net.sqlcipher.IContentObserver: void onChange(boolean)
+net.sqlcipher.IContentObserver$Stub
+net.sqlcipher.IContentObserver$Stub: java.lang.String DESCRIPTOR
+net.sqlcipher.IContentObserver$Stub: int TRANSACTION_onChange
+net.sqlcipher.IContentObserver$Stub: IContentObserver$Stub()
+net.sqlcipher.IContentObserver$Stub: net.sqlcipher.IContentObserver asInterface(android.os.IBinder)
+net.sqlcipher.IContentObserver$Stub: android.os.IBinder asBinder()
+net.sqlcipher.IContentObserver$Stub: boolean onTransact(int,android.os.Parcel,android.os.Parcel,int)
+net.sqlcipher.IContentObserver$Stub$Proxy
+net.sqlcipher.IContentObserver$Stub$Proxy: android.os.IBinder mRemote
+net.sqlcipher.IContentObserver$Stub$Proxy: IContentObserver$Stub$Proxy(android.os.IBinder)
+net.sqlcipher.IContentObserver$Stub$Proxy: android.os.IBinder asBinder()
+net.sqlcipher.IContentObserver$Stub$Proxy: java.lang.String getInterfaceDescriptor()
+net.sqlcipher.IContentObserver$Stub$Proxy: void onChange(boolean)
+net.sqlcipher.MatrixCursor
+net.sqlcipher.MatrixCursor: java.lang.String[] columnNames
+net.sqlcipher.MatrixCursor: java.lang.Object[] data
+net.sqlcipher.MatrixCursor: int rowCount
+net.sqlcipher.MatrixCursor: int columnCount
+net.sqlcipher.MatrixCursor: MatrixCursor(java.lang.String[],int)
+net.sqlcipher.MatrixCursor: MatrixCursor(java.lang.String[])
+net.sqlcipher.MatrixCursor: java.lang.Object get(int)
+net.sqlcipher.MatrixCursor: net.sqlcipher.MatrixCursor$RowBuilder newRow()
+net.sqlcipher.MatrixCursor: void addRow(java.lang.Object[])
+net.sqlcipher.MatrixCursor: void addRow(java.lang.Iterable)
+net.sqlcipher.MatrixCursor: void addRow(java.util.ArrayList,int)
+net.sqlcipher.MatrixCursor: void ensureCapacity(int)
+net.sqlcipher.MatrixCursor: int getCount()
+net.sqlcipher.MatrixCursor: java.lang.String[] getColumnNames()
+net.sqlcipher.MatrixCursor: java.lang.String getString(int)
+net.sqlcipher.MatrixCursor: short getShort(int)
+net.sqlcipher.MatrixCursor: int getInt(int)
+net.sqlcipher.MatrixCursor: long getLong(int)
+net.sqlcipher.MatrixCursor: float getFloat(int)
+net.sqlcipher.MatrixCursor: double getDouble(int)
+net.sqlcipher.MatrixCursor: int getType(int)
+net.sqlcipher.MatrixCursor: boolean isNull(int)
+net.sqlcipher.MatrixCursor: java.lang.Object[] access$000(net.sqlcipher.MatrixCursor)
+net.sqlcipher.MatrixCursor$RowBuilder
+net.sqlcipher.MatrixCursor$RowBuilder: int index
+net.sqlcipher.MatrixCursor$RowBuilder: int endIndex
+net.sqlcipher.MatrixCursor$RowBuilder: net.sqlcipher.MatrixCursor this$0
+net.sqlcipher.MatrixCursor$RowBuilder: MatrixCursor$RowBuilder(net.sqlcipher.MatrixCursor,int,int)
+net.sqlcipher.MatrixCursor$RowBuilder: net.sqlcipher.MatrixCursor$RowBuilder add(java.lang.Object)
+net.sqlcipher.R
+net.sqlcipher.R: R()
+net.sqlcipher.R$attr
+net.sqlcipher.R$attr: R$attr()
+net.sqlcipher.R$drawable
+net.sqlcipher.R$drawable: int icon
+net.sqlcipher.R$drawable: R$drawable()
+net.sqlcipher.R$id
+net.sqlcipher.R$id: int sqllog
+net.sqlcipher.R$id: R$id()
+net.sqlcipher.R$layout
+net.sqlcipher.R$layout: int main
+net.sqlcipher.R$layout: R$layout()
+net.sqlcipher.R$string
+net.sqlcipher.R$string: int app_name
+net.sqlcipher.R$string: int hello
+net.sqlcipher.R$string: R$string()
+net.sqlcipher.SQLException
+net.sqlcipher.SQLException: SQLException()
+net.sqlcipher.SQLException: SQLException(java.lang.String)
+net.sqlcipher.StaleDataException
+net.sqlcipher.StaleDataException: StaleDataException()
+net.sqlcipher.StaleDataException: StaleDataException(java.lang.String)
+net.sqlcipher.database.DatabaseObjectNotClosedException
+net.sqlcipher.database.DatabaseObjectNotClosedException: java.lang.String s
+net.sqlcipher.database.DatabaseObjectNotClosedException: DatabaseObjectNotClosedException()
+net.sqlcipher.database.SQLiteAbortException
+net.sqlcipher.database.SQLiteAbortException: SQLiteAbortException()
+net.sqlcipher.database.SQLiteAbortException: SQLiteAbortException(java.lang.String)
+net.sqlcipher.database.SQLiteClosable
+net.sqlcipher.database.SQLiteClosable: int mReferenceCount
+net.sqlcipher.database.SQLiteClosable: java.lang.Object mLock
+net.sqlcipher.database.SQLiteClosable: SQLiteClosable()
+net.sqlcipher.database.SQLiteClosable: void onAllReferencesReleased()
+net.sqlcipher.database.SQLiteClosable: void onAllReferencesReleasedFromContainer()
+net.sqlcipher.database.SQLiteClosable: void acquireReference()
+net.sqlcipher.database.SQLiteClosable: void releaseReference()
+net.sqlcipher.database.SQLiteClosable: void releaseReferenceFromContainer()
+net.sqlcipher.database.SQLiteClosable: java.lang.String getObjInfo()
+net.sqlcipher.database.SQLiteCompiledSql
+net.sqlcipher.database.SQLiteCompiledSql: java.lang.String TAG
+net.sqlcipher.database.SQLiteCompiledSql: net.sqlcipher.database.SQLiteDatabase mDatabase
+net.sqlcipher.database.SQLiteCompiledSql: int nHandle
+net.sqlcipher.database.SQLiteCompiledSql: int nStatement
+net.sqlcipher.database.SQLiteCompiledSql: java.lang.String mSqlStmt
+net.sqlcipher.database.SQLiteCompiledSql: java.lang.Throwable mStackTrace
+net.sqlcipher.database.SQLiteCompiledSql: boolean mInUse
+net.sqlcipher.database.SQLiteCompiledSql: SQLiteCompiledSql(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.database.SQLiteCompiledSql: void compile(java.lang.String,boolean)
+net.sqlcipher.database.SQLiteCompiledSql: void releaseSqlStatement()
+net.sqlcipher.database.SQLiteCompiledSql: boolean acquire()
+net.sqlcipher.database.SQLiteCompiledSql: void release()
+net.sqlcipher.database.SQLiteCompiledSql: void finalize()
+net.sqlcipher.database.SQLiteCompiledSql: void native_compile(java.lang.String)
+net.sqlcipher.database.SQLiteCompiledSql: void native_finalize()
+net.sqlcipher.database.SQLiteConstraintException
+net.sqlcipher.database.SQLiteConstraintException: SQLiteConstraintException()
+net.sqlcipher.database.SQLiteConstraintException: SQLiteConstraintException(java.lang.String)
+net.sqlcipher.database.SQLiteContentHelper
+net.sqlcipher.database.SQLiteContentHelper: SQLiteContentHelper()
+net.sqlcipher.database.SQLiteContentHelper: android.content.res.AssetFileDescriptor getBlobColumnAsAssetFile(net.sqlcipher.database.SQLiteDatabase,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SQLiteContentHelper: android.os.MemoryFile simpleQueryForBlobMemoryFile(net.sqlcipher.database.SQLiteDatabase,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SQLiteCursor
+net.sqlcipher.database.SQLiteCursor: java.lang.String TAG
+net.sqlcipher.database.SQLiteCursor: int NO_COUNT
+net.sqlcipher.database.SQLiteCursor: java.lang.String mEditTable
+net.sqlcipher.database.SQLiteCursor: java.lang.String[] mColumns
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteQuery mQuery
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteDatabase mDatabase
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteCursorDriver mDriver
+net.sqlcipher.database.SQLiteCursor: int mCount
+net.sqlcipher.database.SQLiteCursor: java.util.Map mColumnNameMap
+net.sqlcipher.database.SQLiteCursor: java.lang.Throwable mStackTrace
+net.sqlcipher.database.SQLiteCursor: int mMaxRead
+net.sqlcipher.database.SQLiteCursor: int mInitialRead
+net.sqlcipher.database.SQLiteCursor: int mCursorState
+net.sqlcipher.database.SQLiteCursor: java.util.concurrent.locks.ReentrantLock mLock
+net.sqlcipher.database.SQLiteCursor: boolean mPendingData
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteCursor$MainThreadNotificationHandler mNotificationHandler
+net.sqlcipher.database.SQLiteCursor: void setLoadStyle(int,int)
+net.sqlcipher.database.SQLiteCursor: void queryThreadLock()
+net.sqlcipher.database.SQLiteCursor: void queryThreadUnlock()
+net.sqlcipher.database.SQLiteCursor: void registerDataSetObserver(android.database.DataSetObserver)
+net.sqlcipher.database.SQLiteCursor: SQLiteCursor(net.sqlcipher.database.SQLiteDatabase,net.sqlcipher.database.SQLiteCursorDriver,java.lang.String,net.sqlcipher.database.SQLiteQuery)
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteDatabase getDatabase()
+net.sqlcipher.database.SQLiteCursor: boolean onMove(int,int)
+net.sqlcipher.database.SQLiteCursor: int getCount()
+net.sqlcipher.database.SQLiteCursor: void fillWindow(int)
+net.sqlcipher.database.SQLiteCursor: int getColumnIndex(java.lang.String)
+net.sqlcipher.database.SQLiteCursor: boolean deleteRow()
+net.sqlcipher.database.SQLiteCursor: java.lang.String[] getColumnNames()
+net.sqlcipher.database.SQLiteCursor: boolean supportsUpdates()
+net.sqlcipher.database.SQLiteCursor: boolean commitUpdates(java.util.Map)
+net.sqlcipher.database.SQLiteCursor: void deactivateCommon()
+net.sqlcipher.database.SQLiteCursor: void deactivate()
+net.sqlcipher.database.SQLiteCursor: void close()
+net.sqlcipher.database.SQLiteCursor: boolean requery()
+net.sqlcipher.database.SQLiteCursor: void setWindow(net.sqlcipher.CursorWindow)
+net.sqlcipher.database.SQLiteCursor: void setSelectionArguments(java.lang.String[])
+net.sqlcipher.database.SQLiteCursor: void finalize()
+net.sqlcipher.database.SQLiteCursor: void fillWindow(int,android.database.CursorWindow)
+net.sqlcipher.database.SQLiteCursor: boolean access$002(net.sqlcipher.database.SQLiteCursor,boolean)
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.CursorWindow access$100(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: java.util.concurrent.locks.ReentrantLock access$200(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: int access$300(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: int access$400(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: int access$500(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: net.sqlcipher.database.SQLiteQuery access$600(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor: int access$512(net.sqlcipher.database.SQLiteCursor,int)
+net.sqlcipher.database.SQLiteCursor: int access$502(net.sqlcipher.database.SQLiteCursor,int)
+net.sqlcipher.database.SQLiteCursor: void access$700(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor$MainThreadNotificationHandler
+net.sqlcipher.database.SQLiteCursor$MainThreadNotificationHandler: net.sqlcipher.database.SQLiteCursor this$0
+net.sqlcipher.database.SQLiteCursor$MainThreadNotificationHandler: SQLiteCursor$MainThreadNotificationHandler(net.sqlcipher.database.SQLiteCursor)
+net.sqlcipher.database.SQLiteCursor$MainThreadNotificationHandler: void handleMessage(android.os.Message)
+net.sqlcipher.database.SQLiteCursor$QueryThread
+net.sqlcipher.database.SQLiteCursor$QueryThread: int mThreadState
+net.sqlcipher.database.SQLiteCursor$QueryThread: net.sqlcipher.database.SQLiteCursor this$0
+net.sqlcipher.database.SQLiteCursor$QueryThread: SQLiteCursor$QueryThread(net.sqlcipher.database.SQLiteCursor,int)
+net.sqlcipher.database.SQLiteCursor$QueryThread: void sendMessage()
+net.sqlcipher.database.SQLiteCursor$QueryThread: void run()
+net.sqlcipher.database.SQLiteCursorDriver
+net.sqlcipher.database.SQLiteCursorDriver: net.sqlcipher.Cursor query(net.sqlcipher.database.SQLiteDatabase$CursorFactory,java.lang.String[])
+net.sqlcipher.database.SQLiteCursorDriver: void cursorDeactivated()
+net.sqlcipher.database.SQLiteCursorDriver: void cursorRequeried(android.database.Cursor)
+net.sqlcipher.database.SQLiteCursorDriver: void cursorClosed()
+net.sqlcipher.database.SQLiteCursorDriver: void setBindArguments(java.lang.String[])
+net.sqlcipher.database.SQLiteDatabase
+net.sqlcipher.database.SQLiteDatabase: java.lang.String TAG
+net.sqlcipher.database.SQLiteDatabase: int EVENT_DB_OPERATION
+net.sqlcipher.database.SQLiteDatabase: int EVENT_DB_CORRUPT
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_ROLLBACK
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_ABORT
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_FAIL
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_IGNORE
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_REPLACE
+net.sqlcipher.database.SQLiteDatabase: int CONFLICT_NONE
+net.sqlcipher.database.SQLiteDatabase: java.lang.String[] CONFLICT_VALUES
+net.sqlcipher.database.SQLiteDatabase: int SQLITE_MAX_LIKE_PATTERN_LENGTH
+net.sqlcipher.database.SQLiteDatabase: int OPEN_READWRITE
+net.sqlcipher.database.SQLiteDatabase: int OPEN_READONLY
+net.sqlcipher.database.SQLiteDatabase: int OPEN_READ_MASK
+net.sqlcipher.database.SQLiteDatabase: int NO_LOCALIZED_COLLATORS
+net.sqlcipher.database.SQLiteDatabase: int CREATE_IF_NECESSARY
+net.sqlcipher.database.SQLiteDatabase: boolean mInnerTransactionIsSuccessful
+net.sqlcipher.database.SQLiteDatabase: boolean mTransactionIsSuccessful
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteTransactionListener mTransactionListener
+net.sqlcipher.database.SQLiteDatabase: java.util.concurrent.locks.ReentrantLock mLock
+net.sqlcipher.database.SQLiteDatabase: long mLockAcquiredWallTime
+net.sqlcipher.database.SQLiteDatabase: long mLockAcquiredThreadTime
+net.sqlcipher.database.SQLiteDatabase: int LOCK_WARNING_WINDOW_IN_MS
+net.sqlcipher.database.SQLiteDatabase: int LOCK_ACQUIRED_WARNING_TIME_IN_MS
+net.sqlcipher.database.SQLiteDatabase: int LOCK_ACQUIRED_WARNING_THREAD_TIME_IN_MS
+net.sqlcipher.database.SQLiteDatabase: int LOCK_ACQUIRED_WARNING_TIME_IN_MS_ALWAYS_PRINT
+net.sqlcipher.database.SQLiteDatabase: int SLEEP_AFTER_YIELD_QUANTUM
+net.sqlcipher.database.SQLiteDatabase: java.util.regex.Pattern EMAIL_IN_DB_PATTERN
+net.sqlcipher.database.SQLiteDatabase: long mLastLockMessageTime
+net.sqlcipher.database.SQLiteDatabase: int sQueryLogTimeInMillis
+net.sqlcipher.database.SQLiteDatabase: int QUERY_LOG_SQL_LENGTH
+net.sqlcipher.database.SQLiteDatabase: java.lang.String COMMIT_SQL
+net.sqlcipher.database.SQLiteDatabase: java.util.Random mRandom
+net.sqlcipher.database.SQLiteDatabase: java.lang.String mLastSqlStatement
+net.sqlcipher.database.SQLiteDatabase: java.lang.String GET_LOCK_LOG_PREFIX
+net.sqlcipher.database.SQLiteDatabase: int mNativeHandle
+net.sqlcipher.database.SQLiteDatabase: int mTempTableSequence
+net.sqlcipher.database.SQLiteDatabase: java.lang.String mPath
+net.sqlcipher.database.SQLiteDatabase: java.lang.String mPathForLogs
+net.sqlcipher.database.SQLiteDatabase: int mFlags
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase$CursorFactory mFactory
+net.sqlcipher.database.SQLiteDatabase: java.util.WeakHashMap mPrograms
+net.sqlcipher.database.SQLiteDatabase: java.util.Map mCompiledQueries
+net.sqlcipher.database.SQLiteDatabase: int MAX_SQL_CACHE_SIZE
+net.sqlcipher.database.SQLiteDatabase: int mMaxSqlCacheSize
+net.sqlcipher.database.SQLiteDatabase: int mCacheFullWarnings
+net.sqlcipher.database.SQLiteDatabase: int MAX_WARNINGS_ON_CACHESIZE_CONDITION
+net.sqlcipher.database.SQLiteDatabase: int mNumCacheHits
+net.sqlcipher.database.SQLiteDatabase: int mNumCacheMisses
+net.sqlcipher.database.SQLiteDatabase: java.lang.String mTimeOpened
+net.sqlcipher.database.SQLiteDatabase: java.lang.String mTimeClosed
+net.sqlcipher.database.SQLiteDatabase: java.lang.Throwable mStackTrace
+net.sqlcipher.database.SQLiteDatabase: java.lang.String LOG_SLOW_QUERIES_PROPERTY
+net.sqlcipher.database.SQLiteDatabase: int mSlowQueryThreshold
+net.sqlcipher.database.SQLiteDatabase: boolean mLockingEnabled
+net.sqlcipher.database.SQLiteDatabase: java.util.Map mSyncUpdateInfo
+net.sqlcipher.database.SQLiteDatabase: int status(int,boolean)
+net.sqlcipher.database.SQLiteDatabase: void loadICUData(android.content.Context,java.io.File)
+net.sqlcipher.database.SQLiteDatabase: void loadLibs(android.content.Context)
+net.sqlcipher.database.SQLiteDatabase: void loadLibs(android.content.Context,java.io.File)
+net.sqlcipher.database.SQLiteDatabase: void addSQLiteClosable(net.sqlcipher.database.SQLiteClosable)
+net.sqlcipher.database.SQLiteDatabase: void removeSQLiteClosable(net.sqlcipher.database.SQLiteClosable)
+net.sqlcipher.database.SQLiteDatabase: void onAllReferencesReleased()
+net.sqlcipher.database.SQLiteDatabase: int releaseMemory()
+net.sqlcipher.database.SQLiteDatabase: void setLockingEnabled(boolean)
+net.sqlcipher.database.SQLiteDatabase: void onCorruption()
+net.sqlcipher.database.SQLiteDatabase: void lock()
+net.sqlcipher.database.SQLiteDatabase: void lockForced()
+net.sqlcipher.database.SQLiteDatabase: void unlock()
+net.sqlcipher.database.SQLiteDatabase: void unlockForced()
+net.sqlcipher.database.SQLiteDatabase: void checkLockHoldTime()
+net.sqlcipher.database.SQLiteDatabase: void beginTransaction()
+net.sqlcipher.database.SQLiteDatabase: void beginTransactionWithListener(net.sqlcipher.database.SQLiteTransactionListener)
+net.sqlcipher.database.SQLiteDatabase: void endTransaction()
+net.sqlcipher.database.SQLiteDatabase: void setTransactionSuccessful()
+net.sqlcipher.database.SQLiteDatabase: boolean inTransaction()
+net.sqlcipher.database.SQLiteDatabase: boolean isDbLockedByCurrentThread()
+net.sqlcipher.database.SQLiteDatabase: boolean isDbLockedByOtherThreads()
+net.sqlcipher.database.SQLiteDatabase: boolean yieldIfContended()
+net.sqlcipher.database.SQLiteDatabase: boolean yieldIfContendedSafely()
+net.sqlcipher.database.SQLiteDatabase: boolean yieldIfContendedSafely(long)
+net.sqlcipher.database.SQLiteDatabase: boolean yieldIfContendedHelper(boolean,long)
+net.sqlcipher.database.SQLiteDatabase: java.util.Map getSyncedTables()
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openDatabase(java.lang.String,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,int,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory,int,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.io.File,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.lang.String,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.io.File,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.lang.String,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openOrCreateDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openDatabase(java.lang.String,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,int)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase openDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory,int)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase create(net.sqlcipher.database.SQLiteDatabase$CursorFactory,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteDatabase create(net.sqlcipher.database.SQLiteDatabase$CursorFactory,char[])
+net.sqlcipher.database.SQLiteDatabase: void close()
+net.sqlcipher.database.SQLiteDatabase: void closeClosable()
+net.sqlcipher.database.SQLiteDatabase: void dbclose()
+net.sqlcipher.database.SQLiteDatabase: int getVersion()
+net.sqlcipher.database.SQLiteDatabase: void setVersion(int)
+net.sqlcipher.database.SQLiteDatabase: long getMaximumSize()
+net.sqlcipher.database.SQLiteDatabase: long setMaximumSize(long)
+net.sqlcipher.database.SQLiteDatabase: long getPageSize()
+net.sqlcipher.database.SQLiteDatabase: void setPageSize(long)
+net.sqlcipher.database.SQLiteDatabase: void markTableSyncable(java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void markTableSyncable(java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void markTableSyncable(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void rowUpdated(java.lang.String,long)
+net.sqlcipher.database.SQLiteDatabase: java.lang.String findEditTable(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteStatement compileStatement(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor query(boolean,java.lang.String,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor queryWithFactory(net.sqlcipher.database.SQLiteDatabase$CursorFactory,boolean,java.lang.String,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor query(java.lang.String,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor query(java.lang.String,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor rawQuery(java.lang.String,java.lang.String[])
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor rawQueryWithFactory(net.sqlcipher.database.SQLiteDatabase$CursorFactory,java.lang.String,java.lang.String[],java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.Cursor rawQuery(java.lang.String,java.lang.String[],int,int)
+net.sqlcipher.database.SQLiteDatabase: long insert(java.lang.String,java.lang.String,android.content.ContentValues)
+net.sqlcipher.database.SQLiteDatabase: long insertOrThrow(java.lang.String,java.lang.String,android.content.ContentValues)
+net.sqlcipher.database.SQLiteDatabase: long replace(java.lang.String,java.lang.String,android.content.ContentValues)
+net.sqlcipher.database.SQLiteDatabase: long replaceOrThrow(java.lang.String,java.lang.String,android.content.ContentValues)
+net.sqlcipher.database.SQLiteDatabase: long insertWithOnConflict(java.lang.String,java.lang.String,android.content.ContentValues,int)
+net.sqlcipher.database.SQLiteDatabase: int delete(java.lang.String,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SQLiteDatabase: int update(java.lang.String,android.content.ContentValues,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SQLiteDatabase: int updateWithOnConflict(java.lang.String,android.content.ContentValues,java.lang.String,java.lang.String[],int)
+net.sqlcipher.database.SQLiteDatabase: void execSQL(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void rawExecSQL(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void execSQL(java.lang.String,java.lang.Object[])
+net.sqlcipher.database.SQLiteDatabase: void finalize()
+net.sqlcipher.database.SQLiteDatabase: SQLiteDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory,int)
+net.sqlcipher.database.SQLiteDatabase: SQLiteDatabase(java.lang.String,char[],net.sqlcipher.database.SQLiteDatabase$CursorFactory,int,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteDatabase: java.lang.String getTime()
+net.sqlcipher.database.SQLiteDatabase: boolean isReadOnly()
+net.sqlcipher.database.SQLiteDatabase: boolean isOpen()
+net.sqlcipher.database.SQLiteDatabase: boolean needUpgrade(int)
+net.sqlcipher.database.SQLiteDatabase: java.lang.String getPath()
+net.sqlcipher.database.SQLiteDatabase: void logTimeStat(java.lang.String,long)
+net.sqlcipher.database.SQLiteDatabase: void logTimeStat(java.lang.String,long,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: java.lang.String getPathForLogs()
+net.sqlcipher.database.SQLiteDatabase: void setLocale(java.util.Locale)
+net.sqlcipher.database.SQLiteDatabase: void addToCompiledQueries(java.lang.String,net.sqlcipher.database.SQLiteCompiledSql)
+net.sqlcipher.database.SQLiteDatabase: void deallocCachedSqlStatements()
+net.sqlcipher.database.SQLiteDatabase: net.sqlcipher.database.SQLiteCompiledSql getCompiledStatementForSql(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: boolean isInCompiledSqlCache(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void purgeFromCompiledSqlCache(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void resetCompiledSqlCache()
+net.sqlcipher.database.SQLiteDatabase: int getMaxSqlCacheSize()
+net.sqlcipher.database.SQLiteDatabase: void setMaxSqlCacheSize(int)
+net.sqlcipher.database.SQLiteDatabase: java.util.ArrayList getDbStats()
+net.sqlcipher.database.SQLiteDatabase: long getPragmaVal(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: java.util.ArrayList getAttachedDbs(net.sqlcipher.database.SQLiteDatabase)
+net.sqlcipher.database.SQLiteDatabase: void setICURoot(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void dbopen(java.lang.String,int)
+net.sqlcipher.database.SQLiteDatabase: void enableSqlTracing(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void enableSqlProfiling(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void native_execSQL(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void native_setLocale(java.lang.String,int)
+net.sqlcipher.database.SQLiteDatabase: long lastInsertRow()
+net.sqlcipher.database.SQLiteDatabase: int lastChangeCount()
+net.sqlcipher.database.SQLiteDatabase: int native_getDbLookaside()
+net.sqlcipher.database.SQLiteDatabase: void native_rawExecSQL(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: int native_status(int,boolean)
+net.sqlcipher.database.SQLiteDatabase: void native_key(char[])
+net.sqlcipher.database.SQLiteDatabase: void native_key(java.lang.String)
+net.sqlcipher.database.SQLiteDatabase: void <clinit>()
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: net.sqlcipher.database.SQLiteDatabase$ActiveDatabases activeDatabases
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: java.util.HashSet mActiveDatabases
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: SQLiteDatabase$ActiveDatabases()
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: net.sqlcipher.database.SQLiteDatabase$ActiveDatabases getInstance()
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: java.util.HashSet access$000(net.sqlcipher.database.SQLiteDatabase$ActiveDatabases)
+net.sqlcipher.database.SQLiteDatabase$ActiveDatabases: void <clinit>()
+net.sqlcipher.database.SQLiteDatabase$CursorFactory
+net.sqlcipher.database.SQLiteDatabase$CursorFactory: net.sqlcipher.Cursor newCursor(net.sqlcipher.database.SQLiteDatabase,net.sqlcipher.database.SQLiteCursorDriver,java.lang.String,net.sqlcipher.database.SQLiteQuery)
+net.sqlcipher.database.SQLiteDatabase$SyncUpdateInfo
+net.sqlcipher.database.SQLiteDatabase$SyncUpdateInfo: java.lang.String masterTable
+net.sqlcipher.database.SQLiteDatabase$SyncUpdateInfo: java.lang.String deletedTable
+net.sqlcipher.database.SQLiteDatabase$SyncUpdateInfo: java.lang.String foreignKey
+net.sqlcipher.database.SQLiteDatabase$SyncUpdateInfo: SQLiteDatabase$SyncUpdateInfo(java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDatabaseCorruptException
+net.sqlcipher.database.SQLiteDatabaseCorruptException: SQLiteDatabaseCorruptException()
+net.sqlcipher.database.SQLiteDatabaseCorruptException: SQLiteDatabaseCorruptException(java.lang.String)
+net.sqlcipher.database.SQLiteDatabaseHook
+net.sqlcipher.database.SQLiteDatabaseHook: void preKey(net.sqlcipher.database.SQLiteDatabase)
+net.sqlcipher.database.SQLiteDatabaseHook: void postKey(net.sqlcipher.database.SQLiteDatabase)
+net.sqlcipher.database.SQLiteDebug
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_SQL_STATEMENTS
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_SQL_TIME
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_SQL_CACHE
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_ACTIVE_CURSOR_FINALIZATION
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_LOCK_TIME_TRACKING
+net.sqlcipher.database.SQLiteDebug: boolean DEBUG_LOCK_TIME_TRACKING_STACK_TRACE
+net.sqlcipher.database.SQLiteDebug: int sNumActiveCursorsFinalized
+net.sqlcipher.database.SQLiteDebug: SQLiteDebug()
+net.sqlcipher.database.SQLiteDebug: net.sqlcipher.database.SQLiteDebug$PagerStats getDatabaseInfo()
+net.sqlcipher.database.SQLiteDebug: void getPagerStats(net.sqlcipher.database.SQLiteDebug$PagerStats)
+net.sqlcipher.database.SQLiteDebug: long getHeapSize()
+net.sqlcipher.database.SQLiteDebug: long getHeapAllocatedSize()
+net.sqlcipher.database.SQLiteDebug: long getHeapFreeSize()
+net.sqlcipher.database.SQLiteDebug: void getHeapDirtyPages(int[])
+net.sqlcipher.database.SQLiteDebug: int getNumActiveCursorsFinalized()
+net.sqlcipher.database.SQLiteDebug: void notifyActiveCursorFinalized()
+net.sqlcipher.database.SQLiteDebug: void <clinit>()
+net.sqlcipher.database.SQLiteDebug$DbStats
+net.sqlcipher.database.SQLiteDebug$DbStats: java.lang.String dbName
+net.sqlcipher.database.SQLiteDebug$DbStats: long pageSize
+net.sqlcipher.database.SQLiteDebug$DbStats: long dbSize
+net.sqlcipher.database.SQLiteDebug$DbStats: int lookaside
+net.sqlcipher.database.SQLiteDebug$DbStats: SQLiteDebug$DbStats(java.lang.String,long,long,int)
+net.sqlcipher.database.SQLiteDebug$PagerStats
+net.sqlcipher.database.SQLiteDebug$PagerStats: long totalBytes
+net.sqlcipher.database.SQLiteDebug$PagerStats: long referencedBytes
+net.sqlcipher.database.SQLiteDebug$PagerStats: long databaseBytes
+net.sqlcipher.database.SQLiteDebug$PagerStats: int numPagers
+net.sqlcipher.database.SQLiteDebug$PagerStats: int memoryUsed
+net.sqlcipher.database.SQLiteDebug$PagerStats: int pageCacheOverflo
+net.sqlcipher.database.SQLiteDebug$PagerStats: int largestMemAlloc
+net.sqlcipher.database.SQLiteDebug$PagerStats: java.util.ArrayList dbStats
+net.sqlcipher.database.SQLiteDebug$PagerStats: SQLiteDebug$PagerStats()
+net.sqlcipher.database.SQLiteDirectCursorDriver
+net.sqlcipher.database.SQLiteDirectCursorDriver: java.lang.String mEditTable
+net.sqlcipher.database.SQLiteDirectCursorDriver: net.sqlcipher.database.SQLiteDatabase mDatabase
+net.sqlcipher.database.SQLiteDirectCursorDriver: net.sqlcipher.Cursor mCursor
+net.sqlcipher.database.SQLiteDirectCursorDriver: java.lang.String mSql
+net.sqlcipher.database.SQLiteDirectCursorDriver: net.sqlcipher.database.SQLiteQuery mQuery
+net.sqlcipher.database.SQLiteDirectCursorDriver: SQLiteDirectCursorDriver(net.sqlcipher.database.SQLiteDatabase,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteDirectCursorDriver: net.sqlcipher.Cursor query(net.sqlcipher.database.SQLiteDatabase$CursorFactory,java.lang.String[])
+net.sqlcipher.database.SQLiteDirectCursorDriver: void cursorClosed()
+net.sqlcipher.database.SQLiteDirectCursorDriver: void setBindArguments(java.lang.String[])
+net.sqlcipher.database.SQLiteDirectCursorDriver: void cursorDeactivated()
+net.sqlcipher.database.SQLiteDirectCursorDriver: void cursorRequeried(android.database.Cursor)
+net.sqlcipher.database.SQLiteDirectCursorDriver: java.lang.String toString()
+net.sqlcipher.database.SQLiteDiskIOException
+net.sqlcipher.database.SQLiteDiskIOException: SQLiteDiskIOException()
+net.sqlcipher.database.SQLiteDiskIOException: SQLiteDiskIOException(java.lang.String)
+net.sqlcipher.database.SQLiteDoneException
+net.sqlcipher.database.SQLiteDoneException: SQLiteDoneException()
+net.sqlcipher.database.SQLiteDoneException: SQLiteDoneException(java.lang.String)
+net.sqlcipher.database.SQLiteException
+net.sqlcipher.database.SQLiteException: SQLiteException()
+net.sqlcipher.database.SQLiteException: SQLiteException(java.lang.String)
+net.sqlcipher.database.SQLiteFullException
+net.sqlcipher.database.SQLiteFullException: SQLiteFullException()
+net.sqlcipher.database.SQLiteFullException: SQLiteFullException(java.lang.String)
+net.sqlcipher.database.SQLiteMisuseException
+net.sqlcipher.database.SQLiteMisuseException: SQLiteMisuseException()
+net.sqlcipher.database.SQLiteMisuseException: SQLiteMisuseException(java.lang.String)
+net.sqlcipher.database.SQLiteOpenHelper
+net.sqlcipher.database.SQLiteOpenHelper: java.lang.String TAG
+net.sqlcipher.database.SQLiteOpenHelper: android.content.Context mContext
+net.sqlcipher.database.SQLiteOpenHelper: java.lang.String mName
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase$CursorFactory mFactory
+net.sqlcipher.database.SQLiteOpenHelper: int mNewVersion
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabaseHook mHook
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase mDatabase
+net.sqlcipher.database.SQLiteOpenHelper: boolean mIsInitializing
+net.sqlcipher.database.SQLiteOpenHelper: SQLiteOpenHelper(android.content.Context,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,int)
+net.sqlcipher.database.SQLiteOpenHelper: SQLiteOpenHelper(android.content.Context,java.lang.String,net.sqlcipher.database.SQLiteDatabase$CursorFactory,int,net.sqlcipher.database.SQLiteDatabaseHook)
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase getWritableDatabase(java.lang.String)
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase getWritableDatabase(char[])
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase getReadableDatabase(java.lang.String)
+net.sqlcipher.database.SQLiteOpenHelper: net.sqlcipher.database.SQLiteDatabase getReadableDatabase(char[])
+net.sqlcipher.database.SQLiteOpenHelper: void close()
+net.sqlcipher.database.SQLiteOpenHelper: void onCreate(net.sqlcipher.database.SQLiteDatabase)
+net.sqlcipher.database.SQLiteOpenHelper: void onUpgrade(net.sqlcipher.database.SQLiteDatabase,int,int)
+net.sqlcipher.database.SQLiteOpenHelper: void onOpen(net.sqlcipher.database.SQLiteDatabase)
+net.sqlcipher.database.SQLiteOpenHelper: void <clinit>()
+net.sqlcipher.database.SQLiteProgram
+net.sqlcipher.database.SQLiteProgram: java.lang.String TAG
+net.sqlcipher.database.SQLiteProgram: net.sqlcipher.database.SQLiteDatabase mDatabase
+net.sqlcipher.database.SQLiteProgram: java.lang.String mSql
+net.sqlcipher.database.SQLiteProgram: int nHandle
+net.sqlcipher.database.SQLiteProgram: net.sqlcipher.database.SQLiteCompiledSql mCompiledSql
+net.sqlcipher.database.SQLiteProgram: int nStatement
+net.sqlcipher.database.SQLiteProgram: SQLiteProgram(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.database.SQLiteProgram: void onAllReferencesReleased()
+net.sqlcipher.database.SQLiteProgram: void onAllReferencesReleasedFromContainer()
+net.sqlcipher.database.SQLiteProgram: void releaseCompiledSqlIfNotInCache()
+net.sqlcipher.database.SQLiteProgram: int getUniqueId()
+net.sqlcipher.database.SQLiteProgram: java.lang.String getSqlString()
+net.sqlcipher.database.SQLiteProgram: void compile(java.lang.String,boolean)
+net.sqlcipher.database.SQLiteProgram: void bindNull(int)
+net.sqlcipher.database.SQLiteProgram: void bindLong(int,long)
+net.sqlcipher.database.SQLiteProgram: void bindDouble(int,double)
+net.sqlcipher.database.SQLiteProgram: void bindString(int,java.lang.String)
+net.sqlcipher.database.SQLiteProgram: void bindBlob(int,byte[])
+net.sqlcipher.database.SQLiteProgram: void clearBindings()
+net.sqlcipher.database.SQLiteProgram: void close()
+net.sqlcipher.database.SQLiteProgram: void native_compile(java.lang.String)
+net.sqlcipher.database.SQLiteProgram: void native_finalize()
+net.sqlcipher.database.SQLiteProgram: void native_bind_null(int)
+net.sqlcipher.database.SQLiteProgram: void native_bind_long(int,long)
+net.sqlcipher.database.SQLiteProgram: void native_bind_double(int,double)
+net.sqlcipher.database.SQLiteProgram: void native_bind_string(int,java.lang.String)
+net.sqlcipher.database.SQLiteProgram: void native_bind_blob(int,byte[])
+net.sqlcipher.database.SQLiteProgram: void native_clear_bindings()
+net.sqlcipher.database.SQLiteQuery
+net.sqlcipher.database.SQLiteQuery: java.lang.String TAG
+net.sqlcipher.database.SQLiteQuery: int mOffsetIndex
+net.sqlcipher.database.SQLiteQuery: java.lang.String[] mBindArgs
+net.sqlcipher.database.SQLiteQuery: boolean mClosed
+net.sqlcipher.database.SQLiteQuery: SQLiteQuery(net.sqlcipher.database.SQLiteDatabase,java.lang.String,int,java.lang.String[])
+net.sqlcipher.database.SQLiteQuery: int fillWindow(net.sqlcipher.CursorWindow,int,int)
+net.sqlcipher.database.SQLiteQuery: int columnCountLocked()
+net.sqlcipher.database.SQLiteQuery: java.lang.String columnNameLocked(int)
+net.sqlcipher.database.SQLiteQuery: java.lang.String toString()
+net.sqlcipher.database.SQLiteQuery: void close()
+net.sqlcipher.database.SQLiteQuery: void requery()
+net.sqlcipher.database.SQLiteQuery: void bindNull(int)
+net.sqlcipher.database.SQLiteQuery: void bindLong(int,long)
+net.sqlcipher.database.SQLiteQuery: void bindDouble(int,double)
+net.sqlcipher.database.SQLiteQuery: void bindString(int,java.lang.String)
+net.sqlcipher.database.SQLiteQuery: int native_fill_window(net.sqlcipher.CursorWindow,int,int,int,int)
+net.sqlcipher.database.SQLiteQuery: int native_column_count()
+net.sqlcipher.database.SQLiteQuery: java.lang.String native_column_name(int)
+net.sqlcipher.database.SQLiteQueryBuilder
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String TAG
+net.sqlcipher.database.SQLiteQueryBuilder: java.util.regex.Pattern sLimitPattern
+net.sqlcipher.database.SQLiteQueryBuilder: java.util.Map mProjectionMap
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String mTables
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.StringBuilder mWhereClause
+net.sqlcipher.database.SQLiteQueryBuilder: boolean mDistinct
+net.sqlcipher.database.SQLiteQueryBuilder: net.sqlcipher.database.SQLiteDatabase$CursorFactory mFactory
+net.sqlcipher.database.SQLiteQueryBuilder: boolean mStrictProjectionMap
+net.sqlcipher.database.SQLiteQueryBuilder: SQLiteQueryBuilder()
+net.sqlcipher.database.SQLiteQueryBuilder: void setDistinct(boolean)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String getTables()
+net.sqlcipher.database.SQLiteQueryBuilder: void setTables(java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: void appendWhere(java.lang.CharSequence)
+net.sqlcipher.database.SQLiteQueryBuilder: void appendWhereEscapeString(java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: void setProjectionMap(java.util.Map)
+net.sqlcipher.database.SQLiteQueryBuilder: void setCursorFactory(net.sqlcipher.database.SQLiteDatabase$CursorFactory)
+net.sqlcipher.database.SQLiteQueryBuilder: void setStrictProjectionMap(boolean)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String buildQueryString(boolean,java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: void appendClause(java.lang.StringBuilder,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: void appendClauseEscapeClause(java.lang.StringBuilder,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: void appendColumns(java.lang.StringBuilder,java.lang.String[])
+net.sqlcipher.database.SQLiteQueryBuilder: net.sqlcipher.Cursor query(net.sqlcipher.database.SQLiteDatabase,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: net.sqlcipher.Cursor query(net.sqlcipher.database.SQLiteDatabase,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String buildQuery(java.lang.String[],java.lang.String,java.lang.String[],java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String buildUnionSubQuery(java.lang.String,java.lang.String[],java.util.Set,int,java.lang.String,java.lang.String,java.lang.String[],java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String buildUnionQuery(java.lang.String[],java.lang.String,java.lang.String)
+net.sqlcipher.database.SQLiteQueryBuilder: java.lang.String[] computeProjection(java.lang.String[])
+net.sqlcipher.database.SQLiteQueryBuilder: void <clinit>()
+net.sqlcipher.database.SQLiteStatement
+net.sqlcipher.database.SQLiteStatement: SQLiteStatement(net.sqlcipher.database.SQLiteDatabase,java.lang.String)
+net.sqlcipher.database.SQLiteStatement: void execute()
+net.sqlcipher.database.SQLiteStatement: long executeInsert()
+net.sqlcipher.database.SQLiteStatement: long executeUpdateDelete()
+net.sqlcipher.database.SQLiteStatement: long simpleQueryForLong()
+net.sqlcipher.database.SQLiteStatement: java.lang.String simpleQueryForString()
+net.sqlcipher.database.SQLiteStatement: void native_execute()
+net.sqlcipher.database.SQLiteStatement: long native_1x1_long()
+net.sqlcipher.database.SQLiteStatement: java.lang.String native_1x1_string()
+net.sqlcipher.database.SQLiteTransactionListener
+net.sqlcipher.database.SQLiteTransactionListener: void onBegin()
+net.sqlcipher.database.SQLiteTransactionListener: void onCommit()
+net.sqlcipher.database.SQLiteTransactionListener: void onRollback()
+net.sqlcipher.database.SqliteWrapper
+net.sqlcipher.database.SqliteWrapper: java.lang.String TAG
+net.sqlcipher.database.SqliteWrapper: java.lang.String SQLITE_EXCEPTION_DETAIL_MESSAGE
+net.sqlcipher.database.SqliteWrapper: SqliteWrapper()
+net.sqlcipher.database.SqliteWrapper: boolean isLowMemory(net.sqlcipher.database.SQLiteException)
+net.sqlcipher.database.SqliteWrapper: void checkSQLiteException(android.content.Context,net.sqlcipher.database.SQLiteException)
+net.sqlcipher.database.SqliteWrapper: net.sqlcipher.Cursor query(android.content.Context,android.content.ContentResolver,android.net.Uri,java.lang.String[],java.lang.String,java.lang.String[],java.lang.String)
+net.sqlcipher.database.SqliteWrapper: boolean requery(android.content.Context,android.database.Cursor)
+net.sqlcipher.database.SqliteWrapper: int update(android.content.Context,android.content.ContentResolver,android.net.Uri,android.content.ContentValues,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SqliteWrapper: int delete(android.content.Context,android.content.ContentResolver,android.net.Uri,java.lang.String,java.lang.String[])
+net.sqlcipher.database.SqliteWrapper: android.net.Uri insert(android.content.Context,android.content.ContentResolver,android.net.Uri,android.content.ContentValues)

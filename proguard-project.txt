@@ -18,3 +18,18 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+# Guava using SQLCipher
+-libraryjars libs/jsr305-3.0.0.jar
+-libraryjars libs/guava-r09.jar
+
+-keepclassmembers class * {
+     @com.google.api.client.util.Key <fields>;
+}
+
+-keep class net.sqlcipher.** {
+    *;
+}
+
+-dontwarn sun.misc.Unsafe
+-dontwarn org.apache.**
