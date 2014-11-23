@@ -13,6 +13,7 @@ import com.mame.flappy.constant.LcomConst;
 import com.mame.flappy.exception.NewMessageNotificationManagerException;
 import com.mame.flappy.notification.NewMessageNotificationManager;
 import com.mame.flappy.util.DbgUtil;
+import com.mame.flappy.util.PreferenceUtil;
 
 public class GCMIntentService extends Service {
 
@@ -47,51 +48,61 @@ public class GCMIntentService extends Service {
 					DbgUtil.showDebug(TAG, "messageType: " + messageType
 							+ ",body:" + extras.toString());
 
-					try {
-						String[] parsed = parseJSON(extras.toString());
-						// Because parsed[0] is "my id" from friend perspective.
-						if (parsed != null) {
-							String friendUserId = parsed[0];
-							String userId = parsed[1];
-							String userName = parsed[2];
-							String targetUserName = parsed[3];
-							String message = parsed[4];
-							String expireDate = parsed[5];
-							DbgUtil.showDebug(TAG, "userId: " + userId);
-							DbgUtil.showDebug(TAG, "friendUserId: "
-									+ friendUserId);
-							DbgUtil.showDebug(TAG, "userName: " + userName);
-							DbgUtil.showDebug(TAG, "targetUserName: "
-									+ targetUserName);
-							DbgUtil.showDebug(TAG, "expireDate: " + expireDate);
-							DbgUtil.showDebug(TAG, "message: " + message);
+					// If the user already logged in
+					// (It not logged in, nothing should happen.)
+					if (PreferenceUtil.getUserId(getApplicationContext()) != LcomConst.NO_USER
+							&& PreferenceUtil
+									.getUserName(getApplicationContext()) != null) {
+						try {
+							String[] parsed = parseJSON(extras.toString());
+							// Because parsed[0] is "my id" from friend
+							// perspective.
+							if (parsed != null) {
+								String friendUserId = parsed[0];
+								String userId = parsed[1];
+								String userName = parsed[2];
+								String targetUserName = parsed[3];
+								String message = parsed[4];
+								String expireDate = parsed[5];
+								DbgUtil.showDebug(TAG, "userId: " + userId);
+								DbgUtil.showDebug(TAG, "friendUserId: "
+										+ friendUserId);
+								DbgUtil.showDebug(TAG, "userName: " + userName);
+								DbgUtil.showDebug(TAG, "targetUserName: "
+										+ targetUserName);
+								DbgUtil.showDebug(TAG, "expireDate: "
+										+ expireDate);
+								DbgUtil.showDebug(TAG, "message: " + message);
 
-							NewMessageNotificationManager
-									.handleLastetMessageAndShowNotification(
-											getApplicationContext(),
-											Integer.valueOf(friendUserId),
-											Integer.valueOf(userId), 1,
-											Long.valueOf(expireDate));
+								NewMessageNotificationManager
+										.handleLastetMessageAndShowNotification(
+												getApplicationContext(),
+												Integer.valueOf(friendUserId),
+												Integer.valueOf(userId), 1,
+												Long.valueOf(expireDate));
 
-							sendBroadcast(Integer.valueOf(userId),
-									Integer.valueOf(friendUserId), userName,
-									targetUserName, message);
+								sendBroadcast(Integer.valueOf(userId),
+										Integer.valueOf(friendUserId),
+										userName, targetUserName, message);
+							}
+						} catch (IndexOutOfBoundsException e) {
+							DbgUtil.showDebug(
+									TAG,
+									"IndexOutOfBoundsException: "
+											+ e.getMessage());
+						} catch (NumberFormatException e) {
+							DbgUtil.showDebug(TAG, "NumberFormatException: "
+									+ e.getMessage());
+						} catch (NewMessageNotificationManagerException e) {
+							DbgUtil.showDebug(TAG,
+									"NewMessageNotificationManagerException: "
+											+ e.getMessage());
 						}
-					} catch (IndexOutOfBoundsException e) {
-						DbgUtil.showDebug(TAG, "IndexOutOfBoundsException: "
-								+ e.getMessage());
-					} catch (NumberFormatException e) {
-						DbgUtil.showDebug(TAG,
-								"NumberFormatException: " + e.getMessage());
-					} catch (NewMessageNotificationManagerException e) {
-						DbgUtil.showDebug(
-								TAG,
-								"NewMessageNotificationManagerException: "
-										+ e.getMessage());
+					} else {
+						DbgUtil.showDebug(TAG, "Not logged in");
 					}
 				}
 			}
-			// GcmBroadcastReceiver.completeWakefulIntent(intent);
 		}
 		return START_STICKY;
 	}
