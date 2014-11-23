@@ -75,7 +75,7 @@ public class GCMIntentService extends Service {
 								DbgUtil.showDebug(TAG, "message: " + message);
 
 								NewMessageNotificationManager
-										.handleLastetMessageAndShowNotification(
+										.handleLatestMessageAndShowNotification(
 												getApplicationContext(),
 												Integer.valueOf(friendUserId),
 												Integer.valueOf(userId), 1,

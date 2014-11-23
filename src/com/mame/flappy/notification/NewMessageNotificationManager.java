@@ -66,10 +66,10 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 	 * @param targetUserId
 	 * @param latestPostedDate
 	 */
-	public static void handleLastetMessageAndShowNotification(Context context,
+	public static void handleLatestMessageAndShowNotification(Context context,
 			int fromUserId, int toUserId, int number, long expireDate)
 			throws NewMessageNotificationManagerException {
-		DbgUtil.showDebug(TAG, "handleLastetMessageAndShowNotification");
+		DbgUtil.showDebug(TAG, "handleLatestMessageAndShowNotification");
 
 		if (context == null) {
 			throw new NewMessageNotificationManagerException("Context is null");
@@ -255,7 +255,8 @@ public class NewMessageNotificationManager implements FriendDataManagerListener 
 					setAlarmManagerForRemoveNotification(mContext, fromUserId,
 							toUserId, expireDate);
 
-					showNotification(mContext, fromUserId);
+					// In decreased case, we don't play sound and vibration.
+					// showNotification(mContext, fromUserId);
 					mCurrentNotificationNum = size;
 				}
 			}
