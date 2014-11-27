@@ -331,9 +331,9 @@ public class UserServerDataHandler implements
 				}
 			} catch (IndexOutOfBoundsException e) {
 				DbgUtil.showDebug(TAG,
-						"IndexOutOfBoundsException: " + e.getMessage());
+						"IndexOutOfBoundsException1: " + e.getMessage());
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
-						"IndexOutOfBoundsException: " + e.getMessage());
+						"IndexOutOfBoundsException1: " + e.getMessage());
 
 				// Based on request code, we will handle error.
 				handleErrorCase();
@@ -441,9 +441,9 @@ public class UserServerDataHandler implements
 				}
 			} catch (IndexOutOfBoundsException e) {
 				DbgUtil.showDebug(TAG,
-						"IndexOutOfBoundException: " + e.getMessage());
+						"IndexOutOfBoundException2: " + e.getMessage());
 				TrackingUtil.trackExceptionMessage(mContext, TAG,
-						"IndexOutOfBoundsException: " + e.getMessage());
+						"IndexOutOfBoundsException2: " + e.getMessage());
 			} catch (NumberFormatException e) {
 				DbgUtil.showDebug(TAG,
 						"NumberFormatException: " + e.getMessage());
