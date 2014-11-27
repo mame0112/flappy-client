@@ -448,10 +448,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 				}
 			}).start();
 
-			// dismiss progress
-			// if (mProgressHelper != null) {
-			// mProgressHelper.dismissDialog(this, TAG);
-			// }
+			if (mFriendListData != null) {
+				TrackingUtil.trackNumberOfFriend(getApplicationContext(),
+						mFriendListData.size());
+			}
+
 			changeProgressSpinnerState(false);
 
 			try {
@@ -579,8 +580,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 				// }
 				// }
 				friendListData.add(data);
-
-				// mFriendListData.add(data);
 			}
 
 			// Initialize flag
@@ -605,10 +604,11 @@ public class FriendListActivity extends LcomBaseActivity implements
 				}
 			}).start();
 
-			// dismiss progress
-			// if (mProgressHelper != null) {
-			// mProgressHelper.dismissDialog(this, TAG);
-			// }
+			if (mFriendListData != null) {
+				TrackingUtil.trackNumberOfFriend(getApplicationContext(),
+						mFriendListData.size());
+			}
+
 			changeProgressSpinnerState(false);
 
 			try {
