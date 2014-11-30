@@ -7601,7 +7601,8 @@ com.mame.flappy.util.TimeUtil -> com.mame.flappy.f.x:
 com.mame.flappy.util.TrackingUtil -> com.mame.flappy.f.y:
     void trackActivityStart(android.app.Activity) -> a
     void trackActivityStop(android.app.Activity) -> b
-    void trackNumberOfCharInOneMessage(android.content.Context,int) -> a
+    void trackNumberOfFriend(android.content.Context,int) -> a
+    void trackNumberOfCharInOneMessage(android.content.Context,int) -> b
     void trackExceptionMessage(android.content.Context,java.lang.String,java.lang.String) -> a
     void trackModel(android.content.Context) -> a
     void trackEvent(android.content.Context,java.lang.String,java.lang.String,java.lang.String,int) -> a

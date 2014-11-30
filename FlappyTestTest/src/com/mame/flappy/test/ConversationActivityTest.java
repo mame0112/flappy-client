@@ -88,59 +88,59 @@ public class ConversationActivityTest extends
 
 	}
 
-	public void testNotifyPresentMessageDataLoadedWithNewDataReady()
-			throws Exception {
-		final ConversationActivity conversation = new ConversationActivity();
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mIsNewDataReady", true);
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mAdapter", mAdapter);
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mActivity", mActivity);
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mProgressDialog", mProgressDialog);
-
-		mActivity.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				ReflectionUtil.setFieldValue(ConversationActivity.class,
-						conversation, "mListView", mListView);
-				ReflectionUtil.setFieldValue(ConversationActivity.class,
-						conversation, "mProgressDialog", mProgressDialog);
-
-				mListView.setAdapter(mAdapter);
-
-			}
-		});
-
-		Thread.sleep(2000);
-
-		ArrayList<MessageItemData> messageData = new ArrayList<MessageItemData>();
-
-		MessageItemData data = new MessageItemData(1, 0, "friend name",
-				"my name", "hello", 123456789, null);
-		MessageItemData dat1 = new MessageItemData(1, 0, "friend name2",
-				"my name2", "hello2", 123456799, null);
-
-		messageData.add(dat1);
-		messageData.add(data);
-
-		conversation.notifyPresentMessageDataLoaded(messageData);
-
-		mIsNewDataReady = (Boolean) ReflectionUtil.getValue(
-				ConversationActivity.class, "mIsNewDataReady", conversation);
-		assertTrue(mIsNewDataReady == false);
-
-		mConversationData = (ArrayList<MessageItemData>) ReflectionUtil
-				.getValue(ConversationActivity.class, "mConversationData",
-						conversation);
-		assertEquals(mConversationData.size(), 2);
-
-	}
+//	public void testNotifyPresentMessageDataLoadedWithNewDataReady()
+//			throws Exception {
+//		final ConversationActivity conversation = new ConversationActivity();
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mIsNewDataReady", true);
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mAdapter", mAdapter);
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mActivity", mActivity);
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mProgressDialog", mProgressDialog);
+//
+//		mActivity.runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
+//				ReflectionUtil.setFieldValue(ConversationActivity.class,
+//						conversation, "mListView", mListView);
+//				ReflectionUtil.setFieldValue(ConversationActivity.class,
+//						conversation, "mProgressDialog", mProgressDialog);
+//
+//				mListView.setAdapter(mAdapter);
+//
+//			}
+//		});
+//
+//		Thread.sleep(2000);
+//
+//		ArrayList<MessageItemData> messageData = new ArrayList<MessageItemData>();
+//
+//		MessageItemData data = new MessageItemData(1, 0, "friend name",
+//				"my name", "hello", 123456789, null);
+//		MessageItemData dat1 = new MessageItemData(1, 0, "friend name2",
+//				"my name2", "hello2", 123456799, null);
+//
+//		messageData.add(dat1);
+//		messageData.add(data);
+//
+//		conversation.notifyPresentMessageDataLoaded(messageData);
+//
+//		mIsNewDataReady = (Boolean) ReflectionUtil.getValue(
+//				ConversationActivity.class, "mIsNewDataReady", conversation);
+//		assertTrue(mIsNewDataReady == false);
+//
+//		mConversationData = (ArrayList<MessageItemData>) ReflectionUtil
+//				.getValue(ConversationActivity.class, "mConversationData",
+//						conversation);
+//		assertEquals(mConversationData.size(), 2);
+//
+//	}
 
 	public void testNnotifyNewConversationDataLoadedNotReady() throws Exception {
 
@@ -175,52 +175,52 @@ public class ConversationActivityTest extends
 		assertEquals(mConversationData.size(), 2);
 	}
 
-	public void testNnotifyNewConversationDataLoadedReady() throws Exception {
-
-		final ConversationActivity conversation = new ConversationActivity();
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mIsPresentDataReady", true);
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mAdapter", mAdapter);
-		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
-				"mActivity", mActivity);
-
-		mActivity.runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				ReflectionUtil.setFieldValue(ConversationActivity.class,
-						conversation, "mListView", mListView);
-				ReflectionUtil.setFieldValue(ConversationActivity.class,
-						conversation, "mProgressDialog", mProgressDialog);
-
-				mListView.setAdapter(mAdapter);
-
-			}
-		});
-
-		Thread.sleep(2000);
-
-		ArrayList<MessageItemData> messageData = new ArrayList<MessageItemData>();
-
-		MessageItemData data = new MessageItemData(1, 0, "friend name",
-				"my name3", "hello3", 123456789, null);
-		MessageItemData dat1 = new MessageItemData(1, 0, "friend name2",
-				"my name4", "hello4", 123456799, null);
-
-		messageData.add(dat1);
-		messageData.add(data);
-
-		conversation.notifyNewConversationDataLoaded(messageData);
-
-		mIsNewDataReady = (Boolean) ReflectionUtil.getValue(
-				ConversationActivity.class, "mIsNewDataReady", conversation);
-		assertTrue(mIsPresentDataReady == false);
-
-		mConversationData = (ArrayList<MessageItemData>) ReflectionUtil
-				.getValue(ConversationActivity.class, "mConversationData",
-						conversation);
-		assertEquals(mConversationData.size(), 2);
-
-	}
+//	public void testNnotifyNewConversationDataLoadedReady() throws Exception {
+//
+//		final ConversationActivity conversation = new ConversationActivity();
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mIsPresentDataReady", true);
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mAdapter", mAdapter);
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, conversation,
+//				"mActivity", mActivity);
+//
+//		mActivity.runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
+//				ReflectionUtil.setFieldValue(ConversationActivity.class,
+//						conversation, "mListView", mListView);
+//				ReflectionUtil.setFieldValue(ConversationActivity.class,
+//						conversation, "mProgressDialog", mProgressDialog);
+//
+//				mListView.setAdapter(mAdapter);
+//
+//			}
+//		});
+//
+//		Thread.sleep(2000);
+//
+//		ArrayList<MessageItemData> messageData = new ArrayList<MessageItemData>();
+//
+//		MessageItemData data = new MessageItemData(1, 0, "friend name",
+//				"my name3", "hello3", 123456789, null);
+//		MessageItemData dat1 = new MessageItemData(1, 0, "friend name2",
+//				"my name4", "hello4", 123456799, null);
+//
+//		messageData.add(dat1);
+//		messageData.add(data);
+//
+//		conversation.notifyNewConversationDataLoaded(messageData);
+//
+//		mIsNewDataReady = (Boolean) ReflectionUtil.getValue(
+//				ConversationActivity.class, "mIsNewDataReady", conversation);
+//		assertTrue(mIsPresentDataReady == false);
+//
+//		mConversationData = (ArrayList<MessageItemData>) ReflectionUtil
+//				.getValue(ConversationActivity.class, "mConversationData",
+//						conversation);
+//		assertEquals(mConversationData.size(), 2);
+//
+//	}
 }

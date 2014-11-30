@@ -6022,7 +6022,6 @@ com.mame.flappy.util.TrackingUtil:
     public static final java.lang.String EVENT_LABEL_CONTACT_LIST
     public static final java.lang.String EVENT_LABEL_INPUT_MESSAGE
     14:14:public TrackingUtil()
-    172:185:public static void trackNumberOfFriend(android.content.Context,int)
     192:199:public static void trackNumberOfNewMessage(android.content.Context,int)
     258:267:public static void trackPage(android.app.Activity,java.lang.String)
 com.mame.flappy.util.VersionUtil:

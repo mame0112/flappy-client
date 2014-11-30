@@ -185,57 +185,57 @@ public class FriendListActivityTest extends
 
 	}
 
-	public void testNotifyPresentDatasetWithNewDataReady() {
-
-		mActivity = getActivity();
-		mProgressDialog = ProgressDialogFragment.newInstance("Title", "Body");
-
-		final FriendListActivity friendList = new FriendListActivity();
-
-		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
-				"isNewDataAvailable", true);
-
-		ArrayList<FriendListData> userData = new ArrayList<FriendListData>();
-
-		FriendListData data1 = new FriendListData(1, "friend name", 0,
-				"Test message", 123455677, 1, "a1@test.com", null);
-		FriendListData data2 = new FriendListData(2, "friend name2", 0,
-				"Test message2", 123455678, 0, "a2@test.com", null);
-		FriendListData data3 = new FriendListData(3, "friend name3", 0,
-				"Test message3", 123455679, 2, "a3@test.com", null);
-
-		userData.add(data1);
-		userData.add(data2);
-		userData.add(data3);
-
-		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
-				"mActivity", mActivity);
-
-		// mActivity.runOnUiThread(new Runnable() {
-		// @Override
-		// public void run() {
-		// ReflectionUtil.setFieldValue(ConversationActivity.class,
-		// friendList, "mProgressDialog", mProgressDialog);
-		//
-		// }
-		// });
-
-		ReflectionUtil.setFieldValue(ConversationActivity.class, friendList,
-				"mProgressDialog", mProgressDialog);
-
-		FriendDataManager manager = FriendDataManager.getInstance();
-		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
-				"mManager", manager);
-
-		friendList.notifyPresentDataset(userData);
-
-		ArrayList<FriendListData> mUserData = (ArrayList<FriendListData>) ReflectionUtil
-				.getValue(FriendListActivity.class, "mUserData", friendList);
-		assertTrue(mUserData == null);
-
-		boolean isExistingDataAvailable = (Boolean) ReflectionUtil
-				.getValue(FriendListActivity.class, "isExistingDataAvailable",
-						friendList);
-		assertTrue(isExistingDataAvailable == false);
-	}
+//	public void testNotifyPresentDatasetWithNewDataReady() {
+//
+//		mActivity = getActivity();
+//		mProgressDialog = ProgressDialogFragment.newInstance("Title", "Body");
+//
+//		final FriendListActivity friendList = new FriendListActivity();
+//
+//		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
+//				"isNewDataAvailable", true);
+//
+//		ArrayList<FriendListData> userData = new ArrayList<FriendListData>();
+//
+//		FriendListData data1 = new FriendListData(1, "friend name", 0,
+//				"Test message", 123455677, 1, "a1@test.com", null);
+//		FriendListData data2 = new FriendListData(2, "friend name2", 0,
+//				"Test message2", 123455678, 0, "a2@test.com", null);
+//		FriendListData data3 = new FriendListData(3, "friend name3", 0,
+//				"Test message3", 123455679, 2, "a3@test.com", null);
+//
+//		userData.add(data1);
+//		userData.add(data2);
+//		userData.add(data3);
+//
+//		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
+//				"mActivity", mActivity);
+//
+//		// mActivity.runOnUiThread(new Runnable() {
+//		// @Override
+//		// public void run() {
+//		// ReflectionUtil.setFieldValue(ConversationActivity.class,
+//		// friendList, "mProgressDialog", mProgressDialog);
+//		//
+//		// }
+//		// });
+//
+//		ReflectionUtil.setFieldValue(ConversationActivity.class, friendList,
+//				"mProgressDialog", mProgressDialog);
+//
+//		FriendDataManager manager = FriendDataManager.getInstance();
+//		ReflectionUtil.setFieldValue(FriendListActivity.class, friendList,
+//				"mManager", manager);
+//
+//		friendList.notifyPresentDataset(userData);
+//
+//		ArrayList<FriendListData> mUserData = (ArrayList<FriendListData>) ReflectionUtil
+//				.getValue(FriendListActivity.class, "mUserData", friendList);
+//		assertTrue(mUserData == null);
+//
+//		boolean isExistingDataAvailable = (Boolean) ReflectionUtil
+//				.getValue(FriendListActivity.class, "isExistingDataAvailable",
+//						friendList);
+//		assertTrue(isExistingDataAvailable == false);
+//	}
 }
