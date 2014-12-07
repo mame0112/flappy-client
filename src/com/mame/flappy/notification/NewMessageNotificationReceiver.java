@@ -22,21 +22,26 @@ public class NewMessageNotificationReceiver extends BroadcastReceiver {
 			// Screen on
 			PowerManager pm = (PowerManager) context
 					.getSystemService(Context.POWER_SERVICE);
+
 			PowerManager.WakeLock wl = pm.newWakeLock(
 					PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
-			wl.acquire(1000);
+			try {
 
-			int targetUserId = intent.getIntExtra(
-					LcomConst.EXTRA_TARGET_USER_ID, LcomConst.NO_USER);
-			int fromUserId = intent.getIntExtra(LcomConst.EXTRA_USER_ID,
-					LcomConst.NO_USER);
+				wl.acquire(1000);
 
-			wl.release();
+				int targetUserId = intent.getIntExtra(
+						LcomConst.EXTRA_TARGET_USER_ID, LcomConst.NO_USER);
+				int fromUserId = intent.getIntExtra(LcomConst.EXTRA_USER_ID,
+						LcomConst.NO_USER);
 
-			Intent i = new Intent(context, NewMessageNotificationService.class);
-			i.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);
-			i.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
-			context.startService(i);
+				Intent i = new Intent(context,
+						NewMessageNotificationService.class);
+				i.putExtra(LcomConst.EXTRA_USER_ID, fromUserId);
+				i.putExtra(LcomConst.EXTRA_TARGET_USER_ID, targetUserId);
+				context.startService(i);
+			} finally {
+				wl.release();
+			}
 		}
 	}
 }

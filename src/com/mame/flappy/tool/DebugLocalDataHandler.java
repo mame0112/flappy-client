@@ -58,9 +58,15 @@ public class DebugLocalDataHandler extends UserLocalDataHandler {
 
 			for (int i = 0; i < 500; i++) {
 
-				valuesForMessage = getInsertContentValuesForMessage(friendId,
-						userId, friendName, userName, message + i,
-						String.valueOf(date + diff * i));
+				if (i % 2 == 0) {
+					valuesForMessage = getInsertContentValuesForMessage(
+							friendId, userId, friendName, userName,
+							message + i, String.valueOf(date + diff * i));
+				} else {
+					valuesForMessage = getInsertContentValuesForMessage(userId,
+							friendId, userName, friendName, message + i,
+							String.valueOf(date + diff * i));
+				}
 
 				long id = sDatabase.insert(DatabaseDef.MessageTable.TABLE_NAME,
 						null, valuesForMessage);
