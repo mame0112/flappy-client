@@ -50,6 +50,8 @@ public class CreateAccountActivityUtil {
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.putExtra(LcomConst.EXTRA_USER_ID, userId);
 		intent.putExtra(LcomConst.EXTRA_USER_NAME, userName);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+				| Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
 	}
 
