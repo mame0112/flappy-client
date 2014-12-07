@@ -167,10 +167,10 @@
     <string name="str_help_for_improve_request">For improvement request</string>
     <string name="str_help_for_ads">For ads, promotion and interviews</string>
     <string name="str_help_for_others">For others</string>
-    <string name="str_help_mail_title">Inquery</string>
+    <string name="str_help_mail_title">Inquiry</string>
     <string name="str_help_no_subject">(No subject)</string>
     <string name="str_help_no_comment">(No comment)</string>
-    <string name="str_help_send_mail_button">Send inquery mail</string>
+    <string name="str_help_send_mail_button">Send inquiry mail</string>
 
     <!-- Flappy about activity -->
     <string name="str_flappy_about_main_itle">About this service</string>
