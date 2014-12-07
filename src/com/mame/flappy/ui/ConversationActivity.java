@@ -84,10 +84,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 	private ConversationListCustonAdapter mAdapter = null;
 
-	// private ListView mListView = null;
 	private ConversationCustomListView mListView = null;
-
-	// private ProgressDialogFragment mProgressDialog = null;
 
 	private boolean mIsPresentDataReady = false;
 
