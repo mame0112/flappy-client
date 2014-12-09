@@ -11,7 +11,8 @@
     <FrameLayout
         android:id="@+id/conversationMyLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/conversation_margin" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -84,7 +85,8 @@
     <FrameLayout
         android:id="@+id/conversationFriendLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/conversation_margin" >
 
         <LinearLayout
             android:layout_width="wrap_content"

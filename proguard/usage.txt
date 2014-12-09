@@ -5886,7 +5886,7 @@ com.mame.flappy.ui.ConversationActivityUtil:
 com.mame.flappy.ui.CreateAccountActivityUtil:
     20:20:public CreateAccountActivityUtil()
     22:34:public static boolean isHalfSizeString(java.lang.String)
-    87:100:public static void showErrorToast(android.content.Context,android.os.Handler,java.lang.String)
+    89:102:public static void showErrorToast(android.content.Context,android.os.Handler,java.lang.String)
 com.mame.flappy.ui.CreateAccountActivityUtil$1
 com.mame.flappy.ui.CreateAccountActivityUtil$1$1
 com.mame.flappy.ui.FriendListActivityUtil:
