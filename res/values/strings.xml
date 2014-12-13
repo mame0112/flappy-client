@@ -32,7 +32,7 @@
 
     <!-- Welcome activity -->
     <string name="str_welcome_title">flappy</string>
-    <string name="str_welcome_desc">Stress-less communication with your friend by to be disappeard message.</string>
+    <string name="str_welcome_desc">Stress-less communication by messages automatically disappear</string>
     <string name="str_welcome_signin_button">Sign in</string>
     <string name="str_welcome_create_account_button">Sign up</string>
     <string name="str_welcome_already_have_account">Already have an account?</string>
