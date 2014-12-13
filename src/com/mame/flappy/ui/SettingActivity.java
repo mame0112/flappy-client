@@ -1,16 +1,17 @@
 package com.mame.flappy.ui;
 
-import com.mame.flappy.R;
-import com.mame.flappy.constant.LcomConst;
-import com.mame.flappy.util.DbgUtil;
-import com.mame.flappy.util.PreferenceUtil;
-
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.PreferenceFragment;
+
+import com.mame.flappy.R;
+import com.mame.flappy.constant.LcomConst;
+import com.mame.flappy.util.DbgUtil;
+import com.mame.flappy.util.PreferenceUtil;
+import com.mame.flappy.util.TrackingUtil;
 
 public class SettingActivity extends Activity {
 
@@ -22,6 +23,18 @@ public class SettingActivity extends Activity {
 		getFragmentManager().beginTransaction()
 				.replace(android.R.id.content, new FlappySettingFragment())
 				.commit();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		TrackingUtil.trackActivityStart(this);
+	}
+
+	public void onStop() {
+		super.onStop();
+		TrackingUtil.trackActivityStop(this);
+
 	}
 
 	public static class FlappySettingFragment extends PreferenceFragment
@@ -53,7 +66,30 @@ public class SettingActivity extends Activity {
 		public void onSharedPreferenceChanged(
 				SharedPreferences sharedPreferences, String key) {
 			setSummaryText();
+			trackUserPreferenceByGA(key);
 
+		}
+
+		private void trackUserPreferenceByGA(String key) {
+			if (key.equals("setting_general_sound_preference")) {
+				CheckBoxPreference soundPreference = (CheckBoxPreference) getPreferenceScreen()
+						.findPreference("setting_general_sound_preference");
+				TrackingUtil.trackNotificationSoundSetting(getActivity(),
+						soundPreference.isChecked());
+				DbgUtil.showDebug(TAG, "setting_general_sound_preference: "
+						+ soundPreference.isChecked());
+
+			} else if (key.equals("setting_general_vibration_preference")) {
+				CheckBoxPreference vibPreference = (CheckBoxPreference) getPreferenceScreen()
+						.findPreference("setting_general_vibration_preference");
+				TrackingUtil.trackNotificationSoundSetting(getActivity(),
+						vibPreference.isChecked());
+				DbgUtil.showDebug(TAG, "setting_general_vibration_preference: "
+						+ vibPreference.isChecked());
+
+			} else {
+				DbgUtil.showDebug(TAG, "Unexpected value");
+			}
 		}
 
 		private void setSummaryText() {

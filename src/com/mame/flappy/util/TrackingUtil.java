@@ -30,6 +30,12 @@ public class TrackingUtil {
 	/** Custome variable5 (Exception that is caught but we need to know) */
 	private static final int CUSTOM_VAR_INDEX_5 = 5;
 
+	/** Custome variable7 (Message receive vibration setting) */
+	private static final int CUSTOM_VAR_INDEX_6 = 6;
+
+	/** Custome variable7 (Message receive sound setting) */
+	private static final int CUSTOM_VAR_INDEX_7 = 7;
+
 	public static final String EVENT_CATEGORY_WELCOME = "Welcome view";
 
 	public static final String EVENT_CATEGORY_LOGIN = "Login view";
@@ -228,6 +234,36 @@ public class TrackingUtil {
 				MapBuilder.createAppView()
 						.set(Fields.customDimension(CUSTOM_VAR_INDEX_5), error)
 						.build());
+	}
+
+	/**
+	 * Tracks Vibration setting which shall be user when new message receives
+	 */
+	public static void trackNotificationVibrationSetting(Context context,
+			boolean isOn) {
+
+		DbgUtil.showDebug(TAG_TRACKING, "trackNotificationVibrationSetting");
+
+		EasyTracker.getInstance(context).send(
+				MapBuilder
+						.createAppView()
+						.set(Fields.customDimension(CUSTOM_VAR_INDEX_6),
+								String.valueOf(isOn)).build());
+	}
+
+	/**
+	 * Tracks Sound setting which shall be user when new message receives
+	 */
+	public static void trackNotificationSoundSetting(Context context,
+			boolean isOn) {
+
+		DbgUtil.showDebug(TAG_TRACKING, "trackNotificationVibrationSetting");
+
+		EasyTracker.getInstance(context).send(
+				MapBuilder
+						.createAppView()
+						.set(Fields.customDimension(CUSTOM_VAR_INDEX_7),
+								String.valueOf(isOn)).build());
 	}
 
 	/**
