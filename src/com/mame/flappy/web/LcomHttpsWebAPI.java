@@ -95,8 +95,9 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			public void run() {
 				// TODO Auto-generated method stub
 				if (!mIsResponed) {
+					DbgUtil.showDebug(TAG, "Timeout");
 					if (mListener != null) {
-						DbgUtil.showDebug(TAG, "Timeout");
+						mPostThread.interrupt();
 						mListener.onAPITimeout();
 					}
 				}
