@@ -37,7 +37,7 @@ public class NewMessageNotification {
 
 		// If current vibration setting is on
 		if (PreferenceUtil.getCurrentVibrationSetting(context)) {
-			builder.setVibrate(new long[] { 1000, 700, 250, 700, 250 });
+			builder.setVibrate(new long[] { 500, 500, 250, 500 });
 		}
 
 		Intent intent = new Intent(context, FriendListActivity.class);
