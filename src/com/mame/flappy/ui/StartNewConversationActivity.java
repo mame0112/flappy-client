@@ -466,9 +466,9 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 						String existUserName = respList.get(3);
 						mailAddress = respList.get(4);
 						// String message = respList.get(5);
-						DbgUtil.showDebug("userId: ", existUserId);
-						DbgUtil.showDebug("userName: ", existUserName);
-						DbgUtil.showDebug("mailAddress: ", mailAddress);
+						// DbgUtil.showDebug("userId: ", existUserId);
+						// DbgUtil.showDebug("userName: ", existUserName);
+						// DbgUtil.showDebug("mailAddress: ", mailAddress);
 						// DbgUtil.showDebug("message: ", message);
 						// If the target mail address is existing user, we need
 						// to

@@ -97,8 +97,10 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 				if (!mIsResponed) {
 					DbgUtil.showDebug(TAG, "Timeout");
 					if (mListener != null) {
-						mPostThread.interrupt();
 						mListener.onAPITimeout();
+					}
+					if (mPostThread != null) {
+						mPostThread.interrupt();
 					}
 				}
 			}
@@ -137,7 +139,9 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 			DbgUtil.showDebug(TAG, "secretKey: " + secretKey);
 			postParams = new ArrayList<NameValuePair>();
 			for (int i = 0; i < key.length; i++) {
+				DbgUtil.showDebug(TAG, "value[i]: " + value[i]);
 				String cipher = CipherUtil.encrypt(value[i], secretKey);
+				DbgUtil.showDebug(TAG, "cipher: " + cipher);
 				// postParams.add(new BasicNameValuePair(key[i], value[i]));
 				postParams.add(new BasicNameValuePair(key[i], cipher));
 			}
@@ -192,14 +196,13 @@ public class LcomHttpsWebAPI implements LcomAbstractServerAccessor {
 					}
 				}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				DbgUtil.showDebug(TAG,
+						"UnsupportedEncodingException: " + e.getMessage());
 			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				DbgUtil.showDebug(TAG,
+						"ClientProtocolException: " + e.getMessage());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				DbgUtil.showDebug(TAG, "IOException: " + e.getMessage());
 			} finally {
 				this.url = null;
 				this.postParams = null;

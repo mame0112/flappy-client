@@ -256,6 +256,8 @@ public class UserServerDataHandler implements
 							notifyNewDataset(newUserDatas);
 						} else {
 							notifyNewDataset(null);
+							TrackingUtil.trackExceptionMessage(mContext, TAG,
+									"REQUEST_NEW_USER_DATA response is null");
 						}
 					} else if (origin.equals(TAG + REQUEST_ALL_NEW_USER_DATA)) {
 						DbgUtil.showDebug(TAG, "REQUEST_ALL_NEW_USER_DATA");
@@ -266,6 +268,9 @@ public class UserServerDataHandler implements
 							notifyUserAllDataset(allDatas);
 						} else {
 							notifyUserAllDataset(null);
+							TrackingUtil
+									.trackExceptionMessage(mContext, TAG,
+											"REQUEST_ALL_NEW_USER_DATA response is null");
 						}
 					} else if (origin.equals(TAG + SEND_AND_ADD_DATA)) {
 						DbgUtil.showDebug(TAG, "SEND_AND_ADD_DATA");
@@ -297,6 +302,9 @@ public class UserServerDataHandler implements
 						} else {
 							mDataListener.notifyMessageSend(
 									Integer.valueOf(result), null);
+							TrackingUtil
+									.trackExceptionMessage(mContext, TAG,
+											"SEND_AND_ADD_DATA userId or targetUserId is null");
 						}
 					} else if (origin.equals(TAG + REQUEST_CONVERSATION_DATA)) {
 						DbgUtil.showDebug(TAG, "REQUEST_CONVERSATION_DATA");
@@ -307,6 +315,9 @@ public class UserServerDataHandler implements
 							notifyConversationDataset(messageDatas);
 						} else {
 							notifyConversationDataset(null);
+							TrackingUtil
+									.trackExceptionMessage(mContext, TAG,
+											"REQUEST_CONVERSATION_DATA response is null");
 						}
 					} else if (origin.equals(TAG + REQUEST_FRIEND_THUMBNAILS)) {
 						DbgUtil.showDebug(TAG, "REQUEST_FRIEND_THUMBNAILS");
@@ -318,6 +329,9 @@ public class UserServerDataHandler implements
 							notifyNewFriendThumbnails(result);
 						} else {
 							notifyNewFriendThumbnails(null);
+							TrackingUtil
+									.trackExceptionMessage(mContext, TAG,
+											"REQUEST_FRIEND_THUMBNAILS response is null");
 						}
 					} else {
 						handleErrorCase();
@@ -492,7 +506,7 @@ public class UserServerDataHandler implements
 			}
 		} else {
 			TrackingUtil.trackExceptionMessage(mContext, TAG,
-					"respList is null");
+					"respList is null in parseNewFriendThumbnailData");
 		}
 
 		return null;
@@ -538,6 +552,9 @@ public class UserServerDataHandler implements
 										TAG,
 										"NumberFormatException: "
 												+ e.getMessage());
+								TrackingUtil
+										.trackExceptionMessage(mContext, TAG,
+												"NumberFormatException in parseResponseForConveersation");
 							}
 
 						}

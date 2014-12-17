@@ -26,7 +26,8 @@ public class LcomConst {
 
 	public final static int API_LEVEL = 1;
 
-	public final static boolean IS_DEBUG = true;
+	// FIXME before release
+	public final static boolean IS_DEBUG = false;
 
 	public final static int NO_USER = -1;
 

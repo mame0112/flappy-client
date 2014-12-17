@@ -304,11 +304,11 @@ public class UserLocalDataHandler {
 									Integer.valueOf(lastSenderId), lastMessage,
 									0L, 0, mailAddress, bmp);
 							datas.add(data);
-							DbgUtil.showDebug(TAG, "friendId: " + friendId
-									+ " userName: " + userName
-									+ " lastSenderId: " + lastSenderId
-									+ " lastMessage: " + lastMessage
-									+ " mailAddress: " + mailAddress);
+							// DbgUtil.showDebug(TAG, "friendId: " + friendId
+							// + " userName: " + userName
+							// + " lastSenderId: " + lastSenderId
+							// + " lastMessage: " + lastMessage
+							// + " mailAddress: " + mailAddress);
 						} while (cursor.moveToNext());
 					}
 				}

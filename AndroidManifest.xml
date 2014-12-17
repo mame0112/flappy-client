@@ -102,30 +102,6 @@
             android:label="@string/str_flappy_setting_title" >
         </activity>
 
-        <!-- DebugActivity -->
-        <!--
-        <activity
-            android:name="com.mame.flappy.tool.DebugMainActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/str_flappy_setting_title" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.mame.flappy.tool.DebugConversationActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/str_flappy_setting_title" >
-        </activity>
-        <activity
-            android:name="com.mame.flappy.tool.DebugFriendshipActivity"
-            android:configChanges="orientation|screenSize"
-            android:label="@string/str_flappy_setting_title" >
-        </activity>
- -->
- 
         <receiver
             android:name="com.mame.flappy.server.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
