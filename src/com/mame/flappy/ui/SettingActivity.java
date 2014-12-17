@@ -17,6 +17,10 @@ public class SettingActivity extends Activity {
 
 	private final static String TAG = LcomConst.TAG + "/SettingActivity";
 
+	private final static String SOUND_SETTING = "setting_general_sound_preference";
+
+	private final static String VIBRATION_SETTING = "setting_general_vibration_preference";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,18 +75,18 @@ public class SettingActivity extends Activity {
 		}
 
 		private void trackUserPreferenceByGA(String key) {
-			if (key.equals("setting_general_sound_preference")) {
+			if (key.equals(SOUND_SETTING)) {
 				CheckBoxPreference soundPreference = (CheckBoxPreference) getPreferenceScreen()
-						.findPreference("setting_general_sound_preference");
+						.findPreference(SOUND_SETTING);
 				TrackingUtil.trackNotificationSoundSetting(getActivity(),
 						soundPreference.isChecked());
 				DbgUtil.showDebug(TAG, "setting_general_sound_preference: "
 						+ soundPreference.isChecked());
 
-			} else if (key.equals("setting_general_vibration_preference")) {
+			} else if (key.equals(VIBRATION_SETTING)) {
 				CheckBoxPreference vibPreference = (CheckBoxPreference) getPreferenceScreen()
-						.findPreference("setting_general_vibration_preference");
-				TrackingUtil.trackNotificationSoundSetting(getActivity(),
+						.findPreference(VIBRATION_SETTING);
+				TrackingUtil.trackNotificationVibrationSetting(getActivity(),
 						vibPreference.isChecked());
 				DbgUtil.showDebug(TAG, "setting_general_vibration_preference: "
 						+ vibPreference.isChecked());
@@ -94,7 +98,7 @@ public class SettingActivity extends Activity {
 
 		private void setSummaryText() {
 			CheckBoxPreference soundPreference = (CheckBoxPreference) getPreferenceScreen()
-					.findPreference("setting_general_sound_preference");
+					.findPreference(SOUND_SETTING);
 			if (soundPreference.isChecked()) {
 				soundPreference
 						.setSummary(R.string.str_flappy_setting_notification_sound_value_on);
@@ -106,7 +110,7 @@ public class SettingActivity extends Activity {
 			}
 
 			CheckBoxPreference vibPreference = (CheckBoxPreference) getPreferenceScreen()
-					.findPreference("setting_general_vibration_preference");
+					.findPreference(VIBRATION_SETTING);
 			if (vibPreference.isChecked()) {
 				vibPreference
 						.setSummary(R.string.str_flappy_setting_notification_vibration_value_on);
