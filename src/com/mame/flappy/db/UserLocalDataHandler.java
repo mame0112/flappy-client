@@ -705,9 +705,13 @@ public class UserLocalDataHandler {
 							.getBlob(checkCursor
 									.getColumnIndex(DatabaseDef.FriendshipColumns.THUMBNAIL));
 
+					// In some cases, we don't have friendName (who is the user
+					// that owner has invited (meaning he/she has only e-mail
+					// address)). Then, we need to update his/her name
+					friendName = data.getFromUserName();
+
 					// Then, need to update latest message info in Friendship
 					// table
-
 					ContentValues valuesForFriendship = null;
 					String where = null;
 					if (senderId == userId) {

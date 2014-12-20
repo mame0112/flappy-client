@@ -416,14 +416,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 
 				friendListData.add(data);
 
-				// mFriendListData.add(data);
-
-				// TODO We need to check if thumbnail is available in local
-				// before accessing server
-				// DbgUtil.showDebug(TAG, "friendId: " + friendId);
-				// targetUserIds.add(friendId);
-				// DbgUtil.showDebug(TAG, "id: " + friendId);
-				// DbgUtil.showDebug(TAG, "message: " + data.getLastMessage());
 			}
 
 			// Initialize flag
@@ -436,8 +428,6 @@ public class FriendListActivity extends LcomBaseActivity implements
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
-							// mFriendListData.addAll(userData);
-							// mFriendListData.addAll(userData);
 							if (mAdapter != null) {
 								mFriendListData.addAll(friendListData);
 								mListView.setAdapter(mAdapter);

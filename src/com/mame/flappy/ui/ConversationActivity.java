@@ -154,14 +154,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 		mActivity = this;
 
-		// mProgressDialog = ProgressDialogFragment.newInstance(
-		// getString(R.string.str_conversation_progress_title),
-		// getString(R.string.str_conversation_progress_desc));
-
 		mAdapter = new ConversationListCustonAdapter(getApplicationContext(),
 				0, mConversationData);
 		mAdapter.setFriendThumbnail(mThumbnail);
-		// mAdapter.addAll(mConversationData);
 
 		mListView = (ConversationCustomListView) findViewById(R.id.conversationListView);
 		mListView.setAdapter(mAdapter);
