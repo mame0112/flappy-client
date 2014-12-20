@@ -43,7 +43,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_frame"
-            android:hint="@string/str_invitation_input_message_hint" />
+            android:hint="@string/str_invitation_input_message_hint"
+            android:inputType="text" />
 
         <LinearLayout
             android:layout_width="match_parent"

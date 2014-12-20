@@ -37,7 +37,8 @@
                 android:layout_marginRight="@dimen/default_padding_vertical"
                 android:layout_weight="6"
                 android:background="@drawable/message_edittext_frame"
-                android:hint="@string/str_conversation_send_hint_text" />
+                android:hint="@string/str_conversation_send_hint_text"
+                android:inputType="text" />
 
             <Button
                 android:id="@+id/conversationSendButton"
