@@ -53,15 +53,17 @@ public class LcomServerAccessor implements LcomWebAccessorListener {
 	@Override
 	public void onResponseReceived(List<String> respList) {
 		DbgUtil.showDebug(TAG, "setListener");
-		mListener.onResponseReceived(respList);
-
+		if (mListener != null) {
+			mListener.onResponseReceived(respList);
+		}
 	}
 
 	@Override
 	public void onAPITimeout() {
 		DbgUtil.showDebug(TAG, "onAPITimeout");
-		mListener.onAPITimeout();
-
+		if (mListener != null) {
+			mListener.onAPITimeout();
+		}
 	}
 
 	public interface LcomServerAccessorListener {
