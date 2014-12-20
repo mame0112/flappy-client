@@ -18,10 +18,12 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		DbgUtil.showDebug(TAG, "onReceive");
-		// ComponentName comp = new ComponentName(context.getPackageName(),
-		// GCMIntentService.class.getName());
 		intent.setClass(context, GCMIntentService.class);
+
+		// Intent gcmIntent = new Intent(context, GCMIntentService.class);
+
 		context.startService(intent);
+		// startWakefulService(context, intent);
 
 		// startWakefulService(context, (intent.setComponent(comp)));
 		// setResultCode(Activity.RESULT_OK);

@@ -4,9 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.PowerManager;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mame.flappy.constant.LcomConst;
@@ -21,6 +23,7 @@ public class GCMIntentService extends Service {
 
 	@Override
 	public void onCreate() {
+		super.onCreate();
 		DbgUtil.showDebug(TAG, "onCreate");
 	}
 
@@ -29,86 +32,103 @@ public class GCMIntentService extends Service {
 		DbgUtil.showDebug(TAG, "onStartCommand Received start id " + startId
 				+ ": " + intent);
 
-		if (intent != null) {
-			Bundle extras = intent.getExtras();
-			GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-			String messageType = gcm.getMessageType(intent);
+		PowerManager pm = (PowerManager) getApplicationContext()
+				.getSystemService(Context.POWER_SERVICE);
 
-			if (!extras.isEmpty()) {
-				if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
-						.equals(messageType)) {
-					DbgUtil.showDebug(TAG, "messageType: " + messageType
-							+ ",body:" + extras.toString());
-				} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
-						.equals(messageType)) {
-					DbgUtil.showDebug(TAG, "messageType: " + messageType
-							+ ",body:" + extras.toString());
-				} else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
-						.equals(messageType)) {
-					DbgUtil.showDebug(TAG, "messageType: " + messageType
-							+ ",body:" + extras.toString());
+		PowerManager.WakeLock wl = pm.newWakeLock(
+				PowerManager.PARTIAL_WAKE_LOCK, "My Tag");
+		try {
+			wl.acquire();
 
-					// If the user already logged in
-					// (It not logged in, nothing should happen.)
-					if (PreferenceUtil.getUserId(getApplicationContext()) != LcomConst.NO_USER
-							&& PreferenceUtil
-									.getUserName(getApplicationContext()) != null) {
-						try {
-							String[] parsed = parseJSON(extras.toString());
-							// Because parsed[0] is "my id" from friend
-							// perspective.
-							if (parsed != null) {
-								String friendUserId = parsed[0];
-								String userId = parsed[1];
-								String userName = parsed[2];
-								String targetUserName = parsed[3];
-								String message = parsed[4];
-								String expireDate = parsed[5];
-								DbgUtil.showDebug(TAG, "userId: " + userId);
-								DbgUtil.showDebug(TAG, "friendUserId: "
-										+ friendUserId);
-								DbgUtil.showDebug(TAG, "userName: " + userName);
-								DbgUtil.showDebug(TAG, "targetUserName: "
-										+ targetUserName);
-								DbgUtil.showDebug(TAG, "expireDate: "
-										+ expireDate);
-								DbgUtil.showDebug(TAG, "message: " + message);
+			if (intent != null) {
+				Bundle extras = intent.getExtras();
+				GoogleCloudMessaging gcm = GoogleCloudMessaging
+						.getInstance(this);
+				String messageType = gcm.getMessageType(intent);
 
-								NewMessageNotificationManager
-										.handleLatestMessageAndShowNotification(
-												getApplicationContext(),
-												Integer.valueOf(friendUserId),
-												Integer.valueOf(userId), 1,
-												Long.valueOf(expireDate));
+				if (!extras.isEmpty()) {
+					if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
+							.equals(messageType)) {
+						DbgUtil.showDebug(TAG, "messageType: " + messageType
+								+ ",body:" + extras.toString());
+					} else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
+							.equals(messageType)) {
+						DbgUtil.showDebug(TAG, "messageType: " + messageType
+								+ ",body:" + extras.toString());
+					} else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
+							.equals(messageType)) {
+						DbgUtil.showDebug(TAG, "messageType: " + messageType
+								+ ",body:" + extras.toString());
 
-								sendBroadcast(Integer.valueOf(userId),
-										Integer.valueOf(friendUserId),
-										userName, targetUserName, message);
+						// If the user already logged in
+						// (It not logged in, nothing should happen.)
+						if (PreferenceUtil.getUserId(getApplicationContext()) != LcomConst.NO_USER
+								&& PreferenceUtil
+										.getUserName(getApplicationContext()) != null) {
+							try {
+								String[] parsed = parseJSON(extras.toString());
+								// Because parsed[0] is "my id" from friend
+								// perspective.
+								if (parsed != null) {
+									String friendUserId = parsed[0];
+									String userId = parsed[1];
+									String userName = parsed[2];
+									String targetUserName = parsed[3];
+									String message = parsed[4];
+									String expireDate = parsed[5];
+									DbgUtil.showDebug(TAG, "userId: " + userId);
+									DbgUtil.showDebug(TAG, "friendUserId: "
+											+ friendUserId);
+									DbgUtil.showDebug(TAG, "userName: "
+											+ userName);
+									DbgUtil.showDebug(TAG, "targetUserName: "
+											+ targetUserName);
+									DbgUtil.showDebug(TAG, "expireDate: "
+											+ expireDate);
+									DbgUtil.showDebug(TAG, "message: "
+											+ message);
+
+									NewMessageNotificationManager
+											.handleLatestMessageAndShowNotification(
+													getApplicationContext(),
+													Integer.valueOf(friendUserId),
+													Integer.valueOf(userId), 1,
+													Long.valueOf(expireDate));
+
+									sendBroadcast(Integer.valueOf(userId),
+											Integer.valueOf(friendUserId),
+											userName, targetUserName, message);
+								}
+							} catch (IndexOutOfBoundsException e) {
+								DbgUtil.showDebug(
+										TAG,
+										"IndexOutOfBoundsException: "
+												+ e.getMessage());
+							} catch (NumberFormatException e) {
+								DbgUtil.showDebug(
+										TAG,
+										"NumberFormatException: "
+												+ e.getMessage());
+							} catch (NewMessageNotificationManagerException e) {
+								DbgUtil.showDebug(TAG,
+										"NewMessageNotificationManagerException: "
+												+ e.getMessage());
 							}
-						} catch (IndexOutOfBoundsException e) {
-							DbgUtil.showDebug(
-									TAG,
-									"IndexOutOfBoundsException: "
-											+ e.getMessage());
-						} catch (NumberFormatException e) {
-							DbgUtil.showDebug(TAG, "NumberFormatException: "
-									+ e.getMessage());
-						} catch (NewMessageNotificationManagerException e) {
-							DbgUtil.showDebug(TAG,
-									"NewMessageNotificationManagerException: "
-											+ e.getMessage());
+						} else {
+							DbgUtil.showDebug(TAG, "Not logged in");
 						}
-					} else {
-						DbgUtil.showDebug(TAG, "Not logged in");
 					}
 				}
 			}
+		} finally {
+			wl.release();
 		}
 		return START_STICKY;
 	}
 
 	@Override
 	public void onDestroy() {
+		super.onDestroy();
 		DbgUtil.showDebug(TAG, "onDestroy");
 	}
 
