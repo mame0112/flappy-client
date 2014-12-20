@@ -67,7 +67,7 @@ public class FriendListCustomAdapter extends BaseAdapter {
 		}
 
 		String name = item.getFriendName();
-		if (name == null || name.equals(LcomConst.NULL)) {
+		if (name == null || name.equals(LcomConst.NULL) || name.equals("")) {
 			name = item.getMailAddress();
 		}
 		holder.userNameView.setText(name);
