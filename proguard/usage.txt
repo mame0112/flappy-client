@@ -5824,7 +5824,7 @@ com.mame.flappy.db.UserDatabaseHelper:
     static final java.lang.String MESSAGE_DATA_SQL
     static final java.lang.String NOTIFICATION_SQL
 com.mame.flappy.db.UserLocalDataHandler:
-    1151:1241:public com.mame.flappy.data.NotificationContentData getNotificationNearestExpireData()
+    1155:1245:public com.mame.flappy.data.NotificationContentData getNotificationNearestExpireData()
 com.mame.flappy.db.UserLocalDataHandler$UserLocalDataListener:
     public abstract void notifyLocalUserDataSet(java.util.ArrayList)
 com.mame.flappy.db.UserLocalDataHandlerHelper:
@@ -5901,8 +5901,10 @@ com.mame.flappy.ui.LoginActivityUtil:
 com.mame.flappy.ui.MyProfileActivity
 com.mame.flappy.ui.SettingActivity:
     private static final java.lang.String TAG
+    private static final java.lang.String SOUND_SETTING
+    private static final java.lang.String VIBRATION_SETTING
 com.mame.flappy.ui.StartNewConversationActivity:
-    434:444:private void sendMessageForTargetUser(int,java.lang.String,java.lang.String,java.lang.String)
+    437:447:private void sendMessageForTargetUser(int,java.lang.String,java.lang.String,java.lang.String)
 com.mame.flappy.ui.StartNewConversationActivityUtil:
     9:9:public StartNewConversationActivityUtil()
 com.mame.flappy.util.AlphaNumericFilter
@@ -5975,6 +5977,8 @@ com.mame.flappy.util.TrackingUtil:
     private static final int CUSTOM_VAR_INDEX_3
     private static final int CUSTOM_VAR_INDEX_4
     private static final int CUSTOM_VAR_INDEX_5
+    private static final int CUSTOM_VAR_INDEX_6
+    private static final int CUSTOM_VAR_INDEX_7
     public static final java.lang.String EVENT_CATEGORY_WELCOME
     public static final java.lang.String EVENT_CATEGORY_LOGIN
     public static final java.lang.String EVENT_CATEGORY_CREATE_ACCOUNT
@@ -6021,9 +6025,9 @@ com.mame.flappy.util.TrackingUtil:
     public static final java.lang.String EVENT_LABEL_CONTACT
     public static final java.lang.String EVENT_LABEL_CONTACT_LIST
     public static final java.lang.String EVENT_LABEL_INPUT_MESSAGE
-    14:14:public TrackingUtil()
-    192:199:public static void trackNumberOfNewMessage(android.content.Context,int)
-    258:267:public static void trackPage(android.app.Activity,java.lang.String)
+    13:13:public TrackingUtil()
+    197:204:public static void trackNumberOfNewMessage(android.content.Context,int)
+    293:302:public static void trackPage(android.app.Activity,java.lang.String)
 com.mame.flappy.util.VersionUtil:
     private static final java.lang.String TAG
     9:9:public VersionUtil()
@@ -6038,12 +6042,12 @@ com.mame.flappy.web.LcomHttpsWebAPI:
     private static final java.lang.String TAG
     private static final int API_WAIT_TIMER
     private static final int ACT_HTTPS_UPLOAD
-    118:121:public void destroyAccessor()
+    121:124:public void destroyAccessor()
 com.mame.flappy.web.LcomHttpsWebAPI$HttpResult
 com.mame.flappy.web.LcomHttpsWebAPI$LcomHttpsWebAPIListener
 com.mame.flappy.web.LcomHttpsWebAPI$Result:
-    348:348:public byte[] getBytes()
-    358:358:public org.apache.http.Header[] getHeaders()
+    352:352:public byte[] getBytes()
+    362:362:public org.apache.http.Header[] getHeaders()
 com.mame.flappy.web.LcomServerAccessor:
     26:27:public void setWebAPISecurity(com.mame.flappy.web.LcomAbstractServerAccessor)
 example.EventDataSQLHelper

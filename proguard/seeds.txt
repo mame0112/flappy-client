@@ -611,6 +611,7 @@ com.mame.flappy.R$dimen: int contact_margin_dislay_top
 com.mame.flappy.R$dimen: int contact_margin_top
 com.mame.flappy.R$dimen: int conversation_bottom
 com.mame.flappy.R$dimen: int conversation_list_image_size
+com.mame.flappy.R$dimen: int conversation_margin
 com.mame.flappy.R$dimen: int create_account_block_padding
 com.mame.flappy.R$dimen: int default_font_size_description
 com.mame.flappy.R$dimen: int default_font_size_larze
@@ -648,6 +649,7 @@ com.mame.flappy.R$drawable: int common_signin_btn_text_normal_dark
 com.mame.flappy.R$drawable: int common_signin_btn_text_normal_light
 com.mame.flappy.R$drawable: int common_signin_btn_text_pressed_dark
 com.mame.flappy.R$drawable: int common_signin_btn_text_pressed_light
+com.mame.flappy.R$drawable: int edittext_disabled
 com.mame.flappy.R$drawable: int edittext_focused
 com.mame.flappy.R$drawable: int edittext_frame
 com.mame.flappy.R$drawable: int edittext_normal

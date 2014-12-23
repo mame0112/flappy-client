@@ -6807,20 +6807,27 @@ com.mame.flappy.ui.ConversationActivity$5$1 -> com.mame.flappy.ui.l:
     void run() -> run
 com.mame.flappy.ui.ConversationActivity$6 -> com.mame.flappy.ui.m:
     com.mame.flappy.ui.ConversationActivity this$0 -> a
-    java.util.ArrayList val$messageData -> b
     void run() -> run
     com.mame.flappy.ui.ConversationActivity access$0(com.mame.flappy.ui.ConversationActivity$6) -> a
 com.mame.flappy.ui.ConversationActivity$6$1 -> com.mame.flappy.ui.n:
     com.mame.flappy.ui.ConversationActivity$6 this$1 -> a
+    void run() -> run
+com.mame.flappy.ui.ConversationActivity$7 -> com.mame.flappy.ui.o:
+    com.mame.flappy.ui.ConversationActivity this$0 -> a
     java.util.ArrayList val$messageData -> b
     void run() -> run
-com.mame.flappy.ui.ConversationActivity$ConversationBroadcastReceiver -> com.mame.flappy.ui.o:
+    com.mame.flappy.ui.ConversationActivity access$0(com.mame.flappy.ui.ConversationActivity$7) -> a
+com.mame.flappy.ui.ConversationActivity$7$1 -> com.mame.flappy.ui.p:
+    com.mame.flappy.ui.ConversationActivity$7 this$1 -> a
+    java.util.ArrayList val$messageData -> b
+    void run() -> run
+com.mame.flappy.ui.ConversationActivity$ConversationBroadcastReceiver -> com.mame.flappy.ui.q:
     com.mame.flappy.ui.ConversationActivity this$0 -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.mame.flappy.ui.ConversationActivityUtil -> com.mame.flappy.ui.p:
+com.mame.flappy.ui.ConversationActivityUtil -> com.mame.flappy.ui.r:
     java.util.ArrayList parseMessageBasedOnMaxLength(android.content.Context,java.lang.String) -> a
     java.lang.String parseArrayListMessageToString(java.util.ArrayList) -> a
-com.mame.flappy.ui.ConversationListCustonAdapter -> com.mame.flappy.ui.q:
+com.mame.flappy.ui.ConversationListCustonAdapter -> com.mame.flappy.ui.s:
     java.lang.String TAG -> a
     android.view.LayoutInflater mLayoutInflater -> b
     android.content.Context mContext -> c
@@ -6828,7 +6835,7 @@ com.mame.flappy.ui.ConversationListCustonAdapter -> com.mame.flappy.ui.q:
     android.graphics.Bitmap mThumbnail -> e
     void setFriendThumbnail(android.graphics.Bitmap) -> a
     android.view.View getView(int,android.view.View,android.view.ViewGroup) -> getView
-com.mame.flappy.ui.ConversationListCustonAdapter$ViewHolder -> com.mame.flappy.ui.r:
+com.mame.flappy.ui.ConversationListCustonAdapter$ViewHolder -> com.mame.flappy.ui.t:
     android.widget.FrameLayout friendLayout -> a
     android.widget.FrameLayout myLayout -> b
     android.widget.ImageView thumbnailView -> c
@@ -6873,29 +6880,29 @@ com.mame.flappy.ui.CreateAccountActivity -> com.mame.flappy.ui.CreateAccountActi
     com.mame.flappy.ui.ProgressDialogFragmentHelper access$5(com.mame.flappy.ui.CreateAccountActivity) -> d
     void access$6(com.mame.flappy.ui.CreateAccountActivity,java.lang.String) -> b
     android.os.Handler access$7(com.mame.flappy.ui.CreateAccountActivity) -> e
-com.mame.flappy.ui.CreateAccountActivity$1 -> com.mame.flappy.ui.s:
+com.mame.flappy.ui.CreateAccountActivity$1 -> com.mame.flappy.ui.u:
     com.mame.flappy.ui.CreateAccountActivity this$0 -> a
     android.app.Activity val$a -> b
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.CreateAccountActivity$2 -> com.mame.flappy.ui.t:
+com.mame.flappy.ui.CreateAccountActivity$2 -> com.mame.flappy.ui.v:
     com.mame.flappy.ui.CreateAccountActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.CreateAccountActivity$3 -> com.mame.flappy.ui.u:
+com.mame.flappy.ui.CreateAccountActivity$3 -> com.mame.flappy.ui.w:
     com.mame.flappy.ui.CreateAccountActivity this$0 -> a
     android.app.Activity val$activity -> b
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.CreateAccountActivity$4 -> com.mame.flappy.ui.v:
+com.mame.flappy.ui.CreateAccountActivity$4 -> com.mame.flappy.ui.x:
     com.mame.flappy.ui.CreateAccountActivity this$0 -> a
     java.lang.String val$errorMessage -> b
     void run() -> run
     com.mame.flappy.ui.CreateAccountActivity access$0(com.mame.flappy.ui.CreateAccountActivity$4) -> a
-com.mame.flappy.ui.CreateAccountActivity$4$1 -> com.mame.flappy.ui.w:
+com.mame.flappy.ui.CreateAccountActivity$4$1 -> com.mame.flappy.ui.y:
     com.mame.flappy.ui.CreateAccountActivity$4 this$1 -> a
     java.lang.String val$errorMessage -> b
     void run() -> run
-com.mame.flappy.ui.CreateAccountActivityUtil -> com.mame.flappy.ui.x:
+com.mame.flappy.ui.CreateAccountActivityUtil -> com.mame.flappy.ui.z:
     boolean isInputtedPasswordSame(java.lang.String,java.lang.String) -> a
     void startActivityForFriendList(android.app.Activity,int,java.lang.String) -> a
     void startActivityForCreateAccountComplete(android.app.Activity,java.lang.String,android.graphics.Bitmap) -> a
@@ -6942,28 +6949,28 @@ com.mame.flappy.ui.CreateAccountCompleteActivity -> com.mame.flappy.ui.CreateAcc
     android.os.Handler access$5(com.mame.flappy.ui.CreateAccountCompleteActivity) -> c
     boolean access$6(com.mame.flappy.ui.CreateAccountCompleteActivity,android.app.Activity) -> a
     com.mame.flappy.ui.ProgressDialogFragmentHelper access$7(com.mame.flappy.ui.CreateAccountCompleteActivity) -> d
-com.mame.flappy.ui.CreateAccountCompleteActivity$1 -> com.mame.flappy.ui.y:
+com.mame.flappy.ui.CreateAccountCompleteActivity$1 -> com.mame.flappy.ui.aa:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.CreateAccountCompleteActivity$2 -> com.mame.flappy.ui.z:
+com.mame.flappy.ui.CreateAccountCompleteActivity$2 -> com.mame.flappy.ui.ab:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.CreateAccountCompleteActivity$3 -> com.mame.flappy.ui.aa:
+com.mame.flappy.ui.CreateAccountCompleteActivity$3 -> com.mame.flappy.ui.ac:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.CreateAccountCompleteActivity$4 -> com.mame.flappy.ui.ab:
+com.mame.flappy.ui.CreateAccountCompleteActivity$4 -> com.mame.flappy.ui.ad:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.CreateAccountCompleteActivity$5 -> com.mame.flappy.ui.ac:
+com.mame.flappy.ui.CreateAccountCompleteActivity$5 -> com.mame.flappy.ui.ae:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.CreateAccountCompleteActivity$6 -> com.mame.flappy.ui.ad:
+com.mame.flappy.ui.CreateAccountCompleteActivity$6 -> com.mame.flappy.ui.af:
     com.mame.flappy.ui.CreateAccountCompleteActivity this$0 -> a
     void onClick(android.view.View) -> onClick
 com.mame.flappy.ui.FlappyAboutActivity -> com.mame.flappy.ui.FlappyAboutActivity:
@@ -6973,7 +6980,7 @@ com.mame.flappy.ui.FlappyAboutActivity -> com.mame.flappy.ui.FlappyAboutActivity
     void onStop() -> onStop
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-com.mame.flappy.ui.FlappyAboutActivity$1 -> com.mame.flappy.ui.ae:
+com.mame.flappy.ui.FlappyAboutActivity$1 -> com.mame.flappy.ui.ag:
     com.mame.flappy.ui.FlappyAboutActivity this$0 -> a
     void onClick(android.view.View) -> onClick
 com.mame.flappy.ui.FriendListActivity -> com.mame.flappy.ui.FriendListActivity:
@@ -7040,96 +7047,96 @@ com.mame.flappy.ui.FriendListActivity -> com.mame.flappy.ui.FriendListActivity:
     com.mame.flappy.ui.view.FriendListCustomListView access$8(com.mame.flappy.ui.FriendListActivity) -> h
     android.widget.TextView access$9(com.mame.flappy.ui.FriendListActivity) -> i
     android.widget.Button access$10(com.mame.flappy.ui.FriendListActivity) -> j
-com.mame.flappy.ui.FriendListActivity$1 -> com.mame.flappy.ui.af:
+com.mame.flappy.ui.FriendListActivity$1 -> com.mame.flappy.ui.ah:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
-com.mame.flappy.ui.FriendListActivity$10 -> com.mame.flappy.ui.ag:
+com.mame.flappy.ui.FriendListActivity$10 -> com.mame.flappy.ui.ai:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     boolean val$state -> b
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$11 -> com.mame.flappy.ui.ah:
+com.mame.flappy.ui.FriendListActivity$11 -> com.mame.flappy.ui.aj:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$11) -> a
-com.mame.flappy.ui.FriendListActivity$11$1 -> com.mame.flappy.ui.ai:
+com.mame.flappy.ui.FriendListActivity$11$1 -> com.mame.flappy.ui.ak:
     com.mame.flappy.ui.FriendListActivity$11 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$12 -> com.mame.flappy.ui.aj:
+com.mame.flappy.ui.FriendListActivity$12 -> com.mame.flappy.ui.al:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$12) -> a
-com.mame.flappy.ui.FriendListActivity$12$1 -> com.mame.flappy.ui.ak:
+com.mame.flappy.ui.FriendListActivity$12$1 -> com.mame.flappy.ui.am:
     com.mame.flappy.ui.FriendListActivity$12 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$13 -> com.mame.flappy.ui.al:
+com.mame.flappy.ui.FriendListActivity$13 -> com.mame.flappy.ui.an:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     java.util.ArrayList val$userData -> b
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$13) -> a
-com.mame.flappy.ui.FriendListActivity$13$1 -> com.mame.flappy.ui.am:
+com.mame.flappy.ui.FriendListActivity$13$1 -> com.mame.flappy.ui.ao:
     com.mame.flappy.ui.FriendListActivity$13 this$1 -> a
     java.util.ArrayList val$userData -> b
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$2 -> com.mame.flappy.ui.an:
+com.mame.flappy.ui.FriendListActivity$2 -> com.mame.flappy.ui.ap:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.FriendListActivity$3 -> com.mame.flappy.ui.ao:
+com.mame.flappy.ui.FriendListActivity$3 -> com.mame.flappy.ui.aq:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$3) -> a
-com.mame.flappy.ui.FriendListActivity$3$1 -> com.mame.flappy.ui.ap:
+com.mame.flappy.ui.FriendListActivity$3$1 -> com.mame.flappy.ui.ar:
     com.mame.flappy.ui.FriendListActivity$3 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$4 -> com.mame.flappy.ui.aq:
+com.mame.flappy.ui.FriendListActivity$4 -> com.mame.flappy.ui.as:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     java.util.ArrayList val$friendListData -> b
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$4) -> a
-com.mame.flappy.ui.FriendListActivity$4$1 -> com.mame.flappy.ui.ar:
+com.mame.flappy.ui.FriendListActivity$4$1 -> com.mame.flappy.ui.at:
     com.mame.flappy.ui.FriendListActivity$4 this$1 -> a
     java.util.ArrayList val$friendListData -> b
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$5 -> com.mame.flappy.ui.as:
+com.mame.flappy.ui.FriendListActivity$5 -> com.mame.flappy.ui.au:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$5) -> a
-com.mame.flappy.ui.FriendListActivity$5$1 -> com.mame.flappy.ui.at:
+com.mame.flappy.ui.FriendListActivity$5$1 -> com.mame.flappy.ui.av:
     com.mame.flappy.ui.FriendListActivity$5 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$6 -> com.mame.flappy.ui.au:
+com.mame.flappy.ui.FriendListActivity$6 -> com.mame.flappy.ui.aw:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     java.util.ArrayList val$friendListData -> b
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$6) -> a
-com.mame.flappy.ui.FriendListActivity$6$1 -> com.mame.flappy.ui.av:
+com.mame.flappy.ui.FriendListActivity$6$1 -> com.mame.flappy.ui.ax:
     com.mame.flappy.ui.FriendListActivity$6 this$1 -> a
     java.util.ArrayList val$friendListData -> b
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$7 -> com.mame.flappy.ui.aw:
+com.mame.flappy.ui.FriendListActivity$7 -> com.mame.flappy.ui.ay:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$7) -> a
-com.mame.flappy.ui.FriendListActivity$7$1 -> com.mame.flappy.ui.ax:
+com.mame.flappy.ui.FriendListActivity$7$1 -> com.mame.flappy.ui.az:
     com.mame.flappy.ui.FriendListActivity$7 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$8 -> com.mame.flappy.ui.ay:
+com.mame.flappy.ui.FriendListActivity$8 -> com.mame.flappy.ui.ba:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$8) -> a
-com.mame.flappy.ui.FriendListActivity$8$1 -> com.mame.flappy.ui.az:
+com.mame.flappy.ui.FriendListActivity$8$1 -> com.mame.flappy.ui.bb:
     com.mame.flappy.ui.FriendListActivity$8 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$9 -> com.mame.flappy.ui.ba:
+com.mame.flappy.ui.FriendListActivity$9 -> com.mame.flappy.ui.bc:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void run() -> run
     com.mame.flappy.ui.FriendListActivity access$0(com.mame.flappy.ui.FriendListActivity$9) -> a
-com.mame.flappy.ui.FriendListActivity$9$1 -> com.mame.flappy.ui.bb:
+com.mame.flappy.ui.FriendListActivity$9$1 -> com.mame.flappy.ui.bd:
     com.mame.flappy.ui.FriendListActivity$9 this$1 -> a
     void run() -> run
-com.mame.flappy.ui.FriendListActivity$FriendListBroadcastReceiver -> com.mame.flappy.ui.bc:
+com.mame.flappy.ui.FriendListActivity$FriendListBroadcastReceiver -> com.mame.flappy.ui.be:
     com.mame.flappy.ui.FriendListActivity this$0 -> a
     void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.mame.flappy.ui.FriendListActivityUtil -> com.mame.flappy.ui.bd:
+com.mame.flappy.ui.FriendListActivityUtil -> com.mame.flappy.ui.bf:
     void startActivityConversationViewByPos(android.app.Activity,int,java.lang.String,int,int,java.lang.String,java.lang.String,android.graphics.Bitmap) -> a
     void startActivityForInvitation(android.app.Activity,int,java.lang.String,int) -> a
     void startActivityForHelp(android.content.Context) -> a
@@ -7150,7 +7157,7 @@ com.mame.flappy.ui.HelpActivity -> com.mame.flappy.ui.HelpActivity:
     void access$1(com.mame.flappy.ui.HelpActivity) -> b
     void access$2(com.mame.flappy.ui.HelpActivity) -> c
     void access$3(com.mame.flappy.ui.HelpActivity) -> d
-com.mame.flappy.ui.HelpActivity$1 -> com.mame.flappy.ui.be:
+com.mame.flappy.ui.HelpActivity$1 -> com.mame.flappy.ui.bg:
     com.mame.flappy.ui.HelpActivity this$0 -> a
     void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.mame.flappy.ui.LoginActivity -> com.mame.flappy.ui.LoginActivity:
@@ -7193,39 +7200,42 @@ com.mame.flappy.ui.LoginActivity -> com.mame.flappy.ui.LoginActivity:
     com.mame.flappy.web.LcomServerAccessor access$10(com.mame.flappy.ui.LoginActivity) -> g
     void access$11(com.mame.flappy.ui.LoginActivity,com.mame.flappy.web.LcomServerAccessor,android.app.Activity,java.lang.String,java.lang.String) -> a
     android.widget.TextView access$12(com.mame.flappy.ui.LoginActivity) -> h
-com.mame.flappy.ui.LoginActivity$1 -> com.mame.flappy.ui.bf:
+com.mame.flappy.ui.LoginActivity$1 -> com.mame.flappy.ui.bh:
     com.mame.flappy.ui.LoginActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.LoginActivity$2 -> com.mame.flappy.ui.bg:
+com.mame.flappy.ui.LoginActivity$2 -> com.mame.flappy.ui.bi:
     com.mame.flappy.ui.LoginActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.LoginActivity$3 -> com.mame.flappy.ui.bh:
+com.mame.flappy.ui.LoginActivity$3 -> com.mame.flappy.ui.bj:
     com.mame.flappy.ui.LoginActivity this$0 -> a
     android.app.Activity val$activity -> b
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.LoginActivityUtil -> com.mame.flappy.ui.bi:
+com.mame.flappy.ui.LoginActivityUtil -> com.mame.flappy.ui.bk:
     void startActivityForFriendList(android.content.Context,int,java.lang.String) -> a
     boolean isValidInputString(int,int,java.lang.String) -> a
     boolean isHalfSizeString(java.lang.String) -> a
     void storeUserDataToPref(android.content.Context,int,java.lang.String) -> b
-com.mame.flappy.ui.ProgressDialogFragment -> com.mame.flappy.ui.bj:
+com.mame.flappy.ui.ProgressDialogFragment -> com.mame.flappy.ui.bl:
     java.lang.String TAG -> a
     com.mame.flappy.ui.ProgressDialogFragment newInstance(java.lang.String,java.lang.String) -> a
     android.app.Dialog onCreateDialog(android.os.Bundle) -> onCreateDialog
-com.mame.flappy.ui.ProgressDialogFragmentHelper -> com.mame.flappy.ui.bk:
+com.mame.flappy.ui.ProgressDialogFragmentHelper -> com.mame.flappy.ui.bm:
     void showProgressDialog(android.app.Activity,java.lang.String,java.lang.String,java.lang.String) -> a
     void dismissDialog(android.app.Activity,java.lang.String) -> a
 com.mame.flappy.ui.SettingActivity -> com.mame.flappy.ui.SettingActivity:
     void onCreate(android.os.Bundle) -> onCreate
-com.mame.flappy.ui.SettingActivity$FlappySettingFragment -> com.mame.flappy.ui.bl:
+    void onStart() -> onStart
+    void onStop() -> onStop
+com.mame.flappy.ui.SettingActivity$FlappySettingFragment -> com.mame.flappy.ui.bn:
     void onCreate(android.os.Bundle) -> onCreate
     void onResume() -> onResume
     void onPause() -> onPause
     void onSharedPreferenceChanged(android.content.SharedPreferences,java.lang.String) -> onSharedPreferenceChanged
+    void trackUserPreferenceByGA(java.lang.String) -> a
     void setSummaryText() -> a
 com.mame.flappy.ui.StartNewConversationActivity -> com.mame.flappy.ui.StartNewConversationActivity:
     java.lang.String TAG -> a
@@ -7274,40 +7284,40 @@ com.mame.flappy.ui.StartNewConversationActivity -> com.mame.flappy.ui.StartNewCo
     int access$8(com.mame.flappy.ui.StartNewConversationActivity) -> h
     java.lang.String access$9(com.mame.flappy.ui.StartNewConversationActivity) -> i
     com.mame.flappy.ui.dialog.InvitationConfirmDialog access$10(com.mame.flappy.ui.StartNewConversationActivity) -> j
-com.mame.flappy.ui.StartNewConversationActivity$1 -> com.mame.flappy.ui.bm:
+com.mame.flappy.ui.StartNewConversationActivity$1 -> com.mame.flappy.ui.bo:
     com.mame.flappy.ui.StartNewConversationActivity this$0 -> a
     void afterTextChanged(android.text.Editable) -> afterTextChanged
     void beforeTextChanged(java.lang.CharSequence,int,int,int) -> beforeTextChanged
     void onTextChanged(java.lang.CharSequence,int,int,int) -> onTextChanged
-com.mame.flappy.ui.StartNewConversationActivity$2 -> com.mame.flappy.ui.bn:
+com.mame.flappy.ui.StartNewConversationActivity$2 -> com.mame.flappy.ui.bp:
     com.mame.flappy.ui.StartNewConversationActivity this$0 -> a
     android.app.Activity val$activity -> b
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.StartNewConversationActivity$3 -> com.mame.flappy.ui.bo:
+com.mame.flappy.ui.StartNewConversationActivity$3 -> com.mame.flappy.ui.bq:
     com.mame.flappy.ui.StartNewConversationActivity this$0 -> a
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.StartNewConversationActivity$4 -> com.mame.flappy.ui.bp:
+com.mame.flappy.ui.StartNewConversationActivity$4 -> com.mame.flappy.ui.br:
     com.mame.flappy.ui.StartNewConversationActivity this$0 -> a
     java.lang.String val$targetUserId -> b
     java.lang.String val$targetUserName -> c
     java.lang.String val$mailAddress -> d
     void run() -> run
     com.mame.flappy.ui.StartNewConversationActivity access$0(com.mame.flappy.ui.StartNewConversationActivity$4) -> a
-com.mame.flappy.ui.StartNewConversationActivity$4$1 -> com.mame.flappy.ui.bq:
+com.mame.flappy.ui.StartNewConversationActivity$4$1 -> com.mame.flappy.ui.bs:
     com.mame.flappy.ui.StartNewConversationActivity$4 this$1 -> a
     java.lang.String val$targetUserId -> b
     java.lang.String val$targetUserName -> c
     java.lang.String val$mailAddress -> d
     void run() -> run
-com.mame.flappy.ui.StartNewConversationActivityUtil -> com.mame.flappy.ui.br:
+com.mame.flappy.ui.StartNewConversationActivityUtil -> com.mame.flappy.ui.bt:
     void showFeedbackToast(android.content.Context,android.os.Handler,java.lang.String) -> a
     void startActivityForContactsList(android.app.Activity,int) -> a
-com.mame.flappy.ui.StartNewConversationActivityUtil$1 -> com.mame.flappy.ui.bs:
+com.mame.flappy.ui.StartNewConversationActivityUtil$1 -> com.mame.flappy.ui.bu:
     android.os.Handler val$handler -> a
     android.content.Context val$context -> b
     java.lang.String val$errorText -> c
     void run() -> run
-com.mame.flappy.ui.StartNewConversationActivityUtil$1$1 -> com.mame.flappy.ui.bt:
+com.mame.flappy.ui.StartNewConversationActivityUtil$1$1 -> com.mame.flappy.ui.bv:
     com.mame.flappy.ui.StartNewConversationActivityUtil$1 this$1 -> a
     android.content.Context val$context -> b
     java.lang.String val$errorText -> c
@@ -7323,12 +7333,12 @@ com.mame.flappy.ui.WelcomeActivity -> com.mame.flappy.ui.WelcomeActivity:
     void onAPITimeout() -> a
     boolean onCreateOptionsMenu(android.view.Menu) -> onCreateOptionsMenu
     boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
-com.mame.flappy.ui.WelcomeActivity$1 -> com.mame.flappy.ui.bu:
+com.mame.flappy.ui.WelcomeActivity$1 -> com.mame.flappy.ui.bw:
     com.mame.flappy.ui.WelcomeActivity this$0 -> a
     int val$userId -> b
     java.lang.String val$userName -> c
     void onClick(android.view.View) -> onClick
-com.mame.flappy.ui.WelcomeActivity$2 -> com.mame.flappy.ui.bv:
+com.mame.flappy.ui.WelcomeActivity$2 -> com.mame.flappy.ui.bx:
     com.mame.flappy.ui.WelcomeActivity this$0 -> a
     int val$userId -> b
     java.lang.String val$userName -> c
@@ -7604,6 +7614,8 @@ com.mame.flappy.util.TrackingUtil -> com.mame.flappy.f.y:
     void trackNumberOfFriend(android.content.Context,int) -> a
     void trackNumberOfCharInOneMessage(android.content.Context,int) -> b
     void trackExceptionMessage(android.content.Context,java.lang.String,java.lang.String) -> a
+    void trackNotificationVibrationSetting(android.content.Context,boolean) -> a
+    void trackNotificationSoundSetting(android.content.Context,boolean) -> b
     void trackModel(android.content.Context) -> a
     void trackEvent(android.content.Context,java.lang.String,java.lang.String,java.lang.String,int) -> a
 com.mame.flappy.util.VersionUtil -> com.mame.flappy.f.z:
@@ -7630,6 +7642,7 @@ com.mame.flappy.web.LcomHttpsWebAPI -> com.mame.flappy.g.c:
     java.lang.String access$1(com.mame.flappy.web.LcomHttpsWebAPI) -> a
     com.mame.flappy.web.LcomAbstractServerAccessor$LcomWebAccessorListener access$2(com.mame.flappy.web.LcomHttpsWebAPI) -> b
     boolean access$3(com.mame.flappy.web.LcomHttpsWebAPI) -> c
+    com.mame.flappy.web.LcomHttpsWebAPI$PostThread access$4(com.mame.flappy.web.LcomHttpsWebAPI) -> d
 com.mame.flappy.web.LcomHttpsWebAPI$1 -> com.mame.flappy.g.d:
     com.mame.flappy.web.LcomHttpsWebAPI this$0 -> a
     void run() -> run
