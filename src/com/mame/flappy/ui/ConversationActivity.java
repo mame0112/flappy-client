@@ -221,6 +221,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 								setProgressBarIndeterminateVisibility(true);
 
+								mConversationSendButton.setEnabled(false);
+								mConversationEditText.setEnabled(false);
+
 								long date = TimeUtil.getCurrentDate();
 								sendAndRegisterMessage(mUserId, mTargetUserId,
 										mUserName, mTargetUserName, message,
@@ -347,7 +350,7 @@ public class ConversationActivity extends LcomBaseActivity implements
 		super.onDestroy();
 		if (mManager != null) {
 			mManager.removeFriendDataManagerListener(this);
-//			mManager.destroyFriendDataManager();
+			// mManager.destroyFriendDataManager();
 		}
 	}
 
@@ -404,6 +407,9 @@ public class ConversationActivity extends LcomBaseActivity implements
 								mConversationData.add(messageData);
 							}
 
+							mConversationSendButton.setEnabled(true);
+							mConversationEditText.setEnabled(true);
+
 							mAdapter.notifyDataSetChanged();
 							mListView.setSelection(mListView.getCount() - 1);
 							mConversationEditText.getEditableText().clear();
@@ -415,8 +421,24 @@ public class ConversationActivity extends LcomBaseActivity implements
 
 			}).start();
 		} else {
+			// If message can not be sent
 			FeedbackUtil.showFeedbackToast(getApplicationContext(), mHandler,
 					R.string.str_conversation_message_fail_sent);
+
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mConversationSendButton.setEnabled(true);
+							mConversationEditText.setEnabled(true);
+						}
+					});
+				}
+
+			}).start();
+
 		}
 
 	}

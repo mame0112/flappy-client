@@ -317,6 +317,9 @@ public class StartNewConversationActivity extends LcomBaseActivity implements
 					mMailEditText.setEnabled(false);
 					mInputMessageButton.setEnabled(true);
 				}
+
+				// Disable Direct message input edit text (to improve usability)
+				mMailEditText.setEnabled(false);
 			} else {
 				DbgUtil.showDebug(TAG, "Illegal requestCode: " + requestCode);
 			}

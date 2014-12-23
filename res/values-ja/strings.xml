@@ -63,9 +63,9 @@
     <string name="str_create_account_photo_title">写真を設定</string>
     <string name="str_create_account_photo_desc">画像 (任意)</string>
     <string name="str_create_account_username_hint">ユーザ名</string>
-    <string name="str_create_account_username_desc">6～16文字</string>
+    <string name="str_create_account_username_desc">6～16文字 (半角英数)</string>
     <string name="str_create_account_password_hint">パスワード</string>
-    <string name="str_create_account_password_desc">6～16文字</string>
+    <string name="str_create_account_password_desc">6～16文字 (半角英数)</string>
     <string name="str_create_account_password_hint_again">パスワードの確認</string>
     <string name="str_create_account_mail_address_hint">メールアドレス</string>
     <string name="str_create_account_create_account_done_button">完了</string>
